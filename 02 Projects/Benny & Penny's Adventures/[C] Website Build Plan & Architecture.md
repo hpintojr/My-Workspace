@@ -1,73 +1,138 @@
 ---
 type: build-plan
 project: Benny & Penny's Adventures
-date: 2026-06-10
-author: Claude
-status: architecture locked
+updated: 2026-06-12
+status: build and commerce infrastructure phase
 ---
 
 # Website Build Plan & Architecture
 
-**Locked stack:** custom branded **Next.js** site with **Payload CMS** (open-source) as the backbone, on **Vercel**, via **GitHub**, DNS + storage on **Cloudflare**. Ebook delivered securely from **Cloudflare R2**; payments via **Stripe**. Print-on-demand vendor (Lulu vs. BookVault) to be chosen later. Hamilton is sole admin/developer.
+## Current Status
 
-## Architecture at a glance
+### Infrastructure Complete
 
-```
-Visitor → bennyandpennyadventures.com  (Next.js + Payload on Vercel; DNS via Cloudflare)
-   │
-   ├── Browse books            → Payload-managed catalog (books = CMS content)
-   │
-   ├── Buy EBOOK  → Stripe Checkout → webhook → Payload grants access
-   │                              → buyer gets a SIGNED, time-limited link to the PDF in Cloudflare R2
-   │
-   ├── Buy PRINT  → Stripe Checkout → webhook → [POD vendor API — Lulu/BookVault, added later]
-   │
-   └── Join email list → signup form (provider TBD)
-```
+- Cloudflare connected.
+- `bennyandpennyadventures.com` connected to Vercel.
+- GitHub connected.
+- First deployment completed.
+- Homepage largely complete.
+- Majority of UI complete.
 
-- **Why Payload:** one open-source system = your CMS (manage books/pages), your store (Stripe-synced products/orders), auth, and gated digital delivery — native to Next.js, no SaaS lock-in.
-- **Ebook security:** files live in a private R2 bucket; the app issues short-lived signed URLs per purchase. Add a download limit and stamp the buyer's email into the PDF (in the webhook) to deter resharing.
-- **Funds:** Stripe secures payment up front. For print later, the POD vendor charges only print+ship after the API order; you keep the margin.
+## Locked Stack
 
-## Tech stack
-- **Next.js (App Router) + TypeScript**, **Tailwind CSS**.
-- **Payload CMS 3** (runs inside the Next.js app) — open-source, self-hosted.
-- **Postgres** (managed free tier — Neon or Supabase) for Payload's data.
-- **Cloudflare R2** for ebook PDFs (10GB free, zero egress) + signed URLs.
-- **Stripe Checkout** + webhook route for fulfillment.
-- **GitHub** repo → **Vercel** auto-deploy.
-- Email list provider: **Mailjet** (chosen) — has a free tier + transactional + contact-list API.
-- POD: **Lulu or BookVault API** — decided later.
+- Next.js with TypeScript.
+- Payload CMS.
+- Vercel hosting.
+- GitHub deployment.
+- Cloudflare DNS.
+- Cloudflare R2 for private ebook storage.
+- Stripe Checkout and webhooks.
+- Mailjet for email list and email communications.
+- Lulu Direct API for print-on-demand fulfillment later.
 
-## Running cost (low volume)
-- Stripe: $0/mo (~2.9% + $0.30 per sale).
-- Cloudflare R2 + DNS: ~$0 (within free tier).
-- Postgres (Neon/Supabase free tier): $0.
-- Vercel: free during build (Hobby); **$20/mo Pro** once it's a live commercial store.
-- **≈ $20/mo all-in at launch**, $0 while building.
+## Payload CMS Collections
 
-## Phase 0 — Provision (do these first)
-- [x] Create a **GitHub** repo for the site → https://github.com/hpintojr/bennyandpennyadventures
-- [ ] Create a **Vercel** account, linked to GitHub (stay on free Hobby until launch).
-- [ ] Create a free **Postgres** database (Neon or Supabase) — grab the connection string.
-- [ ] Create a **Cloudflare R2** bucket (private) — grab access key id/secret + endpoint.
-- [ ] Create a **Stripe** account (test mode) — grab publishable + secret keys, set up webhook signing secret.
-- [ ] Gather **content**: homepage draft, and for books 1 & 2 — title, description, cover image, interior **PDF**, ebook price (print price later).
+### Core Collections
 
-## Build phases
-1. **Scaffold** — Payload + Next.js + Tailwind; connect Postgres; global layout, nav/footer, brand theme.
-2. **Homepage** — built from your draft.
-3. **Books in the CMS** — a `Books` collection (title, slug, description, cover, PDF-in-R2, ebook price, Stripe link). Add books 1 & 2.
-4. **Catalog + book detail pages** — data-driven from the collection.
-5. **Stripe Checkout** — ebook products/prices, success/cancel pages.
-6. **Ebook delivery** — webhook grants access + issues signed R2 link; optional email-stamp/watermark + download limit.
-7. **Email list** — signup capture (home + footer).
-8. **Deploy** — connect `bennyandpennyadventures.com` via Cloudflare; go Vercel Pro at launch.
-9. **POD (later)** — choose Lulu/BookVault; wire Stripe webhook → print API.
-10. **Polish** — SEO, metadata, analytics, privacy/terms.
+- Books.
+- Orders.
+- Downloads.
+- Subscribers.
+- ContactSubmissions.
+- Users.
 
-## Open technical decisions (resolve in-phase)
-- Neon vs. Supabase for Postgres (both free; Supabase also gives storage/auth if ever useful).
-- Cart model: single-item Checkout to launch (simplest) vs. multi-item cart later.
-- Email provider (Phase 7).
-- POD vendor + print margins (Phase 9 — I'll pull real costs then).
+## Phase 0 — Business Foundation
+
+- [ ] Obtain PO Box.
+- [ ] File DBA.
+- [ ] Open business bank account.
+- [ ] Create Stripe account.
+
+## Phase 1 — Payload CMS Setup
+
+- [ ] Install/configure Payload CMS.
+- [ ] Connect Postgres database.
+- [ ] Configure admin user.
+- [ ] Create Books collection.
+- [ ] Create Subscribers collection.
+- [ ] Create ContactSubmissions collection.
+- [ ] Create Orders and Downloads collections.
+
+## Phase 2 — Customer Communication & Lead Management
+
+### Contact Forms
+
+- [ ] Contact page submits to Payload CMS.
+- [ ] Notification email sent to `hello@bennyandpenny.com`.
+- [ ] Inquiry stored in database.
+- [ ] Spam protection enabled.
+- [ ] Inquiry categories supported.
+
+### Newsletter System
+
+- [ ] Homepage signup form.
+- [ ] Footer signup form.
+- [ ] Store subscribers in Payload CMS.
+- [ ] Admin dashboard to search/view subscribers.
+- [ ] CSV export capability.
+- [ ] Mailjet synchronization.
+- [ ] New subscriber email notification.
+- [ ] Source tracking.
+
+## Phase 3 — Cloudflare R2 Ebook Delivery
+
+- [ ] Create private R2 bucket.
+- [ ] Upload ebook files.
+- [ ] Generate signed, time-limited URLs.
+- [ ] Track downloads.
+- [ ] Add download limits.
+- [ ] Optional: watermark PDFs with buyer email.
+
+## Phase 4 — Stripe Checkout & Fulfillment
+
+- [ ] Create Stripe account.
+- [ ] Configure products/prices.
+- [ ] Build checkout flow.
+- [ ] Build webhook route.
+- [ ] Grant ebook access after payment.
+- [ ] Trigger signed R2 download link.
+- [ ] Send confirmation/fulfillment email.
+
+## Phase 5 — Lulu Direct POD Integration
+
+- [ ] Evaluate Lulu Direct API requirements.
+- [ ] Configure Lulu API credentials.
+- [ ] Map print SKUs.
+- [ ] Connect paid print orders to Lulu order creation.
+- [ ] Test sandbox fulfillment.
+- [ ] Test live fulfillment before launch.
+
+## Remaining Build Order
+
+1. Payload CMS setup.
+2. Postgres database.
+3. Contact form system.
+4. Subscriber management system.
+5. Cloudflare R2.
+6. Stripe integration.
+7. Signed ebook delivery.
+8. Lulu Direct API.
+9. Production launch.
+
+## Launch Blockers
+
+### Business
+
+- PO Box.
+- DBA.
+- Business bank account.
+- Stripe account.
+
+### Technical
+
+- Payload CMS.
+- R2 setup.
+- Contact form storage and notification.
+- Email subscriber storage, backend view, and CSV export.
+- Ebook delivery workflow.
+- POD integration.
