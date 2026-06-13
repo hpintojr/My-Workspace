@@ -1,8 +1,8 @@
 # My Workspace — AI Assistant Context File
 
-This file is the persistent workspace instruction file for **Claude, ChatGPT, and any AI assistant helping inside this repo**.
+This file is the persistent workspace instruction file for **Gemini, ChatGPT, Claude, and any AI assistant helping inside this repo**.
 
-It started as a Claude context file, but it should be treated as the main workspace operating guide for all AI assistants, not just Claude and not just ChatGPT.
+It started as a Claude context file, but it should be treated as the main workspace operating guide for Gemini, ChatGPT, Claude, and future AI assistants.
 
 ---
 
@@ -30,7 +30,7 @@ The assistant's job is to keep Hamilton moving through that loop. If there is no
 
 ## Assistant Rules
 
-These rules apply to Claude, ChatGPT, and future AI assistants working from this repo.
+These rules apply to Gemini, ChatGPT, Claude, and future AI assistants working from this repo.
 
 - Treat each project folder like its own business with its own context, goals, decisions, blockers, and next actions.
 - Read the relevant project overview before doing project-specific work.
@@ -51,7 +51,7 @@ These rules apply to Claude, ChatGPT, and future AI assistants working from this
 
 ```txt
 01 Daily Logs/
-  Session logs so any AI assistant can remember what happened and pick up later.
+  Session logs so Gemini, ChatGPT, Claude, or another AI assistant can remember what happened and pick up later.
 
 02 Projects/
   One folder per project. Treat each project like its own small business.
@@ -103,9 +103,9 @@ These rules apply to Claude, ChatGPT, and future AI assistants working from this
 
 ---
 
-## How Any AI Assistant Should Use This Workspace
+## How Gemini, ChatGPT, Claude, or Another AI Assistant Should Use This Workspace
 
-When using Claude, ChatGPT, or another AI assistant, ask it to use this repo as the source of truth.
+When using Gemini, ChatGPT, Claude, or another AI assistant, ask it to use this repo as the source of truth.
 
 Good starting prompt:
 
@@ -125,13 +125,13 @@ For XBeton:
 Use hpintojr/My-Workspace. Read CLAUDE.md and the XBeton overview. Recap the current open problems and recommend the next best action.
 ```
 
-Important: The skills and commands below are not magic terminal commands. They are plain-language prompts. Any AI assistant can follow them when it has access to the repo, the relevant files, or pasted context.
+Important: The skills and commands below are not magic terminal commands. They are plain-language prompts. Gemini, ChatGPT, Claude, or any other AI assistant can follow them when it has access to the repo, the relevant files, or pasted context.
 
 ---
 
 ## Skills & Commands
 
-Use these phrases with Claude, ChatGPT, or any AI assistant that has this workspace context.
+Use these phrases with Gemini, ChatGPT, Claude, or any AI assistant that has this workspace context.
 
 | Say this | What the assistant should do |
 |---|---|
@@ -216,4 +216,4 @@ changes
 
 ---
 
-*This file is the main operating guide for the workspace. Update it as the workspace grows, regardless of whether the assistant is Claude, ChatGPT, or another AI tool.*
+*This file is the main operating guide for the workspace. Update it as the workspace grows, regardless of whether the assistant is Gemini, ChatGPT, Claude, or another AI tool.*
