@@ -12,6 +12,7 @@ Build a children's publishing business around the Benny & Penny book series, inc
 
 - Website.
 - Digital ebook sales.
+- Audiobook/audio sales.
 - Print-on-demand book sales.
 - Email marketing.
 - Social media presence.
@@ -19,7 +20,7 @@ Build a children's publishing business around the Benny & Penny book series, inc
 
 ## Why
 
-This is a family project and a way to generate extra income through digital products and future print products.
+This is a family project and a way to generate extra income through digital, audio, and future print products.
 
 ## Domains
 
@@ -38,19 +39,33 @@ The project has moved from planning into build and business infrastructure.
 - First deployment completed.
 - Homepage substantially completed.
 - Majority of site UI completed.
+- Contact form converted from email-client behavior to a real web form submission flow.
+- Contact API route connected to Mailjet API.
+- Mailjet issue diagnosed as an account-level temporary block, not a code issue.
+- Privacy Policy updated with digital, audio, payment, contact, newsletter, and children's privacy language.
+- Terms of Service updated with PDF/EPUB, audiobook/audio, POD, refund, IP, and acceptable-use language.
+- Audiobook product option added at `$21.99`.
 
 ## Current Priority Order
 
-1. PO Box.
-2. DBA filing.
-3. Business bank account.
-4. Stripe account.
-5. Payload CMS setup.
-6. Contact form system.
-7. Email list database.
-8. Cloudflare R2 setup.
-9. Signed ebook delivery.
-10. Lulu POD integration.
+1. Resolve Mailjet account block / sender approval.
+2. PO Box.
+3. DBA filing.
+4. Business bank account.
+5. Stripe account.
+6. Payload CMS setup.
+7. Contact submission storage.
+8. Email list database.
+9. Cloudflare R2 setup.
+10. Signed ebook/audio delivery.
+11. Lulu POD integration.
+
+## Product Format Pricing
+
+- PDF / EPUB: `$15.99`.
+- Audiobook: `$21.99`.
+- Paperback: `$17.99`.
+- Hardcover: `$24.99`.
 
 ## Open Problems
 
@@ -70,10 +85,12 @@ The project has moved from planning into build and business infrastructure.
 
 ### Contact & Communications
 
-- [ ] Configure `hello@bennyandpenny.com`.
-- [ ] Connect Contact page form.
-- [ ] Route website contact form submissions to `hello@bennyandpenny.com`.
-- [ ] Send email notifications for new contact inquiries.
+- [x] Replace Contact page `mailto:` / email-client behavior with a real web form.
+- [x] Add `/api/contact` route.
+- [x] Connect Contact page form to server-side API route.
+- [x] Connect Contact API route to Mailjet API.
+- [ ] Resolve Mailjet account temporary block.
+- [ ] Route website contact form notifications to `hello@bennyandpenny.com` after Mailjet is unblocked.
 - [ ] Store inquiries in Payload CMS database.
 - [ ] Add spam protection.
 - [ ] Create inquiry categories.
@@ -84,16 +101,27 @@ The project has moved from planning into build and business infrastructure.
 - [ ] Send notification email when a new subscriber joins.
 - [ ] Create subscriber admin dashboard.
 - [ ] Enable CSV export.
-- [ ] Integrate Mailjet.
+- [ ] Integrate Mailjet after account is unblocked.
 - [ ] Capture source information for subscribers.
 
-### Digital Fulfillment
+### Legal / Compliance
+
+- [x] Privacy Policy updated.
+- [x] Terms of Service updated.
+- [x] Add audiobook/audio disclosures.
+- [ ] Attorney review before accepting payments.
+
+### Digital and Audio Fulfillment
 
 - [ ] Setup Cloudflare R2 private bucket.
+- [ ] Upload PDF files to private R2 paths.
+- [ ] Upload EPUB files to private R2 paths.
+- [ ] Upload audiobook/audio files to private R2 paths.
 - [ ] Configure signed URL ebook delivery.
+- [ ] Configure signed URL audiobook/audio delivery.
 - [ ] Build Stripe webhooks.
-- [ ] Build download tracking.
-- [ ] Add download limits.
+- [ ] Build download/access tracking.
+- [ ] Add download limits, initially max 3 downloads/access attempts.
 - [ ] Consider optional PDF watermarking.
 
 ### Print-On-Demand
@@ -112,6 +140,18 @@ The project has moved from planning into build and business infrastructure.
 - ContactSubmissions.
 - Users.
 
+## R2 Private Object Path Direction
+
+Recommended private R2 object keys:
+
+```txt
+ebooks/book-1/home-infusion-day.pdf
+ebooks/book-1/home-infusion-day.epub
+audiobooks/book-1/home-infusion-day.mp3
+```
+
+Each book should eventually store PDF, EPUB, and audiobook object keys in Payload CMS rather than public URLs.
+
 ## Next Session Focus
 
-The site is no longer the main bottleneck. The current launch blockers are business setup, payment infrastructure, backend CMS setup, lead capture, and digital fulfillment.
+The site is no longer the main bottleneck. The current launch blockers are Mailjet account approval, business setup, payment infrastructure, backend CMS setup, lead capture, and private digital/audio fulfillment.
