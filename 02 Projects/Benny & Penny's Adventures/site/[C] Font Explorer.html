@@ -1,0 +1,157 @@
+<!--
+  Benny & Penny's Adventures — Font Explorer
+  Renders the logo + both section headers in candidate Google Fonts so you can pick.
+  All fonts here are free Google Fonts and work with Next.js `next/font/google`.
+-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Font Explorer — Benny &amp; Penny's Adventures</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Pacifico&family=Grand+Hotel&family=Dancing+Script:wght@600;700&family=Satisfy&family=Kaushan+Script&family=Pinyon+Script&family=Sacramento&family=Fredoka:wght@500;600&family=Baloo+2:wght@600;700&family=Comfortaa:wght@600;700&family=Itim&family=Patrick+Hand&family=DynaPuff:wght@500;600&family=Nunito:wght@400;600;700&display=swap');
+  :root{--cream:#FFF6E8;--teal:#064852;--coral:#E7646C;--tan:#E8CFAE;--body:#1D3237;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--cream);color:var(--teal);font-family:'Nunito',sans-serif;line-height:1.5}
+  .wrap{max-width:1000px;margin:0 auto;padding:24px 22px 60px}
+  h1{font-family:'Playfair Display',serif;font-size:34px;margin:0}
+  .lead{color:var(--body);max-width:70ch;margin:10px 0 6px}
+  .rec{background:#fde4de;border:1px solid var(--tan);border-radius:14px;padding:14px 18px;margin:16px 0 28px;font-size:14px;color:var(--body)}
+  .rec b{color:var(--teal)}
+
+  .card{background:rgba(255,255,255,.55);border:1px solid var(--tan);border-radius:18px;padding:22px 24px;margin-bottom:18px}
+  .meta{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--tan);padding-bottom:10px;margin-bottom:14px;flex-wrap:wrap}
+  .name{font-family:'Nunito';font-weight:700;font-size:15px;color:var(--teal)}
+  .vibe{font-size:12.5px;color:#6b7d80}
+  .use{font-size:11px;font-weight:700;color:var(--coral);text-transform:uppercase;letter-spacing:.06em}
+
+  .logo .n{font-size:44px;color:var(--teal);line-height:1.1}
+  .logo .a{font-size:40px;color:var(--coral);line-height:1.15;text-align:left}
+  .logo .a .hs{font-size:.7em;vertical-align:middle}
+  .hdr{font-size:30px;color:var(--teal);margin-top:14px}
+  .hdr2{font-size:26px;color:var(--teal);margin-top:6px}
+  .tag{font-family:'Nunito';font-weight:bold;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#6b5d4f;margin-top:6px}
+  @media(max-width:560px){.logo .n,.logo .a{font-size:32px}.hdr{font-size:24px}.hdr2{font-size:20px}}
+</style>
+
+<div class="wrap">
+  <h1>Font Explorer</h1>
+  <p class="lead">Each card shows your logo and both section headers in a candidate font. All are free Google Fonts that work with Next.js <code>next/font/google</code>. You can also mix — e.g., one font for the logo, a different one for the "Meet the…" headers.</p>
+  <div class="rec"><b>My pick:</b> <b>Grand Hotel</b> or <b>Pacifico</b> for the logo (warm + readable), <b>Dancing Script</b> for the "Meet the…" headers, and keep <b>Nunito</b> for body. Scripts like Pinyon/Sacramento look elegant but get hard to read small — better as accents than the logo.</p>
+
+  <!-- CURRENT -->
+  <div class="card">
+    <div class="meta"><span class="name">Playfair Display</span><span class="vibe">Current — elegant serif</span><span class="use">Current</span></div>
+    <div class="logo" style="font-family:'Playfair Display'"><div class="n">Benny &amp; Penny's</div><div class="a"><span class="hs">♥</span> <i>Adventures</i> <span class="hs">♥</span></div></div>
+    <div class="tag">Medical Books for Brave Little Hearts</div>
+    <div class="hdr" style="font-family:'Playfair Display';font-style:italic">Meet the Author ♥</div>
+    <div class="hdr2" style="font-family:'Playfair Display';font-style:italic">♥ Meet the Real Family Behind the Adventures ♥</div>
+  </div>
+
+  <!-- PACIFICO -->
+  <div class="card">
+    <div class="meta"><span class="name">Pacifico</span><span class="vibe">Bold, friendly, rounded script</span><span class="use">Logo + headers</span></div>
+    <div class="logo" style="font-family:'Pacifico'"><div class="n">Benny &amp; Penny's</div><div class="a"><span class="hs">♥</span> Adventures <span class="hs">♥</span></div></div>
+    <div class="tag">Medical Books for Brave Little Hearts</div>
+    <div class="hdr" style="font-family:'Pacifico'">Meet the Author ♥</div>
+    <div class="hdr2" style="font-family:'Pacifico'">♥ Meet the Real Family Behind the Adventures ♥</div>
+  </div>
+
+  <!-- GRAND HOTEL -->
+  <div class="card">
+    <div class="meta"><span class="name">Grand Hotel</span><span class="vibe">Classic, soft, whimsical</span><span class="use">Logo + headers</span></div>
+    <div class="logo" style="font-family:'Grand Hotel'"><div class="n">Benny &amp; Penny's</div><div class="a"><span class="hs">♥</span> Adventures <span class="hs">♥</span></div></div>
+    <div class="tag">Medical Books for Brave Little Hearts</div>
+    <div class="hdr" style="font-family:'Grand Hotel'">Meet the Author ♥</div>
+    <div class="hdr2" style="font-family:'Grand Hotel'">♥ Meet the Real Family Behind the Adventures ♥</div>
+  </div>
+
+  <!-- DANCING SCRIPT -->
+  <div class="card">
+    <div class="meta"><span class="name">Dancing Script</span><span class="vibe">Flowing, casual, lively</span><span class="use">Headers (great)</span></div>
+    <div class="logo" style="font-family:'Dancing Script'"><div class="n">Benny &amp; Penny's</div><div class="a"><span class="hs">♥</span> Adventures <span class="hs">♥</span></div></div>
+    <div class="tag">Medical Books for Brave Little Hearts</div>
+    <div class="hdr" style="font-family:'Dancing Script'">Meet the Author ♥</div>
+    <div class="hdr2" style="font-family:'Dancing Script'">♥ Meet the Real Family Behind the Adventures ♥</div>
+  </div>
+
+  <!-- SATISFY -->
+  <div class="card">
+    <div class="meta"><span class="name">Satisfy</span><span class="vibe">Relaxed, handwritten</span><span class="use">Logo + headers</span></div>
+    <div class="logo" style="font-family:'Satisfy'"><div class="n">Benny &amp; Penny's</div><div class="a"><span class="hs">♥</span> Adventures <span class="hs">♥</span></div></div>
+    <div class="tag">Medical Books for Brave Little Hearts</div>
+    <div class="hdr" style="font-family:'Satisfy'">Meet the Author ♥</div>
+    <div class="hdr2" style="font-family:'Satisfy'">♥ Meet the Real Family Behind the Adventures ♥</div>
+  </div>
+
+  <!-- KAUSHAN -->
+  <div class="card">
+    <div class="meta"><span class="name">Kaushan Script</span><span class="vibe">Brushy, energetic</span><span class="use">Logo + headers</span></div>
+    <div class="logo" style="font-family:'Kaushan Script'"><div class="n">Benny &amp; Penny's</div><div class="a"><span class="hs">♥</span> Adventures <span class="hs">♥</span></div></div>
+    <div class="tag">Medical Books for Brave Little Hearts</div>
+    <div class="hdr" style="font-family:'Kaushan Script'">Meet the Author ♥</div>
+    <div class="hdr2" style="font-family:'Kaushan Script'">♥ Meet the Real Family Behind the Adventures ♥</div>
+  </div>
+
+  <!-- SACRAMENTO -->
+  <div class="card">
+    <div class="meta"><span class="name">Sacramento</span><span class="vibe">Thin, elegant monoline</span><span class="use">Accent only</span></div>
+    <div class="logo" style="font-family:'Sacramento'"><div class="n">Benny &amp; Penny's</div><div class="a"><span class="hs">♥</span> Adventures <span class="hs">♥</span></div></div>
+    <div class="tag">Medical Books for Brave Little Hearts</div>
+    <div class="hdr" style="font-family:'Sacramento'">Meet the Author ♥</div>
+    <div class="hdr2" style="font-family:'Sacramento'">♥ Meet the Real Family Behind the Adventures ♥</div>
+  </div>
+
+  <!-- PINYON -->
+  <div class="card">
+    <div class="meta"><span class="name">Pinyon Script</span><span class="vibe">Formal, fancy calligraphy</span><span class="use">Accent only</span></div>
+    <div class="logo" style="font-family:'Pinyon Script'"><div class="n">Benny &amp; Penny's</div><div class="a"><span class="hs">♥</span> Adventures <span class="hs">♥</span></div></div>
+    <div class="tag">Medical Books for Brave Little Hearts</div>
+    <div class="hdr" style="font-family:'Pinyon Script'">Meet the Author ♥</div>
+    <div class="hdr2" style="font-family:'Pinyon Script'">♥ Meet the Real Family Behind the Adventures ♥</div>
+  </div>
+
+  <!-- FREDOKA -->
+  <div class="card">
+    <div class="meta"><span class="name">Fredoka</span><span class="vibe">Rounded, playful sans (not script)</span><span class="use">Sub-headers / pairing</span></div>
+    <div class="logo" style="font-family:'Fredoka'"><div class="n">Benny &amp; Penny's</div><div class="a"><span class="hs">♥</span> Adventures <span class="hs">♥</span></div></div>
+    <div class="tag">Medical Books for Brave Little Hearts</div>
+    <div class="hdr" style="font-family:'Fredoka'">Meet the Author ♥</div>
+    <div class="hdr2" style="font-family:'Fredoka'">♥ Meet the Real Family Behind the Adventures ♥</div>
+  </div>
+
+  <!-- BALOO 2 -->
+  <div class="card">
+    <div class="meta"><span class="name">Baloo 2</span><span class="vibe">Chunky, bubbly, bold</span><span class="use">Logo / headers</span></div>
+    <div class="logo" style="font-family:'Baloo 2'"><div class="n">Benny &amp; Penny's</div><div class="a"><span class="hs">♥</span> Adventures <span class="hs">♥</span></div></div>
+    <div class="tag">Medical Books for Brave Little Hearts</div>
+    <div class="hdr" style="font-family:'Baloo 2'">Meet the Author ♥</div>
+    <div class="hdr2" style="font-family:'Baloo 2'">♥ Meet the Real Family Behind the Adventures ♥</div>
+  </div>
+
+  <!-- ITIM -->
+  <div class="card">
+    <div class="meta"><span class="name">Itim</span><span class="vibe">Child handwriting, very legible</span><span class="use">Headers / body accent</span></div>
+    <div class="logo" style="font-family:'Itim'"><div class="n">Benny &amp; Penny's</div><div class="a"><span class="hs">♥</span> Adventures <span class="hs">♥</span></div></div>
+    <div class="tag">Medical Books for Brave Little Hearts</div>
+    <div class="hdr" style="font-family:'Itim'">Meet the Author ♥</div>
+    <div class="hdr2" style="font-family:'Itim'">♥ Meet the Real Family Behind the Adventures ♥</div>
+  </div>
+
+  <!-- PATRICK HAND -->
+  <div class="card">
+    <div class="meta"><span class="name">Patrick Hand</span><span class="vibe">Warm, authentic handwriting</span><span class="use">Headers / accent</span></div>
+    <div class="logo" style="font-family:'Patrick Hand'"><div class="n">Benny &amp; Penny's</div><div class="a"><span class="hs">♥</span> Adventures <span class="hs">♥</span></div></div>
+    <div class="tag">Medical Books for Brave Little Hearts</div>
+    <div class="hdr" style="font-family:'Patrick Hand'">Meet the Author ♥</div>
+    <div class="hdr2" style="font-family:'Patrick Hand'">♥ Meet the Real Family Behind the Adventures ♥</div>
+  </div>
+
+  <!-- DYNAPUFF -->
+  <div class="card">
+    <div class="meta"><span class="name">DynaPuff</span><span class="vibe">Bouncy, bubbly display</span><span class="use">Logo / playful headers</span></div>
+    <div class="logo" style="font-family:'DynaPuff'"><div class="n">Benny &amp; Penny's</div><div class="a"><span class="hs">♥</span> Adventures <span class="hs">♥</span></div></div>
+    <div class="tag">Medical Books for Brave Little Hearts</div>
+    <div class="hdr" style="font-family:'DynaPuff'">Meet the Author ♥</div>
+    <div class="hdr2" style="font-family:'DynaPuff'">♥ Meet the Real Family Behind the Adventures ♥</div>
+  </div>
+
+</div>
