@@ -14,6 +14,8 @@ Build a children's publishing business around the Benny & Penny book series, inc
 - Digital ebook sales.
 - Audiobook/audio sales.
 - Print-on-demand book sales.
+- Customer/member area.
+- Admin backend.
 - Email marketing.
 - Social media presence.
 - Business infrastructure.
@@ -45,20 +47,23 @@ The project has moved from planning into build and business infrastructure.
 - Privacy Policy updated with digital, audio, payment, contact, newsletter, and children's privacy language.
 - Terms of Service updated with PDF/EPUB, audiobook/audio, POD, refund, IP, and acceptable-use language.
 - Audiobook product option added at `$21.99`.
+- Neon Postgres database created for Payload CMS.
 
 ## Current Priority Order
 
-1. Resolve Mailjet account block / sender approval.
-2. PO Box.
-3. DBA filing.
-4. Business bank account.
-5. Stripe account.
-6. Payload CMS setup.
-7. Contact submission storage.
-8. Email list database.
-9. Cloudflare R2 setup.
-10. Signed ebook/audio delivery.
-11. Lulu POD integration.
+1. Rotate Neon database password because the original connection string was exposed in chat.
+2. Add the rotated pooled database URL to Vercel as `DATABASE_URI`.
+3. Resolve Mailjet account block / sender approval.
+4. PO Box.
+5. DBA filing.
+6. Business bank account.
+7. Stripe account.
+8. Payload CMS setup.
+9. Contact submission storage.
+10. Email list database.
+11. Cloudflare R2 setup.
+12. Signed ebook/audio delivery.
+13. Lulu POD integration.
 
 ## Product Format Pricing
 
@@ -78,8 +83,12 @@ The project has moved from planning into build and business infrastructure.
 
 ### Website Infrastructure
 
+- [x] Create Neon Postgres database.
+- [ ] Rotate Neon password after exposed connection string.
+- [ ] Add pooled database URL to Vercel as `DATABASE_URI`.
+- [ ] Add `PAYLOAD_SECRET` to Vercel.
+- [ ] Add `PAYLOAD_PUBLIC_SERVER_URL` to Vercel.
 - [ ] Setup Payload CMS.
-- [ ] Setup Postgres database.
 - [ ] Configure Payload collections.
 - [ ] Connect Payload to Next.js.
 
@@ -103,6 +112,32 @@ The project has moved from planning into build and business infrastructure.
 - [ ] Enable CSV export.
 - [ ] Integrate Mailjet after account is unblocked.
 - [ ] Capture source information for subscribers.
+- [ ] Add marketing opt-in/opt-out preferences.
+
+### Member Area
+
+- [ ] Customer login/account page.
+- [ ] My Orders page.
+- [ ] My Downloads page.
+- [ ] Email Preferences page.
+- [ ] Support Tickets page.
+- [ ] Profile Settings page.
+- [ ] Optional customer profile phone number.
+- [ ] Optional shipping address phone number.
+
+### Admin Tools
+
+- [ ] View customers.
+- [ ] View orders.
+- [ ] View downloads/access records.
+- [ ] Reset download counts.
+- [ ] Extend access expiration.
+- [ ] Resend download links.
+- [ ] View support tickets.
+- [ ] Reply to or manage support tickets.
+- [ ] View email preferences.
+- [ ] Add manual access grants.
+- [ ] Track audit logs for admin changes.
 
 ### Legal / Compliance
 
@@ -110,6 +145,8 @@ The project has moved from planning into build and business infrastructure.
 - [x] Terms of Service updated.
 - [x] Add audiobook/audio disclosures.
 - [ ] Attorney review before accepting payments.
+- [ ] Add phone-number disclosure before collecting phone numbers.
+- [ ] SMS marketing must remain separate and opt-in only.
 
 ### Digital and Audio Fulfillment
 
@@ -134,11 +171,33 @@ The project has moved from planning into build and business infrastructure.
 ## Recommended Payload Collections
 
 - Books.
+- Customers.
+- CustomerAddresses.
 - Orders.
+- OrderItems.
 - Downloads.
 - Subscribers.
+- EmailPreferences.
 - ContactSubmissions.
-- Users.
+- SupportTickets.
+- SupportMessages.
+- AccessGrants.
+- AuditLogs.
+- AdminUsers / Users.
+
+## Hosting Direction
+
+Free-first stack:
+
+- Vercel Hobby for Next.js, API routes, future account pages, and Payload integration.
+- Neon free Postgres for Payload data.
+- Cloudflare R2 for private PDF, EPUB, and audiobook files.
+- Cloudflare DNS for domain/DNS.
+- GitHub for source control and deployment.
+- Stripe standard checkout with no monthly fee.
+- Mailjet free tier once account is unblocked.
+
+Avoid paying for Payload Cloud, VPS hosting, or a separate backend until usage requires it.
 
 ## R2 Private Object Path Direction
 
@@ -154,4 +213,4 @@ Each book should eventually store PDF, EPUB, and audiobook object keys in Payloa
 
 ## Next Session Focus
 
-The site is no longer the main bottleneck. The current launch blockers are Mailjet account approval, business setup, payment infrastructure, backend CMS setup, lead capture, and private digital/audio fulfillment.
+The site is no longer the main bottleneck. The current launch blockers are Neon credential rotation, Mailjet account approval, business setup, payment infrastructure, backend CMS setup, lead capture, member area planning, and private digital/audio fulfillment.
