@@ -20,11 +20,13 @@ status: build and commerce infrastructure phase
 - Contact form converted from `mailto:` to a normal web form submission flow.
 - Privacy Policy and Terms of Service pages drafted and updated for launch-readiness.
 - Audiobook product option added at `$21.99`.
+- Neon Postgres database created for Payload CMS.
 
 ## Locked Stack
 
 - Next.js with TypeScript.
 - Payload CMS.
+- Neon Postgres.
 - Vercel hosting.
 - GitHub deployment.
 - Cloudflare DNS.
@@ -33,6 +35,20 @@ status: build and commerce infrastructure phase
 - Mailjet for email list and email communications once account is unblocked.
 - Lulu Direct API for print-on-demand fulfillment later.
 
+## Free-First Hosting Plan
+
+Use the lowest-cost launch stack:
+
+- Vercel Hobby for the website, account pages, API routes, and Payload integration.
+- Neon free Postgres for Payload data.
+- Cloudflare R2 for private PDF, EPUB, and audiobook files.
+- Cloudflare DNS for domain/DNS.
+- GitHub for source control and deployment.
+- Stripe standard checkout with no monthly fee.
+- Mailjet free tier once account is unblocked.
+
+Avoid paying for Payload Cloud, VPS hosting, or separate backend infrastructure until usage requires it.
+
 ## Product Format Pricing
 
 - PDF / EPUB: `$15.99`.
@@ -40,16 +56,96 @@ status: build and commerce infrastructure phase
 - Paperback: `$17.99`.
 - Hardcover: `$24.99`.
 
+## Payload CMS Purpose
+
+Payload CMS is the private admin/backend control center for the site. It should manage:
+
+- Book/product content.
+- Customers.
+- Orders.
+- Downloads and access records.
+- Subscribers.
+- Contact submissions.
+- Support tickets.
+- Admin users.
+- Access grants.
+- Audit logs.
+
+Payload also powers the future member area by storing the data the customer sees in `/account` pages.
+
 ## Payload CMS Collections
 
 ### Core Collections
 
 - Books.
+- Customers.
+- CustomerAddresses.
 - Orders.
+- OrderItems.
 - Downloads.
 - Subscribers.
+- EmailPreferences.
 - ContactSubmissions.
-- Users.
+- SupportTickets.
+- SupportMessages.
+- AccessGrants.
+- AuditLogs.
+- AdminUsers / Users.
+
+## Customer / Member Area Scope
+
+Recommended customer pages:
+
+- `/account`
+- `/account/orders`
+- `/account/downloads`
+- `/account/email-preferences`
+- `/account/support`
+- `/account/profile`
+
+Customer should be able to:
+
+- Log in.
+- View orders.
+- Find PDF, EPUB, and audiobook download links.
+- See remaining downloads/access attempts.
+- See expiration status.
+- Update email preferences and marketing opt-in/opt-out.
+- Submit support tickets tied to orders.
+- Update profile settings.
+
+## Optional Phone Fields
+
+Add optional phone fields in:
+
+- Customer profile.
+- Shipping address.
+
+Phone number rules:
+
+- Optional only.
+- Used for order, shipping, and support issues.
+- Not used for SMS marketing unless the customer separately opts in.
+- Add disclosure before collecting phone numbers.
+
+## Admin Tools Scope
+
+Admin should be able to:
+
+- View customers.
+- View orders.
+- View downloads/access records.
+- Reset download counts.
+- Extend expiration dates.
+- Resend download links.
+- View download/access history.
+- View and manage contact submissions.
+- View and manage newsletter subscribers.
+- View and manage email preferences.
+- View and manage support tickets.
+- Add internal ticket notes.
+- Add manual access grants.
+- Track audit logs for admin changes.
 
 ## Phase 0 — Business Foundation
 
@@ -58,16 +154,27 @@ status: build and commerce infrastructure phase
 - [ ] Open business bank account.
 - [ ] Create Stripe account.
 - [ ] Resolve Mailjet temporary account block.
+- [ ] Rotate Neon database password because the original database URL was exposed in chat.
+- [ ] Add rotated pooled database URL to Vercel as `DATABASE_URI`.
+- [ ] Add `PAYLOAD_SECRET` to Vercel.
+- [ ] Add `PAYLOAD_PUBLIC_SERVER_URL` to Vercel.
 
 ## Phase 1 — Payload CMS Setup
 
 - [ ] Install/configure Payload CMS.
-- [ ] Connect Postgres database.
+- [ ] Connect Neon Postgres database.
 - [ ] Configure admin user.
 - [ ] Create Books collection.
+- [ ] Create Customers collection.
+- [ ] Create CustomerAddresses collection.
 - [ ] Create Subscribers collection.
+- [ ] Create EmailPreferences collection.
 - [ ] Create ContactSubmissions collection.
-- [ ] Create Orders and Downloads collections.
+- [ ] Create Orders and OrderItems collections.
+- [ ] Create Downloads collection.
+- [ ] Create SupportTickets and SupportMessages collections.
+- [ ] Create AccessGrants collection.
+- [ ] Create AuditLogs collection.
 
 ## Phase 2 — Customer Communication & Lead Management
 
@@ -89,6 +196,7 @@ status: build and commerce infrastructure phase
 - [ ] Homepage signup form.
 - [ ] Footer signup form.
 - [ ] Store subscribers in Payload CMS.
+- [ ] Store marketing opt-in/opt-out preferences.
 - [ ] Admin dashboard to search/view subscribers.
 - [ ] CSV export capability.
 - [ ] Mailjet synchronization after account unblock.
@@ -105,6 +213,7 @@ status: build and commerce infrastructure phase
 - [x] Add refund/digital download language.
 - [x] Add intellectual property/copyright language.
 - [x] Add audiobook/audio access disclosures.
+- [ ] Add optional phone-number disclosure before collecting phone numbers.
 - [ ] Attorney review before accepting payments.
 
 ## Phase 3 — Cloudflare R2 Ebook and Audiobook Delivery
@@ -130,8 +239,21 @@ status: build and commerce infrastructure phase
 - [ ] Grant ebook/audio access after payment.
 - [ ] Trigger signed R2 download/access link.
 - [ ] Send confirmation/fulfillment email.
+- [ ] Create customer order history.
 
-## Phase 5 — Lulu Direct POD Integration
+## Phase 5 — Member Area
+
+- [ ] Build `/account` dashboard.
+- [ ] Build `/account/orders`.
+- [ ] Build `/account/downloads`.
+- [ ] Build `/account/email-preferences`.
+- [ ] Build `/account/support`.
+- [ ] Build `/account/profile`.
+- [ ] Allow customer to find download links.
+- [ ] Allow customer to see remaining downloads/access attempts.
+- [ ] Allow customer to submit support tickets tied to orders.
+
+## Phase 6 — Lulu Direct POD Integration
 
 - [ ] Evaluate Lulu Direct API requirements.
 - [ ] Configure Lulu API credentials.
@@ -140,19 +262,35 @@ status: build and commerce infrastructure phase
 - [ ] Test sandbox fulfillment.
 - [ ] Test live fulfillment before launch.
 
+## Later / Version 2 Ideas
+
+- Gift purchases.
+- Family/caregiver profile.
+- Topic preferences.
+- Free printable library.
+- Bundle and series tracking.
+- Bulk/institutional order requests.
+- Review/testimonial collection.
+- Coupon/access grants.
+- Organization accounts for schools, clinics, hospitals, and nonprofits.
+
 ## Remaining Build Order
 
-1. Resolve Mailjet account block.
-2. Payload CMS setup.
-3. Postgres database.
-4. Contact form database storage.
-5. Subscriber management system.
-6. Cloudflare R2 private bucket.
-7. Upload PDF/EPUB/audiobook files.
-8. Stripe integration.
-9. Signed ebook/audio delivery.
-10. Lulu Direct API.
-11. Production launch.
+1. Rotate Neon database password and update Vercel with the new pooled `DATABASE_URI`.
+2. Resolve Mailjet account block.
+3. Payload CMS setup.
+4. Neon Postgres connection.
+5. Contact form database storage.
+6. Subscriber management system.
+7. Customer/member data model.
+8. Support ticket model.
+9. Cloudflare R2 private bucket.
+10. Upload PDF/EPUB/audiobook files.
+11. Stripe integration.
+12. Signed ebook/audio delivery.
+13. Member account pages.
+14. Lulu Direct API.
+15. Production launch.
 
 ## Launch Blockers
 
@@ -166,10 +304,12 @@ status: build and commerce infrastructure phase
 
 ### Technical
 
+- Rotated Neon database credentials installed in Vercel.
 - Payload CMS.
 - R2 setup.
 - Contact form storage and notification.
 - Email subscriber storage, backend view, and CSV export.
 - Attorney-reviewed Privacy Policy and Terms of Service.
+- Optional phone-number disclosure.
 - Ebook/audio delivery workflow.
 - POD integration.
