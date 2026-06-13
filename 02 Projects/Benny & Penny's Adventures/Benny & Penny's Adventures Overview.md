@@ -1,28 +1,25 @@
 ---
 type: problems
 project: Benny & Penny's Adventures
-updated: 2026-06-12
+updated: 2026-06-13
 ---
 
 # Benny & Penny's Adventures Overview
 
 ## Goal
 
-Build a children's publishing business around the Benny & Penny book series, including:
+Build a children's publishing business around the Benny & Penny medical adventure book series, including:
 
-- Website.
+- Public website.
 - Digital ebook sales.
 - Audiobook/audio sales.
 - Print-on-demand book sales.
 - Customer/member area.
-- Admin backend.
-- Email marketing.
-- Social media presence.
+- Payload CMS admin backend.
+- Email list and contact management.
+- Private digital/audio fulfillment.
+- Social media and brand presence.
 - Business infrastructure.
-
-## Why
-
-This is a family project and a way to generate extra income through digital, audio, and future print products.
 
 ## Domains
 
@@ -31,39 +28,66 @@ This is a family project and a way to generate extra income through digital, aud
 
 ## Current Status
 
-The project has moved from planning into build and business infrastructure.
+The project is now in backend/CMS integration and commerce infrastructure buildout.
 
-### Completed
+### Completed / Confirmed
 
 - Cloudflare configured.
 - `bennyandpennyadventures.com` connected to Vercel.
 - GitHub deployment pipeline operational.
 - First deployment completed.
-- Homepage substantially completed.
-- Majority of site UI completed.
-- Contact form converted from email-client behavior to a real web form submission flow.
-- Contact API route connected to Mailjet API.
-- Mailjet issue diagnosed as an account-level temporary block, not a code issue.
-- Privacy Policy updated with digital, audio, payment, contact, newsletter, and children's privacy language.
-- Terms of Service updated with PDF/EPUB, audiobook/audio, POD, refund, IP, and acceptable-use language.
+- Homepage and most public website UI substantially completed.
+- Contact page converted from `mailto:` behavior to an on-site form.
+- `/api/contact` created and connected to Mailjet client.
+- Mailjet issue diagnosed as account-level temporary block, not a code issue.
+- Privacy Policy and Terms of Service updated for digital, audio, POD, payment, and privacy topics.
 - Audiobook product option added at `$21.99`.
-- Neon Postgres database created for Payload CMS.
+- Neon Postgres database created.
+- Vercel Node.js version confirmed as `20.x`.
+- Payload CMS added to the Next.js project.
+- Payload Admin `/admin` loads and admin login works.
+- First admin user was created.
+- Payload collections were defined for books, users, orders, downloads, subscribers, support, access grants, and audit logs.
+- Books catalog was seeded into Neon/Payload with 9 records.
+- Payload API confirmed it can read 9 Books records.
+- Public `/books` and `/books/[slug]` pages were updated to read from Payload/Neon with a local fallback.
 
-## Current Priority Order
+### Active Problem
 
-1. Rotate Neon database password because the original connection string was exposed in chat.
-2. Add the rotated pooled database URL to Vercel as `DATABASE_URI`.
-3. Resolve Mailjet account block / sender approval.
-4. PO Box.
-5. DBA filing.
-6. Business bank account.
-7. Stripe account.
-8. Payload CMS setup.
-9. Contact submission storage.
-10. Email list database.
-11. Cloudflare R2 setup.
-12. Signed ebook/audio delivery.
-13. Lulu POD integration.
+Payload Admin sidebar renders, but collection center panels are blank for all collections.
+
+Confirmed facts:
+
+- Raw database debug endpoint can read 9 books.
+- Payload API debug endpoint can read 9 books.
+- The issue is not the Books data layer.
+- Browser console showed React minified error `#418`, indicating a hydration mismatch.
+- Likely cause: public website root layout was wrapping Payload Admin. Payload's admin `RootLayout` renders its own `<html>` and `<body>`, so it must be isolated from the public website layout.
+
+Fix direction already committed in the website repo:
+
+```txt
+app/(frontend)/layout.tsx  → public website layout and CartProvider
+app/(payload)/layout.tsx   → Payload Admin layout only
+```
+
+Next deployment must verify this fixes the admin center panel rendering.
+
+## Vercel Deployment Limit
+
+Vercel Hobby hit the daily deployment cap during troubleshooting:
+
+```txt
+Resource is limited - try again in 24 hours
+more than 100 deployments free per day
+```
+
+Workflow change:
+
+- Stop committing/deploying every tiny fix directly to `main`.
+- Group related fixes into larger commits.
+- Prefer feature branches and merge once a batch is ready.
+- Redeploy only when the batch is ready to test.
 
 ## Product Format Pricing
 
@@ -72,136 +96,130 @@ The project has moved from planning into build and business infrastructure.
 - Paperback: `$17.99`.
 - Hardcover: `$24.99`.
 
-## Open Problems
+## Payload Books Data Requirements
 
-### Business Formation
+The Books collection must support the current public product pages.
 
-- [ ] Obtain PO Box.
-- [ ] File Riverside County DBA.
-- [ ] Open business bank account.
-- [ ] Create Stripe account.
+Required fields:
 
-### Website Infrastructure
+```txt
+number
+slug
+title
+topic
+ages
+pages
+badge
+status
+shortDescription
+longDescription
+coverImage
+coverImagePath
+pagePreviewOne
+pagePreviewTwo
+pdfPath
+epubPath
+audioPath
+priceDigital
+priceAudiobook
+pricePaperback
+priceHardcover
+digitalDescription
+audiobookDescription
+paperbackDescription
+hardcoverDescription
+pdfObjectKey
+epubObjectKey
+audiobookObjectKey
+stripeLookupKey
+stripeDigitalPriceId
+stripeAudiobookPriceId
+stripePaperbackPriceId
+stripeHardcoverPriceId
+```
 
-- [x] Create Neon Postgres database.
-- [ ] Rotate Neon password after exposed connection string.
-- [ ] Add pooled database URL to Vercel as `DATABASE_URI`.
-- [ ] Add `PAYLOAD_SECRET` to Vercel.
-- [ ] Add `PAYLOAD_PUBLIC_SERVER_URL` to Vercel.
-- [ ] Setup Payload CMS.
-- [ ] Configure Payload collections.
-- [ ] Connect Payload to Next.js.
+Seeded books:
 
-### Contact & Communications
-
-- [x] Replace Contact page `mailto:` / email-client behavior with a real web form.
-- [x] Add `/api/contact` route.
-- [x] Connect Contact page form to server-side API route.
-- [x] Connect Contact API route to Mailjet API.
-- [ ] Resolve Mailjet account temporary block.
-- [ ] Route website contact form notifications to `hello@bennyandpenny.com` after Mailjet is unblocked.
-- [ ] Store inquiries in Payload CMS database.
-- [ ] Add spam protection.
-- [ ] Create inquiry categories.
-
-### Email Marketing & Lead Collection
-
-- [ ] Store newsletter signups in Payload CMS database.
-- [ ] Send notification email when a new subscriber joins.
-- [ ] Create subscriber admin dashboard.
-- [ ] Enable CSV export.
-- [ ] Integrate Mailjet after account is unblocked.
-- [ ] Capture source information for subscribers.
-- [ ] Add marketing opt-in/opt-out preferences.
-
-### Member Area
-
-- [ ] Customer login/account page.
-- [ ] My Orders page.
-- [ ] My Downloads page.
-- [ ] Email Preferences page.
-- [ ] Support Tickets page.
-- [ ] Profile Settings page.
-- [ ] Optional customer profile phone number.
-- [ ] Optional shipping address phone number.
-
-### Admin Tools
-
-- [ ] View customers.
-- [ ] View orders.
-- [ ] View downloads/access records.
-- [ ] Reset download counts.
-- [ ] Extend access expiration.
-- [ ] Resend download links.
-- [ ] View support tickets.
-- [ ] Reply to or manage support tickets.
-- [ ] View email preferences.
-- [ ] Add manual access grants.
-- [ ] Track audit logs for admin changes.
-
-### Legal / Compliance
-
-- [x] Privacy Policy updated.
-- [x] Terms of Service updated.
-- [x] Add audiobook/audio disclosures.
-- [ ] Attorney review before accepting payments.
-- [ ] Add phone-number disclosure before collecting phone numbers.
-- [ ] SMS marketing must remain separate and opt-in only.
-
-### Digital and Audio Fulfillment
-
-- [ ] Setup Cloudflare R2 private bucket.
-- [ ] Upload PDF files to private R2 paths.
-- [ ] Upload EPUB files to private R2 paths.
-- [ ] Upload audiobook/audio files to private R2 paths.
-- [ ] Configure signed URL ebook delivery.
-- [ ] Configure signed URL audiobook/audio delivery.
-- [ ] Build Stripe webhooks.
-- [ ] Build download/access tracking.
-- [ ] Add download limits, initially max 3 downloads/access attempts.
-- [ ] Consider optional PDF watermarking.
-
-### Print-On-Demand
-
-- [ ] Evaluate Lulu Direct API.
-- [ ] Prepare POD API setup.
-- [ ] Build order automation workflow.
-- [ ] Test fulfillment end-to-end.
+1. Benny & Penny's Home Infusion Day.
+2. Benny and Penny's Port Adventure.
+3. Benny & Penny's PICC Line Adventure.
+4. Benny & Penny's Special Line Adventure.
+5. Benny & Penny's MRI Adventure.
+6. Benny & Penny's Hospital Sleepover.
+7. Benny & Penny's Ambulance Adventure.
+8. Benny & Penny's Surgery Day.
+9. Benny & Penny's Lab Draw Adventure.
 
 ## Recommended Payload Collections
 
 - Books.
-- Customers.
+- Users / Customers & Admins.
 - CustomerAddresses.
+- ContactSubmissions.
+- Subscribers.
 - Orders.
 - OrderItems.
 - Downloads.
-- Subscribers.
-- EmailPreferences.
-- ContactSubmissions.
 - SupportTickets.
 - SupportMessages.
 - AccessGrants.
 - AuditLogs.
-- AdminUsers / Users.
+- Payload system tables: preferences, locked documents, migrations.
 
-## Hosting Direction
+## Temporary Setup / Debug Routes
 
-Free-first stack:
+Temporary setup/debug routes were created to bootstrap and inspect the Payload/Neon setup:
 
-- Vercel Hobby for Next.js, API routes, future account pages, and Payload integration.
-- Neon free Postgres for Payload data.
-- Cloudflare R2 for private PDF, EPUB, and audiobook files.
-- Cloudflare DNS for domain/DNS.
-- GitHub for source control and deployment.
-- Stripe standard checkout with no monthly fee.
-- Mailjet free tier once account is unblocked.
+```txt
+/api/setup-payload
+/api/setup-payload-preferences
+/api/setup-payload-catalog
+/api/setup-payload-system
+/api/debug-books
+/api/debug-payload-books
+```
 
-Avoid paying for Payload Cloud, VPS hosting, or a separate backend until usage requires it.
+These must be removed before production launch. After removal, rotate/delete `PAYLOAD_SETUP_SECRET`.
 
-## R2 Private Object Path Direction
+## Current Priority Order
 
-Recommended private R2 object keys:
+1. Wait for Vercel deployment limit to reset or upgrade Vercel if immediate deploys are required.
+2. Redeploy the latest route-group/admin-layout fix once.
+3. Verify `/admin/collections/books` and other admin collection pages render center panels.
+4. Verify public site routes after `(frontend)` route-group move.
+5. Restore full Privacy/Terms/For Parents/Thank You content if any route-group placeholders remain.
+6. Remove temporary setup/debug routes after Payload Admin stabilizes.
+7. Rotate/delete `PAYLOAD_SETUP_SECRET`.
+8. Rotate Neon and Mailjet credentials if not already done.
+9. Resolve Mailjet account block.
+10. Store contact submissions and subscribers in Payload.
+11. Set up Cloudflare R2 private bucket.
+12. Add Stripe products/checkout/webhooks.
+13. Build signed ebook/audio delivery.
+14. Build member area.
+15. Prepare Lulu Direct POD integration.
+
+## Business Tasks Still Open
+
+- PO Box.
+- DBA filing.
+- Business bank account.
+- Stripe account.
+- Mailjet account unblock.
+- Attorney review before taking payments.
+
+## Legal / Compliance Notes
+
+- Privacy Policy and Terms were drafted, but must be rechecked after the route-group refactor.
+- If simplified placeholder content remains in `(frontend)/privacy` or `(frontend)/terms`, restore the full text from Git history before launch.
+- Add phone-number disclosure before collecting optional phone numbers.
+- SMS marketing must remain separate and opt-in only.
+
+## Digital / Audio Fulfillment Direction
+
+Paid files must be private, not permanent public downloads.
+
+Recommended R2 keys:
 
 ```txt
 ebooks/book-1/home-infusion-day.pdf
@@ -209,8 +227,15 @@ ebooks/book-1/home-infusion-day.epub
 audiobooks/book-1/home-infusion-day.mp3
 ```
 
-Each book should eventually store PDF, EPUB, and audiobook object keys in Payload CMS rather than public URLs.
+Fulfillment flow:
 
-## Next Session Focus
+```txt
+Stripe payment complete
+→ Payload creates order/access/download records
+→ customer requests file
+→ app checks access limits
+→ app creates short-lived signed R2 URL
+→ app logs download/access attempt
+```
 
-The site is no longer the main bottleneck. The current launch blockers are Neon credential rotation, Mailjet account approval, business setup, payment infrastructure, backend CMS setup, lead capture, member area planning, and private digital/audio fulfillment.
+Initial rule: max 3 downloads/access attempts per purchased file/link.
