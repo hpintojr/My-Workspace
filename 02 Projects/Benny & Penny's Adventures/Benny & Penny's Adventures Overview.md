@@ -1,33 +1,117 @@
 ---
 type: problems
-date: 2026-06-10
 project: Benny & Penny's Adventures
+updated: 2026-06-12
 ---
 
+# Benny & Penny's Adventures Overview
+
 ## Goal
-My wife created a children's book series. I need to copyright, publish, and build the website — and stand up the business around it: a DBA, bank account, Stripe, social media accounts, and a marketing strategy. First and foremost, though, I want the foundation set up: Cloudflare, domain, website, and emails.
+
+Build a children's publishing business around the Benny & Penny book series, including:
+
+- Website.
+- Digital ebook sales.
+- Print-on-demand book sales.
+- Email marketing.
+- Social media presence.
+- Business infrastructure.
 
 ## Why
-This is a family project and a way to generate extra income through a digital product.
 
-## Tangible Outcomes
-- A complete website with all 8–9 books.
-- A payment portal (Stripe) for selling the books.
-- Email list collection running.
-- Social media accounts established.
-- Marketing on autopilot.
+This is a family project and a way to generate extra income through digital products and future print products.
 
-## Assets & Context
-- **Domains owned:** `bennyandpennyadventures.com` (→ the website) and `bennyandpenny.com` (→ communications/email).
-- **Done so far:** Books 1 and 2 completed; a draft of the site homepage exists.
-- **People:** Wife (Michelle) will register the business and run social/banking; needs her own email addresses.
+## Domains
+
+- `bennyandpennyadventures.com` — main website.
+- `bennyandpenny.com` — communications/email domain.
+
+## Current Status
+
+The project has moved from planning into build and business infrastructure.
+
+### Completed
+
+- Cloudflare configured.
+- `bennyandpennyadventures.com` connected to Vercel.
+- GitHub deployment pipeline operational.
+- First deployment completed.
+- Homepage substantially completed.
+- Majority of site UI completed.
+
+## Current Priority Order
+
+1. PO Box.
+2. DBA filing.
+3. Business bank account.
+4. Stripe account.
+5. Payload CMS setup.
+6. Contact form system.
+7. Email list database.
+8. Cloudflare R2 setup.
+9. Signed ebook delivery.
+10. Lulu POD integration.
 
 ## Open Problems
-1. **Foundation first — emails + Cloudflare.** Set up email addresses (e.g. `social@`, `michelle@`), then configure Cloudflare. Decide the canonical email domain (plan: `bennyandpenny.com` for communications).
-2. **Website build.** ✅ DECIDED: custom branded **Next.js + Payload CMS** (open-source) on **Vercel**, via **GitHub**, DNS + storage on **Cloudflare**. **Stripe** for payments; ebook delivered as a signed, time-limited link from **Cloudflare R2**. POD vendor (Lulu vs. BookVault) chosen later. Hamilton is sole admin/dev. Build on `bennyandpennyadventures.com`. (Primary focus.) See `[C] Website Build Plan & Architecture.md`.
-3. **Business setup (DBA).** Step-by-step guide for Michelle to register a Sole Proprietor / DBA with Riverside County so she can open a business bank account.
-4. **Email provisioning for Michelle.** Create her addresses (`michelle@`, `social@`, etc.) so she can set up the social media accounts and personal/business banking.
-5. **Copyright & publishing.** Copyright the book series and publish (books 1–2 done; 8–9 total planned).
-6. **Stripe / payments.** Set up the Stripe account and payment portal.
-7. **Social media + marketing.** Create accounts and build a marketing strategy that runs on autopilot.
-8. **Email list.** Stand up list collection on the site.
+
+### Business Formation
+
+- [ ] Obtain PO Box.
+- [ ] File Riverside County DBA.
+- [ ] Open business bank account.
+- [ ] Create Stripe account.
+
+### Website Infrastructure
+
+- [ ] Setup Payload CMS.
+- [ ] Setup Postgres database.
+- [ ] Configure Payload collections.
+- [ ] Connect Payload to Next.js.
+
+### Contact & Communications
+
+- [ ] Configure `hello@bennyandpenny.com`.
+- [ ] Connect Contact page form.
+- [ ] Route website contact form submissions to `hello@bennyandpenny.com`.
+- [ ] Send email notifications for new contact inquiries.
+- [ ] Store inquiries in Payload CMS database.
+- [ ] Add spam protection.
+- [ ] Create inquiry categories.
+
+### Email Marketing & Lead Collection
+
+- [ ] Store newsletter signups in Payload CMS database.
+- [ ] Send notification email when a new subscriber joins.
+- [ ] Create subscriber admin dashboard.
+- [ ] Enable CSV export.
+- [ ] Integrate Mailjet.
+- [ ] Capture source information for subscribers.
+
+### Digital Fulfillment
+
+- [ ] Setup Cloudflare R2 private bucket.
+- [ ] Configure signed URL ebook delivery.
+- [ ] Build Stripe webhooks.
+- [ ] Build download tracking.
+- [ ] Add download limits.
+- [ ] Consider optional PDF watermarking.
+
+### Print-On-Demand
+
+- [ ] Evaluate Lulu Direct API.
+- [ ] Prepare POD API setup.
+- [ ] Build order automation workflow.
+- [ ] Test fulfillment end-to-end.
+
+## Recommended Payload Collections
+
+- Books.
+- Orders.
+- Downloads.
+- Subscribers.
+- ContactSubmissions.
+- Users.
+
+## Next Session Focus
+
+The site is no longer the main bottleneck. The current launch blockers are business setup, payment infrastructure, backend CMS setup, lead capture, and digital fulfillment.
