@@ -92,28 +92,32 @@ These rules apply to Gemini, ChatGPT, Claude, and future AI assistants working f
 **Key files:**
 
 ```txt
+01 Daily Logs/[C] 2026-06-14.md
 02 Projects/Benny & Penny's Adventures/Benny & Penny's Adventures Overview.md
 02 Projects/Benny & Penny's Adventures/[C] Website Build Plan & Architecture.md
 02 Projects/Benny & Penny's Adventures/[C] Implementation Notes — Contact Forms, Legal Pages, R2 Ebook Delivery.md
 ```
 
-**Current status:** Vercel is back to normal working conditions after the prior deployment cap. Payload Admin is functional, admin login works, Neon is connected, Books are seeded with 9 records, `/admin/collections/books` renders, individual Book edit pages open, and the public product pages read from Payload/Neon with fallback.
+**Current status:** Payload Admin is functional and the dashboard has been connected to live Payload data. Stripe sandbox/order fulfillment is working enough to create Orders, Order Details, and Customer Addresses. The admin dashboard now has live stats, an interactive sales graph, recent orders, database health, latest subscribers, and system status. Contact/newsletter opt-in disclosures, privacy/state/TCPA pages, Privacy Requests, and Consent Logs have been added in code.
 
-**Current active concern:** Hamilton is not happy with the current Payload Admin dashboard/theme. The admin works, but it still needs to feel like a polished **Benny & Penny's Admin Panel**. The login screen still needs stronger email/password field contrast and a clearer coral login button. The admin dashboard should follow the supplied modern mockup with sales/status cards, latest orders, latest subscribers, quick links, and a simplified sidebar.
+**Current active concern:** The latest website commits need to be redeployed and the new Neon SQL patches must be run before the new consent/privacy storage can be trusted. The immediate next work is verification, not design: run schema patches, redeploy `main`, test forms/admin collections, then fix any schema/build issues.
 
 **Current desired admin navigation direction:**
 
 ```txt
 Dashboard
+Adventure Hub
 Orders
-Product Catalog
+Order Details
+Customer Addresses
 Subscribers
+Support
+Privacy Requests
+Consent Logs
 Settings
-
-Log out at bottom
 ```
 
-**Current next actions:** Confirm the latest Vercel build after the admin dashboard `<Link />` fix, verify `/admin/login` and `/admin`, improve the admin login/theme contrast if still needed, rework the admin dashboard around the mockup, simplify the sidebar, verify admin collection routes, then remove temporary setup/debug routes and rotate `PAYLOAD_SETUP_SECRET`.
+**Current next actions:** Run the Neon SQL patches from `docs/CONTACT_OPT_IN_SCHEMA_PATCH.md` and `docs/PRIVACY_COMPLIANCE_SCHEMA_PATCH.md`, redeploy `hpintojr/bennyandpennyadventures` from `main`, test `/contact`, newsletter signup, `/privacy/requests`, `/admin/collections/privacy-requests`, `/admin/collections/consent-logs`, and the order/admin collections. After verification, begin the Client Portal foundation.
 
 ---
 
@@ -197,40 +201,3 @@ Each active project should have:
 - Launch blockers if relevant.
 
 For AI-authored planning files, use `[C]` in the filename.
-
----
-
-## Commit Message Preference
-
-Use detailed commit messages for workspace updates.
-
-Good:
-
-```txt
-Update Benny and Penny build plan with Payload CMS progress, catalog seeding, admin blocker, and next deployment priorities
-```
-
-Avoid vague commit messages like:
-
-```txt
-update notes
-fix file
-changes
-```
-
----
-
-## Current Workspace Rules From Recent Work
-
-- The Benny & Penny website repo previously hit Vercel Hobby's deployment cap because too many small commits triggered deployments.
-- Vercel limits are now back to normal working conditions, but future website work should still be grouped into fewer commits and preferably done on a branch before merging to `main`.
-- Workspace documentation updates are safe because they happen in `hpintojr/My-Workspace`, not the production website repo.
-- For Benny & Penny, Payload Admin is functional and Books are visible in the backend, but the admin dashboard/theme is not approved by Hamilton yet.
-- For Benny & Penny, the next design target is a modern branded admin with Dashboard, Orders, Product Catalog, Subscribers, Settings, and Log out at the bottom.
-- For Benny & Penny, do not forget to remove temporary setup/debug routes before launch.
-- For Benny & Penny, rotate/delete `PAYLOAD_SETUP_SECRET` because it was visible in screenshots during setup-route testing.
-- For Benny & Penny, verify Privacy, Terms, For Parents, and Thank You pages after the route-group refactor because some pages were moved quickly during debugging.
-
----
-
-*This file is the main operating guide for the workspace. Update it as the workspace grows, regardless of whether the assistant is Gemini, ChatGPT, Claude, or another AI tool.*
