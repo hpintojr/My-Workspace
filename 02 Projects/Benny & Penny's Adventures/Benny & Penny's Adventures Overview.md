@@ -28,14 +28,18 @@ Build a children's publishing business around the Benny & Penny medical adventur
 
 ## Current Status
 
-The project is now in backend/CMS integration and commerce infrastructure buildout.
+The project is now in **backend/CMS stabilization and admin experience cleanup**.
+
+The major Payload/Vercel blocker from earlier in the day has been cleared: Vercel deployments are back to normal working conditions, Payload Admin loads, Books show in the backend, and the Books catalog is seeded in Neon/Payload with 9 records.
+
+The current concern is no longer whether Payload works. The current concern is that the admin experience still needs to feel like a polished **Benny & Penny's Admin Panel**, not a lightly themed generic Payload backend.
 
 ### Completed / Confirmed
 
 - Cloudflare configured.
 - `bennyandpennyadventures.com` connected to Vercel.
 - GitHub deployment pipeline operational.
-- First deployment completed.
+- Vercel deployments are back to normal working conditions after the prior Hobby deployment limit reset.
 - Homepage and most public website UI substantially completed.
 - Contact page converted from `mailto:` behavior to an on-site form.
 - `/api/contact` created and connected to Mailjet client.
@@ -50,44 +54,118 @@ The project is now in backend/CMS integration and commerce infrastructure buildo
 - Payload collections were defined for books, users, orders, downloads, subscribers, support, access grants, and audit logs.
 - Books catalog was seeded into Neon/Payload with 9 records.
 - Payload API confirmed it can read 9 Books records.
+- Payload Admin `/admin/collections/books` now renders the Books list and individual Book edit pages.
 - Public `/books` and `/books/[slug]` pages were updated to read from Payload/Neon with a local fallback.
+- Payload admin branding work started:
+  - Benny & Penny login logo component added.
+  - Benny & Penny heart icon component added.
+  - Admin font/CSP support updated for Google Fonts.
+  - Admin CSS/theme pass added for cream, teal, coral, gold, Nunito, and Playfair Display.
+  - Modern dashboard mockup direction started in code with a `BeforeDashboard` component and dashboard styles.
+- Build issue from internal admin dashboard links was fixed by replacing internal `<a>` links with Next `<Link />`.
 
-### Active Problem
+### Resolved Problems
 
-Payload Admin sidebar renders, but collection center panels are blank for all collections.
+#### Payload Admin blank center panel
 
-Confirmed facts:
+Previously, Payload Admin sidebar rendered but the collection center panels were blank.
 
-- Raw database debug endpoint can read 9 books.
-- Payload API debug endpoint can read 9 books.
-- The issue is not the Books data layer.
+Confirmed during troubleshooting:
+
+- Raw database debug endpoint could read 9 books.
+- Payload API debug endpoint could read 9 books.
+- The issue was not the Books data layer.
 - Browser console showed React minified error `#418`, indicating a hydration mismatch.
-- Likely cause: public website root layout was wrapping Payload Admin. Payload's admin `RootLayout` renders its own `<html>` and `<body>`, so it must be isolated from the public website layout.
+- Additional issues appeared from missing Payload preference columns and CSP restrictions.
 
-Fix direction already committed in the website repo:
+Fixes applied:
+
+- Public site and Payload Admin were separated into route groups:
 
 ```txt
 app/(frontend)/layout.tsx  → public website layout and CartProvider
 app/(payload)/layout.tsx   → Payload Admin layout only
 ```
 
-Next deployment must verify this fixes the admin center panel rendering.
+- Payload preference table was repaired so `payload_preferences_rels.order` exists.
+- Admin CSP was updated so Payload Admin scripts can run and admin fonts can load.
+- Books table was aligned and seeded.
 
-## Vercel Deployment Limit
+Current result:
 
-Vercel Hobby hit the daily deployment cap during troubleshooting:
+```txt
+/admin/collections/books works
+Books table shows 9 records
+Book edit pages open
+```
+
+#### Vercel deployment limit
+
+Vercel Hobby previously hit the daily deployment cap during rapid troubleshooting:
 
 ```txt
 Resource is limited - try again in 24 hours
 more than 100 deployments free per day
 ```
 
-Workflow change:
+Current update:
 
-- Stop committing/deploying every tiny fix directly to `main`.
+- Vercel limits are back to normal working conditions.
+- Production deployments from `main` are working again.
+- Continue grouping changes and avoid tiny repeated production commits when possible.
+
+## Active Problem
+
+The **functional admin is working**, but Hamilton is not happy with the current admin dashboard/theme.
+
+Specific concerns:
+
+- Login screen still needs stronger field contrast.
+- Email/password text and input styling must be easier to see.
+- Login button color/text must be clearer.
+- Dashboard needs a more modern product/business dashboard look.
+- Admin navigation should be simplified around the real business workflow:
+
+```txt
+Dashboard
+Orders
+Product Catalog
+Subscribers
+Settings
+
+Log out at bottom
+```
+
+- The current Payload nav still exposes too many backend collections as top-level items.
+- The mockup direction should guide the next admin redesign:
+  - Sales status cards.
+  - Books sold.
+  - Active titles.
+  - Subscriber growth.
+  - Latest orders.
+  - Latest subscribers.
+  - Quick links.
+  - Better sidebar hierarchy.
+  - Benny & Penny heart branding instead of Payload mini-logo where possible.
+
+## Vercel Deployment Workflow
+
+Vercel is back to normal working conditions, but the workflow decision remains:
+
+- Stop committing/deploying every tiny fix directly to `main` when debugging.
 - Group related fixes into larger commits.
 - Prefer feature branches and merge once a batch is ready.
 - Redeploy only when the batch is ready to test.
+
+Recommended future commit grouping:
+
+```txt
+1 commit = full admin theme/dashboard pass
+1 commit = navigation/collection grouping cleanup
+1 commit = setup/debug route removal
+1 commit = Stripe/R2 fulfillment integration
+1 commit = workspace/docs update
+```
 
 ## Product Format Pricing
 
@@ -181,23 +259,48 @@ Temporary setup/debug routes were created to bootstrap and inspect the Payload/N
 
 These must be removed before production launch. After removal, rotate/delete `PAYLOAD_SETUP_SECRET`.
 
+Important security note:
+
+- `PAYLOAD_SETUP_SECRET` was visible in screenshots during troubleshooting.
+- Treat it as exposed.
+- Rotate it after setup/debug routes are removed or disabled.
+
 ## Current Priority Order
 
-1. Wait for Vercel deployment limit to reset or upgrade Vercel if immediate deploys are required.
-2. Redeploy the latest route-group/admin-layout fix once.
-3. Verify `/admin/collections/books` and other admin collection pages render center panels.
-4. Verify public site routes after `(frontend)` route-group move.
-5. Restore full Privacy/Terms/For Parents/Thank You content if any route-group placeholders remain.
-6. Remove temporary setup/debug routes after Payload Admin stabilizes.
-7. Rotate/delete `PAYLOAD_SETUP_SECRET`.
-8. Rotate Neon and Mailjet credentials if not already done.
-9. Resolve Mailjet account block.
-10. Store contact submissions and subscribers in Payload.
-11. Set up Cloudflare R2 private bucket.
-12. Add Stripe products/checkout/webhooks.
-13. Build signed ebook/audio delivery.
-14. Build member area.
-15. Prepare Lulu Direct POD integration.
+1. Confirm the latest Vercel build passes after the admin dashboard Link fix.
+2. Rework the Payload Admin UI so it feels like **Benny & Penny's Admin Panel**, not generic Payload.
+3. Improve login field/button contrast and readability.
+4. Simplify admin navigation toward:
+   ```txt
+   Dashboard
+   Orders
+   Product Catalog
+   Subscribers
+   Settings
+   Log out
+   ```
+5. Activate or rebuild the custom dashboard experience based on the mockup.
+6. Verify `/admin/collections/books`, `/admin/collections/subscribers`, `/admin/collections/contact-submissions`, and `/admin/collections/orders`.
+7. Verify public routes:
+   ```txt
+   /
+   /books
+   /books/[slug]
+   /contact
+   /privacy
+   /terms
+   /for-parents
+   /thank-you
+   ```
+8. Remove temporary setup/debug routes after Payload Admin stabilizes.
+9. Rotate/delete `PAYLOAD_SETUP_SECRET`.
+10. Rotate Neon and Mailjet credentials if not already done.
+11. Resolve Mailjet account block.
+12. Set up Cloudflare R2 private bucket.
+13. Add Stripe products/checkout/webhooks.
+14. Build signed ebook/audio delivery.
+15. Build member area.
+16. Prepare Lulu Direct POD integration.
 
 ## Business Tasks Still Open
 
