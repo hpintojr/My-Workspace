@@ -1,7 +1,7 @@
 ---
 type: problems
 project: Benny & Penny's Adventures
-updated: 2026-06-13
+updated: 2026-06-14
 ---
 
 # Benny & Penny's Adventures Overview
@@ -28,125 +28,150 @@ Build a children's publishing business around the Benny & Penny medical adventur
 
 ## Current Status
 
-The project is now in **backend/CMS stabilization and admin experience cleanup**.
+The project is now in **admin/compliance verification and client-portal preparation**.
 
-The major Payload/Vercel blocker from earlier in the day has been cleared: Vercel deployments are back to normal working conditions, Payload Admin loads, Books show in the backend, and the Books catalog is seeded in Neon/Payload with 9 records.
+Payload Admin is functional. The previous blank-center-panel blocker is resolved. The public book catalog reads from Payload/Neon with fallback. Stripe sandbox checkout is working enough to create order-related Payload records. The admin dashboard is now connected to live data. Contact/newsletter opt-in disclosures, legal/privacy pages, Privacy Requests, and Consent Logs have been added in code.
 
-The current concern is no longer whether Payload works. The current concern is that the admin experience still needs to feel like a polished **Benny & Penny's Admin Panel**, not a lightly themed generic Payload backend.
+The immediate blocker is not design. The immediate blocker is verifying deployment and database schema after the newest changes.
 
-### Completed / Confirmed
+## Completed / Confirmed
+
+### Platform and CMS
 
 - Cloudflare configured.
 - `bennyandpennyadventures.com` connected to Vercel.
 - GitHub deployment pipeline operational.
 - Vercel deployments are back to normal working conditions after the prior Hobby deployment limit reset.
-- Homepage and most public website UI substantially completed.
-- Contact page converted from `mailto:` behavior to an on-site form.
-- `/api/contact` created and connected to Mailjet client.
-- Mailjet issue diagnosed as account-level temporary block, not a code issue.
-- Privacy Policy and Terms of Service updated for digital, audio, POD, payment, and privacy topics.
-- Audiobook product option added at `$21.99`.
-- Neon Postgres database created.
-- Vercel Node.js version confirmed as `20.x`.
+- Next.js route groups separated frontend and Payload Admin layouts.
 - Payload CMS added to the Next.js project.
+- Neon Postgres database created and connected.
 - Payload Admin `/admin` loads and admin login works.
 - First admin user was created.
-- Payload collections were defined for books, users, orders, downloads, subscribers, support, access grants, and audit logs.
-- Books catalog was seeded into Neon/Payload with 9 records.
+- Payload Admin collection center panels render.
+- Books catalog seeded into Neon/Payload with 9 records.
 - Payload API confirmed it can read 9 Books records.
-- Payload Admin `/admin/collections/books` now renders the Books list and individual Book edit pages.
-- Public `/books` and `/books/[slug]` pages were updated to read from Payload/Neon with a local fallback.
-- Payload admin branding work started:
-  - Benny & Penny login logo component added.
-  - Benny & Penny heart icon component added.
-  - Admin font/CSP support updated for Google Fonts.
-  - Admin CSS/theme pass added for cream, teal, coral, gold, Nunito, and Playfair Display.
-  - Modern dashboard mockup direction started in code with a `BeforeDashboard` component and dashboard styles.
-- Build issue from internal admin dashboard links was fixed by replacing internal `<a>` links with Next `<Link />`.
+- Public `/books` and `/books/[slug]` pages read from Payload/Neon with a local fallback.
 
-### Resolved Problems
+### Admin Dashboard
 
-#### Payload Admin blank center panel
+- Admin branding/theme work is active.
+- Admin dashboard is connected to live Payload data.
+- Dashboard data sources include:
+  - Orders.
+  - Order Items.
+  - Customer Addresses.
+  - Subscribers.
+  - Support Tickets.
+  - Books.
+  - Users.
+- Dashboard cards show live revenue/orders/items/subscribers.
+- Sales Performance graph is interactive by dropdown range.
+- Database Health card is approved for now.
+- Recent Orders table was cleaned up.
+- Recent Order Details table was removed from dashboard because it felt redundant.
+- System Status checks were restored.
 
-Previously, Payload Admin sidebar rendered but the collection center panels were blank.
-
-Confirmed during troubleshooting:
-
-- Raw database debug endpoint could read 9 books.
-- Payload API debug endpoint could read 9 books.
-- The issue was not the Books data layer.
-- Browser console showed React minified error `#418`, indicating a hydration mismatch.
-- Additional issues appeared from missing Payload preference columns and CSP restrictions.
-
-Fixes applied:
-
-- Public site and Payload Admin were separated into route groups:
+Sales graph behavior:
 
 ```txt
-app/(frontend)/layout.tsx  → public website layout and CartProvider
-app/(payload)/layout.tsx   → Payload Admin layout only
+Today → hourly
+Last 3 days → daily
+Last 7 days → daily
+Last 14 days → weekly
+Last 30 days → weekly
+Last 45 days → weekly
+Last 60 days → weekly
+Last 90 days → monthly
+Last 120 days → monthly
+This Past Year → monthly
 ```
 
-- Payload preference table was repaired so `payload_preferences_rels.order` exists.
-- Admin CSP was updated so Payload Admin scripts can run and admin fonts can load.
-- Books table was aligned and seeded.
-
-Current result:
-
-```txt
-/admin/collections/books works
-Books table shows 9 records
-Book edit pages open
-```
-
-#### Vercel deployment limit
-
-Vercel Hobby previously hit the daily deployment cap during rapid troubleshooting:
-
-```txt
-Resource is limited - try again in 24 hours
-more than 100 deployments free per day
-```
-
-Current update:
-
-- Vercel limits are back to normal working conditions.
-- Production deployments from `main` are working again.
-- Continue grouping changes and avoid tiny repeated production commits when possible.
-
-## Active Problem
-
-The **functional admin is working**, but Hamilton is not happy with the current admin dashboard/theme.
-
-Specific concerns:
-
-- Login screen still needs stronger field contrast.
-- Email/password text and input styling must be easier to see.
-- Login button color/text must be clearer.
-- Dashboard needs a more modern product/business dashboard look.
-- Admin navigation should be simplified around the real business workflow:
+Current requested sidebar:
 
 ```txt
 Dashboard
+Adventure Hub
 Orders
-Product Catalog
+Order Details
+Customer Addresses
 Subscribers
+Support
+Privacy Requests
+Consent Logs
 Settings
-
-Log out at bottom
 ```
 
-- The current Payload nav still exposes too many backend collections as top-level items.
-- The mockup direction should guide the next admin redesign:
-  - Sales status cards.
-  - Books sold.
-  - Active titles.
-  - Subscriber growth.
-  - Latest orders.
-  - Latest subscribers.
-  - Quick links.
-  - Better sidebar hierarchy.
-  - Benny & Penny heart branding instead of Payload mini-logo where possible.
+### Stripe / Orders
+
+- Stripe checkout works in sandbox enough to generate Payload order data.
+- Cart clears after checkout success.
+- Orders are created.
+- Order Details are stored separately in `order-items`.
+- Customer Addresses are structured with billing/shipping type.
+- New order ID sequence was changed to yearly sequence style:
+
+```txt
+26-0001
+26-0002
+26-0003
+```
+
+Existing sandbox records may still show older `BP-...` IDs unless backfilled.
+
+### Contact, Newsletter, Legal, and Compliance
+
+- Contact page converted from `mailto:` behavior to an on-site form.
+- `/api/contact` exists and is connected to Mailjet client.
+- Contact form includes required contact consent.
+- Contact form includes optional email opt-in.
+- Contact form includes optional SMS opt-in with TCPA-style language.
+- Contact form stores consent proof fields when schema is available.
+- Newsletter form now requires email opt-in.
+- Newsletter signup logs consent events.
+- Newsletter thank-you page now shows signup-specific copy instead of order copy.
+- Privacy Request form added.
+- Consent Logs collection added.
+- Privacy Requests collection added.
+- Footer legal links expanded.
+
+Legal/compliance pages now include:
+
+```txt
+/privacy
+/terms
+/sms-terms
+/privacy/california
+/privacy/state-rights
+/privacy/requests
+```
+
+Important legal/business gap:
+
+- Marketing emails still need a valid physical mailing address or PO Box.
+- Do not invent the address.
+- Legal language still needs attorney review before launch.
+
+## Active Problem
+
+The active problem is **verification after schema and compliance changes**.
+
+The following SQL patches need to be run in Neon before relying on the newest admin records:
+
+```txt
+docs/CONTACT_OPT_IN_SCHEMA_PATCH.md
+docs/PRIVACY_COMPLIANCE_SCHEMA_PATCH.md
+```
+
+After those patches:
+
+```txt
+Redeploy main
+Test contact form
+Test newsletter signup
+Test privacy request form
+Test admin Consent Logs and Privacy Requests
+Fix any schema/build/runtime issues
+```
 
 ## Vercel Deployment Workflow
 
@@ -154,16 +179,16 @@ Vercel is back to normal working conditions, but the workflow decision remains:
 
 - Stop committing/deploying every tiny fix directly to `main` when debugging.
 - Group related fixes into larger commits.
-- Prefer feature branches and merge once a batch is ready.
+- Prefer feature branches where practical.
 - Redeploy only when the batch is ready to test.
 
 Recommended future commit grouping:
 
 ```txt
-1 commit = full admin theme/dashboard pass
-1 commit = navigation/collection grouping cleanup
+1 commit = schema/compliance verification fixes
 1 commit = setup/debug route removal
-1 commit = Stripe/R2 fulfillment integration
+1 commit = client portal foundation
+1 commit = R2/signed delivery integration
 1 commit = workspace/docs update
 ```
 
@@ -176,7 +201,7 @@ Recommended future commit grouping:
 
 ## Payload Books Data Requirements
 
-The Books collection must support the current public product pages.
+The Books collection supports the current public product pages.
 
 Required fields:
 
@@ -228,7 +253,7 @@ Seeded books:
 8. Benny & Penny's Surgery Day.
 9. Benny & Penny's Lab Draw Adventure.
 
-## Recommended Payload Collections
+## Current Payload Collections
 
 - Books.
 - Users / Customers & Admins.
@@ -242,6 +267,8 @@ Seeded books:
 - SupportMessages.
 - AccessGrants.
 - AuditLogs.
+- PrivacyRequests.
+- ConsentLogs.
 - Payload system tables: preferences, locked documents, migrations.
 
 ## Temporary Setup / Debug Routes
@@ -259,86 +286,19 @@ Temporary setup/debug routes were created to bootstrap and inspect the Payload/N
 
 These must be removed before production launch. After removal, rotate/delete `PAYLOAD_SETUP_SECRET`.
 
-Important security note:
+## Next Best Actions
 
-- `PAYLOAD_SETUP_SECRET` was visible in screenshots during troubleshooting.
-- Treat it as exposed.
-- Rotate it after setup/debug routes are removed or disabled.
-
-## Current Priority Order
-
-1. Confirm the latest Vercel build passes after the admin dashboard Link fix.
-2. Rework the Payload Admin UI so it feels like **Benny & Penny's Admin Panel**, not generic Payload.
-3. Improve login field/button contrast and readability.
-4. Simplify admin navigation toward:
-   ```txt
-   Dashboard
-   Orders
-   Product Catalog
-   Subscribers
-   Settings
-   Log out
-   ```
-5. Activate or rebuild the custom dashboard experience based on the mockup.
-6. Verify `/admin/collections/books`, `/admin/collections/subscribers`, `/admin/collections/contact-submissions`, and `/admin/collections/orders`.
-7. Verify public routes:
-   ```txt
-   /
-   /books
-   /books/[slug]
-   /contact
-   /privacy
-   /terms
-   /for-parents
-   /thank-you
-   ```
-8. Remove temporary setup/debug routes after Payload Admin stabilizes.
-9. Rotate/delete `PAYLOAD_SETUP_SECRET`.
-10. Rotate Neon and Mailjet credentials if not already done.
-11. Resolve Mailjet account block.
-12. Set up Cloudflare R2 private bucket.
-13. Add Stripe products/checkout/webhooks.
-14. Build signed ebook/audio delivery.
-15. Build member area.
-16. Prepare Lulu Direct POD integration.
-
-## Business Tasks Still Open
-
-- PO Box.
-- DBA filing.
-- Business bank account.
-- Stripe account.
-- Mailjet account unblock.
-- Attorney review before taking payments.
-
-## Legal / Compliance Notes
-
-- Privacy Policy and Terms were drafted, but must be rechecked after the route-group refactor.
-- If simplified placeholder content remains in `(frontend)/privacy` or `(frontend)/terms`, restore the full text from Git history before launch.
-- Add phone-number disclosure before collecting optional phone numbers.
-- SMS marketing must remain separate and opt-in only.
-
-## Digital / Audio Fulfillment Direction
-
-Paid files must be private, not permanent public downloads.
-
-Recommended R2 keys:
-
-```txt
-ebooks/book-1/home-infusion-day.pdf
-ebooks/book-1/home-infusion-day.epub
-audiobooks/book-1/home-infusion-day.mp3
-```
-
-Fulfillment flow:
-
-```txt
-Stripe payment complete
-→ Payload creates order/access/download records
-→ customer requests file
-→ app checks access limits
-→ app creates short-lived signed R2 URL
-→ app logs download/access attempt
-```
-
-Initial rule: max 3 downloads/access attempts per purchased file/link.
+1. Run Neon SQL patches.
+2. Redeploy `main` for `hpintojr/bennyandpennyadventures`.
+3. Test `/contact`.
+4. Test newsletter signup and `/thank-you?email=...`.
+5. Test `/privacy/requests`.
+6. Test admin collections:
+   - `privacy-requests`
+   - `consent-logs`
+   - `orders`
+   - `order-items`
+   - `customer-addresses`
+7. Fix any deploy/schema/build errors.
+8. Remove setup/debug routes and rotate/delete setup secret.
+9. Start the Client Portal foundation.
