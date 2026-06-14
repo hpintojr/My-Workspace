@@ -1,78 +1,165 @@
 ---
 type: build-plan
 project: Benny & Penny's Adventures
-updated: 2026-06-13
-status: Payload CMS integration and commerce infrastructure phase
+updated: 2026-06-14
+status: admin dashboard and compliance infrastructure verification phase
 ---
 
 # Website Build Plan & Architecture
 
 ## Current Status
 
-The public website is largely built. The project is now focused on Payload CMS, Neon Postgres, payments, private fulfillment, and customer/member infrastructure.
+The public website, Payload CMS backend, Stripe sandbox/order data flow, admin dashboard, contact/newsletter consent handling, and privacy/TCPA page structure are now substantially built in code.
+
+The current phase is **verification and schema finalization**, not conceptual planning.
+
+Immediate priority:
+
+```txt
+Run Neon SQL patches
+Redeploy main
+Test contact/newsletter/privacy request/admin data flows
+Fix any schema/build issues
+Then start Client Portal foundation
+```
 
 ## Completed or Confirmed
 
+### Platform / Deployment
+
 - Cloudflare and Vercel are connected.
 - GitHub deployment pipeline works.
-- Homepage and most public website UI are substantially complete.
-- Contact page uses an on-site form instead of opening the visitor email client.
-- Contact API route exists and is connected to Mailjet, but Mailjet remains blocked at the account level.
-- Privacy Policy and Terms were drafted for launch, but must be rechecked after the route-group refactor.
-- Audiobook product option is set at `$21.99`.
-- Neon Postgres exists.
 - Vercel Node.js version is set to `20.x`.
-- Payload CMS was added to the Next.js app.
-- Payload Admin login works and the first admin user was created.
-- Payload collections were defined for the core backend model.
-- Books catalog was seeded into Neon/Payload with 9 books.
+- Vercel deployment cap issue from earlier troubleshooting is resolved, but batching commits is still preferred.
+- Public route group and Payload Admin route group were separated.
+- Payload Admin collection rendering issue was resolved.
+
+### Public Website
+
+- Homepage and most public website UI are substantially complete.
+- Public `/books` and `/books/[slug]` load from Payload/Neon with local fallback data.
+- Newsletter signup now routes to a newsletter-specific thank-you page.
+- Checkout/order thank-you flow still uses `session_id` and clears cart.
+
+### Payload CMS
+
+- Payload CMS installed and configured.
+- Neon Postgres connected.
+- Admin login works and first admin user was created.
+- Books catalog seeded with 9 records.
 - Payload API can read the Books collection.
-- Public `/books` and `/books/[slug]` were wired to load from Payload/Neon with local fallback data.
+- Payload Admin collection pages render.
+- Admin dashboard connected to live Payload data.
+
+### Admin Dashboard
+
+Dashboard now pulls live data from:
+
+```txt
+orders
+order-items
+customer-addresses
+subscribers
+support-tickets
+books
+users
+```
+
+Dashboard includes:
+
+- Total revenue.
+- Orders.
+- Items sold.
+- Subscribers.
+- Interactive Sales Performance graph.
+- Database Health card.
+- Recent Orders table.
+- Latest Subscribers table.
+- System Status checks.
+
+Sales graph behavior:
+
+```txt
+Today → hourly
+Last 3 days → daily
+Last 7 days → daily
+Last 14 days → weekly
+Last 30 days → weekly
+Last 45 days → weekly
+Last 60 days → weekly
+Last 90 days → monthly
+Last 120 days → monthly
+This Past Year → monthly
+```
+
+Admin sidebar target:
+
+```txt
+Dashboard
+Adventure Hub
+Orders
+Order Details
+Customer Addresses
+Subscribers
+Support
+Privacy Requests
+Consent Logs
+Settings
+```
+
+### Stripe / Commerce
+
+- Stripe checkout/order flow is working in sandbox enough to create Payload records.
+- Cart clears after successful checkout.
+- Orders are created.
+- Order Details are stored in `order-items`.
+- Customer Addresses are stored with billing/shipping type.
+- New order ID sequence is intended to use:
+
+```txt
+26-0001
+26-0002
+26-0003
+```
+
+Existing sandbox/test orders may still show old `BP-...` IDs unless backfilled.
+
+### Contact, Newsletter, Consent, and Privacy
+
+- Contact page uses an on-site form.
+- `/api/contact` validates form input and sends/stores submissions.
+- Contact form includes contact consent, optional email opt-in, optional SMS opt-in, phone field, and SMS/TCPA disclosure.
+- Newsletter form requires email opt-in checkbox.
+- Newsletter signup logs consent events.
+- Privacy Requests form added at `/privacy/requests`.
+- New Payload collections added:
+  - `privacy-requests`
+  - `consent-logs`
+- Footer links to legal/privacy/TCPA pages.
+
+Legal/compliance pages now include:
+
+```txt
+/privacy
+/terms
+/sms-terms
+/privacy/california
+/privacy/state-rights
+/privacy/requests
+```
 
 ## Current Blocker
 
-Payload Admin sidebar renders, but the collection center panels are blank for all collections.
+The main blocker is now **database schema and deployment verification**.
 
-Confirmed:
-
-- Raw database debug can read Books.
-- Payload API debug can read Books.
-- The issue is not a Books data problem.
-- Browser console showed React error `#418`, which points to a hydration mismatch.
-
-Likely cause:
-
-- Payload Admin was wrapped by the public app root layout.
-- Payload Admin needs its own root layout and should not be nested inside the public website layout.
-
-Fix direction:
+Before relying on the new compliance data, run the Neon SQL patches from the website repo:
 
 ```txt
-app/(frontend)/layout.tsx = public website layout
-app/(payload)/layout.tsx = Payload Admin layout
+docs/CONTACT_OPT_IN_SCHEMA_PATCH.md
+docs/PRIVACY_COMPLIANCE_SCHEMA_PATCH.md
 ```
 
-Next step is to redeploy once Vercel allows it and test the admin collection pages again.
-
-## Deployment Workflow Rule
-
-Vercel Hobby hit the daily deployment cap during troubleshooting.
-
-New rule:
-
-- Do not push every tiny fix directly to `main`.
-- Use feature branches for debugging.
-- Group related fixes before merging/deploying.
-- Deploy only when a complete batch is ready.
-
-Recommended grouping:
-
-```txt
-1 commit = full Payload Admin route/layout fix
-1 commit = product/catalog integration
-1 commit = cleanup/remove setup routes
-1 commit = workspace/docs update
-```
+Then redeploy `main` and verify the new collections/routes.
 
 ## Locked Stack
 
@@ -82,10 +169,10 @@ Recommended grouping:
 - Vercel hosting.
 - GitHub deployment.
 - Cloudflare DNS.
-- Cloudflare R2 for private ebook and audiobook storage.
-- Stripe Checkout and webhooks.
-- Mailjet after account unblock.
-- Lulu Direct API later.
+- Stripe Checkout and webhooks/sandbox fulfillment.
+- Mailjet for email once account/config is fully working.
+- Cloudflare R2 later for private ebook/audiobook storage.
+- Lulu Direct API later for print-on-demand.
 
 ## Product Format Pricing
 
@@ -94,23 +181,7 @@ Recommended grouping:
 - Paperback: `$17.99`.
 - Hardcover: `$24.99`.
 
-## Payload CMS Purpose
-
-Payload should manage:
-
-- Book/product content.
-- Customers/admin users.
-- Orders and order items.
-- Downloads and access records.
-- Subscribers.
-- Contact submissions.
-- Support tickets and messages.
-- Manual access grants.
-- Audit logs.
-
-Payload will also support the future customer/member area.
-
-## Current / Intended Payload Collections
+## Current Payload Collections
 
 - Books.
 - Users / Customers & Admins.
@@ -124,10 +195,12 @@ Payload will also support the future customer/member area.
 - SupportMessages.
 - AccessGrants.
 - AuditLogs.
+- PrivacyRequests.
+- ConsentLogs.
 
 ## Books Collection Product Page Fields
 
-The Books collection now needs to mirror the current public product pages:
+The Books collection mirrors the public product page model:
 
 - number.
 - slug.
@@ -172,25 +245,14 @@ Seeded books:
 8. Surgery Day.
 9. Lab Draw Adventure.
 
-## Temporary Setup and Debug Routes
-
-Temporary setup/debug routes were created to bootstrap and inspect the Payload/Neon setup.
-
-Cleanup requirement:
-
-- Remove temporary setup/debug routes before launch.
-- Rotate/delete the setup secret after removal.
-- Replace temporary SQL repair routes with proper migrations later.
-
 ## Phase 0 — Business Foundation
 
-- [ ] Obtain PO Box.
+- [ ] Obtain PO Box or valid business mailing address for CAN-SPAM marketing email footer.
 - [ ] File DBA.
 - [ ] Open business bank account.
-- [ ] Create Stripe account.
-- [ ] Resolve Mailjet temporary account block.
-- [ ] Rotate Neon database password if exposed credentials are still active.
-- [ ] Rotate Mailjet credentials if exposed credentials are still active.
+- [ ] Create/finish Stripe account setup.
+- [ ] Resolve or confirm Mailjet account/config status.
+- [ ] Attorney review of Privacy, Terms, SMS Terms, California Notice, State Rights, and Privacy Requests language.
 - [x] Add Payload-related Vercel environment variables.
 - [x] Confirm Vercel Node.js version is `20.x`.
 
@@ -209,34 +271,46 @@ Cleanup requirement:
 - [x] Define SupportTickets and SupportMessages collections.
 - [x] Define AccessGrants collection.
 - [x] Define AuditLogs collection.
+- [x] Define PrivacyRequests collection.
+- [x] Define ConsentLogs collection.
 - [x] Seed Books catalog.
-- [ ] Verify Payload Admin collection center panels render after route-group fix.
+- [x] Verify Payload Admin collection panels render.
+- [x] Add custom admin dashboard.
+- [x] Connect dashboard to live data.
+- [ ] Run latest Neon SQL patches for consent/privacy collections.
 - [ ] Replace temporary setup routes with proper migrations.
 - [ ] Remove temporary setup/debug routes.
 
-## Phase 2 — Contact and Lead Management
+## Phase 2 — Contact, Newsletter, and Consent Management
 
 - [x] Replace `mailto:` behavior with a real web form.
 - [x] Contact page submits to a Next.js API route.
 - [x] API route validates form input.
 - [x] Visitor sees on-page success/error message.
 - [x] Connect API route to Mailjet API client.
-- [ ] Resolve Mailjet account block.
-- [ ] Store contact submissions in Payload.
-- [ ] Store newsletter signups in Payload.
-- [ ] Add admin subscriber dashboard.
+- [x] Store contact submissions in Payload.
+- [x] Store newsletter signups in Payload.
+- [x] Add contact form opt-in disclosures.
+- [x] Add newsletter email opt-in checkbox.
+- [x] Add Consent Logs collection.
+- [x] Log contact/newsletter/privacy request consent events.
+- [ ] Run database patch for consent columns and logs table.
+- [ ] Resolve/confirm Mailjet account/config status.
 - [ ] Add CSV export workflow.
-- [ ] Add spam protection.
+- [ ] Add spam protection, preferably Cloudflare Turnstile.
 
-## Phase 2.5 — Legal Pages
+## Phase 2.5 — Legal, Privacy, and TCPA Pages
 
-- [x] Draft Privacy Policy.
-- [x] Draft Terms of Service.
-- [x] Add audiobook/audio disclosures.
-- [ ] Verify full Privacy/Terms content after moving pages into the frontend route group.
-- [ ] Restore full legal text from Git history if any placeholder content remains.
-- [ ] Add optional phone-number disclosure before collecting phone numbers.
-- [ ] Attorney review before accepting payments.
+- [x] Update Privacy Policy.
+- [x] Update Terms of Use.
+- [x] Add Messaging Terms page.
+- [x] Add California Privacy Notice.
+- [x] Add State Privacy Rights page.
+- [x] Add Privacy Requests / Do Not Sell or Share page.
+- [x] Add working Privacy Request form.
+- [x] Add footer links to legal/compliance pages.
+- [ ] Add official physical mailing address / PO Box to marketing email templates.
+- [ ] Attorney review before accepting payments or sending campaigns.
 
 ## Phase 3 — Private Ebook and Audiobook Delivery
 
@@ -249,14 +323,18 @@ Cleanup requirement:
 
 ## Phase 4 — Stripe Checkout and Fulfillment
 
-- [ ] Create Stripe account.
+- [ ] Finish Stripe account/live setup.
 - [ ] Configure products/prices for all formats.
-- [ ] Build checkout flow.
-- [ ] Build webhook route.
-- [ ] Create order/access records after payment.
+- [x] Build checkout flow.
+- [x] Build webhook/fallback fulfillment route enough for sandbox testing.
+- [x] Create order/order item/address records after payment.
+- [x] Clear cart after successful payment.
 - [ ] Send confirmation/fulfillment email.
+- [ ] Confirm order ID sequence in fresh sandbox test after redeploy.
 
-## Phase 5 — Member Area
+## Phase 5 — Client Portal / Member Area
+
+Next major build phase after admin/compliance verification:
 
 - [ ] `/account` dashboard.
 - [ ] `/account/orders`.
@@ -275,42 +353,40 @@ Cleanup requirement:
 
 ## Remaining Build Order
 
-1. Wait for Vercel deployment limit reset or upgrade Vercel.
-2. Deploy the route-group admin layout fix once.
-3. Verify Payload Admin collection pages render.
-4. Verify public routes after frontend route-group move.
-5. Restore full legal/resource/thank-you content if needed.
+1. Run the Neon SQL patches.
+2. Redeploy `main`.
+3. Test `/contact`, newsletter signup, `/privacy/requests`, and admin compliance collections.
+4. Verify dashboard graph, recent orders, system status, and sidebar after deploy.
+5. Fix any schema/build issues.
 6. Remove temporary setup/debug routes.
 7. Rotate/delete setup secret.
-8. Resolve Mailjet block.
-9. Store contact form submissions and subscribers in Payload.
+8. Add business mailing address/PO box before marketing email campaigns.
+9. Start Client Portal foundation.
 10. Set up R2 and upload digital/audio files.
-11. Set up Stripe checkout/webhooks.
-12. Build signed delivery.
-13. Build member area.
-14. Add Lulu Direct API.
-15. Production launch.
+11. Build signed delivery.
+12. Add Lulu Direct API later.
 
 ## Launch Blockers
 
 ### Business
 
-- PO Box.
+- PO Box or business mailing address.
 - DBA.
 - Business bank account.
-- Stripe account.
-- Mailjet account unblocked.
+- Stripe live account readiness.
+- Mailjet account/config readiness.
 - Attorney review.
 
 ### Technical
 
-- Payload Admin collection rendering verified.
+- Neon SQL patches run.
+- Latest `main` redeployed and QA tested.
 - Temporary setup/debug routes removed.
 - Setup secret rotated/deleted.
-- Public route QA after route-group refactor.
-- Full legal text verified.
+- Full contact/newsletter/privacy request flow verified.
+- Consent Logs verified in admin.
 - R2 setup.
-- Stripe setup.
-- Contact/subscriber storage.
+- Fulfillment email.
 - Ebook/audio delivery workflow.
+- Client portal.
 - POD integration.
