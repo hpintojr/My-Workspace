@@ -2,18 +2,39 @@
 type: work-queue
 project: Benny & Penny's Adventures
 created: 2026-06-13
-status: active
+updated: 2026-06-13 late-session admin polish
+status: active-admin-polish
 ---
 
 # Assistant Work Queue — Admin Dashboard While Stripe Setup
 
 ## Purpose
 
-Hamilton is setting up the Stripe account. While that happens, the assistant should focus on work that does not require live Stripe credentials.
+Hamilton is setting up Stripe sandbox/test mode while the assistant continues work that does not require live Stripe secrets.
 
-The goal is to keep development moving without waiting on Stripe account completion.
+The current goal is to stabilize the Benny & Penny Payload Admin experience so it feels like a branded business dashboard instead of a generic Payload database UI.
+
+## Critical Security Rules
+
+Do not ask Hamilton to paste secret values into chat.
+
+Do not commit these to GitHub:
+
+```txt
+Stripe restricted key
+Stripe secret key
+Stripe webhook signing secret
+Neon connection string
+Mailjet API keys
+PAYLOAD_SECRET
+PAYLOAD_SETUP_SECRET
+```
+
+Use only environment variable names in code/docs.
 
 ## Current Known State
+
+Working:
 
 - Payload Admin is functional.
 - Admin login works.
@@ -22,159 +43,211 @@ The goal is to keep development moving without waiting on Stripe account complet
 - `/admin/collections/books` renders.
 - Individual Book edit pages open.
 - The public product pages read from Payload/Neon with local fallback.
-- The current admin theme/dashboard is not approved yet.
-- The approved dashboard direction is the warm branded mockup with a simplified sidebar, KPI cards, recent orders, recent subscribers, quick links, and a bear PNG placeholder.
+- Production deployments from `main` are working.
+- The admin dashboard is now visually much closer to the approved mockup.
+- Hamilton prefers the softer teal/mint direction over the heavy cream/coral direction.
 
-## Hamilton's Current Task
+Still active:
 
-Hamilton is setting up the Stripe account/sandbox.
+- Final Payload UI polish for Product Catalog table controls.
+- Verify the Sales by Region card after changing it from `<aside>` to `<article>`.
+- Verify Payload checkbox styling after fixing the double-layer input/icon issue.
+- Verify breadcrumb heart/icon clipping.
+- Verify sidebar hamburger/collapse button background.
+- Verify Per Page dropdown vertical centering.
 
-Hamilton should avoid pasting live secret keys into chat or committing them to GitHub.
+## Current Admin Sidebar Target
 
-When ready, Hamilton can provide non-secret confirmation such as:
-
-```txt
-Stripe sandbox is created.
-Products/prices are ready.
-I added the test env vars in Vercel/local.
-```
-
-Do not ask Hamilton to paste secret keys into chat.
-
-## Assistant Work Queue
-
-### 1. Admin Dashboard Redesign Pass
-
-Focus on making `/admin` feel like Benny & Penny's Admin Panel instead of generic Payload.
-
-Tasks:
-
-- Rework dashboard layout to follow the approved sample mockup.
-- Add top header with:
-  - `Benny & Penny's Adventures | Admin Dashboard`.
-  - Help icon placeholder.
-  - Notification icon placeholder.
-  - User/avatar control placeholder.
-- Add welcome strip:
-
-```txt
-Welcome, Nurse Ivy! 🧸 Benny and Penny are ready to manage your book sales and community!
-```
-
-- Add KPI cards:
-  - Total Book Sales.
-  - Books Sold.
-  - Active Book Titles.
-  - Subscriber Growth.
-- Add dashboard sections:
-  - Book Sales Performance.
-  - Sales by Region.
-  - Latest Community Newsletter Subscribers.
-  - Recent Book Sales Orders.
-  - Quick Links.
-  - System Status.
-
-### 2. Sidebar Cleanup
-
-Simplify admin navigation toward the approved structure:
+Approved simplified structure:
 
 ```txt
 Dashboard
-Orders
+Adventure Hub
 Product Catalog
+Orders
 Subscribers
+Support
 Settings
 
+Bear PNG placeholder
 Log out
 ```
 
-Add a reserved bear PNG area near the bottom of the sidebar above Log out.
+Notes:
 
-Suggested placeholder file:
-
-```txt
-/public/admin/bear-sidebar-placeholder.png
-```
-
-Do not hardcode final artwork. The placeholder must be replaceable by dropping in a PNG later.
-
-### 3. Login Contrast Pass
-
-Verify and improve:
-
-- Email input contrast.
-- Password input contrast.
-- Field labels.
-- Login button color and readability.
-- Error/help text readability.
-
-The login screen should keep the existing Benny & Penny logo/name treatment that Hamilton likes.
-
-### 4. Product Catalog Visual Cleanup
-
-Improve the existing Product Catalog page/table styling:
-
-- Better page header spacing.
-- Cleaner search/filter controls.
-- Card-like table container.
-- Better status badges for:
-  - Cover Ready.
-  - Coming Soon.
-- Less harsh table controls.
-- Keep Product Catalog active in sidebar.
-
-### 5. Mock Data Layer for Dashboard
-
-Prepare mock data without needing Stripe credentials.
-
-Create local/static mock data for:
-
-- Sales totals.
-- Books sold.
-- Subscriber growth.
-- Monthly sales chart values.
-- Region chart values.
-- Recent orders.
-- Recent subscribers.
-- System status items.
-
-This can later be replaced with real Payload/Stripe data.
-
-### 6. Stripe Sandbox Integration Prep
-
-Prepare the code/documentation shape for Stripe without needing live secrets.
-
-Expected model:
-
-- One Stripe Product per book.
-- Four Stripe Prices per book:
-  - PDF / EPUB: $15.99.
-  - Audiobook: $21.99.
-  - Paperback: $17.99.
-  - Hardcover: $24.99.
-
-Expected lookup keys:
+- `Adventure Hub` should be a static heading, not a collapsible Payload `Collections` control.
+- Log out should stay fixed at the far bottom-left.
+- The bear PNG placeholder should sit above Log out.
+- Top-left branding should read like:
 
 ```txt
-book_1_digital
-book_1_audiobook
-book_1_paperback
-book_1_hardcover
+Benny & Penny
+Admin Panel
 ```
 
-Expected Payload Books fields:
+- Branding needs enough left padding so the collapse button does not cover it.
+
+## Dashboard Work Completed
+
+Files involved in the website repo:
 
 ```txt
-stripeDigitalPriceId
-stripeAudiobookPriceId
-stripePaperbackPriceId
-stripeHardcoverPriceId
-stripeLookupKey
+app/(payload)/components/BeforeDashboard.tsx
+app/(payload)/components/BeforeDashboard.scss
+app/(payload)/components/RegionCompact.scss
+app/(payload)/components/AdminWelcomeName.tsx
+app/(payload)/components/AdminBeforeNavLinks.tsx
+app/(payload)/components/AdminAfterNavLinks.tsx
+app/(payload)/admin/importMap.ts
+app/(payload)/custom.scss
+app/(payload)/admin-polish-overrides.scss
+app/(payload)/admin-final-fixes.scss
+app/(payload)/graphics/Icon.tsx
+payload.config.ts
 ```
 
-### 7. Route Verification Checklist
+Implemented:
 
-After dashboard/theme work, verify:
+- Dynamic welcome name from `/api/users/me?depth=0`.
+- KPI cards.
+- Book Sales Performance mock bar chart.
+- Hover/focus chart totals for revenue and order count.
+- Dropdown options:
+
+```txt
+Today
+Last 3 days
+Last 7 days
+Last 14 days
+Last 30 days
+Last 45 days
+Last 60 days
+Last 90 days
+Last 120 days
+Last Year
+```
+
+- Sales by Region compact card direction.
+- Latest subscribers table.
+- Recent orders table.
+- Quick Links.
+- System Status.
+- Mailjet API status line.
+- Mailjet email metric placeholders: Sent, Opened, Bounced, Spam.
+
+## Important UI Bug: Sales by Region Height
+
+Root cause discovered:
+
+The Sales by Region card was originally rendered as an HTML `<aside>`.
+
+The global admin sidebar theme also targeted every `aside`:
+
+```css
+.template-default .nav,
+.template-default aside {
+  ...
+}
+```
+
+This accidentally made the Sales by Region card inherit sidebar behavior such as large min-height and padding.
+
+Fix direction committed:
+
+```txt
+Change Sales by Region from <aside> to <article>
+```
+
+Next assistant should verify this after redeploy before adding more CSS.
+
+## Important UI Bug: Payload Checkbox Double Layer
+
+Payload checkbox structure:
+
+```html
+<div class="checkbox-input checkbox-input--checked">
+  <div class="checkbox-input__input">
+    <input type="checkbox" />
+    <span class="checkbox-input__icon checkbox-input__icon--check"></span>
+  </div>
+</div>
+```
+
+Correct approach:
+
+- Keep the real input clickable but visually hidden.
+- Style the icon span as the visible checkbox.
+- Use `.checkbox-input--checked` and/or `:has(input[type='checkbox']:checked)` for selected state.
+
+Do not make the real input visible, or two boxes appear stacked.
+
+## Important UI Bug: Breadcrumb Heart Clipping
+
+Hamilton inspected DevTools and found the likely cause:
+
+```css
+.step-nav span {
+  overflow: hidden;
+}
+```
+
+Next pass should target Payload's step nav/breadcrumb span so the heart badge is not clipped, or reduce/align the icon so it stays inside the clipping area.
+
+## Product Catalog Polish Items Still Open
+
+Open items on `/admin/collections/books`:
+
+- Confirm checkbox selected state is now one visible box.
+- Confirm the sort buttons are not too tall.
+- Confirm selected action buttons have clear teal borders.
+- Confirm `Per Page: 10` text is vertically centered.
+- Confirm breadcrumb icon is not clipped.
+- Confirm sidebar collapse/hamburger does not show a white square.
+
+Use DevTools and target the exact Payload classnames instead of broad selectors where possible.
+
+## Stripe Sandbox Work Completed
+
+Added to the website repo:
+
+```txt
+stripe dependency
+.env.example Stripe placeholders
+lib/stripe.ts
+lib/stripeCheckout.ts
+app/(frontend)/api/checkout/route.ts
+app/(frontend)/api/stripe/webhook/route.ts
+docs/STRIPE_SANDBOX_SETUP.md
+```
+
+Cart checkout route exists and redirects to Stripe Checkout.
+
+Webhook route exists and verifies Stripe signatures.
+
+Webhook fulfillment is not complete yet.
+
+## Stripe Sandbox Next Backend Pass
+
+After admin UI stabilizes, wire:
+
+```txt
+checkout.session.completed
+```
+
+into Payload records:
+
+```txt
+Orders
+OrderItems
+Downloads
+AccessGrants
+```
+
+Later connect dashboard cards/charts to live Stripe/Payload data.
+
+## Route Verification Checklist
+
+After each major admin/theme deploy, verify:
 
 ```txt
 /admin
@@ -193,15 +266,9 @@ After dashboard/theme work, verify:
 /thank-you
 ```
 
-### 8. Cleanup After Admin Stabilizes
+## Cleanup After Admin Stabilizes
 
-After the admin is stable:
-
-- Remove temporary setup/debug routes.
-- Rotate/delete `PAYLOAD_SETUP_SECRET`.
-- Replace temporary setup SQL with proper migrations later.
-
-Temporary routes to remove before production:
+Remove or disable temporary setup/debug routes before production launch:
 
 ```txt
 /api/setup-payload
@@ -212,19 +279,15 @@ Temporary routes to remove before production:
 /api/debug-payload-books
 ```
 
-## Do Not Do While Waiting for Stripe
+Rotate/delete `PAYLOAD_SETUP_SECRET` after setup routes are removed/disabled.
 
-- Do not require live Stripe credentials to design the dashboard.
-- Do not commit Stripe secret keys.
-- Do not commit webhook signing secrets.
-- Do not commit real customer/payment data.
-- Do not deploy many tiny dashboard fixes directly to main if avoidable.
-- Do not remove setup/debug routes until admin stability is confirmed.
+Build real Payload/database migrations later instead of relying on temporary setup routes.
 
-## Next Handoff Prompt
+## Start Here Next Session
 
-When picking this back up, use:
-
-```txt
-Read the Assistant Work Queue for Benny & Penny. Hamilton is setting up Stripe. Start with the admin dashboard redesign and sidebar cleanup using the approved mockup direction.
-```
+1. Redeploy latest website `main`.
+2. Verify `/admin` region chart after the `<aside>` → `<article>` fix.
+3. Verify Product Catalog table controls on `/admin/collections/books`.
+4. If still broken, use DevTools classnames and patch narrowly.
+5. Once UI is stable, implement Stripe webhook fulfillment into Payload Orders/OrderItems/Downloads/AccessGrants.
+6. Keep secrets out of chat and GitHub.
