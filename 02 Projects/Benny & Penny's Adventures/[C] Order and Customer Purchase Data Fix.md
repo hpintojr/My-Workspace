@@ -23,30 +23,114 @@ Commit: 6d206eee9f24325724eb9e69bee10ec9c6ada218
 Change: collections/Users.ts now includes addressHistory join → customer-addresses.customer
 ```
 
-Order/customer profile navigation is being improved so admin users do not have to rely only on the sidebar to return to the list view.
+Stripe checkout/order fulfillment has now been debugged through a full sandbox recovery cycle.
+
+Confirmed current state:
+
+- Stripe sandbox payments can be reconciled into Payload Orders.
+- Missing Stripe order was manually repaired through the protected Stripe order reconciliation endpoint.
+- Payload database order ID `17` was created as customer-facing order number `26-0009`.
+- 4 order items were created for the repaired checkout.
+- Billing address now saves to the Order record.
+- Shipping address now saves to the Order record after reading Stripe's newer shipping payload location.
+- Billing and shipping records should also create in `customer-addresses` when a customer record is linked.
+- Tax remains `0` for current products because they are being treated as California-exempt for now.
+
+Latest important fulfillment commits:
 
 ```txt
-Customer profile back action commits:
-3584e79e25bd916582fe06813e428362dea4e2ab
-0617f78738b0533f0220cebd3ede48453eebb38c
-c397e4c03fe070439880d9150964b6da8ac3eb30
-e760a5a8b1ceb2a5551e1dd2ef85fee3f5512294
+693631cac67ca619e080989866bc1672eaf725da
+Refresh Stripe session before fulfillment
 
-Order profile back action work:
-934c8b8155424521eb2c11657a52857fd4de597b
-86b464f318e22a311622994c60f1994a1a061a88
-4e4fab3775dfd443c883a27d1c4ac3fd72d7fe68
-35babec20ff01e25c748a6ffde76a9841221b205
-0485c72f2d2ad4b228463de7f3ca404a3db42350
+db532e591cebcde099eb3842768698be2f7e60ab
+Backfill existing Stripe order addresses
+
+56ceb2c8964eb9a04bd674badc4ec27e06c59ba8
+Improve order confirmation on thank-you page
+
+62aaa60bbfd1fccb7fdfd585c48622423861dfc7
+Normalize Stripe customer emails during fulfillment
+
+0ac62b375d82e7ff2fda4eaefb607822bac2ceb0
+Fix Stripe fulfillment shipping postal code
+
+f7b52de4458c8755e4d420a3946044c845a16c54
+Return reconcile diagnostics for authorized requests
+
+3b3ec50151ee2a4a1acc258f92f19c61d2fb11df
+Read Stripe collected shipping details
 ```
 
-Important: The production Neon order schema patch still needs to be run or confirmed before relying on new Stripe fulfillment data fields.
+## Key Stripe Fulfillment Lesson
+
+Stripe Checkout shipping data may not always appear under the old/top-level field:
+
+```txt
+shipping_details
+```
+
+For the tested Checkout Session, Stripe returned shipping under:
+
+```txt
+collected_information.shipping_details
+```
+
+The fulfillment code now checks both locations.
+
+Working tested Stripe data example:
+
+```txt
+Billing name: Hamster Diver
+Billing address: 11437 Lower Azusa Road, El Monte, CA 91732, US
+Shipping name: James Brown
+Shipping address: 1500 Pennsylvania Avenue, San Diego, CA 92103, US
+```
+
+## Manual Reconciliation Notes
+
+Manual reconciliation is now confirmed useful for recovering missing Stripe payments that succeeded before Payload order creation completed.
+
+Important distinction:
+
+```txt
+orderId = Payload database ID
+orderNumber = customer-facing order number
+fallback confirmation reference = not the real order number
+```
+
+The protected reconciliation endpoint requires a valid Stripe Checkout Session ID and the current setup secret. Do not store the secret in this workspace.
+
+Expected success shape:
+
+```json
+{
+  "ok": true,
+  "summary": {
+    "orderId": 17,
+    "orderNumber": "26-0009",
+    "created": true,
+    "orderItemsCreated": 4,
+    "downloadsCreated": 0,
+    "accessGrantsCreated": 0
+  }
+}
+```
+
+## Security Note — Setup Secret
+
+`PAYLOAD_SETUP_SECRET` was exposed in screenshots/browser URLs during manual repair testing.
+
+Required next action:
+
+```txt
+Rotate PAYLOAD_SETUP_SECRET in Vercel after order recovery/testing is complete.
+```
+
+Do not paste or commit the new secret value into this workspace.
 
 ## Stripe Tax Decision
 
 Current decision: do not collect tax for the current Benny & Penny products because they are being treated as California-exempt for now.
-
-The checkout code was briefly changed to enable Stripe Automatic Tax by default, but Stripe test checkout failed because the Stripe test/sandbox tax registration setup was incomplete.
 
 Final current checkout direction:
 
@@ -67,7 +151,7 @@ Operational expectation:
 - Current orders should show tax as `0`.
 - Checkout should not require Stripe Tax registration setup.
 - Do not add California tax collection unless tax/legal/accounting review later confirms it is required.
-- If taxable products are added later, re-enable with `STRIPE_AUTOMATIC_TAX_ENABLED=true` and configure Stripe Tax registrations/tax codes before launch.
+- If taxable products are added later, re-enable with the env var and configure Stripe Tax registrations/tax codes before launch.
 
 ## Subscriber to Customer Tracking Direction
 
@@ -130,36 +214,7 @@ orders.id ← order-items.order
 
 That means the Customer file should surface the related address and purchase records in one place, but the full source of truth stays in Orders, Order Details, and Customer Addresses.
 
-If Payload join fields do not render the customer file cleanly enough, the fallback is to build a custom Customer detail/admin component that displays:
-
-```txt
-Contact Info
-Addresses
-Purchase History
-Order Number
-Purchase Summary
-Order Totals
-Order Details
-```
-
-## Reason for This Fix
-
-Hamilton identified that the current Payload order/customer admin records are missing important basic purchase data.
-
-The issue is not that Stripe checkout is completely broken. Stripe fulfillment is already creating:
-
-- Orders.
-- Order Details / line items.
-- Customer records.
-- Customer Addresses.
-
-The issue is that the Order file itself is too thin, and the Customer file does not clearly show the customer's purchase history.
-
-## Desired Outcome
-
-When a Stripe sandbox/live purchase completes, the admin should be able to open the Order file and immediately see the basic purchase data without hunting through multiple records.
-
-The admin should also be able to open a Customer file and see the customer's linked contact data, mailing/shipping addresses, order numbers, and purchase history.
+If Payload join fields do not render the customer file cleanly enough, the fallback is to build a custom Customer detail/admin component that displays contact info, addresses, purchase history, order numbers, totals, and order details.
 
 ## Website Repo
 
@@ -171,27 +226,9 @@ hpintojr/bennyandpennyadventures
 
 ### Orders Collection
 
-`collections/Orders.ts` was expanded so an Order record can store:
+`collections/Orders.ts` was expanded so an Order record can store customer, Stripe, totals, purchased item summary, billing address, and shipping address snapshot fields.
 
-- Customer name.
-- Customer email.
-- Customer phone.
-- Linked customer relationship.
-- Stripe checkout session ID.
-- Stripe payment intent ID.
-- Stripe customer ID.
-- Subtotal.
-- Tax total.
-- Shipping total.
-- Discount total.
-- Final total.
-- Currency.
-- Item count.
-- Purchased items summary.
-- Billing address fields.
-- Shipping address fields when applicable.
-
-The Orders admin list should now prioritize:
+The Orders admin list should prioritize:
 
 ```txt
 orderNumber
@@ -205,138 +242,62 @@ createdAt
 
 ### Stripe Fulfillment
 
-`lib/stripeFulfillment.ts` was updated so completed Stripe checkout sessions populate the new Order fields.
+`lib/stripeFulfillment.ts` is the core source for Stripe → Payload order creation.
 
-The detailed line items should still be created in `order-items`; the new Order fields are meant to make the main Order file useful at a glance.
+Current behavior:
+
+- Re-fetches the Checkout Session before fulfillment.
+- Normalizes Stripe customer email to lowercase.
+- Finds or creates a Payload customer where possible.
+- Does not let customer profile creation failure block order creation.
+- Creates the Payload Order.
+- Creates Order Details / line items.
+- Saves billing address fields from `customer_details.address`.
+- Saves shipping address fields from `shipping_details` or `collected_information.shipping_details`.
+- Can update an existing order during manual reconcile/backfill.
 
 ### Customer File Purchase History
 
-`collections/Users.ts` now includes a `purchaseHistory` join field.
-
-This is intended to show Orders linked through:
+`collections/Users.ts` includes a `purchaseHistory` join field intended to show Orders linked through:
 
 ```txt
 orders.customer → users.id
 ```
 
-Do not create a separate manual purchase-history table unless the join field fails and another approach is needed.
-
 ### Customer File Address History
 
-`collections/Users.ts` now includes an `addressHistory` join field.
-
-This is intended to show addresses linked through:
+`collections/Users.ts` includes an `addressHistory` join field intended to show addresses linked through:
 
 ```txt
 customer-addresses.customer → users.id
 ```
 
-This should surface:
-
-- Billing / mailing address records.
-- Shipping address records.
-- Address phone numbers.
-- Default shipping flag.
-
 Address records should remain in `customer-addresses` as the source of truth.
 
 ### Neon SQL Patch
 
-`docs/ORDER_SCHEMA_PATCH.md` was updated with the new manual SQL patch for the added Orders columns.
+`docs/ORDER_SCHEMA_PATCH.md` documents the manual SQL patch for added Orders columns. Confirm the production Neon schema has the order/customer/totals/billing/shipping columns before relying on these fields at launch.
 
-This patch must be run or confirmed in Neon before the new fulfillment fields can be relied on.
-
-## Production SQL Patch
-
-Run this in the production Neon SQL editor if it has not already been run:
-
-```sql
-alter table if exists orders
-  add column if not exists customer_name varchar,
-  add column if not exists customer_phone varchar,
-  add column if not exists stripe_customer_id varchar,
-  add column if not exists subtotal numeric default 0,
-  add column if not exists tax_total numeric default 0,
-  add column if not exists shipping_total numeric default 0,
-  add column if not exists discount_total numeric default 0,
-  add column if not exists item_count numeric default 0,
-  add column if not exists items_summary varchar,
-  add column if not exists billing_address_name varchar,
-  add column if not exists billing_address_line1 varchar,
-  add column if not exists billing_address_line2 varchar,
-  add column if not exists billing_address_city varchar,
-  add column if not exists billing_address_state varchar,
-  add column if not exists billing_address_postal_code varchar,
-  add column if not exists billing_address_country varchar,
-  add column if not exists shipping_address_name varchar,
-  add column if not exists shipping_address_line1 varchar,
-  add column if not exists shipping_address_line2 varchar,
-  add column if not exists shipping_address_city varchar,
-  add column if not exists shipping_address_state varchar,
-  add column if not exists shipping_address_postal_code varchar,
-  add column if not exists shipping_address_country varchar;
-```
-
-## Verification SQL
-
-```sql
-select column_name
-from information_schema.columns
-where table_name = 'orders'
-  and column_name in (
-    'customer_name',
-    'customer_phone',
-    'stripe_customer_id',
-    'subtotal',
-    'tax_total',
-    'shipping_total',
-    'discount_total',
-    'item_count',
-    'items_summary',
-    'billing_address_name',
-    'billing_address_line1',
-    'billing_address_line2',
-    'billing_address_city',
-    'billing_address_state',
-    'billing_address_postal_code',
-    'billing_address_country',
-    'shipping_address_name',
-    'shipping_address_line1',
-    'shipping_address_line2',
-    'shipping_address_city',
-    'shipping_address_state',
-    'shipping_address_postal_code',
-    'shipping_address_country'
-  )
-order by column_name;
-```
-
-Expected result: 23 rows.
+Expected verification result: 23 order columns.
 
 ## Testing Checklist
 
 After production deploy and SQL patch confirmation:
 
-1. Run a Stripe sandbox checkout.
-2. Confirm the checkout completes successfully.
-3. Open `/admin/collections/orders`.
-4. Confirm the order list shows customer name, item summary, status, total, and created date.
-5. Open the new Order detail page.
-6. Confirm the Order file shows:
-   - Customer name/email/phone.
-   - Stripe IDs.
-   - Subtotal/tax/shipping/discount/total.
-   - Item count and purchased item summary.
-   - Billing address.
-   - Shipping address for print orders.
-7. Open `/admin/collections/order-items`.
-8. Confirm individual order details/line items still exist.
-9. Open the linked customer file.
-10. Confirm Purchase History shows the linked order.
-11. Confirm the customer file clearly shows or links to the customer's mailing/billing/shipping addresses.
-12. Open `/admin/collections/customer-addresses`.
-13. Confirm customer address records are still being created/deduplicated.
-14. Confirm tax total is `0` for currently exempt products.
+1. Run a Stripe sandbox checkout with at least one physical item.
+2. Use different billing and shipping addresses.
+3. Confirm checkout completes successfully.
+4. Confirm tax total is `0` for currently exempt products.
+5. Confirm the thank-you page shows the real `26-000X` order number when fulfillment completes.
+6. Open `/admin/collections/orders`.
+7. Confirm the order list shows customer name, item summary, status, total, and created date.
+8. Open the new Order detail page.
+9. Confirm the Order file shows customer, Stripe IDs, totals, item summary, billing address, and shipping address.
+10. Open `/admin/collections/order-items` and confirm line items exist.
+11. Open the linked customer file and confirm Purchase History shows the linked order.
+12. Open `/admin/collections/customer-addresses` and confirm billing/shipping address records are created/deduplicated.
+13. Run manual reconcile only for missing/backfill cases, not normal flow.
+14. Rotate `PAYLOAD_SETUP_SECRET` after testing.
 
 ## Important Notes
 
@@ -346,4 +307,4 @@ After production deploy and SQL patch confirmation:
 - The client portal should later read from the same Orders, Order Details, and Customer Addresses data.
 - Current product tax decision: do not collect tax for now; Stripe Automatic Tax stays off unless explicitly enabled by env var.
 - Existing sandbox orders may not have the new fields unless backfilled or recreated through a fresh checkout.
-- If Payload's join field does not render as expected in admin, the fallback approach is to build a custom customer detail/admin component or store a denormalized summary on the customer record.
+- The manual reconcile route is useful for repair but should not remain exposed long-term.
