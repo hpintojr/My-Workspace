@@ -23,7 +23,86 @@ Commit: 6d206eee9f24325724eb9e69bee10ec9c6ada218
 Change: collections/Users.ts now includes addressHistory join → customer-addresses.customer
 ```
 
+Order/customer profile navigation is being improved so admin users do not have to rely only on the sidebar to return to the list view.
+
+```txt
+Customer profile back action commits:
+3584e79e25bd916582fe06813e428362dea4e2ab
+0617f78738b0533f0220cebd3ede48453eebb38c
+c397e4c03fe070439880d9150964b6da8ac3eb30
+e760a5a8b1ceb2a5551e1dd2ef85fee3f5512294
+
+Order profile back action work:
+934c8b8155424521eb2c11657a52857fd4de597b
+86b464f318e22a311622994c60f1994a1a061a88
+4e4fab3775dfd443c883a27d1c4ac3fd72d7fe68
+35babec20ff01e25c748a6ffde76a9841221b205
+0485c72f2d2ad4b228463de7f3ca404a3db42350
+```
+
 Important: The production Neon order schema patch still needs to be run or confirmed before relying on new Stripe fulfillment data fields.
+
+## Stripe Tax Decision
+
+Current decision: do not collect tax for the current Benny & Penny products because they are being treated as California-exempt for now.
+
+The checkout code was briefly changed to enable Stripe Automatic Tax by default, but Stripe test checkout failed because the Stripe test/sandbox tax registration setup was incomplete.
+
+Final current checkout direction:
+
+```txt
+Stripe Automatic Tax is OFF by default.
+It only turns on if STRIPE_AUTOMATIC_TAX_ENABLED=true is explicitly set in Vercel.
+```
+
+Production commit for this decision:
+
+```txt
+0d2a94fe82d40d11b3b3c9b38b1dc20f61662a07
+Change: app/(frontend)/api/checkout/route.ts disables Stripe Automatic Tax by default again.
+```
+
+Operational expectation:
+
+- Current orders should show tax as `0`.
+- Checkout should not require Stripe Tax registration setup.
+- Do not add California tax collection unless tax/legal/accounting review later confirms it is required.
+- If taxable products are added later, re-enable with `STRIPE_AUTOMATIC_TAX_ENABLED=true` and configure Stripe Tax registrations/tax codes before launch.
+
+## Subscriber to Customer Tracking Direction
+
+Hamilton wants to track when a subscriber becomes a customer and use that distinction for marketing segmentation.
+
+Desired segmentation:
+
+```txt
+Subscribers who are not customers yet
+Subscribers who became customers
+Customers who opted into marketing
+Customers who did not opt into marketing
+```
+
+Initial subscriber/customer tracking admin fields were added, but they caused production admin errors because the production `subscribers` table did not yet have the new `linked_customer_id` column.
+
+Emergency rollback/hotfix commits:
+
+```txt
+7a1af037b40d3c5c5e6127b786f64bcb9ad980c7
+993c96afe369abe92a88607a7582e73d0656fe4b
+```
+
+Current subscriber/customer tracking status:
+
+- Concept approved.
+- Schema patch documented.
+- Live admin fields temporarily removed until the Neon subscriber/customer schema patch is run.
+- Do not re-enable the Subscriber → Customer relationship until the database columns exist.
+
+Schema patch doc:
+
+```txt
+docs/SUBSCRIBER_CUSTOMER_LINK_SCHEMA_PATCH.md
+```
 
 ## Customer File Requirement — Source of Truth
 
@@ -257,6 +336,7 @@ After production deploy and SQL patch confirmation:
 11. Confirm the customer file clearly shows or links to the customer's mailing/billing/shipping addresses.
 12. Open `/admin/collections/customer-addresses`.
 13. Confirm customer address records are still being created/deduplicated.
+14. Confirm tax total is `0` for currently exempt products.
 
 ## Important Notes
 
@@ -264,5 +344,6 @@ After production deploy and SQL patch confirmation:
 - The Customer file should become the admin-friendly customer snapshot: contact info, addresses, order numbers, and purchase history.
 - The Order record stores enough purchase data for admin review and future customer-service workflows.
 - The client portal should later read from the same Orders, Order Details, and Customer Addresses data.
+- Current product tax decision: do not collect tax for now; Stripe Automatic Tax stays off unless explicitly enabled by env var.
 - Existing sandbox orders may not have the new fields unless backfilled or recreated through a fresh checkout.
 - If Payload's join field does not render as expected in admin, the fallback approach is to build a custom customer detail/admin component or store a denormalized summary on the customer record.
