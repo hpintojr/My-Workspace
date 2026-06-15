@@ -18,6 +18,44 @@ Merged commit: 3f86dd82415718a64db9fbf8fa2689d07963bf09
 
 Important: The production Neon order schema patch still needs to be run or confirmed before relying on new Stripe fulfillment data fields.
 
+## Customer File Requirement — Source of Truth
+
+The Customer file must eventually behave like the single admin snapshot for that customer.
+
+When an admin opens a Customer file, it should clearly show:
+
+- Customer contact details.
+- Mailing / billing addresses.
+- Shipping addresses.
+- Purchase history.
+- Order numbers.
+- Purchase data for each order.
+- Purchased item summary.
+- Order totals, tax, shipping, discounts, and status.
+- Links or relationship references back to the full Order file and Order Details / line items.
+
+The current direction is to keep this relationship-based, not manually duplicated:
+
+```txt
+users.id ← orders.customer
+users.id ← customer-addresses.customer
+orders.id ← order-items.order
+```
+
+That means the Customer file should surface the related address and purchase records in one place, but the full source of truth stays in Orders, Order Details, and Customer Addresses.
+
+If Payload join fields do not render the customer file cleanly enough, the fallback is to build a custom Customer detail/admin component that displays:
+
+```txt
+Contact Info
+Addresses
+Purchase History
+Order Number
+Purchase Summary
+Order Totals
+Order Details
+```
+
 ## Reason for This Fix
 
 Hamilton identified that the current Payload order/customer admin records are missing important basic purchase data.
@@ -35,7 +73,7 @@ The issue is that the Order file itself is too thin, and the Customer file does 
 
 When a Stripe sandbox/live purchase completes, the admin should be able to open the Order file and immediately see the basic purchase data without hunting through multiple records.
 
-The admin should also be able to open a Customer file and see the customer's linked purchase history.
+The admin should also be able to open a Customer file and see the customer's linked contact data, mailing/shipping addresses, order numbers, and purchase history.
 
 ## Website Repo
 
@@ -96,6 +134,22 @@ orders.customer → users.id
 ```
 
 Do not create a separate manual purchase-history table unless the join field fails and another approach is needed.
+
+### Customer File Address History — Needed Next
+
+The Customer file should also surface addresses linked through:
+
+```txt
+customer-addresses.customer → users.id
+```
+
+Needed next admin improvement:
+
+- Add a clear Addresses section to the Customer file.
+- Show billing/mailing address records.
+- Show shipping address records.
+- Keep address records in `customer-addresses` as the source of truth.
+- Make the Customer file easy to review without leaving the page.
 
 ### Neon SQL Patch
 
@@ -190,13 +244,15 @@ After production deploy and SQL patch confirmation:
 8. Confirm individual order details/line items still exist.
 9. Open the linked customer file.
 10. Confirm Purchase History shows the linked order.
-11. Open `/admin/collections/customer-addresses`.
-12. Confirm customer address records are still being created/deduplicated.
+11. Confirm the customer file clearly shows or links to the customer's mailing/billing/shipping addresses.
+12. Open `/admin/collections/customer-addresses`.
+13. Confirm customer address records are still being created/deduplicated.
 
 ## Important Notes
 
 - The new customer purchase history is relationship-based, not manually duplicated.
-- The Order record now stores enough purchase data for admin review and future customer-service workflows.
-- The client portal should later read from the same Orders and Order Details data.
+- The Customer file should become the admin-friendly customer snapshot: contact info, addresses, order numbers, and purchase history.
+- The Order record stores enough purchase data for admin review and future customer-service workflows.
+- The client portal should later read from the same Orders, Order Details, and Customer Addresses data.
 - Existing sandbox orders may not have the new fields unless backfilled or recreated through a fresh checkout.
 - If Payload's join field does not render as expected in admin, the fallback approach is to build a custom customer purchase-history component or store a denormalized summary on the customer record.
