@@ -86,7 +86,7 @@ These rules apply to Gemini, ChatGPT, Claude, and future AI assistants working f
 
 ### Benny & Penny's Adventures
 
-**Goal:** Build a children's medical book publishing business around Michelle's book series, including website, Payload CMS backend, digital ebook/audiobook products, future print-on-demand, email/contact systems, private file delivery, Stripe, and a future member area.
+**Goal:** Build a children's medical book publishing business around Michelle's book series, including website, Payload CMS backend, digital ebook/audiobook products, future print-on-demand, email/contact systems, private file delivery, Stripe, and a customer portal.
 
 **Why:** Family project and potential extra-income digital product business.
 
@@ -94,15 +94,17 @@ These rules apply to Gemini, ChatGPT, Claude, and future AI assistants working f
 
 ```txt
 01 Daily Logs/[C] 2026-06-14.md
+01 Daily Logs/[C] 2026-06-15.md
 02 Projects/Benny & Penny's Adventures/Benny & Penny's Adventures Overview.md
 02 Projects/Benny & Penny's Adventures/[C] Website Build Plan & Architecture.md
 02 Projects/Benny & Penny's Adventures/[C] Implementation Notes — Contact Forms, Legal Pages, R2 Ebook Delivery.md
 02 Projects/Benny & Penny's Adventures/[C] Order and Customer Purchase Data Fix.md
+02 Projects/Benny & Penny's Adventures/[C] Client Portal Build Notes.md
 ```
 
-**Current status:** Payload Admin is functional and has gone through major visual QA/polish. Stripe sandbox checkout is working again after the fulfillment recovery. Missing order recovery was confirmed through `/api/reconcile-stripe-order`; Order database ID `17` was created as customer-facing order number `26-0009` with 4 order items. Billing address capture is working. Shipping address capture is now working after updating fulfillment to read Stripe shipping data from both `session.shipping_details` and the newer `session.collected_information.shipping_details` location.
+**Current status:** Payload Admin is functional and Stripe sandbox checkout is working. Fresh checkout confirmed the thank-you page shows the real order number. Billing and shipping are saving correctly. The Client Portal foundation is now built and visible at `/portal`. Customer login works through Payload auth after a password is manually set. `/portal/orders` displays the signed-in customer's order history. `/portal/addresses` displays billing and shipping addresses. `/portal/library` displays purchased books grouped by book and format, with access/status buttons for PDF/EPUB, audiobook, paperback, and hardcover.
 
-**Current active concern:** The immediate next work is verification and cleanup. Confirm new checkouts create orders automatically without needing manual reconcile, confirm billing/shipping addresses populate in both Orders and Customer Addresses, confirm customer records link cleanly, and continue toward the Client Portal foundation. Mailjet is still under review, so email delivery should be treated as pending. `PAYLOAD_SETUP_SECRET` rotation is intentionally deferred until after the Client Portal is completed.
+**Current active concern:** The portal is usable as an account shell and ownership view, but digital delivery is not fully wired yet. PDF/EPUB and audiobook access buttons currently show access/status placeholders. The protected `/api/portal/downloads` endpoint exists and is designed to validate customer ownership without exposing raw R2 keys, but signed R2 links/private delivery still need to be connected after files are uploaded. Mailjet is still under review, so password reset/account activation and customer email flows remain pending. `PAYLOAD_SETUP_SECRET` rotation remains intentionally deferred until after the Client Portal is completed.
 
 **Current desired admin navigation direction:**
 
@@ -120,7 +122,7 @@ Privacy Requests
 Log out
 ```
 
-**Current next actions:** Verify latest Vercel deploy, run one fresh Stripe sandbox checkout with different billing/shipping addresses, confirm Order, Order Details, Customer, and Customer Address records, confirm/run any remaining Neon SQL patches, continue cleanup, and begin/finish the Client Portal foundation. After the Client Portal is completed, remind Hamilton to rotate the exposed `PAYLOAD_SETUP_SECRET`.
+**Current next actions:** Verify the latest portal deploy, test `/portal/orders`, `/portal/addresses`, and `/portal/library` after customer login, upload/prepare book files for PDF/EPUB/audiobook delivery, wire signed private file delivery, add customer-facing support workflow, then complete remaining launch cleanup. After the Client Portal is completed, remind Hamilton to rotate the exposed `PAYLOAD_SETUP_SECRET`.
 
 ---
 
