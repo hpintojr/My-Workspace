@@ -96,11 +96,12 @@ These rules apply to Gemini, ChatGPT, Claude, and future AI assistants working f
 02 Projects/Benny & Penny's Adventures/Benny & Penny's Adventures Overview.md
 02 Projects/Benny & Penny's Adventures/[C] Website Build Plan & Architecture.md
 02 Projects/Benny & Penny's Adventures/[C] Implementation Notes — Contact Forms, Legal Pages, R2 Ebook Delivery.md
+02 Projects/Benny & Penny's Adventures/[C] Order and Customer Purchase Data Fix.md
 ```
 
-**Current status:** Payload Admin is functional and has gone through a major visual QA/polish pass. The custom dashboard, live stats, order pages, media/downloads page, users/customers split, subscribers page, sidebar active states, and order detail pages are now working or very close to locked. The Orders detail blank-page issue was traced to a Neon/Payload locked-document relation-table schema mismatch and repaired with `docs/PAYLOAD_LOCKED_DOCUMENTS_SCHEMA_PATCH.md`. Subscriber opt-in now displays `Yes`/`No` instead of raw booleans. The remaining admin polish item is verifying Payload native UI styling after the latest CSS fixes, especially row checkboxes and logout notification color.
+**Current status:** Payload Admin is functional and has gone through major visual QA/polish. Stripe sandbox checkout is working again after the fulfillment recovery. Missing order recovery was confirmed through `/api/reconcile-stripe-order`; Order database ID `17` was created as customer-facing order number `26-0009` with 4 order items. Billing address capture is working. Shipping address capture is now working after updating fulfillment to read Stripe shipping data from both `session.shipping_details` and the newer `session.collected_information.shipping_details` location.
 
-**Current active concern:** The immediate next work is verification and cleanup, not redesign. Verify the latest admin CSS changes after deploy, confirm row-selection checkboxes match the Select All checkbox, confirm the logout notification is dark teal, and then consolidate the layered admin CSS files so future fixes do not fight older overrides. Database SQL patches and production cleanup/migration work still matter before launch.
+**Current active concern:** The immediate next work is verification and cleanup. Confirm new checkouts create orders automatically without needing manual reconcile, confirm billing/shipping addresses populate in both Orders and Customer Addresses, confirm customer records link cleanly, and rotate `PAYLOAD_SETUP_SECRET` because it was exposed in screenshots/URLs during manual reconciliation. Mailjet is still under review, so email delivery should be treated as pending.
 
 **Current desired admin navigation direction:**
 
@@ -118,7 +119,7 @@ Privacy Requests
 Log out
 ```
 
-**Current next actions:** Deploy/pull latest website commits, hard-refresh admin, verify row checkboxes, logout notification, Subscribers Yes/No display, sidebar active states, and Media/Orders/Users/Customers pages. Then consolidate admin CSS, replace manual Neon SQL patches with proper migrations, remove temporary setup/debug routes, rotate/delete setup secret, and begin the Client Portal foundation.
+**Current next actions:** Verify latest Vercel deploy, run one fresh Stripe sandbox checkout with different billing/shipping addresses, confirm Order, Order Details, Customer, and Customer Address records, rotate the exposed setup secret, confirm/run any remaining Neon SQL patches, remove temporary setup/debug routes before launch, then begin the Client Portal foundation.
 
 ---
 
