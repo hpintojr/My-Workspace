@@ -28,11 +28,11 @@ Build a children's publishing business around the Benny & Penny medical adventur
 
 ## Current Status
 
-The project is now in **admin/compliance verification and client-portal preparation**.
+The project is now in **admin polish verification and launch-readiness cleanup**.
 
-Payload Admin is functional. The previous blank-center-panel blocker is resolved. The public book catalog reads from Payload/Neon with fallback. Stripe sandbox checkout is working enough to create order-related Payload records. The admin dashboard is now connected to live data. Contact/newsletter opt-in disclosures, legal/privacy pages, Privacy Requests, and Consent Logs have been added in code.
+Payload Admin is functional. The public book catalog reads from Payload/Neon with fallback. Stripe sandbox checkout is working enough to create order-related Payload records. The admin dashboard is connected to live data. Contact/newsletter opt-in disclosures, legal/privacy pages, Privacy Requests, and Consent Logs have been added in code.
 
-The immediate blocker is not design. The immediate blocker is verifying deployment and database schema after the newest changes.
+The late-session admin QA pass fixed or improved sidebar active states, Users vs Customers routing, Media access, Orders detail access, Subscribers Yes/No boolean display, Payload row checkbox styling, and notification/toast styling. The immediate blocker is now final verification after deploy and cleanup of the layered admin CSS.
 
 ## Completed / Confirmed
 
@@ -52,9 +52,8 @@ The immediate blocker is not design. The immediate blocker is verifying deployme
 - Payload API confirmed it can read 9 Books records.
 - Public `/books` and `/books/[slug]` pages read from Payload/Neon with a local fallback.
 
-### Admin Dashboard
+### Admin Dashboard and Admin Panel
 
-- Admin branding/theme work is active.
 - Admin dashboard is connected to live Payload data.
 - Dashboard data sources include:
   - Orders.
@@ -70,6 +69,9 @@ The immediate blocker is not design. The immediate blocker is verifying deployme
 - Recent Orders table was cleaned up.
 - Recent Order Details table was removed from dashboard because it felt redundant.
 - System Status checks were restored.
+- Dashboard expands when sidebar collapses.
+- Dashboard search icon and top spacing were visually adjusted.
+- Breadcrumb/profile/avatar clutter was removed from the dashboard.
 
 Sales graph behavior:
 
@@ -86,20 +88,36 @@ Last 120 days → monthly
 This Past Year → monthly
 ```
 
-Current requested sidebar:
+Current admin sidebar direction:
 
 ```txt
 Dashboard
 Adventure Hub
 Orders
-Order Details
-Customer Addresses
+Customers
+Books
+Media
 Subscribers
-Support
+Users
+System Status Check
 Privacy Requests
-Consent Logs
-Settings
+Log out
 ```
+
+Admin polish completed or in verification:
+
+- Sidebar active state now follows the current route instead of always highlighting Dashboard.
+- Native Payload sidebar/current-page labels are hidden.
+- Sidebar branding is centered with the rest of the nav elements.
+- Customers and Users are separated by route behavior:
+  - Customers = Users collection filtered to `role = customer`.
+  - Users = full Users collection.
+- Users collection labels were changed from Settings to Users.
+- Media link works by exposing the Downloads collection as Media.
+- Subscribers `Marketing Opt In` displays `Yes`/`No` instead of raw `true`/`false`.
+- Yes/No styling was softened to match regular collection table typography.
+- Row checkbox styling was debugged and narrowed away from broad select/button styling.
+- Logout notification/toast styling has a global dark-teal override and needs final deploy verification.
 
 ### Stripe / Orders
 
@@ -108,6 +126,7 @@ Settings
 - Orders are created.
 - Order Details are stored separately in `order-items`.
 - Customer Addresses are structured with billing/shipping type.
+- Order detail pages are now working after fixing the Payload locked-document schema issue.
 - New order ID sequence was changed to yearly sequence style:
 
 ```txt
@@ -153,24 +172,27 @@ Important legal/business gap:
 
 ## Active Problem
 
-The active problem is **verification after schema and compliance changes**.
+The active problem is **verification after admin polish, schema patches, and deployment**.
 
-The following SQL patches need to be run in Neon before relying on the newest admin records:
+The following SQL patches need to be run or confirmed in Neon before relying on the newest admin/compliance records:
 
 ```txt
 docs/CONTACT_OPT_IN_SCHEMA_PATCH.md
 docs/PRIVACY_COMPLIANCE_SCHEMA_PATCH.md
+docs/PAYLOAD_LOCKED_DOCUMENTS_SCHEMA_PATCH.md
 ```
 
-After those patches:
+After those patches and latest deploy:
 
 ```txt
 Redeploy main
+Hard-refresh admin and login pages
+Test admin collection styling and native Payload controls
 Test contact form
 Test newsletter signup
 Test privacy request form
 Test admin Consent Logs and Privacy Requests
-Fix any schema/build/runtime issues
+Fix any schema/build/runtime/admin CSS issues
 ```
 
 ## Vercel Deployment Workflow
@@ -187,6 +209,7 @@ Recommended future commit grouping:
 ```txt
 1 commit = schema/compliance verification fixes
 1 commit = setup/debug route removal
+1 commit = admin CSS consolidation
 1 commit = client portal foundation
 1 commit = R2/signed delivery integration
 1 commit = workspace/docs update
@@ -262,7 +285,7 @@ Seeded books:
 - Subscribers.
 - Orders.
 - OrderItems.
-- Downloads.
+- Downloads / Media.
 - SupportTickets.
 - SupportMessages.
 - AccessGrants.
@@ -288,17 +311,18 @@ These must be removed before production launch. After removal, rotate/delete `PA
 
 ## Next Best Actions
 
-1. Run Neon SQL patches.
-2. Redeploy `main` for `hpintojr/bennyandpennyadventures`.
-3. Test `/contact`.
-4. Test newsletter signup and `/thank-you?email=...`.
-5. Test `/privacy/requests`.
-6. Test admin collections:
-   - `privacy-requests`
-   - `consent-logs`
-   - `orders`
-   - `order-items`
-   - `customer-addresses`
-7. Fix any deploy/schema/build errors.
-8. Remove setup/debug routes and rotate/delete setup secret.
-9. Start the Client Portal foundation.
+1. Pull/deploy latest `hpintojr/bennyandpennyadventures` commits.
+2. Hard-refresh admin and login pages.
+3. Verify admin polish:
+   - Row checkboxes match Select All.
+   - Logout notification is dark teal.
+   - Subscribers opt-in shows Yes/No with normal font.
+   - Sidebar active states are correct.
+   - Orders, Media, Users, and Customers all open correctly.
+4. Run or confirm Neon SQL patches:
+   - `docs/CONTACT_OPT_IN_SCHEMA_PATCH.md`.
+   - `docs/PRIVACY_COMPLIANCE_SCHEMA_PATCH.md`.
+   - `docs/PAYLOAD_LOCKED_DOCUMENTS_SCHEMA_PATCH.md`.
+5. Consolidate admin CSS files after final QA.
+6. Remove setup/debug routes and rotate/delete setup secret.
+7. Start the Client Portal foundation.
