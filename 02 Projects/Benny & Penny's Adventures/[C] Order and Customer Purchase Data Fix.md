@@ -16,6 +16,13 @@ PR: #5 — Tie Stripe purchase data to orders and customers
 Merged commit: 3f86dd82415718a64db9fbf8fa2689d07963bf09
 ```
 
+Customer address history was added directly to the Customer/User file on `main`.
+
+```txt
+Commit: 6d206eee9f24325724eb9e69bee10ec9c6ada218
+Change: collections/Users.ts now includes addressHistory join → customer-addresses.customer
+```
+
 Important: The production Neon order schema patch still needs to be run or confirmed before relying on new Stripe fulfillment data fields.
 
 ## Customer File Requirement — Source of Truth
@@ -135,21 +142,24 @@ orders.customer → users.id
 
 Do not create a separate manual purchase-history table unless the join field fails and another approach is needed.
 
-### Customer File Address History — Needed Next
+### Customer File Address History
 
-The Customer file should also surface addresses linked through:
+`collections/Users.ts` now includes an `addressHistory` join field.
+
+This is intended to show addresses linked through:
 
 ```txt
 customer-addresses.customer → users.id
 ```
 
-Needed next admin improvement:
+This should surface:
 
-- Add a clear Addresses section to the Customer file.
-- Show billing/mailing address records.
-- Show shipping address records.
-- Keep address records in `customer-addresses` as the source of truth.
-- Make the Customer file easy to review without leaving the page.
+- Billing / mailing address records.
+- Shipping address records.
+- Address phone numbers.
+- Default shipping flag.
+
+Address records should remain in `customer-addresses` as the source of truth.
 
 ### Neon SQL Patch
 
@@ -255,4 +265,4 @@ After production deploy and SQL patch confirmation:
 - The Order record stores enough purchase data for admin review and future customer-service workflows.
 - The client portal should later read from the same Orders, Order Details, and Customer Addresses data.
 - Existing sandbox orders may not have the new fields unless backfilled or recreated through a fresh checkout.
-- If Payload's join field does not render as expected in admin, the fallback approach is to build a custom customer purchase-history component or store a denormalized summary on the customer record.
+- If Payload's join field does not render as expected in admin, the fallback approach is to build a custom customer detail/admin component or store a denormalized summary on the customer record.
