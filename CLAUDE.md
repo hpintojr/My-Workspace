@@ -98,9 +98,9 @@ These rules apply to Gemini, ChatGPT, Claude, and future AI assistants working f
 02 Projects/Benny & Penny's Adventures/[C] Implementation Notes — Contact Forms, Legal Pages, R2 Ebook Delivery.md
 ```
 
-**Current status:** Payload Admin is functional and the dashboard has been connected to live Payload data. Stripe sandbox/order fulfillment is working enough to create Orders, Order Details, and Customer Addresses. The admin dashboard now has live stats, an interactive sales graph, recent orders, database health, latest subscribers, and system status. Contact/newsletter opt-in disclosures, privacy/state/TCPA pages, Privacy Requests, and Consent Logs have been added in code.
+**Current status:** Payload Admin is functional and has gone through a major visual QA/polish pass. The custom dashboard, live stats, order pages, media/downloads page, users/customers split, subscribers page, sidebar active states, and order detail pages are now working or very close to locked. The Orders detail blank-page issue was traced to a Neon/Payload locked-document relation-table schema mismatch and repaired with `docs/PAYLOAD_LOCKED_DOCUMENTS_SCHEMA_PATCH.md`. Subscriber opt-in now displays `Yes`/`No` instead of raw booleans. The remaining admin polish item is verifying Payload native UI styling after the latest CSS fixes, especially row checkboxes and logout notification color.
 
-**Current active concern:** The latest website commits need to be redeployed and the new Neon SQL patches must be run before the new consent/privacy storage can be trusted. The immediate next work is verification, not design: run schema patches, redeploy `main`, test forms/admin collections, then fix any schema/build issues.
+**Current active concern:** The immediate next work is verification and cleanup, not redesign. Verify the latest admin CSS changes after deploy, confirm row-selection checkboxes match the Select All checkbox, confirm the logout notification is dark teal, and then consolidate the layered admin CSS files so future fixes do not fight older overrides. Database SQL patches and production cleanup/migration work still matter before launch.
 
 **Current desired admin navigation direction:**
 
@@ -108,16 +108,17 @@ These rules apply to Gemini, ChatGPT, Claude, and future AI assistants working f
 Dashboard
 Adventure Hub
 Orders
-Order Details
-Customer Addresses
+Customers
+Books
+Media
 Subscribers
-Support
+Users
+System Status Check
 Privacy Requests
-Consent Logs
-Settings
+Log out
 ```
 
-**Current next actions:** Run the Neon SQL patches from `docs/CONTACT_OPT_IN_SCHEMA_PATCH.md` and `docs/PRIVACY_COMPLIANCE_SCHEMA_PATCH.md`, redeploy `hpintojr/bennyandpennyadventures` from `main`, test `/contact`, newsletter signup, `/privacy/requests`, `/admin/collections/privacy-requests`, `/admin/collections/consent-logs`, and the order/admin collections. After verification, begin the Client Portal foundation.
+**Current next actions:** Deploy/pull latest website commits, hard-refresh admin, verify row checkboxes, logout notification, Subscribers Yes/No display, sidebar active states, and Media/Orders/Users/Customers pages. Then consolidate admin CSS, replace manual Neon SQL patches with proper migrations, remove temporary setup/debug routes, rotate/delete setup secret, and begin the Client Portal foundation.
 
 ---
 
