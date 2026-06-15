@@ -1,7 +1,7 @@
 ---
 type: problems
 project: Benny & Penny's Adventures
-updated: 2026-06-14
+updated: 2026-06-15
 ---
 
 # Benny & Penny's Adventures Overview
@@ -14,7 +14,7 @@ Build a children's publishing business around the Benny & Penny medical adventur
 - Digital ebook sales.
 - Audiobook/audio sales.
 - Print-on-demand book sales.
-- Customer/member area.
+- Customer portal / member area.
 - Payload CMS admin backend.
 - Email list and contact management.
 - Private digital/audio fulfillment.
@@ -28,11 +28,30 @@ Build a children's publishing business around the Benny & Penny medical adventur
 
 ## Current Status
 
-The project is now in **admin polish verification and launch-readiness cleanup**.
+The project has moved from admin/order stabilization into the first **Client Portal** build.
 
-Payload Admin is functional. The public book catalog reads from Payload/Neon with fallback. Stripe sandbox checkout is working enough to create order-related Payload records. The admin dashboard is connected to live data. Contact/newsletter opt-in disclosures, legal/privacy pages, Privacy Requests, and Consent Logs have been added in code.
+Payload Admin is functional. Stripe sandbox checkout is working. Fresh checkout testing confirmed the thank-you page can show the real customer-facing order number. Billing and shipping are saving correctly. Orders, order details, customer addresses, and customer records are now usable enough to power the portal.
 
-The late-session admin QA pass fixed or improved sidebar active states, Users vs Customers routing, Media access, Orders detail access, Subscribers Yes/No boolean display, Payload row checkbox styling, and notification/toast styling. The immediate blocker is now final verification after deploy and cleanup of the layered admin CSS.
+The Client Portal foundation is now live in code:
+
+```txt
+/portal
+/portal/login
+/portal/orders
+/portal/addresses
+/portal/library
+```
+
+Current portal status:
+
+- Customer login works through Payload auth when a password exists.
+- `/portal/orders` shows live signed-in customer order history.
+- `/portal/addresses` shows live billing/shipping addresses.
+- `/portal/library` shows purchased books grouped by book and format.
+- Library access/status buttons exist for PDF/EPUB, audiobook, paperback, and hardcover.
+- `/api/portal/downloads` exists as a protected endpoint foundation for future private file delivery.
+
+Digital delivery is not complete yet. PDF/EPUB and audiobook buttons currently show access placeholders until R2/private signed file delivery and active `downloads` records are wired.
 
 ## Completed / Confirmed
 
@@ -47,7 +66,6 @@ The late-session admin QA pass fixed or improved sidebar active states, Users vs
 - Neon Postgres database created and connected.
 - Payload Admin `/admin` loads and admin login works.
 - First admin user was created.
-- Payload Admin collection center panels render.
 - Books catalog seeded into Neon/Payload with 9 records.
 - Payload API confirmed it can read 9 Books records.
 - Public `/books` and `/books/[slug]` pages read from Payload/Neon with a local fallback.
@@ -55,38 +73,23 @@ The late-session admin QA pass fixed or improved sidebar active states, Users vs
 ### Admin Dashboard and Admin Panel
 
 - Admin dashboard is connected to live Payload data.
-- Dashboard data sources include:
-  - Orders.
-  - Order Items.
-  - Customer Addresses.
-  - Subscribers.
-  - Support Tickets.
-  - Books.
-  - Users.
+- Dashboard data sources include Orders, Order Items, Customer Addresses, Subscribers, Support Tickets, Books, and Users.
 - Dashboard cards show live revenue/orders/items/subscribers.
 - Sales Performance graph is interactive by dropdown range.
-- Database Health card is approved for now.
 - Recent Orders table was cleaned up.
 - Recent Order Details table was removed from dashboard because it felt redundant.
 - System Status checks were restored.
 - Dashboard expands when sidebar collapses.
 - Dashboard search icon and top spacing were visually adjusted.
 - Breadcrumb/profile/avatar clutter was removed from the dashboard.
-
-Sales graph behavior:
-
-```txt
-Today → hourly
-Last 3 days → daily
-Last 7 days → daily
-Last 14 days → weekly
-Last 30 days → weekly
-Last 45 days → weekly
-Last 60 days → weekly
-Last 90 days → monthly
-Last 120 days → monthly
-This Past Year → monthly
-```
+- Sidebar active state now follows the current route instead of always highlighting Dashboard.
+- Native Payload sidebar/current-page labels are hidden.
+- Sidebar branding is centered with the rest of the nav elements.
+- Customers and Users are separated by route behavior.
+- Media link works by exposing the Downloads collection as Media.
+- Subscribers `Marketing Opt In` displays `Yes`/`No` instead of raw `true`/`false`.
+- Row checkbox styling was debugged and narrowed away from broad select/button styling.
+- Logout notification/toast styling has a global dark-teal override and needs final deploy verification.
 
 Current admin sidebar direction:
 
@@ -104,30 +107,16 @@ Privacy Requests
 Log out
 ```
 
-Admin polish completed or in verification:
-
-- Sidebar active state now follows the current route instead of always highlighting Dashboard.
-- Native Payload sidebar/current-page labels are hidden.
-- Sidebar branding is centered with the rest of the nav elements.
-- Customers and Users are separated by route behavior:
-  - Customers = Users collection filtered to `role = customer`.
-  - Users = full Users collection.
-- Users collection labels were changed from Settings to Users.
-- Media link works by exposing the Downloads collection as Media.
-- Subscribers `Marketing Opt In` displays `Yes`/`No` instead of raw `true`/`false`.
-- Yes/No styling was softened to match regular collection table typography.
-- Row checkbox styling was debugged and narrowed away from broad select/button styling.
-- Logout notification/toast styling has a global dark-teal override and needs final deploy verification.
-
 ### Stripe / Orders
 
-- Stripe checkout works in sandbox enough to generate Payload order data.
+- Stripe checkout works in sandbox.
 - Cart clears after checkout success.
 - Orders are created.
 - Order Details are stored separately in `order-items`.
 - Customer Addresses are structured with billing/shipping type.
-- Order detail pages are now working after fixing the Payload locked-document schema issue.
-- New order ID sequence was changed to yearly sequence style:
+- Order detail pages are working after fixing the Payload locked-document schema issue.
+- Stripe fulfillment now reads shipping from both the old location and Stripe's newer `collected_information.shipping_details` location.
+- Order number sequence uses yearly sequence style:
 
 ```txt
 26-0001
@@ -135,7 +124,82 @@ Admin polish completed or in verification:
 26-0003
 ```
 
-Existing sandbox records may still show older `BP-...` IDs unless backfilled.
+Confirmed clean checkout result:
+
+```txt
+Order #26-0011 has been created.
+```
+
+Portal testing also showed customer order:
+
+```txt
+Order #26-0012
+Total: $80.96
+Status: paid
+```
+
+Current product tax decision:
+
+```txt
+Do not collect tax for now.
+Stripe Automatic Tax is OFF by default.
+Tax remains $0 for current exempt-product assumption.
+```
+
+### Client Portal
+
+Built routes:
+
+```txt
+/portal
+/portal/login
+/portal/orders
+/portal/addresses
+/portal/library
+```
+
+Built APIs:
+
+```txt
+/api/portal/orders
+/api/portal/addresses
+/api/portal/library
+/api/portal/downloads
+```
+
+Portal data source approach:
+
+```txt
+users = customers/auth
+orders = receipt/order history
+order-items = purchased formats
+customer-addresses = billing/shipping records
+downloads = future digital/audiobook delivery records
+```
+
+Portal pages now do the following:
+
+- `/portal` gives customer account dashboard cards.
+- `/portal/login` signs customers in through Payload auth.
+- `/portal/orders` shows order receipt/accounting view.
+- `/portal/addresses` shows billing and shipping addresses.
+- `/portal/library` shows purchased books and owned formats.
+
+My Orders vs My Library distinction:
+
+```txt
+My Orders = receipts, totals, shipping, payment/order status.
+My Library = books and formats the customer owns or can access.
+```
+
+Current My Library status buttons:
+
+```txt
+PDF / EPUB → PDF / EPUB Access Coming Soon
+Audiobook → Audiobook Access Coming Soon
+Paperback → Paperback Order Recorded
+Hardcover → Hardcover Order Recorded
+```
 
 ### Contact, Newsletter, Legal, and Compliance
 
@@ -145,15 +209,15 @@ Existing sandbox records may still show older `BP-...` IDs unless backfilled.
 - Contact form includes optional email opt-in.
 - Contact form includes optional SMS opt-in with TCPA-style language.
 - Contact form stores consent proof fields when schema is available.
-- Newsletter form now requires email opt-in.
+- Newsletter form requires email opt-in.
 - Newsletter signup logs consent events.
-- Newsletter thank-you page now shows signup-specific copy instead of order copy.
+- Newsletter thank-you page shows signup-specific copy instead of order copy.
 - Privacy Request form added.
 - Consent Logs collection added.
 - Privacy Requests collection added.
 - Footer legal links expanded.
 
-Legal/compliance pages now include:
+Legal/compliance pages:
 
 ```txt
 /privacy
@@ -172,28 +236,18 @@ Important legal/business gap:
 
 ## Active Problem
 
-The active problem is **verification after admin polish, schema patches, and deployment**.
+The active problem is now **finishing the Client Portal**, especially digital delivery.
 
-The following SQL patches need to be run or confirmed in Neon before relying on the newest admin/compliance records:
+The portal can show orders, addresses, and library ownership. It cannot yet deliver private PDF/EPUB/audiobook files.
 
-```txt
-docs/CONTACT_OPT_IN_SCHEMA_PATCH.md
-docs/PRIVACY_COMPLIANCE_SCHEMA_PATCH.md
-docs/PAYLOAD_LOCKED_DOCUMENTS_SCHEMA_PATCH.md
-```
+Current blockers for portal completion:
 
-After those patches and latest deploy:
-
-```txt
-Redeploy main
-Hard-refresh admin and login pages
-Test admin collection styling and native Payload controls
-Test contact form
-Test newsletter signup
-Test privacy request form
-Test admin Consent Logs and Privacy Requests
-Fix any schema/build/runtime/admin CSS issues
-```
+- Actual PDF/EPUB/audiobook files need to be prepared/uploaded.
+- Private storage/signed delivery needs to be wired, likely Cloudflare R2.
+- `downloads` records need to be created/automated for customers.
+- Library access buttons need to connect to active `downloads` records.
+- Password reset/account activation emails are pending Mailjet approval.
+- Customer logout/profile/support flows still need to be built.
 
 ## Vercel Deployment Workflow
 
@@ -207,11 +261,11 @@ Vercel is back to normal working conditions, but the workflow decision remains:
 Recommended future commit grouping:
 
 ```txt
-1 commit = schema/compliance verification fixes
-1 commit = setup/debug route removal
+1 commit = client portal data/display fix
+1 commit = download/R2 delivery integration
+1 commit = customer support workflow
 1 commit = admin CSS consolidation
-1 commit = client portal foundation
-1 commit = R2/signed delivery integration
+1 commit = setup/debug route removal
 1 commit = workspace/docs update
 ```
 
@@ -221,60 +275,6 @@ Recommended future commit grouping:
 - Audiobook: `$21.99`.
 - Paperback: `$17.99`.
 - Hardcover: `$24.99`.
-
-## Payload Books Data Requirements
-
-The Books collection supports the current public product pages.
-
-Required fields:
-
-```txt
-number
-slug
-title
-topic
-ages
-pages
-badge
-status
-shortDescription
-longDescription
-coverImage
-coverImagePath
-pagePreviewOne
-pagePreviewTwo
-pdfPath
-epubPath
-audioPath
-priceDigital
-priceAudiobook
-pricePaperback
-priceHardcover
-digitalDescription
-audiobookDescription
-paperbackDescription
-hardcoverDescription
-pdfObjectKey
-epubObjectKey
-audiobookObjectKey
-stripeLookupKey
-stripeDigitalPriceId
-stripeAudiobookPriceId
-stripePaperbackPriceId
-stripeHardcoverPriceId
-```
-
-Seeded books:
-
-1. Benny & Penny's Home Infusion Day.
-2. Benny and Penny's Port Adventure.
-3. Benny & Penny's PICC Line Adventure.
-4. Benny & Penny's Special Line Adventure.
-5. Benny & Penny's MRI Adventure.
-6. Benny & Penny's Hospital Sleepover.
-7. Benny & Penny's Ambulance Adventure.
-8. Benny & Penny's Surgery Day.
-9. Benny & Penny's Lab Draw Adventure.
 
 ## Current Payload Collections
 
@@ -296,33 +296,52 @@ Seeded books:
 
 ## Temporary Setup / Debug Routes
 
-Temporary setup/debug routes were created to bootstrap and inspect the Payload/Neon setup:
+Temporary setup/debug/reconcile routes exist or have existed to bootstrap and repair Payload/Neon/Stripe setup.
+
+Known temporary route categories:
 
 ```txt
-/api/setup-payload
-/api/setup-payload-preferences
-/api/setup-payload-catalog
-/api/setup-payload-system
-/api/debug-books
-/api/debug-payload-books
+setup routes
+debug routes
+manual Stripe reconciliation route
 ```
 
-These must be removed before production launch. After removal, rotate/delete `PAYLOAD_SETUP_SECRET`.
+These must be removed or locked down before production launch.
+
+Hamilton explicitly deferred rotating `PAYLOAD_SETUP_SECRET` until after the Client Portal is completed. Do not keep pushing it during active portal build work. Remind him after portal completion.
 
 ## Next Best Actions
 
-1. Pull/deploy latest `hpintojr/bennyandpennyadventures` commits.
-2. Hard-refresh admin and login pages.
-3. Verify admin polish:
-   - Row checkboxes match Select All.
-   - Logout notification is dark teal.
-   - Subscribers opt-in shows Yes/No with normal font.
-   - Sidebar active states are correct.
-   - Orders, Media, Users, and Customers all open correctly.
-4. Run or confirm Neon SQL patches:
-   - `docs/CONTACT_OPT_IN_SCHEMA_PATCH.md`.
-   - `docs/PRIVACY_COMPLIANCE_SCHEMA_PATCH.md`.
-   - `docs/PAYLOAD_LOCKED_DOCUMENTS_SCHEMA_PATCH.md`.
-5. Consolidate admin CSS files after final QA.
-6. Remove setup/debug routes and rotate/delete setup secret.
-7. Start the Client Portal foundation.
+1. Verify `/portal/library` and access/status buttons after deploy.
+2. Add customer logout button/state.
+3. Add account/profile page.
+4. Prepare first real PDF/EPUB/audiobook files for Book 1.
+5. Wire private file delivery with signed links.
+6. Connect Library buttons to active Downloads records.
+7. Add customer support page/form connected to Support Tickets.
+8. Add password reset/account activation once Mailjet is approved.
+9. Confirm/run any remaining Neon SQL patches.
+10. Consolidate admin CSS files after final QA.
+11. Remove temporary setup/debug/reconcile routes before launch.
+12. After Client Portal completion, remind Hamilton to rotate `PAYLOAD_SETUP_SECRET`.
+
+## Launch Blockers
+
+### Business
+
+- PO Box or business mailing address.
+- DBA.
+- Business bank account.
+- Stripe live account readiness.
+- Mailjet approval/configuration.
+- Attorney review of legal/compliance pages.
+
+### Technical
+
+- Client Portal digital delivery not finished.
+- Password reset/account activation not finished.
+- Customer support portal not finished.
+- Private file delivery/R2 signed links not finished.
+- Neon SQL patches still need to be run/confirmed.
+- Temporary setup/debug/reconcile routes need cleanup before launch.
+- Admin CSS consolidation still recommended.
