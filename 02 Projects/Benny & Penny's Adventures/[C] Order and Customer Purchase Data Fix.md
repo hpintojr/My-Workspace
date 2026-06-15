@@ -7,6 +7,17 @@ status: active
 
 # Order and Customer Purchase Data Fix
 
+## Current Status
+
+PR #5 has been merged into `main`.
+
+```txt
+PR: #5 — Tie Stripe purchase data to orders and customers
+Merged commit: 3f86dd82415718a64db9fbf8fa2689d07963bf09
+```
+
+Important: The production Neon order schema patch still needs to be run or confirmed before relying on new Stripe fulfillment data fields.
+
 ## Reason for This Fix
 
 Hamilton identified that the current Payload order/customer admin records are missing important basic purchase data.
@@ -26,19 +37,10 @@ When a Stripe sandbox/live purchase completes, the admin should be able to open 
 
 The admin should also be able to open a Customer file and see the customer's linked purchase history.
 
-## Website PR
-
-Website repo:
+## Website Repo
 
 ```txt
 hpintojr/bennyandpennyadventures
-```
-
-Open PR:
-
-```txt
-#5 — Tie Stripe purchase data to orders and customers
-Branch: fix/order-customer-purchase-data-v2
 ```
 
 ## Code Changes in PR #5
@@ -101,9 +103,76 @@ Do not create a separate manual purchase-history table unless the join field fai
 
 This patch must be run or confirmed in Neon before the new fulfillment fields can be relied on.
 
+## Production SQL Patch
+
+Run this in the production Neon SQL editor if it has not already been run:
+
+```sql
+alter table if exists orders
+  add column if not exists customer_name varchar,
+  add column if not exists customer_phone varchar,
+  add column if not exists stripe_customer_id varchar,
+  add column if not exists subtotal numeric default 0,
+  add column if not exists tax_total numeric default 0,
+  add column if not exists shipping_total numeric default 0,
+  add column if not exists discount_total numeric default 0,
+  add column if not exists item_count numeric default 0,
+  add column if not exists items_summary varchar,
+  add column if not exists billing_address_name varchar,
+  add column if not exists billing_address_line1 varchar,
+  add column if not exists billing_address_line2 varchar,
+  add column if not exists billing_address_city varchar,
+  add column if not exists billing_address_state varchar,
+  add column if not exists billing_address_postal_code varchar,
+  add column if not exists billing_address_country varchar,
+  add column if not exists shipping_address_name varchar,
+  add column if not exists shipping_address_line1 varchar,
+  add column if not exists shipping_address_line2 varchar,
+  add column if not exists shipping_address_city varchar,
+  add column if not exists shipping_address_state varchar,
+  add column if not exists shipping_address_postal_code varchar,
+  add column if not exists shipping_address_country varchar;
+```
+
+## Verification SQL
+
+```sql
+select column_name
+from information_schema.columns
+where table_name = 'orders'
+  and column_name in (
+    'customer_name',
+    'customer_phone',
+    'stripe_customer_id',
+    'subtotal',
+    'tax_total',
+    'shipping_total',
+    'discount_total',
+    'item_count',
+    'items_summary',
+    'billing_address_name',
+    'billing_address_line1',
+    'billing_address_line2',
+    'billing_address_city',
+    'billing_address_state',
+    'billing_address_postal_code',
+    'billing_address_country',
+    'shipping_address_name',
+    'shipping_address_line1',
+    'shipping_address_line2',
+    'shipping_address_city',
+    'shipping_address_state',
+    'shipping_address_postal_code',
+    'shipping_address_country'
+  )
+order by column_name;
+```
+
+Expected result: 23 rows.
+
 ## Testing Checklist
 
-After PR #5 is merged/deployed and the SQL patch is run/confirmed:
+After production deploy and SQL patch confirmation:
 
 1. Run a Stripe sandbox checkout.
 2. Confirm the checkout completes successfully.
