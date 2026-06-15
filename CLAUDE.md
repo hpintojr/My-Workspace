@@ -42,9 +42,8 @@ These rules apply to Gemini, ChatGPT, Claude, and future AI assistants working f
 - When creating AI-authored files, prefix the filename with `[C]` unless the user asks otherwise.
 - Do not edit non-`[C]` user-authored notes without permission.
 - It is okay to freely update `[C]` files, daily logs, workspace instructions, and project planning files when the user asks for workspace updates.
-- Never commit real secrets, API keys, database URLs, passwords, setup secrets, or credentials.
-- If a secret was pasted in chat or visible in a screenshot, treat it as exposed and recommend rotation unless the user explicitly defers it.
-- For Benny & Penny, Hamilton explicitly deferred rotating `PAYLOAD_SETUP_SECRET` until after the Client Portal is completed. Do not keep pushing this during current build work. Remind him after the Client Portal has been completed.
+- Never commit real credentials, API keys, database URLs, passwords, or private tokens.
+- For Benny & Penny, Hamilton deferred credential cleanup until after the Client Portal is completed. Do not keep pushing that during current build work. Remind him after the Client Portal has been completed.
 
 ---
 
@@ -100,11 +99,12 @@ These rules apply to Gemini, ChatGPT, Claude, and future AI assistants working f
 02 Projects/Benny & Penny's Adventures/[C] Implementation Notes — Contact Forms, Legal Pages, R2 Ebook Delivery.md
 02 Projects/Benny & Penny's Adventures/[C] Order and Customer Purchase Data Fix.md
 02 Projects/Benny & Penny's Adventures/[C] Client Portal Build Notes.md
+02 Projects/Benny & Penny's Adventures/[C] Portal and Digital Delivery Implementation Notes.md
 ```
 
-**Current status:** Payload Admin is functional and Stripe sandbox checkout is working. Fresh checkout confirmed the thank-you page shows the real order number. Billing and shipping are saving correctly. The Client Portal foundation is now built and visible at `/portal`. Customer login works through Payload auth after a password is manually set. `/portal/orders` displays the signed-in customer's order history. `/portal/addresses` displays billing and shipping addresses. `/portal/library` displays purchased books grouped by book and format, with access/status buttons for PDF/EPUB, audiobook, paperback, and hardcover.
+**Current status:** Payload Admin is functional and Stripe sandbox checkout is working. Fresh checkout confirmed the thank-you page shows the real order number. Billing and shipping are saving correctly. The Client Portal is built and visible at `/portal`. Customer login works through Payload auth after a password is manually set. The portal now has a compact signed-in navigation bar with Portal Home, My Orders, My Library, Addresses, and Log out. Orders display in collapsible rows. Addresses show primary shipping, primary billing, and collapsed other saved addresses. Library displays purchased books and formats in collapsible rows.
 
-**Current active concern:** The portal is usable as an account shell and ownership view, but digital delivery is not fully wired yet. PDF/EPUB and audiobook access buttons currently show access/status placeholders. The protected `/api/portal/downloads` endpoint exists and is designed to validate customer ownership without exposing raw R2 keys, but signed R2 links/private delivery still need to be connected after files are uploaded. Mailjet is still under review, so password reset/account activation and customer email flows remain pending. `PAYLOAD_SETUP_SECRET` rotation remains intentionally deferred until after the Client Portal is completed.
+**Current active concern:** The next portal task is true Address Book management for Lulu/POD readiness: add/edit/default/archive saved addresses and keep frozen address snapshots on orders. Digital delivery is not fully wired yet. PDF/EPUB and audiobook access buttons currently show pending/status labels. Private delivery still needs to be connected after files are uploaded. Mailjet is still under review, so password reset/account activation and customer email flows remain pending.
 
 **Current desired admin navigation direction:**
 
@@ -122,7 +122,7 @@ Privacy Requests
 Log out
 ```
 
-**Current next actions:** Verify the latest portal deploy, test `/portal/orders`, `/portal/addresses`, and `/portal/library` after customer login, upload/prepare book files for PDF/EPUB/audiobook delivery, wire signed private file delivery, add customer-facing support workflow, then complete remaining launch cleanup. After the Client Portal is completed, remind Hamilton to rotate the exposed `PAYLOAD_SETUP_SECRET`.
+**Current next actions:** Verify the latest portal deploy, test the compact portal nav, collapsible Orders, collapsible Library, and improved Addresses page. Then build true Address Book management, account/profile, digital file preparation, private delivery, and customer support workflow. After the Client Portal is completed, remind Hamilton about deferred credential cleanup.
 
 ---
 
@@ -180,7 +180,7 @@ Daily logs should capture:
 - What broke or remains blocked.
 - Current known state.
 - Next actions in priority order.
-- Any secrets or credentials that were exposed and need rotation.
+- Any exposed credentials that need later cleanup.
 - Links/paths to important files changed.
 
 Daily logs belong in:
