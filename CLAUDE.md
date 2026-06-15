@@ -43,7 +43,8 @@ These rules apply to Gemini, ChatGPT, Claude, and future AI assistants working f
 - Do not edit non-`[C]` user-authored notes without permission.
 - It is okay to freely update `[C]` files, daily logs, workspace instructions, and project planning files when the user asks for workspace updates.
 - Never commit real secrets, API keys, database URLs, passwords, setup secrets, or credentials.
-- If a secret was pasted in chat or visible in a screenshot, treat it as exposed and recommend rotation.
+- If a secret was pasted in chat or visible in a screenshot, treat it as exposed and recommend rotation unless the user explicitly defers it.
+- For Benny & Penny, Hamilton explicitly deferred rotating `PAYLOAD_SETUP_SECRET` until after the Client Portal is completed. Do not keep pushing this during current build work. Remind him after the Client Portal has been completed.
 
 ---
 
@@ -101,7 +102,7 @@ These rules apply to Gemini, ChatGPT, Claude, and future AI assistants working f
 
 **Current status:** Payload Admin is functional and has gone through major visual QA/polish. Stripe sandbox checkout is working again after the fulfillment recovery. Missing order recovery was confirmed through `/api/reconcile-stripe-order`; Order database ID `17` was created as customer-facing order number `26-0009` with 4 order items. Billing address capture is working. Shipping address capture is now working after updating fulfillment to read Stripe shipping data from both `session.shipping_details` and the newer `session.collected_information.shipping_details` location.
 
-**Current active concern:** The immediate next work is verification and cleanup. Confirm new checkouts create orders automatically without needing manual reconcile, confirm billing/shipping addresses populate in both Orders and Customer Addresses, confirm customer records link cleanly, and rotate `PAYLOAD_SETUP_SECRET` because it was exposed in screenshots/URLs during manual reconciliation. Mailjet is still under review, so email delivery should be treated as pending.
+**Current active concern:** The immediate next work is verification and cleanup. Confirm new checkouts create orders automatically without needing manual reconcile, confirm billing/shipping addresses populate in both Orders and Customer Addresses, confirm customer records link cleanly, and continue toward the Client Portal foundation. Mailjet is still under review, so email delivery should be treated as pending. `PAYLOAD_SETUP_SECRET` rotation is intentionally deferred until after the Client Portal is completed.
 
 **Current desired admin navigation direction:**
 
@@ -119,7 +120,7 @@ Privacy Requests
 Log out
 ```
 
-**Current next actions:** Verify latest Vercel deploy, run one fresh Stripe sandbox checkout with different billing/shipping addresses, confirm Order, Order Details, Customer, and Customer Address records, rotate the exposed setup secret, confirm/run any remaining Neon SQL patches, remove temporary setup/debug routes before launch, then begin the Client Portal foundation.
+**Current next actions:** Verify latest Vercel deploy, run one fresh Stripe sandbox checkout with different billing/shipping addresses, confirm Order, Order Details, Customer, and Customer Address records, confirm/run any remaining Neon SQL patches, continue cleanup, and begin/finish the Client Portal foundation. After the Client Portal is completed, remind Hamilton to rotate the exposed `PAYLOAD_SETUP_SECRET`.
 
 ---
 
