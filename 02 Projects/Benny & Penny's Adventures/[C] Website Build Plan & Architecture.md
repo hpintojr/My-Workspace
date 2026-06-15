@@ -2,24 +2,26 @@
 type: build-plan
 project: Benny & Penny's Adventures
 updated: 2026-06-14
-status: admin dashboard and compliance infrastructure verification phase
+status: admin polish verification and launch cleanup phase
 ---
 
 # Website Build Plan & Architecture
 
 ## Current Status
 
-The public website, Payload CMS backend, Stripe sandbox/order data flow, admin dashboard, contact/newsletter consent handling, and privacy/TCPA page structure are now substantially built in code.
+The public website, Payload CMS backend, Stripe sandbox/order data flow, admin dashboard, contact/newsletter consent handling, privacy/TCPA page structure, and major admin panel workflow are now substantially built in code.
 
-The current phase is **verification and schema finalization**, not conceptual planning.
+The current phase is **admin polish verification, schema finalization, and launch cleanup**, not conceptual planning.
 
 Immediate priority:
 
 ```txt
-Run Neon SQL patches
-Redeploy main
-Test contact/newsletter/privacy request/admin data flows
-Fix any schema/build issues
+Pull/deploy latest admin fixes
+Hard-refresh admin/login pages
+Verify row checkboxes, logout notification, Subscribers Yes/No, sidebar active states
+Run or confirm Neon SQL patches
+Consolidate admin CSS
+Remove setup/debug routes
 Then start Client Portal foundation
 ```
 
@@ -50,8 +52,10 @@ Then start Client Portal foundation
 - Payload API can read the Books collection.
 - Payload Admin collection pages render.
 - Admin dashboard connected to live Payload data.
+- Orders detail pages open after resolving the Payload locked-documents schema mismatch.
+- Media page works after exposing the hidden Downloads collection as Media.
 
-### Admin Dashboard
+### Admin Dashboard and Admin UI
 
 Dashboard now pulls live data from:
 
@@ -98,14 +102,28 @@ Admin sidebar target:
 Dashboard
 Adventure Hub
 Orders
-Order Details
-Customer Addresses
+Customers
+Books
+Media
 Subscribers
-Support
+Users
+System Status Check
 Privacy Requests
-Consent Logs
-Settings
+Log out
 ```
+
+Admin UI polish status:
+
+- Dashboard is working and visually close to approved.
+- Sidebar active state follows the current route.
+- Native Payload sidebar/current-page labels are hidden.
+- Sidebar branding is centered.
+- Customers and Users split behavior is implemented.
+- Media link opens `/admin/collections/downloads`.
+- Subscribers `Marketing Opt In` renders as `Yes`/`No` instead of raw `true`/`false`.
+- Row checkbox styling was debugged after broad selectors affected Payload's `select-row` checkbox classes.
+- `opacity: revert !important` was removed from the row checkbox reset because it broke Payload's checkbox appearance.
+- Logout notification/toast has a global dark-teal override and needs final visual verification after deploy.
 
 ### Stripe / Commerce
 
@@ -150,16 +168,17 @@ Legal/compliance pages now include:
 
 ## Current Blocker
 
-The main blocker is now **database schema and deployment verification**.
+The main blocker is now **final verification and cleanup**.
 
-Before relying on the new compliance data, run the Neon SQL patches from the website repo:
+Before relying on new compliance/admin document data, run or confirm the Neon SQL patches from the website repo:
 
 ```txt
 docs/CONTACT_OPT_IN_SCHEMA_PATCH.md
 docs/PRIVACY_COMPLIANCE_SCHEMA_PATCH.md
+docs/PAYLOAD_LOCKED_DOCUMENTS_SCHEMA_PATCH.md
 ```
 
-Then redeploy `main` and verify the new collections/routes.
+Then redeploy `main` and verify the new collections/routes/admin UI.
 
 ## Locked Stack
 
@@ -190,7 +209,7 @@ Then redeploy `main` and verify the new collections/routes.
 - Subscribers.
 - Orders.
 - OrderItems.
-- Downloads.
+- Downloads / Media.
 - SupportTickets.
 - SupportMessages.
 - AccessGrants.
@@ -267,7 +286,7 @@ Seeded books:
 - [x] Define Subscribers collection.
 - [x] Define ContactSubmissions collection.
 - [x] Define Orders and OrderItems collections.
-- [x] Define Downloads collection.
+- [x] Define Downloads / Media collection.
 - [x] Define SupportTickets and SupportMessages collections.
 - [x] Define AccessGrants collection.
 - [x] Define AuditLogs collection.
@@ -277,9 +296,11 @@ Seeded books:
 - [x] Verify Payload Admin collection panels render.
 - [x] Add custom admin dashboard.
 - [x] Connect dashboard to live data.
-- [ ] Run latest Neon SQL patches for consent/privacy collections.
+- [x] Repair Payload locked-documents relationship columns for order detail access.
+- [ ] Run/latest verify Neon SQL patches for consent/privacy collections.
 - [ ] Replace temporary setup routes with proper migrations.
 - [ ] Remove temporary setup/debug routes.
+- [ ] Consolidate layered admin CSS files after final visual QA.
 
 ## Phase 2 — Contact, Newsletter, and Consent Management
 
@@ -353,18 +374,25 @@ Next major build phase after admin/compliance verification:
 
 ## Remaining Build Order
 
-1. Run the Neon SQL patches.
-2. Redeploy `main`.
-3. Test `/contact`, newsletter signup, `/privacy/requests`, and admin compliance collections.
-4. Verify dashboard graph, recent orders, system status, and sidebar after deploy.
-5. Fix any schema/build issues.
-6. Remove temporary setup/debug routes.
-7. Rotate/delete setup secret.
-8. Add business mailing address/PO box before marketing email campaigns.
-9. Start Client Portal foundation.
-10. Set up R2 and upload digital/audio files.
-11. Build signed delivery.
-12. Add Lulu Direct API later.
+1. Pull/deploy latest website commits.
+2. Hard-refresh admin/login pages.
+3. Verify admin polish:
+   - Row checkboxes match Select All.
+   - Logout notification is dark teal.
+   - Subscribers Yes/No display is normal weight.
+   - Sidebar active states are correct.
+   - Orders, Media, Users, and Customers open correctly.
+4. Run or confirm Neon SQL patches.
+5. Consolidate admin CSS files.
+6. Test `/contact`, newsletter signup, `/privacy/requests`, and admin compliance collections.
+7. Fix any schema/build issues.
+8. Remove temporary setup/debug routes.
+9. Rotate/delete setup secret.
+10. Add business mailing address/PO box before marketing email campaigns.
+11. Start Client Portal foundation.
+12. Set up R2 and upload digital/audio files.
+13. Build signed delivery.
+14. Add Lulu Direct API later.
 
 ## Launch Blockers
 
@@ -379,8 +407,9 @@ Next major build phase after admin/compliance verification:
 
 ### Technical
 
-- Neon SQL patches run.
+- Neon SQL patches run/confirmed.
 - Latest `main` redeployed and QA tested.
+- Admin CSS consolidated after final visual QA.
 - Temporary setup/debug routes removed.
 - Setup secret rotated/deleted.
 - Full contact/newsletter/privacy request flow verified.
