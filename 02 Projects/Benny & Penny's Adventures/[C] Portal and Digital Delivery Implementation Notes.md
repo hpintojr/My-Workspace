@@ -26,6 +26,8 @@ The goal is to let customers sign in, see their orders, see their billing/shippi
 ## Current Portal API Routes
 
 ```txt
+/api/portal/me
+/api/portal/logout
 /api/portal/orders
 /api/portal/addresses
 /api/portal/library
@@ -39,18 +41,31 @@ The goal is to let customers sign in, see their orders, see their billing/shippi
 - Public header includes `My Account`.
 - `/portal` shows customer account cards.
 - `/portal/login` signs customers in through Payload auth when the customer has a password.
+- Portal pages now show the signed-in customer and email.
+- Portal pages have a compact one-line navigation bar.
+- Customer can log out from the portal bar.
 - `/portal/orders` displays signed-in customer order history.
 - `/portal/addresses` displays signed-in customer billing and shipping addresses.
 - `/portal/library` displays purchased books and purchased formats.
 - Library shows status/access buttons per purchased format.
 
+### Portal Navigation
+
+The portal bar was redesigned from a stacked widget into a cleaner one-line desktop layout:
+
+```txt
+Signed in as [Customer Name] [email] | Portal Home | My Orders | My Library | Addresses | Log out
+```
+
+It highlights the active portal page in coral.
+
 ### Current Library Button Labels
 
 ```txt
-PDF / EPUB → PDF / EPUB Access Coming Soon
-Audiobook → Audiobook Access Coming Soon
-Paperback → Paperback Order Recorded
-Hardcover → Hardcover Order Recorded
+PDF / EPUB → Digital file pending
+Audiobook → Audio file pending
+Paperback → Paperback recorded
+Hardcover → Hardcover recorded
 ```
 
 ## Data Source Direction
@@ -69,17 +84,17 @@ downloads = future digital/audio delivery records
 
 ## Orders Page Logic
 
-`/portal/orders` should show the signed-in customer's order history.
+`/portal/orders` shows the signed-in customer's order history.
 
 Matching direction:
 
 ```txt
 orders.customer equals logged-in user ID
 OR
-orders.customerEmail equals logged-in user email
+orders.customerEmail matches logged-in user email
 ```
 
-This fallback matters because some older or repaired Stripe orders may have the email but not the relationship field populated perfectly.
+Order matching was widened to account for customer relationship differences, exact email, lowercase email, and email-like matching.
 
 The Orders page should behave like a receipt/accounting page.
 
@@ -96,9 +111,29 @@ It should show:
 - Total.
 - Shipping summary.
 
+### Current Orders UX
+
+Orders are now collapsible.
+
+Compact row:
+
+```txt
+Order number · status · date · format preview · total
+```
+
+Expanded view:
+
+```txt
+Purchased items
+Summary
+Shipping details
+```
+
+Newest order opens first by default.
+
 ## Addresses Page Logic
 
-`/portal/addresses` should show the signed-in customer's billing and shipping addresses.
+`/portal/addresses` shows the signed-in customer's billing and shipping addresses.
 
 Matching direction:
 
@@ -109,6 +144,54 @@ address snapshots from matching orders
 ```
 
 This fallback matters because some checkout data may exist on the order even if the reusable Customer Address record is missing.
+
+### Current Address UX
+
+The address page was cleaned up into a more manageable layout:
+
+```txt
+Primary Shipping Address
+Primary Billing Address
+Other saved addresses collapsed below
+```
+
+Duplicate addresses are filtered tighter so repeated checkout addresses do not clutter the portal.
+
+## Address Book Direction for Lulu POD
+
+Because future print products will use Lulu POD, the address book should become more than a read-only display.
+
+Recommended architecture:
+
+```txt
+Cart contains print/POD item
+→ require or select shipping address before Stripe payment
+→ backend asks Lulu for available shipping rates
+→ customer selects shipping option
+→ Stripe Checkout is created with the chosen shipping charge
+→ payment completes
+→ order is stored with frozen address snapshot
+→ POD job uses the same locked address/shipping choice
+```
+
+Address Book should eventually support:
+
+- Default Shipping Address.
+- Default Billing Address.
+- Other Saved Addresses.
+- Add New Address.
+- Edit Address.
+- Archive/Remove Address.
+- Address label such as Home, Work, Grandma, etc.
+- Type: Shipping, Billing, or Both.
+- Last used date.
+
+Important rule:
+
+```txt
+Orders store frozen address snapshots.
+Changing an address later should not rewrite old orders.
+```
 
 ## Library Page Logic
 
@@ -136,6 +219,27 @@ For each book, show:
 - Quantity per format.
 - Related order numbers.
 - Access/status button per format.
+
+### Current Library UX
+
+My Library is now collapsible.
+
+Compact row:
+
+```txt
+Book title · owned formats · latest purchase date
+```
+
+Expanded view:
+
+```txt
+Hardcover
+Paperback
+Audiobook
+PDF / EPUB
+Order references
+Status buttons
+```
 
 ## Digital Delivery Direction
 
@@ -189,7 +293,7 @@ Until Mailjet is approved, customer login requires manually set passwords or a n
 
 ### Portal UX
 
-- Add customer logout.
+- Build true Address Book add/edit/default/archive behavior.
 - Add account/profile page.
 - Add customer support page.
 - Add customer support form connected to Support Tickets.
@@ -222,43 +326,35 @@ Add customer portal orders API
 c1af73543cb769c2c0c8b07e53a62706a4ea1cef
 Add customer portal addresses API
 
-6608e830d6e1638a36dd092c4400a30a948a5a1b
-Add live customer portal orders component
-
-0cc6e6aa217f24211fda9ef57bbd15ea28697f6a
-Add live customer portal addresses component
-
-6ff85b3c9fb588329764df780f979a783bdbfe49
-Wire portal orders page to live data
-
-0520fbbe5d29c74d34d19626d052bdd63476b8b3
-Wire portal addresses page to live data
-
-116478fbd4546fd043a409c101b15ebbef011a64
-Find portal orders by customer email fallback
-
-2954afea683d3f8067a4cff441fd6a53305476c1
-Add order snapshot fallback for portal addresses
-
 5e76602ffadc0ec17cab21c9a5094d5e2676e722
 Add customer portal library API
-
-519d5e26d198b559db03432a25f6baf8481441e2
-Add live customer portal library component
-
-cd6030387d8f0bac7ace6bf2094b85af56a175eb
-Add customer portal library page
-
-27a97b92e7d3475ff024221ee82485fabb53af12
-Point portal library card to library page
 
 1fd84d23ce9269c46b015f9b786a9fc94d4b616a
 Add safe customer portal download endpoint
 
-cb803a59cf71e6f595f43ae30e68e53e25aa97c8
-Add library access buttons
+b471627d81aeba0b11f0820353552dcd5643457d
+Clean up portal navigation bar
+
+8f9d7de53cc841c0de0e89ac64a787e86dc3a283
+Make portal orders expandable
+
+f2c77aebb97a1bd8d6bcc031c6d67c696bfeb923
+Improve portal address management layout
+
+d1c507d93944e04153cff732a6261a1b6ff7497c
+Make portal library expandable
 ```
 
 ## Next Best Action
 
-Build customer logout and account/profile next, then move into digital file preparation and private delivery wiring.
+Build true Address Book management next:
+
+```txt
+Add New Address
+Edit Address
+Default Shipping
+Default Billing
+Archive/Remove Address
+```
+
+Then add account/profile and continue into digital file preparation and private delivery wiring.
