@@ -80,11 +80,13 @@ Visitor enters email
 - Newsletter form now requires an email opt-in checkbox.
 - Newsletter signup API logs an `email-marketing` event to `consent-logs`.
 - `/thank-you?email=...` now shows newsletter-specific copy instead of checkout/order copy.
+- Admin Subscribers list renders `Marketing Opt In` as `Yes`/`No` instead of raw `true`/`false`.
 
 ### Requirements Still Open
 
 - Confirm newsletter signup works after redeploy and Neon patch.
 - Confirm Consent Logs record source, email, IP address, user agent, consent text, and related subscriber ID.
+- Confirm Subscriber Yes/No display remains normal table font after final admin CSS verification.
 - Support CSV export later.
 - Integrate or sync with Mailjet after account/config readiness.
 
@@ -156,14 +158,62 @@ Current custom admin sidebar:
 Dashboard
 Adventure Hub
 Orders
-Order Details
-Customer Addresses
+Customers
+Books
+Media
 Subscribers
-Support
+Users
+System Status Check
 Privacy Requests
-Consent Logs
-Settings
+Log out
 ```
+
+### Admin UI Polish Notes
+
+Current admin UI work is a polish/verification pass, not a full redesign.
+
+Important implementation details:
+
+- Sidebar active state is handled by a custom active-aware admin sidebar link component.
+- Dashboard should only be active on `/admin`.
+- Orders should stay active on Orders list/detail pages.
+- Customers and Users intentionally point to the same `users` collection but with different URL behavior:
+  - Customers: `/admin/collections/users?where[role][equals]=customer`.
+  - Users: `/admin/collections/users`.
+- Media points to `/admin/collections/downloads`; the Downloads collection was exposed and relabeled as Media.
+- Native Payload sidebar/current page labels are hidden so only the custom Adventure Hub navigation shows state.
+- Subscribers `marketingOptIn` uses a custom boolean cell component and should display `Yes`/`No`.
+- Do not use broad CSS selectors like `[class*='select']` for admin controls. Payload row checkboxes use classes like `select-row`, so broad select selectors break row checkboxes.
+- Do not force `opacity: revert !important` on row checkbox controls. It caused row checkboxes to visually differ from the Select All checkbox.
+- Payload notifications/toasts may render in a portal outside `.template-login`; notification styling needs global selectors, not only login-scoped selectors.
+- Admin CSS is currently layered across multiple rapid-fix files and should be consolidated once final visual QA is approved.
+
+Admin UI verification checklist:
+
+- [ ] Sidebar active state is correct on Dashboard, Orders, Customers, Users, Books, Media, Subscribers, and Privacy Requests.
+- [ ] Row checkboxes match the Select All checkbox.
+- [ ] Subscribers `Marketing Opt In` shows `Yes`/`No` with normal table typography.
+- [ ] Logout notification is dark teal with white text.
+- [ ] Media collection opens and does not 404.
+- [ ] Order detail pages open.
+
+### Payload Locked Documents Schema Note
+
+A blank Orders detail page was traced to a Neon schema mismatch in Payload's locked-document relationship table.
+
+Observed failure:
+
+```txt
+payload_locked_documents_rels.privacy_requests_id does not exist
+```
+
+Repair doc in website repo:
+
+```txt
+docs/PAYLOAD_LOCKED_DOCUMENTS_SCHEMA_PATCH.md
+```
+
+This patch must be run or confirmed in Neon when newer collections are added after Payload's system tables already exist.
 
 ### Temporary Setup / Debug Routes
 
@@ -178,7 +228,7 @@ Temporary routes were created during bootstrapping and must be removed before la
 
 After removing them:
 
-- Rotate/delete the setup secret.
+- Rotate/delete the setup credential.
 - Replace temporary table repair logic with real migrations.
 
 ## 4. Books / Product Catalog Requirement
@@ -402,7 +452,7 @@ Recommended rules:
 - Max downloads/access attempts: 3 per purchased file.
 - Signed URL expiration: 15 minutes to 1 hour.
 - Purchase access window: decide later.
-- Store download events in Payload CMS `Downloads` collection.
+- Store download events in Payload CMS `Downloads` / `Media` collection.
 - Never expose permanent public ebook or audiobook URLs.
 
 ## 8. Cloudflare R2 Setup Steps
@@ -422,41 +472,43 @@ ebooks/book-1/home-infusion-day.epub
 audiobooks/book-1/home-infusion-day.mp3
 ```
 
-Add R2 environment values to Vercel later:
-
-```txt
-R2_ACCOUNT_ID=
-R2_ACCESS_KEY_ID=
-R2_SECRET_ACCESS_KEY=
-R2_BUCKET_NAME=benny-penny-ebooks
-R2_ENDPOINT=
-```
-
-Store only object keys in Payload Books, not public download URLs.
+Add R2 configuration in Vercel later. Do not commit actual R2 credentials or access values to the repo. Store only object keys in Payload Books, not public download URLs.
 
 ## 9. Recommended Implementation Order
 
-1. Run Neon SQL patches:
-   - `docs/CONTACT_OPT_IN_SCHEMA_PATCH.md`
-   - `docs/PRIVACY_COMPLIANCE_SCHEMA_PATCH.md`
-2. Redeploy `main`.
-3. Test `/contact`.
-4. Test newsletter signup and `/thank-you?email=...`.
-5. Test `/privacy/requests`.
-6. Test admin collections:
-   - `privacy-requests`
-   - `consent-logs`
-   - `orders`
-   - `order-items`
-   - `customer-addresses`
-7. Fix schema/build issues.
-8. Remove temporary setup/debug routes.
-9. Rotate/delete setup secret.
-10. Start Client Portal foundation.
-11. Create private R2 bucket.
-12. Upload PDF/EPUB/audiobook files.
-13. Build signed ebook/audio delivery.
-14. Add Lulu Direct API later.
+1. Pull/deploy latest website commits.
+2. Hard-refresh admin/login pages.
+3. Verify admin UI:
+   - Row checkboxes.
+   - Logout notification.
+   - Subscribers Yes/No display.
+   - Sidebar active state.
+   - Media, Orders detail, Users, Customers.
+4. Run Neon SQL patches:
+   - `docs/CONTACT_OPT_IN_SCHEMA_PATCH.md`.
+   - `docs/PRIVACY_COMPLIANCE_SCHEMA_PATCH.md`.
+   - `docs/PAYLOAD_LOCKED_DOCUMENTS_SCHEMA_PATCH.md`.
+5. Test `/contact`.
+6. Test newsletter signup and `/thank-you?email=...`.
+7. Test `/privacy/requests`.
+8. Test admin collections:
+   - `privacy-requests`.
+   - `consent-logs`.
+   - `orders`.
+   - `order-items`.
+   - `customer-addresses`.
+   - `downloads` / Media.
+   - `subscribers`.
+   - `users`.
+9. Fix schema/build/admin CSS issues.
+10. Consolidate admin CSS files.
+11. Remove temporary setup/debug routes.
+12. Rotate/delete setup credential.
+13. Start Client Portal foundation.
+14. Create private R2 bucket.
+15. Upload PDF/EPUB/audiobook files.
+16. Build signed ebook/audio delivery.
+17. Add Lulu Direct API later.
 
 ## 10. Commit and Deployment Workflow Preference
 
