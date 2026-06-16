@@ -14,7 +14,7 @@ Severity: 🔴 Critical · 🟠 High · 🟡 Medium · 🟢 Low
 - [x] 🟠 **Delete or disable setup/debug routes** in production: `setup-payload*`, `debug-books`, `debug-payload-books`; move any kept reconcile to header-only auth. (2.2)
 - [x] 🟠 **Ship missing assets** referenced in `layout.tsx`: `og-image.png` (1200×630), `favicon.png`, `apple-touch-icon.png`. Currently 404. (3 / 8)
 - [x] 🟠 **Add baseline security headers site-wide** (HSTS, X-Content-Type-Options, Referrer-Policy, X-Frame-Options, CSP); consolidate the duplicated admin CSP. (2.5)
-- [ ] 🔴 **Finish admin dashboard mobile remediation.** Current mobile screenshots still show admin sidebar/hamburger/search/layout problems. Desktop and mobile admin layout must be separated so phone fixes do not break desktop. Highest active blocker as of 2026-06-16.
+- [ ] 🔴 **Finish admin dashboard mobile remediation.** Sidebar and search are now much improved, but latest screenshots showed data inside dashboard cards still stacking instead of using the right side of the cards. Active blocker is validating the new final row-layout stylesheet for System Status, Recent Orders, and Community Growth.
 
 ---
 
@@ -30,6 +30,7 @@ Severity: 🔴 Critical · 🟠 High · 🟡 Medium · 🟢 Low
 - [x] 🟡 **Transactional email brand header:** shared email layout updated to match site-style hierarchy: `Benny & Penny` / `♥ Adventures ♥` / `MEDICAL BOOKS FOR BRAVE LITTLE HEARTS`. Commit `d8d1bd00eb19a19be7f93af6c732b242863637c2`.
 - [x] 🟡 **Admin System Status Check:** added Sequenzy API above Mailjet with supplied logo. Commit `f4ca40c5ada3a00cb46f16ff4fe6d334846f4711`.
 - [x] 🟡 **Payload admin dashboard export fix:** `BeforeDashboard` now supports Payload's named import and the default export. Commit `03ee988c6437d9d1a20c612689be2a7ccb5d5c43` was confirmed READY.
+- [x] 🟡 **Admin search/sidebar mobile pass:** mobile sidebar transition/scroll improved, search moved below greeting structurally, and text-width caps removed from admin dashboard. Needs continued row-layout validation.
 - [x] 🟡 **Customer portal mobile pass — phase 1:** session bar, Orders page, and Library page were patched for mobile stacking, horizontal overflow, and long text handling. Needs real-device validation before closing completely.
 - [ ] 🟡 **Customer portal mobile validation:** test Portal Home, Orders, Library, Gifts, and Addresses on iPhone Safari, Chrome Mobile, and iPad portrait.
 - [ ] 🟡 **Frontend bot/spam protection wiring:** add hidden honeypot fields to public forms, add frontend challenge widget/token support, and end-to-end test contact/newsletter/privacy request submissions. (2.4)
@@ -48,6 +49,8 @@ app/(payload)/components/BeforeDashboard.tsx
 app/(payload)/components/BeforeDashboard.scss
 app/(payload)/components/RegionCompact.scss
 app/(payload)/admin-polish-overrides.scss
+app/(payload)/admin-dashboard-mobile-rows.scss
+app/(payload)/layout.tsx
 ```
 
 Completed so far:
@@ -57,23 +60,27 @@ Completed so far:
 - Restored compact service logos after oversized SVG issue.
 - Added mobile-specific admin dashboard shell overrides.
 - Added overflow containment for dashboard cards and mobile shell.
-- Began moving search into a single-column mobile layout.
+- Improved sidebar/hamburger behavior; user later confirmed the sidebar is perfect.
+- Moved the admin dashboard search into a standalone row below the greeting.
+- Removed dashboard text width caps that were causing headings/subtitles to wrap too narrowly.
+- Added `admin-dashboard-mobile-rows.scss` and imported it last in Payload layout to restore table-like row layouts inside mobile cards.
 
 Still open:
 
-- Sidebar/hamburger behavior remains inconsistent.
-- Mobile drawer can still interfere with dashboard content.
-- Search bar needs final alignment on physical devices.
-- Need desktop/mobile CSS separation so phone fixes do not regress desktop.
-- Confirm compact service icons show and remain small.
+- Validate final row-layout override on phone after deployment.
+- Confirm System Status `ONLINE` badges remain in the right column instead of stacking.
+- Confirm Recent Orders rows use order/customer, date, status, and total columns instead of stacking.
+- Confirm Community Growth subscriber rows use subscriber/date/status columns instead of stacking.
+- Confirm no regression to sidebar/hamburger/search behavior.
+- Validate iPhone Safari, Chrome Mobile, and iPad portrait.
 
 Next actions:
 
-1. Inspect Payload admin DOM/classnames on mobile.
-2. Add a dedicated mobile-only sidebar/drawer override.
-3. Keep desktop nav untouched above the mobile breakpoint.
-4. Re-test with dashboard, collection lists, and edit forms.
-5. Validate on iPhone Safari and iPad portrait.
+1. Check Vercel deployment for `a55194a092729fcd645070019cb35c01a12498e3` after the normal delay.
+2. Test admin dashboard on phone.
+3. Review System Status, Recent Orders, and Community Growth row layouts.
+4. If row layout is still not correct, inspect final CSS cascade and consider a JSX-level table/grid structure for those cards.
+5. Only after admin mobile is stable, move to portal validation.
 
 ---
 
@@ -91,7 +98,7 @@ Next actions:
 - [ ] 🟡 **Customer support workflow:** portal "Contact support" action that opens a `support-ticket`. (5)
 - [ ] 🟢 **Accessibility pass:** contrast, focus styles, `aria-live` on form status, label association on address selects. (4)
 - [ ] 🟢 **Performance/CWV:** `next/image` for hero/character art, width/height, WebP/AVIF, preload hero. (8)
-- [ ] 🟢 **Consolidate admin CSS** (5 overlapping `admin-*.scss`). (3)
+- [ ] 🟢 **Consolidate admin CSS** (multiple overlapping `admin-*.scss`). (3)
 - [ ] 🟢 **Order-number generation:** move to DB sequence / unique-constraint-with-retry before volume. (3)
 - [ ] 🟢 **Reuse Stripe customer:** store `stripeCustomerId` on user to avoid duplicate Stripe customers. (3)
 - [ ] 🟢 **Remove stray `public/images/hero-family.png.bak`.** (3)
