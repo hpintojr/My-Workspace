@@ -2,6 +2,29 @@
 
 A GitHub-based workspace for project notes, daily logs, and active project context.
 
+## Start Here
+
+When opening this workspace in a new chat, read in this order:
+
+```txt
+README.md
+00 [C] Workspace Index.md
+CLAUDE.md
+Current active focus files listed below
+```
+
+The workspace index contains the clean directory tree, read-order rules, and update-maintenance checklist.
+
+When Hamilton says **"update my workspace"**, update the relevant daily logs/project notes and also update:
+
+```txt
+00 [C] Workspace Index.md
+```
+
+if any file list, read order, active focus, or project status changed.
+
+---
+
 ## Current Active Focus
 
 ### Benny & Penny's Adventures
@@ -11,6 +34,7 @@ The current priority is the Benny & Penny website/admin/customer portal launch c
 Read first:
 
 ```txt
+00 [C] Workspace Index.md
 CLAUDE.md
 01 Daily Logs/[C] 2026-06-16.md
 01 Daily Logs/[C] 2026-06-16 Admin Mobile Final Polish Update.md
