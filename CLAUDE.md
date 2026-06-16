@@ -43,7 +43,6 @@ These rules apply to Gemini, ChatGPT, Claude, and future AI assistants working f
 - Do not edit non-`[C]` user-authored notes without permission.
 - It is okay to freely update `[C]` files, daily logs, workspace instructions, and project planning files when the user asks for workspace updates.
 - Never commit real credentials, API keys, database URLs, passwords, or private tokens.
-- For Benny & Penny, Hamilton deferred credential cleanup until after the Client Portal is completed. Do not keep pushing that during current build work. Remind him after the Client Portal has been completed.
 
 ---
 
@@ -105,9 +104,9 @@ These rules apply to Gemini, ChatGPT, Claude, and future AI assistants working f
 02 Projects/Benny & Penny's Adventures/[C] Promotions, Gifting & Access Grants Plan.md
 ```
 
-**Current status:** Live production deployment is READY after the latest bot-protection and build-fix pass. Access control is locked down across Payload collections. Checkout supports saved-address selection and stamps last-used dates. Address Book management is done. R2 digital delivery, license-scaled allowance, Promotions, Gifting, Sequenzy email helpers, and email-link auth are built. SEO/AI layer and security headers are shipped. Public API bot protection is now in place for contact, newsletter signup, and privacy request endpoints.
+**Current status:** Live production deployment is READY after the bot-protection and build-fix pass. Access control is locked down across Payload collections. Checkout supports saved-address selection and stamps last-used dates. Address Book management is done. R2 digital delivery, license-scaled allowance, Promotions, Gifting, Sequenzy email helpers, and email-link auth are built. SEO/AI layer and security headers are shipped. Public API bot protection is in place for contact, newsletter signup, and privacy request endpoints. Shared transactional email branding has been updated to the three-line site-style header: `Benny & Penny` / `♥ Adventures ♥` / `MEDICAL BOOKS FOR BRAVE LITTLE HEARTS`. Admin System Status Check now includes Sequenzy above Mailjet.
 
-**Current active concern:** Backend/API bot protection is deployed, but frontend form hardening is still open. Add hidden honeypot fields to the public form components, wire frontend challenge-token support, then test contact, newsletter, and privacy-request submissions end to end. After that, test auth emails, order receipt email, gift email, gift redemption, and R2 downloads.
+**Current active concern:** Backend/API bot protection is deployed, but frontend form hardening is still open. Add hidden honeypot fields to the public form components, wire frontend challenge-token support, then test contact, newsletter, and privacy-request submissions end to end. After that, test auth emails, order receipt email, gift email, gift redemption, and R2 downloads. Also review whether the email platform footer badge can be removed through account settings.
 
 **Current desired admin navigation direction:**
 
@@ -125,7 +124,7 @@ Privacy Requests
 Log out
 ```
 
-**Current next actions:** (1) Add hidden honeypot fields to public forms. (2) Add frontend challenge widget/token support. (3) Test contact/newsletter/privacy submissions. (4) End-to-end test account email links, order receipt email, gift email, gift redemption, and R2 downloads. (5) Review deployment settings and rotate old setup credentials once setup/debug routes are confirmed unnecessary. See `[C] Backlog & Launch Checklist.md` for the full prioritized list.
+**Current next actions:** (1) Deploy/verify the email header and Sequenzy status card updates. (2) Add hidden honeypot fields to public forms. (3) Add frontend challenge widget/token support. (4) Test contact/newsletter/privacy submissions. (5) End-to-end test account email links, order receipt email, gift email, gift redemption, and R2 downloads. See `[C] Backlog & Launch Checklist.md` for the full prioritized list.
 
 ---
 
@@ -183,7 +182,7 @@ Daily logs should capture:
 - What broke or remains blocked.
 - Current known state.
 - Next actions in priority order.
-- Any exposed credentials that need later cleanup.
+- Items that need later cleanup.
 - Links/paths to important files changed.
 
 Daily logs belong in:
