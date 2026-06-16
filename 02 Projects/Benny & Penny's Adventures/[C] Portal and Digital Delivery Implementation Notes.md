@@ -2,6 +2,7 @@
 type: implementation-notes
 project: Benny & Penny's Adventures
 created: 2026-06-15
+updated: 2026-06-16
 status: active
 ---
 
@@ -11,7 +12,7 @@ status: active
 
 This file tracks the customer portal and digital delivery build for Benny & Penny's Adventures.
 
-The goal is to let customers sign in, see their orders, see their billing/shipping addresses, see their purchased books, and eventually access purchased PDF/EPUB/audiobook files safely.
+The goal is to let customers sign in, see their orders, see their billing/shipping addresses, see their purchased books, and access purchased PDF/EPUB/audiobook files safely.
 
 ## Current Portal Routes
 
@@ -21,6 +22,7 @@ The goal is to let customers sign in, see their orders, see their billing/shippi
 /portal/orders
 /portal/addresses
 /portal/library
+/portal/gifts
 ```
 
 ## Current Portal API Routes
@@ -41,29 +43,88 @@ The goal is to let customers sign in, see their orders, see their billing/shippi
 - Public header includes `My Account`.
 - `/portal` shows customer account cards.
 - `/portal/login` signs customers in through Payload auth when the customer has a password.
-- Portal pages now show the signed-in customer and email.
-- Portal pages have a compact one-line navigation bar.
+- Portal pages show the signed-in customer and email.
+- Portal navigation is active-page aware.
 - Customer can log out from the portal bar.
 - `/portal/orders` displays signed-in customer order history.
 - `/portal/addresses` displays signed-in customer billing and shipping addresses.
 - `/portal/library` displays purchased books and purchased formats.
 - Library shows status/access buttons per purchased format.
+- Gifted access grants surface in the customer portal/library flow.
+- Address Book management exists, including add/edit/default/archive behavior.
 
-### Portal Navigation
+### Mobile progress — 2026-06-16
 
-The portal bar was redesigned from a stacked widget into a cleaner one-line desktop layout:
+Customer portal mobile work was patched in the website repo.
+
+Files updated:
 
 ```txt
-Signed in as [Customer Name] [email] | Portal Home | My Orders | My Library | Addresses | Log out
+app/components/PortalSessionBar.tsx
+app/components/PortalOrdersClient.tsx
+app/components/PortalLibraryClient.tsx
 ```
 
-It highlights the active portal page in coral.
+Completed mobile improvements:
 
-### Current Library Button Labels
+- Portal session bar stacks better on phones.
+- Signed-in name/email no longer crushes the nav.
+- Portal nav becomes horizontal scrollable pills on mobile.
+- Orders rows stack better on phone screens.
+- Order numbers, book titles, and long status text now break instead of forcing horizontal overflow.
+- Order details, purchased item lists, and summary boxes are more mobile-friendly.
+- Library rows and format cards stack better.
+- Download/status buttons are full-width on small screens.
+
+Important commits:
 
 ```txt
-PDF / EPUB → Digital file pending
-Audiobook → Audio file pending
+4a079c64d735fee92766f6f5b011092f00ffb95f
+Improve portal orders mobile layout
+
+204fcf3907940b8ceead492e04f76ffb2c6b3c32
+Improve portal library mobile layout
+```
+
+### Current portal validation status
+
+The portal is substantially improved but still needs real-device validation on:
+
+- iPhone Safari.
+- Chrome Mobile.
+- iPad portrait.
+- Signed-in state.
+- Signed-out state.
+- Portal Home.
+- Orders.
+- Library.
+- Gifts.
+- Addresses.
+
+## Portal Navigation
+
+Desktop direction:
+
+```txt
+Signed in as [Customer Name] [email] | Portal Home | My Orders | My Library | Gifts | Addresses | Log out
+```
+
+Mobile direction:
+
+```txt
+Signed in as [Customer Name]
+[email]
+[scrollable nav pill row]
+[Log out]
+```
+
+The active page should highlight in coral.
+
+## Current Library Button Labels
+
+```txt
+PDF / EPUB → Digital file pending or Download when active
+Audiobook → Audio file pending or Download when active
 Paperback → Paperback recorded
 Hardcover → Hardcover recorded
 ```
@@ -79,7 +140,9 @@ users = customer accounts and auth
 orders = receipts and order history
 order-items = purchased book formats
 customer-addresses = billing and shipping records
-downloads = future digital/audio delivery records
+downloads = private digital/audio delivery records
+access-grants = gifted or manually granted digital access
+gifts = gift purchase/redemption records
 ```
 
 ## Orders Page Logic
@@ -113,7 +176,7 @@ It should show:
 
 ### Current Orders UX
 
-Orders are now collapsible.
+Orders are collapsible.
 
 Compact row:
 
@@ -131,6 +194,13 @@ Shipping details
 
 Newest order opens first by default.
 
+Mobile update:
+
+- Compact row now stacks at small widths.
+- Order number and preview text can wrap.
+- Total/View/Hide controls wrap instead of forcing overflow.
+- Summary boxes use smaller padding on phones.
+
 ## Addresses Page Logic
 
 `/portal/addresses` shows the signed-in customer's billing and shipping addresses.
@@ -147,19 +217,25 @@ This fallback matters because some checkout data may exist on the order even if 
 
 ### Current Address UX
 
-The address page was cleaned up into a more manageable layout:
+The address page supports Address Book management:
 
 ```txt
-Primary Shipping Address
-Primary Billing Address
-Other saved addresses collapsed below
+Default Shipping Address
+Default Billing Address
+Other saved addresses
+Add New Address
+Edit Address
+Set Default Shipping
+Set Default Billing
+Archive/Remove Address
+Import from past orders
 ```
 
 Duplicate addresses are filtered tighter so repeated checkout addresses do not clutter the portal.
 
-## Address Book Direction for Lulu POD
+### Address Book Direction for Lulu POD
 
-Because future print products will use Lulu POD, the address book should become more than a read-only display.
+Because future print products will use Lulu POD, the address book should continue to support POD checkout.
 
 Recommended architecture:
 
@@ -173,18 +249,6 @@ Cart contains print/POD item
 → order is stored with frozen address snapshot
 → POD job uses the same locked address/shipping choice
 ```
-
-Address Book should eventually support:
-
-- Default Shipping Address.
-- Default Billing Address.
-- Other Saved Addresses.
-- Add New Address.
-- Edit Address.
-- Archive/Remove Address.
-- Address label such as Home, Work, Grandma, etc.
-- Type: Shipping, Billing, or Both.
-- Last used date.
 
 Important rule:
 
@@ -207,14 +271,14 @@ My Library = what books and formats do I own/access?
 Library grouping direction:
 
 ```txt
-Group order-items by book
-Then show owned formats under each book
+Group order-items and access grants by book
+Then show owned/granted formats under each book
 ```
 
 For each book, show:
 
 - Book title.
-- Latest purchase date.
+- Latest purchase or grant date.
 - Formats owned.
 - Quantity per format.
 - Related order numbers.
@@ -222,7 +286,7 @@ For each book, show:
 
 ### Current Library UX
 
-My Library is now collapsible.
+My Library is collapsible.
 
 Compact row:
 
@@ -239,18 +303,27 @@ Audiobook
 PDF / EPUB
 Order references
 Status buttons
+Download button when active
 ```
+
+Mobile update:
+
+- Summary rows stack on phones.
+- Format cards are full-width on phones.
+- Long book titles/status text wrap.
+- Order references wrap.
+- Download/status buttons are full-width.
 
 ## Digital Delivery Direction
 
-The current portal does not yet deliver PDF/EPUB/audiobook files.
+The protected customer download endpoint foundation exists and is intended to become the safe file access point.
 
-The next delivery build should:
+Delivery build direction:
 
 1. Prepare final file assets for each book and format.
-2. Store private files in the chosen storage provider.
+2. Store private files in R2/private storage.
 3. Create or automate Payload `downloads` records for customer/book/format access.
-4. Validate the signed-in customer owns the requested file.
+4. Validate the signed-in customer owns or was granted the requested file.
 5. Return a short-lived access link only after validation.
 6. Track access count and last accessed/downloaded timestamp.
 7. Enforce max access/download count if desired.
@@ -263,8 +336,6 @@ Never show raw storage keys or permanent public file URLs in the customer portal
 
 ## Current Download Endpoint Foundation
 
-The protected customer download endpoint foundation exists and should eventually become the safe file access point.
-
 Current behavior:
 
 - Requires logged-in customer.
@@ -272,42 +343,51 @@ Current behavior:
 - Blocks inactive records.
 - Blocks expired records.
 - Does not reveal raw file storage keys.
-- Returns a safe placeholder response until real private file delivery is connected.
+- Returns safe access flow only after ownership/access validation.
 
-## Mailjet / Account Email Limitation
+## Email Provider Direction
 
-Mailjet is still under review.
+Current direction:
 
-Do not rely on these yet:
+```txt
+Sequenzy = primary transactional email provider
+Mailjet = secondary/fallback provider
+```
 
-- Customer welcome emails.
-- Password reset emails.
-- Account activation emails.
-- Order confirmation emails.
-- Digital delivery emails.
-- Newsletter campaigns.
+Primary transactional flows:
 
-Until Mailjet is approved, customer login requires manually set passwords or a non-email activation path.
+- Gift emails.
+- Account setup links.
+- Password reset links.
+- Order receipts.
+- Gift redeemed confirmations.
+- Digital delivery/download emails.
+
+Mailjet should be retained as fallback/backup for critical transactional delivery and may remain useful for marketing campaigns.
+
+Important open item:
+
+- Confirm whether Sequenzy account settings or plan controls allow removing the provider-added footer badge.
 
 ## Current Open Items
 
 ### Portal UX
 
-- Build true Address Book add/edit/default/archive behavior.
+- Validate portal mobile updates on real devices.
 - Add account/profile page.
 - Add customer support page.
 - Add customer support form connected to Support Tickets.
-- Add password reset/account activation when email sending is ready.
+- Continue improving Addresses mobile layout if real-device testing shows issues.
 
 ### Digital Delivery
 
 - Prepare PDF file.
 - Prepare EPUB file.
 - Prepare audiobook file.
-- Confirm storage provider and private bucket structure.
-- Create Payload `downloads` records.
+- Confirm private bucket structure.
+- Create/validate Payload `downloads` records.
 - Connect Library buttons to active Downloads records.
-- Add short-lived access link generation.
+- Add short-lived access link generation where still pending.
 - Track usage.
 
 ### Admin/Data Cleanup
@@ -343,18 +423,24 @@ Improve portal address management layout
 
 d1c507d93944e04153cff732a6261a1b6ff7497c
 Make portal library expandable
+
+4a079c64d735fee92766f6f5b011092f00ffb95f
+Improve portal orders mobile layout
+
+204fcf3907940b8ceead492e04f76ffb2c6b3c32
+Improve portal library mobile layout
 ```
 
 ## Next Best Action
 
-Build true Address Book management next:
+Do not start new portal features until mobile validation is complete.
+
+Priority:
 
 ```txt
-Add New Address
-Edit Address
-Default Shipping
-Default Billing
-Archive/Remove Address
+1. Validate customer portal on real devices.
+2. Finish admin dashboard mobile/hamburger/sidebar remediation.
+3. Validate private download delivery end to end.
+4. Add account/profile page.
+5. Add support workflow.
 ```
-
-Then add account/profile and continue into digital file preparation and private delivery wiring.
