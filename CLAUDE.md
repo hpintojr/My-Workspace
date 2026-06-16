@@ -105,9 +105,9 @@ These rules apply to Gemini, ChatGPT, Claude, and future AI assistants working f
 02 Projects/Benny & Penny's Adventures/[C] Promotions, Gifting & Access Grants Plan.md
 ```
 
-**Current status:** Live and tested. Access control is locked down across all Payload collections (customers can no longer reach other users' data via the API; role self-escalation closed; /admin gated to admins). Checkout supports saved-address selection (Stripe Customer prefill) and stamps lastUsedAt. True Address Book management (add/edit/default/archive, frozen order snapshots) is done. Customers can set their own portal password on the thank-you page right after purchase (session-id gated). R2 digital delivery is live: signed-URL downloads with per-item limits, and a license-scaled allowance (downloads = R2_DOWNLOADS_PER_LICENSE x quantity purchased, auto-raised on repeat buys). SEO + AI layer shipped: sitemap, robots (AI crawlers allowed), JSON-LD, llms.txt, OG/favicon assets. Site-wide security headers added; setup/debug routes 404 in production.
+**Current status:** Live production deployment is READY after the latest bot-protection and build-fix pass. Access control is locked down across Payload collections. Checkout supports saved-address selection and stamps last-used dates. Address Book management is done. R2 digital delivery, license-scaled allowance, Promotions, Gifting, Sequenzy email helpers, and email-link auth are built. SEO/AI layer and security headers are shipped. Public API bot protection is now in place for contact, newsletter signup, and privacy request endpoints.
 
-**Current active concern:** Build is feature-complete through Promotions, Gifting, Sequenzy email, and a full email-link auth overhaul (register / forgot-password / order-activation via tokenized links; no more on-page password form). Hamilton applied all pending Neon SQL patches (promotions_id, gifts + gifts_id, password_tokens + password_tokens_id). Remaining to go live: redeploy + `npm run build`; set Vercel env for Sequenzy (API key + **verified sender/domain**) and R2 (`R2_*`), decide `R2_AUTO_CREATE_DOWNLOADS`; rotate `PAYLOAD_SETUP_SECRET`; add bot/spam protection to public forms (not started).
+**Current active concern:** Backend/API bot protection is deployed, but frontend form hardening is still open. Add hidden honeypot fields to the public form components, wire frontend challenge-token support, then test contact, newsletter, and privacy-request submissions end to end. After that, test auth emails, order receipt email, gift email, gift redemption, and R2 downloads.
 
 **Current desired admin navigation direction:**
 
@@ -125,7 +125,7 @@ Privacy Requests
 Log out
 ```
 
-**Current next actions:** (1) Redeploy with SQL patches (done) + Sequenzy/R2 env vars; run `npm run build`; commit/push. (2) End-to-end test the email-link auth (register → setup link → sign in; forgot-password; new-order activation email; returning-customer thank-you), the gifting email, and R2 license scaling. (3) Bot/spam protection on contact/newsletter/privacy forms. (4) Rotate `PAYLOAD_SETUP_SECRET`. See `[C] Backlog & Launch Checklist.md` for the full prioritized list.
+**Current next actions:** (1) Add hidden honeypot fields to public forms. (2) Add frontend challenge widget/token support. (3) Test contact/newsletter/privacy submissions. (4) End-to-end test account email links, order receipt email, gift email, gift redemption, and R2 downloads. (5) Review deployment settings and rotate old setup credentials once setup/debug routes are confirmed unnecessary. See `[C] Backlog & Launch Checklist.md` for the full prioritized list.
 
 ---
 
