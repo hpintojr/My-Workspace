@@ -1,9 +1,9 @@
 # Workspace Index
 
 **Status:** Current as of 2026-06-16  
-**Purpose:** This is the clean directory-tree index and read-order guide for `hpintojr/My-Workspace`.
+**Purpose:** Clean directory-tree index, read-order guide, and workspace update rule source for `hpintojr/My-Workspace`.
 
-Future assistants should use this file to quickly understand what exists in the workspace, what to read first, and what must be updated when the workspace changes.
+Future assistants should use this file to quickly understand what exists, what to read first, and what must be updated when the workspace changes.
 
 ---
 
@@ -16,27 +16,24 @@ When Hamilton says **"read my workspace"**, read in this order:
 2. 00 [C] Workspace Index.md
 3. CLAUDE.md
 4. Current active focus files listed in README.md
-5. Latest daily log(s) in 01 Daily Logs/
-6. Relevant project overview in 02 Projects/[project]/
-7. Relevant project planning/status files for the task
+5. Relevant project overview/status files only as needed
 ```
 
-For the current active focus, read these first after README/index/CLAUDE:
+For the current Benny & Penny active focus, read these first after README/index/CLAUDE:
 
 ```txt
-01 Daily Logs/[C] 2026-06-16.md
-01 Daily Logs/[C] 2026-06-16 Admin Mobile Final Polish Update.md
-02 Projects/Benny & Penny's Adventures/[C] Admin Dashboard and Portal Mobile Progress 2026-06-16.md
-02 Projects/Benny & Penny's Adventures/[C] Admin Mobile Final Polish Status 2026-06-16.md
-02 Projects/Benny & Penny's Adventures/[C] Backlog & Launch Checklist.md
+02 Projects/Benny & Penny's Adventures/[C] Admin Mobile Accepted Working Update 2026-06-16.md
 02 Projects/Benny & Penny's Adventures/[C] Portal and Digital Delivery Implementation Notes.md
+02 Projects/Benny & Penny's Adventures/[C] Backlog & Launch Checklist.md
 ```
+
+Do not read the older verbose admin-mobile progress logs first unless debugging a regression.
 
 ---
 
 ## Workspace Update Rule
 
-When Hamilton says **"update my workspace"**, the assistant should update all relevant active files and then update this index if anything changed.
+When Hamilton says **"update my workspace"**, update all relevant active files and then update this index if anything changed.
 
 Always check whether these need updates:
 
@@ -45,8 +42,7 @@ README.md
 00 [C] Workspace Index.md
 CLAUDE.md
 01 Daily Logs/[C] YYYY-MM-DD.md
-Relevant project overview file
-Relevant project planning/status/implementation files
+Relevant project overview/status/planning file
 ```
 
 Update this index whenever:
@@ -78,8 +74,9 @@ hpintojr/My-Workspace/
 └── 02 Projects/
     ├── Benny & Penny's Adventures/
     │   ├── Benny & Penny's Adventures Overview.md
-    │   ├── [C] Admin Dashboard and Portal Mobile Progress 2026-06-16.md
+    │   ├── [C] Admin Mobile Accepted Working Update 2026-06-16.md
     │   ├── [C] Admin Mobile Final Polish Status 2026-06-16.md
+    │   ├── [C] Admin Dashboard and Portal Mobile Progress 2026-06-16.md
     │   ├── [C] Backlog & Launch Checklist.md
     │   ├── [C] Client Portal Build Notes.md
     │   ├── [C] Implementation Notes — Contact Forms, Legal Pages, R2 Ebook Delivery.md
@@ -138,7 +135,7 @@ Main persistent assistant operating guide. Applies to ChatGPT, Claude, Gemini, a
 01 Daily Logs/
 ```
 
-Session-level records. Use these to reconstruct what happened recently and where to continue.
+Session-level records. Use these only when a deeper reconstruction is needed.
 
 Latest important logs:
 
@@ -146,6 +143,8 @@ Latest important logs:
 01 Daily Logs/[C] 2026-06-16.md
 01 Daily Logs/[C] 2026-06-16 Admin Mobile Final Polish Update.md
 ```
+
+These are no longer part of the default Benny & Penny read-first path because the accepted-working handoff is faster.
 
 ---
 
@@ -159,27 +158,41 @@ Project folder:
 
 Primary website/business project. Includes public website, Payload CMS admin, customer portal, Stripe, R2/digital delivery, email, legal/compliance, promotions, gifting, and launch cleanup.
 
-Read order for Benny & Penny continuation:
+Fast read order for Benny & Penny continuation:
 
 ```txt
-1. 02 Projects/Benny & Penny's Adventures/Benny & Penny's Adventures Overview.md
-2. 02 Projects/Benny & Penny's Adventures/[C] Backlog & Launch Checklist.md
-3. 02 Projects/Benny & Penny's Adventures/[C] Admin Mobile Final Polish Status 2026-06-16.md
-4. 02 Projects/Benny & Penny's Adventures/[C] Admin Dashboard and Portal Mobile Progress 2026-06-16.md
-5. 02 Projects/Benny & Penny's Adventures/[C] Portal and Digital Delivery Implementation Notes.md
-6. Other topic-specific files as needed
+1. 02 Projects/Benny & Penny's Adventures/[C] Admin Mobile Accepted Working Update 2026-06-16.md
+2. 02 Projects/Benny & Penny's Adventures/[C] Portal and Digital Delivery Implementation Notes.md
+3. 02 Projects/Benny & Penny's Adventures/[C] Backlog & Launch Checklist.md
+4. 02 Projects/Benny & Penny's Adventures/Benny & Penny's Adventures Overview.md only if broader project context is needed
+```
+
+Reference/archive files for debugging only:
+
+```txt
+01 Daily Logs/[C] 2026-06-16.md
+01 Daily Logs/[C] 2026-06-16 Admin Mobile Final Polish Update.md
+02 Projects/Benny & Penny's Adventures/[C] Admin Dashboard and Portal Mobile Progress 2026-06-16.md
+02 Projects/Benny & Penny's Adventures/[C] Admin Mobile Final Polish Status 2026-06-16.md
 ```
 
 Current active status:
 
 ```txt
-Admin dashboard mobile polish is close/working after the final sidebar heart fix. Future changes should be tiny final-layer fixes only. Do not start broad rewrites.
+Admin dashboard mobile polish is accepted/working on iPhone Chrome after the final sidebar dark-heart close fix. Future admin mobile changes should be tiny final-layer fixes only. Do not start broad rewrites.
+```
+
+Latest accepted Benny & Penny website commit:
+
+```txt
+69d549e3160c38e87be80eafb00bdb700d0a66c6
+Hard override sidebar close icon to dark heart
 ```
 
 Current Benny & Penny next focus:
 
 ```txt
-1. Confirm final Vercel deployment if needed.
+1. Confirm latest Vercel deployment if needed.
 2. Validate remaining customer portal mobile pages.
 3. Confirm Chrome iPhone bottom white gap is acceptable.
 4. Confirm Sequenzy footer badge/account settings.
@@ -222,7 +235,7 @@ Current XBeton next focus:
 When updating this workspace, use this checklist before committing:
 
 ```txt
-[ ] Did I update the latest daily log?
+[ ] Did I update the latest daily log or active handoff file?
 [ ] Did I update the relevant project status/planning file?
 [ ] Did I update README.md if the active focus changed?
 [ ] Did I update CLAUDE.md if the persistent operating context changed?
