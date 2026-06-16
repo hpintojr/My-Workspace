@@ -21,17 +21,20 @@ CLAUDE.md
 Current blocker:
 
 ```txt
-Finish admin dashboard mobile remediation.
+Validate and finish admin dashboard mobile row/table layout.
 ```
 
 Known focus areas:
 
-- Admin hamburger/sidebar behavior on mobile.
-- Admin dashboard search placement on mobile.
-- Preventing admin dashboard horizontal overflow.
-- Keeping desktop admin layout separate from mobile fixes.
-- Validating customer portal mobile pages after recent patches.
-- Confirming Sequenzy footer badge/account settings.
-- Keeping Mailjet as fallback for transactional email.
+- Latest admin mobile sidebar/search fixes are improved.
+- New active issue is dashboard card data rows stacking inside mobile cards.
+- Validate `admin-dashboard-mobile-rows.scss` after deployment.
+- Confirm System Status rows keep status badges on the right.
+- Confirm Recent Orders rows keep order/customer, date, status, and total in row format.
+- Confirm Community Growth rows keep subscriber, date, and status in row format.
+- Confirm no regression to hamburger/sidebar/search placement.
+- Validate customer portal mobile pages after admin mobile is stable.
+- Confirm Sequenzy footer badge/account settings.
+- Keep Mailjet as fallback for transactional email.
 
 Do not start new features until admin mobile is stable.
