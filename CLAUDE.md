@@ -100,11 +100,14 @@ These rules apply to Gemini, ChatGPT, Claude, and future AI assistants working f
 02 Projects/Benny & Penny's Adventures/[C] Order and Customer Purchase Data Fix.md
 02 Projects/Benny & Penny's Adventures/[C] Client Portal Build Notes.md
 02 Projects/Benny & Penny's Adventures/[C] Portal and Digital Delivery Implementation Notes.md
+02 Projects/Benny & Penny's Adventures/[C] Site Assessment 2026-06-15.md
+02 Projects/Benny & Penny's Adventures/[C] Backlog & Launch Checklist.md
+02 Projects/Benny & Penny's Adventures/[C] Promotions, Gifting & Access Grants Plan.md
 ```
 
-**Current status:** Payload Admin is functional and Stripe sandbox checkout is working. Fresh checkout confirmed the thank-you page shows the real order number. Billing and shipping are saving correctly. The Client Portal is built and visible at `/portal`. Customer login works through Payload auth after a password is manually set. The portal now has a compact signed-in navigation bar with Portal Home, My Orders, My Library, Addresses, and Log out. Orders display in collapsible rows. Addresses show primary shipping, primary billing, and collapsed other saved addresses. Library displays purchased books and formats in collapsible rows.
+**Current status:** Live and tested. Access control is locked down across all Payload collections (customers can no longer reach other users' data via the API; role self-escalation closed; /admin gated to admins). Checkout supports saved-address selection (Stripe Customer prefill) and stamps lastUsedAt. True Address Book management (add/edit/default/archive, frozen order snapshots) is done. Customers can set their own portal password on the thank-you page right after purchase (session-id gated). R2 digital delivery is live: signed-URL downloads with per-item limits, and a license-scaled allowance (downloads = R2_DOWNLOADS_PER_LICENSE x quantity purchased, auto-raised on repeat buys). SEO + AI layer shipped: sitemap, robots (AI crawlers allowed), JSON-LD, llms.txt, OG/favicon assets. Site-wide security headers added; setup/debug routes 404 in production.
 
-**Current active concern:** The next portal task is true Address Book management for Lulu/POD readiness: add/edit/default/archive saved addresses and keep frozen address snapshots on orders. Digital delivery is not fully wired yet. PDF/EPUB and audiobook access buttons currently show pending/status labels. Private delivery still needs to be connected after files are uploaded. Mailjet is still under review, so password reset/account activation and customer email flows remain pending.
+**Current active concern:** Build is feature-complete through Promotions, Gifting, Sequenzy email, and a full email-link auth overhaul (register / forgot-password / order-activation via tokenized links; no more on-page password form). Hamilton applied all pending Neon SQL patches (promotions_id, gifts + gifts_id, password_tokens + password_tokens_id). Remaining to go live: redeploy + `npm run build`; set Vercel env for Sequenzy (API key + **verified sender/domain**) and R2 (`R2_*`), decide `R2_AUTO_CREATE_DOWNLOADS`; rotate `PAYLOAD_SETUP_SECRET`; add bot/spam protection to public forms (not started).
 
 **Current desired admin navigation direction:**
 
@@ -122,7 +125,7 @@ Privacy Requests
 Log out
 ```
 
-**Current next actions:** Verify the latest portal deploy, test the compact portal nav, collapsible Orders, collapsible Library, and improved Addresses page. Then build true Address Book management, account/profile, digital file preparation, private delivery, and customer support workflow. After the Client Portal is completed, remind Hamilton about deferred credential cleanup.
+**Current next actions:** (1) Redeploy with SQL patches (done) + Sequenzy/R2 env vars; run `npm run build`; commit/push. (2) End-to-end test the email-link auth (register → setup link → sign in; forgot-password; new-order activation email; returning-customer thank-you), the gifting email, and R2 license scaling. (3) Bot/spam protection on contact/newsletter/privacy forms. (4) Rotate `PAYLOAD_SETUP_SECRET`. See `[C] Backlog & Launch Checklist.md` for the full prioritized list.
 
 ---
 
