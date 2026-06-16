@@ -26,6 +26,8 @@ Severity: 🔴 Critical · 🟠 High · 🟡 Medium · 🟢 Low
 - [x] 🟠 **Set-password-on-thank-you-page** (session-id-gated) — biggest registration UX win, shippable before Mailjet. (7)
 - [x] 🟡 **R2 digital delivery:** create bucket + token, S3-compatible client, signed-URL download endpoint, admin upload path; auto-create `downloads` on webhook. (6 #2)
 - [x] 🟡 **API-side bot/spam protection** on `/api/contact`, `/api/subscribe`, `/api/privacy-request`: honeypot detection, optional Turnstile verification path, and per-IP rate limits. Deployed READY on commit `fd20a61bf8662ec62f42bf736ea83593a8a55029`. (2.4)
+- [x] 🟡 **Transactional email brand header:** shared email layout updated to match site-style hierarchy: `Benny & Penny` / `♥ Adventures ♥` / `MEDICAL BOOKS FOR BRAVE LITTLE HEARTS`. Commit `d8d1bd00eb19a19be7f93af6c732b242863637c2`.
+- [x] 🟡 **Admin System Status Check:** added Sequenzy API above Mailjet with supplied logo. Commit `f4ca40c5ada3a00cb46f16ff4fe6d334846f4711`.
 - [ ] 🟡 **Frontend bot/spam protection wiring:** add hidden honeypot fields to public forms, add frontend challenge widget/token support, and end-to-end test contact/newsletter/privacy request submissions. (2.4)
 - [ ] 🟡 **Resolve catalog dual-source-of-truth** (static `lib/books.ts` vs Payload `books`); make Payload canonical or document pricing source. (3)
 - [ ] 🟡 **Per-page metadata + canonicals** on books index, for-parents, contact, legal; add Twitter card. (8)
@@ -40,6 +42,7 @@ Severity: 🔴 Critical · 🟠 High · 🟡 Medium · 🟢 Low
 - [ ] 🟢 **Gifting Phase 3 — marketing automation:** tag + nurture gifted recipients; attribution reporting.
 
 - [ ] 🟡 **Email automations E2E:** receipt + set-password link, gift-redeemed confirmation, password reset, dunning, review request. Provider helpers are wired; needs live testing.
+- [ ] 🟡 **Email footer branding review:** confirm whether the provider-added footer badge can be removed through provider settings or plan controls.
 - [ ] 🟡 **POD/Lulu automation:** create print job from frozen address snapshot on paid physical order; write tracking back + email. (6 #3)
 - [ ] 🟡 **Admin actions:** Stripe refund button, resend receipt, regenerate download access; write privileged actions to `audit-logs`. (5)
 - [ ] 🟡 **Customer support workflow:** portal "Contact support" action that opens a `support-ticket`. (5)
