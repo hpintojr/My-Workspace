@@ -13,7 +13,9 @@ Read first:
 ```txt
 CLAUDE.md
 01 Daily Logs/[C] 2026-06-16.md
+01 Daily Logs/[C] 2026-06-16 Admin Mobile Final Polish Update.md
 02 Projects/Benny & Penny's Adventures/[C] Admin Dashboard and Portal Mobile Progress 2026-06-16.md
+02 Projects/Benny & Penny's Adventures/[C] Admin Mobile Final Polish Status 2026-06-16.md
 02 Projects/Benny & Penny's Adventures/[C] Backlog & Launch Checklist.md
 02 Projects/Benny & Penny's Adventures/[C] Portal and Digital Delivery Implementation Notes.md
 ```
@@ -21,20 +23,21 @@ CLAUDE.md
 Current blocker:
 
 ```txt
-Validate and finish admin dashboard mobile row/table layout.
+Validate final Chrome iPhone admin dashboard polish.
 ```
 
 Known focus areas:
 
-- Latest admin mobile sidebar/search fixes are improved.
-- New active issue is dashboard card data rows stacking inside mobile cards.
-- Validate `admin-dashboard-mobile-rows.scss` after deployment.
-- Confirm System Status rows keep status badges on the right.
-- Confirm Recent Orders rows keep order/customer, date, status, and total in row format.
-- Confirm Community Growth rows keep subscriber, date, and status in row format.
-- Confirm no regression to hamburger/sidebar/search placement.
+- Admin mobile sidebar/search/card row fixes are now mostly working.
+- System Status, Recent Orders, and Community Growth rows now use the right side of the card again.
+- Latest work added `admin-dashboard-final-polish.scss` and imports it last in Payload layout.
+- Validate the Welcome section top gap under the mobile heart/menu button.
+- Confirm collapsed state shows red circle + white heart.
+- Confirm open-sidebar state shows a dark/black heart for visibility on the pale blue sidebar.
+- Confirm the heart is centered inside the red circle.
+- Confirm Chrome iPhone bottom white gap is reduced after removing the fixed filler.
 - Validate customer portal mobile pages after admin mobile is stable.
 - Confirm Sequenzy footer badge/account settings.
 - Keep Mailjet as fallback for transactional email.
 
-Do not start new features until admin mobile is stable.
+Do not start new features until admin mobile is visually accepted.
