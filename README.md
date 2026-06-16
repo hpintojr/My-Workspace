@@ -20,24 +20,34 @@ CLAUDE.md
 02 Projects/Benny & Penny's Adventures/[C] Portal and Digital Delivery Implementation Notes.md
 ```
 
-Current blocker:
+Current status:
 
 ```txt
-Validate final Chrome iPhone admin dashboard polish.
+Admin dashboard mobile polish is working on the user's iPhone Chrome test after the final sidebar heart fix.
 ```
 
-Known focus areas:
+Confirmed working:
 
-- Admin mobile sidebar/search/card row fixes are now mostly working.
-- System Status, Recent Orders, and Community Growth rows now use the right side of the card again.
-- Latest work added `admin-dashboard-final-polish.scss` and imports it last in Payload layout.
-- Validate the Welcome section top gap under the mobile heart/menu button.
-- Confirm collapsed state shows red circle + white heart.
-- Confirm open-sidebar state shows a dark/black heart for visibility on the pale blue sidebar.
-- Confirm the heart is centered inside the red circle.
-- Confirm Chrome iPhone bottom white gap is reduced after removing the fixed filler.
-- Validate customer portal mobile pages after admin mobile is stable.
+- Dashboard search is below the greeting.
+- Welcome renders as `Welcome,` then `Hamilton Pinto!` with punctuation attached to the name.
+- System Status, Recent Orders, and Community Growth rows use the right side of the cards again.
+- Collapsed mobile nav control shows the branded red circle with a white heart.
+- Open sidebar close control now shows a dark/deep-teal heart instead of the X.
+- Broad heart selectors were removed so Payload filter/search controls are not converted into hearts.
+
+Latest accepted website commit:
+
+```txt
+69d549e3160c38e87be80eafb00bdb700d0a66c6
+Hard override sidebar close icon to dark heart
+```
+
+Next focus areas:
+
+- Do one final Vercel deployment confirmation if needed.
+- Validate remaining customer portal mobile pages.
+- Confirm Chrome iPhone bottom white gap is acceptable after safe-area filler removal.
 - Confirm Sequenzy footer badge/account settings.
 - Keep Mailjet as fallback for transactional email.
 
-Do not start new features until admin mobile is visually accepted.
+Do not start broad rewrites. Admin mobile is now close enough that future changes should be tiny, final-layer fixes only.
