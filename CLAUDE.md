@@ -93,6 +93,7 @@ These rules apply to Gemini, ChatGPT, Claude, and future AI assistants working f
 ```txt
 01 Daily Logs/[C] 2026-06-14.md
 01 Daily Logs/[C] 2026-06-15.md
+01 Daily Logs/[C] 2026-06-16.md
 02 Projects/Benny & Penny's Adventures/Benny & Penny's Adventures Overview.md
 02 Projects/Benny & Penny's Adventures/[C] Website Build Plan & Architecture.md
 02 Projects/Benny & Penny's Adventures/[C] Implementation Notes — Contact Forms, Legal Pages, R2 Ebook Delivery.md
@@ -104,9 +105,9 @@ These rules apply to Gemini, ChatGPT, Claude, and future AI assistants working f
 02 Projects/Benny & Penny's Adventures/[C] Promotions, Gifting & Access Grants Plan.md
 ```
 
-**Current status:** Live production deployment is READY after the bot-protection and build-fix pass. Access control is locked down across Payload collections. Checkout supports saved-address selection and stamps last-used dates. Address Book management is done. R2 digital delivery, license-scaled allowance, Promotions, Gifting, Sequenzy email helpers, and email-link auth are built. SEO/AI layer and security headers are shipped. Public API bot protection is in place for contact, newsletter signup, and privacy request endpoints. Shared transactional email branding has been updated to the three-line site-style header: `Benny & Penny` / `♥ Adventures ♥` / `MEDICAL BOOKS FOR BRAVE LITTLE HEARTS`. Admin System Status Check now includes Sequenzy above Mailjet.
+**Current status:** Live production has passed the previous bot-protection/build-fix cycle. Access control is locked down across Payload collections. Checkout supports saved-address selection and stamps last-used dates. Address Book management is built. R2 digital delivery, license-scaled allowance, Promotions, Gifting, Sequenzy email helpers, and email-link auth are built. SEO/AI layer and security headers are shipped. Public API bot protection is in place for contact, newsletter signup, and privacy request endpoints. Shared transactional email branding has been updated to the three-line site-style header: `Benny & Penny` / `♥ Adventures ♥` / `MEDICAL BOOKS FOR BRAVE LITTLE HEARTS`. Admin System Status Check includes Sequenzy above Mailjet. Customer portal mobile layout has been patched for session navigation, Orders, and Library.
 
-**Current active concern:** Backend/API bot protection is deployed, but frontend form hardening is still open. Add hidden honeypot fields to the public form components, wire frontend challenge-token support, then test contact, newsletter, and privacy-request submissions end to end. After that, test auth emails, order receipt email, gift email, gift redemption, and R2 downloads. Also review whether the email platform footer badge can be removed through account settings.
+**Current active concern:** The customer portal is substantially improved but needs real-device validation. The admin dashboard mobile experience is still the biggest blocker. The mobile admin sidebar/hamburger behavior is inconsistent, the drawer can overlay the dashboard poorly, and dashboard/search/status cards need final mobile validation. Do not start new feature work until the admin mobile experience is stable.
 
 **Current desired admin navigation direction:**
 
@@ -124,7 +125,7 @@ Privacy Requests
 Log out
 ```
 
-**Current next actions:** (1) Deploy/verify the email header and Sequenzy status card updates. (2) Add hidden honeypot fields to public forms. (3) Add frontend challenge widget/token support. (4) Test contact/newsletter/privacy submissions. (5) End-to-end test account email links, order receipt email, gift email, gift redemption, and R2 downloads. See `[C] Backlog & Launch Checklist.md` for the full prioritized list.
+**Current next actions:** (1) Finish admin dashboard mobile shell/hamburger/sidebar fix. (2) Validate admin dashboard on iPhone Safari, Chrome Mobile, and iPad portrait. (3) Validate customer portal mobile pages: Portal Home, Orders, Library, Gifts, and Addresses. (4) Confirm compact System Status logos are showing correctly after latest CSS updates. (5) Confirm whether the Sequenzy footer badge can be removed through account settings. (6) Continue the email failover plan with Sequenzy as primary transactional email and Mailjet as fallback. See `[C] Backlog & Launch Checklist.md` and `[C] 2026-06-16.md` for details.
 
 ---
 
