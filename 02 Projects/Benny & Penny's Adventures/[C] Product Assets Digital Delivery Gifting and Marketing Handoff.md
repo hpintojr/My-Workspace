@@ -10,7 +10,7 @@ last_updated: 2026-06-17
 
 ## Purpose
 
-This file captures Hamilton's latest direction after the repo review. The active work is broader than portal UX polish: the project now needs correct product assets, automated digital delivery, better customer workflows, simplified gifting, and a cleaner marketing/abandoned-cart strategy.
+This file captures Hamilton's latest direction after the repo review and the confirmed R2 delivery test. The active work is now product asset replacement, BPG gifting/license rules, customer portal UX/workflow, and later LuLu/marketing planning.
 
 ---
 
@@ -45,21 +45,26 @@ Do not build final customer UX around placeholder cover/page/cart images.
 
 ## Digital Product Delivery and R2
 
-Current situation:
+Status:
 
 ```txt
-Digital file linkage for PDF/EPUB products is currently too manual.
-Manual admin/media linkage was only intended as an internal support reference point.
-The full delivery process needs to become automated.
+R2 automated digital delivery is confirmed working in testing.
+Digital order flow creates Media/Downloads records automatically.
+Portal Library shows separate PDF, EPUB, and Audiobook buttons.
+R2 signed download links work.
+Shared readable slot tracking is active.
 ```
 
-New priority:
+Current R2 bucket standard:
 
 ```txt
-Upload temporary files for all digital products to Cloudflare R2 and automate delivery from paid checkout through customer Library/download access.
+ebooks/book-<number>.pdf
+ebooks/book-<number>.epub
+audio/book-<number>-audiobook.mp3
+print/
 ```
 
-Delivery goal:
+Delivery goal now validated in testing:
 
 ```txt
 Customer buys PDF/EPUB/audiobook
@@ -70,14 +75,36 @@ Customer buys PDF/EPUB/audiobook
 -> secure download link is generated on demand
 ```
 
-Open build items:
+Remaining digital-delivery work:
 
-- Upload temporary PDF/EPUB/audio files for all digital products to R2.
-- Decide the R2 object-key convention for all 9 books and every digital format.
-- Store digital delivery keys on the Book/Product records or a related asset mapping.
-- Create download records automatically after paid checkout.
-- Keep manual media/admin view only as a support/admin reference, not the customer delivery mechanism.
-- Test paid-order-to-library-to-download end to end.
+- Replace dummy/zero-byte R2 files with real files as Books 1-4 are finalized.
+- Keep Book records as source of truth for exact R2 object keys.
+- Keep manual media/admin view only as support/admin reference.
+- Polish final Library UX later during portal revamp.
+
+---
+
+## Shared Readable License Rule
+
+Hamilton approved the shared readable-license model.
+
+Rule:
+
+```txt
+One purchased digital readable license grants access to both PDF and EPUB.
+The license has 3 total readable access slots.
+PDF downloads, EPUB downloads, and BPG gifts all spend from the same 3-slot pool.
+A gifted recipient receives one digital download/device allowance.
+```
+
+Examples:
+
+```txt
+Buyer downloads PDF once and EPUB once -> 1 readable slot remains.
+Buyer downloads nothing -> buyer may issue up to 3 gifts.
+Buyer downloads PDF 3 times -> no EPUB or gift slots remain.
+Buyer issues 1 gift -> buyer has 2 readable slots left across PDF/EPUB.
+```
 
 ---
 
@@ -89,7 +116,8 @@ Current view:
 
 ```txt
 Underlying fields and database components are mostly there.
-The portal UX and workflow are wrong and need to be magnified, improved, and made customer-friendly.
+The portal UX and workflow are wrong and need to be improved and made customer-friendly.
+Current Library UI is a testing/proof UI, not final UX.
 ```
 
 Portal direction:
@@ -111,18 +139,17 @@ Hamilton's intended direction:
 ```txt
 BPG gift codes should tie into the shopping cart coupon/discount system.
 The code should be trackable from cart through redemption.
-A BPG code should allow one digital download only.
-A full purchased license may allow three downloads/devices.
-A gifted access code should not grant the same full-license allowance.
+A BPG code should spend one slot from the purchaser's shared readable license.
+A gifted recipient should receive one digital download/device allowance.
+A full purchased readable license allows 3 total readable slots across PDF, EPUB, and gifts.
 Terms and conditions must be updated to match this policy.
 ```
 
-Open questions/build items:
+Open build items:
 
 - Decide whether BPG codes are implemented as coupon codes, gift redemptions, or a connected layer over the coupon system.
 - Track BPG usage from cart, order, customer, and download record.
 - Limit BPG redemption to one digital download/device allowance.
-- Keep full paid digital license rules separate from gifted access rules.
 - Update Terms and Conditions to define gifted digital access limits.
 - Update Library UI so gifted access is labeled clearly.
 
@@ -173,19 +200,13 @@ Books 1-4 are nearly assembled in Canva.
 Final output needs to use correct print-ready PDF specs with bleeds before LuLu upload.
 ```
 
-Next LuLu research/build step:
-
-```txt
-Before sandbox submission, research official LuLu setup and template requirements, then create a repeatable setup plan for all 9 books.
-```
-
 ---
 
 ## Abandoned Cart and Marketing
 
-The Admin portal already has an Abandoned Cart area planned/visible. This should later connect into customer and marketing workflows.
+This is not the immediate build priority, but it needs to stay on the roadmap.
 
-Hamilton wants options for:
+Future topics:
 
 ```txt
 Abandoned cart recovery emails
@@ -195,32 +216,7 @@ Facebook / Meta tagging
 Other DSP marketing options
 Retargeting strategy
 Webhook/API connections to outside services
-```
-
-This is not the immediate build priority, but it needs to stay on the roadmap.
-
-Open planning items:
-
-- Decide what abandoned-cart event data is stored first-party.
-- Decide if/when to add Google/Meta tags.
-- Decide consent/cookie/GPC requirements before marketing pixels.
-- Plan email recovery sequence.
-- Plan how abandoned carts connect to subscriber/customer records.
-
----
-
-## Subscriber / Marketing Panel
-
-Hamilton is considering a future admin marketing panel.
-
-Possible channels:
-
-```txt
-Email
-Newsletters
-SMS
-Outbound AI calls
-API/webhook connections to outside marketing or booking services
+Subscriber marketing panel for email/newsletter/SMS/outbound calls/API integrations
 ```
 
 Current priority:
@@ -231,15 +227,6 @@ Do not overbuild now.
 May only need a clean way to API data in and out at first.
 ```
 
-Future marketing panel direction:
-
-- Subscriber list management.
-- Newsletter segmentation.
-- Email/SMS consent-safe outreach.
-- Export/API/webhook integrations.
-- Campaign audit trail.
-- Optional outbound AI call integration later.
-
 ---
 
 ## Updated Next Build Priority
@@ -248,11 +235,12 @@ The next practical build sequence should be:
 
 ```txt
 1. Replace/organize correct book product assets and image strategy.
-2. Upload temporary digital product files to R2.
-3. Automate digital download record creation after checkout.
-4. Rework portal UX around the corrected delivery workflow.
-5. Add Geoapify to customer/admin address entry points.
-6. Simplify BPG gifting and tie it into cart/coupon tracking.
-7. Research official LuLu project/template setup before real print submission.
-8. Keep abandoned cart and marketing panel planning on the roadmap but back burner.
+2. Replace dummy R2 files with real PDF, EPUB, and audio files as they are finalized.
+3. Build BPG gift-code logic against the shared readable slot pool.
+4. Update Terms for full readable license vs gifted access.
+5. Verify or build the customer account setup page.
+6. Rework portal UX around the confirmed delivery workflow.
+7. Add Geoapify to customer/admin address entry points.
+8. Research official LuLu project/template setup before real print submission.
+9. Keep abandoned cart and marketing panel planning on the roadmap but back burner.
 ```
