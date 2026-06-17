@@ -1,7 +1,7 @@
 ---
 type: project-handoff
 project: Benny & Penny's Adventures
-status: active
+status: validated
 updated_by: ChatGPT
 last_updated: 2026-06-17
 ---
@@ -44,12 +44,15 @@ Enforce shared readable download pool
 
 67b5cee6f88a5b1bb3990fe3f3eec62548ec8d79
 Expose PDF and EPUB download options in library API
+
+7b1a0dc5825d0f68149a5dc121601c19fccfb4ed
+Show separate PDF and EPUB buttons in library
 ```
 
-Latest redeploy status:
+Latest deployment status:
 
 ```txt
-Vercel production redeploy for 67b5cee completed successfully.
+7b1a0dc5825d0f68149a5dc121601c19fccfb4ed deployed to production and is READY.
 ```
 
 ## Current R2 Folder Pattern
@@ -63,38 +66,35 @@ audio/book-1-audiobook.mp3
 print/
 ```
 
-This is the current standard. The app should use book records as the source of truth for exact R2 object keys.
+This is the current standard. Book records are the source of truth for exact R2 object keys.
 
-## 2026-06-17 Test Finding and Correction
+## 2026-06-17 Validation
 
-Hamilton processed order `26-0027` with digital, audiobook, paperback, and hardcover items. Order items and print jobs were created, but Media/Downloads records did not appear automatically.
-
-Findings:
+Validated in testing:
 
 ```txt
-Order 26-0027 existed as order id 35.
-Digital and audiobook order items existed for Book 1.
-Downloads table had no records for order 26-0027.
+Paid test order created order records.
+Order items were created.
+Media/Downloads records were auto-created.
+Portal Library showed separate PDF, EPUB, and Audiobook buttons.
+PDF download worked.
+EPUB download worked.
+Audiobook download worked.
+R2 signed download links worked.
+Shared readable slot count updated.
+```
+
+Earlier issue and correction:
+
+```txt
+Order 26-0027 initially did not create downloads automatically.
 Book object keys did not match the latest R2 folder pattern.
-Automation is gated by R2_AUTO_CREATE_DOWNLOADS=true.
+Automation requires R2_AUTO_CREATE_DOWNLOADS=true.
+Book records and existing Downloads records were corrected to ebooks/ and audio/.
+A later fresh test confirmed automatic delivery now works.
 ```
 
-Corrections applied:
-
-```txt
-Updated all existing Book records to:
-- ebooks/book-<number>.pdf
-- ebooks/book-<number>.epub
-- audio/book-<number>-audiobook.mp3
-
-Updated existing Downloads records to the same R2 folder pattern.
-Backfilled downloads for order 26-0027:
-- PDF record
-- EPUB record
-- Audiobook record
-```
-
-## Vercel Values Needed for Future Automatic Creation
+## Vercel Values Required
 
 ```txt
 R2_AUTO_CREATE_DOWNLOADS=true
@@ -103,19 +103,11 @@ R2_AUDIO_PREFIX=audio
 R2_DOWNLOADS_PER_LICENSE=3
 ```
 
-Note:
-
-```txt
-The current fulfillment code uses Book-level R2 object keys first.
-Because all Book records were updated, future orders can create the correct keys from the database.
-A later code cleanup can make the fallback helper use R2_EBOOK_PREFIX and R2_AUDIO_PREFIX directly.
-```
-
 ## Remaining Work
 
 ```txt
-Polish Portal Library UI so PDF and EPUB appear as clear separate buttons.
-Test a new paid digital order after confirming Vercel values are active.
+Replace dummy/zero-byte R2 files with real files as Books 1-4 are finalized.
 Connect BPG gifting to the same readable slot pool.
 Update Terms and Conditions for gifted vs full-license access.
+Redesign final Portal Library UX later.
 ```
