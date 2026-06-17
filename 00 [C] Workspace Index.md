@@ -185,13 +185,10 @@ Reference/archive files for debugging only:
 Current active status:
 
 ```txt
-Admin dashboard mobile polish is accepted/working on iPhone Chrome after the final sidebar dark-heart close fix. Future admin mobile changes should be tiny final-layer fixes only. Do not start broad rewrites.
-
-Current active issue is desktop admin sidebar toggle validation. The desktop Payload toggler DOM differs from mobile:
-- Desktop: button.nav-toggler.template-default__nav-toggler
-- Mobile: button.nav-toggler.app-header__mobile-nav-toggler
-
-Latest desktop patch retargets the desktop toggler outside the .template-default shell and needs Vercel deploy + hard-refresh validation.
+Admin dashboard mobile polish is accepted/working on iPhone Chrome.
+Admin desktop sidebar toggle polish is accepted/working.
+Welcome now renders as: Welcome, Hamilton Pinto!
+Future admin changes should be tiny final-layer fixes only. Do not start broad rewrites.
 ```
 
 Latest accepted Benny & Penny mobile website commit:
@@ -201,24 +198,24 @@ Latest accepted Benny & Penny mobile website commit:
 Hard override sidebar close icon to dark heart
 ```
 
-Latest Benny & Penny desktop toggle patch needing validation:
+Latest accepted Benny & Penny desktop/admin greeting commits:
 
 ```txt
 e678610a677948f7046eef8dadc6df1bc5df99ec
 Retarget desktop nav toggles outside admin shell
+
+f0de9ab63cbe54407b262ffed100c74b18595447
+Add space after welcome comma
 ```
 
 Current Benny & Penny next focus:
 
 ```txt
-1. Confirm Vercel deployed e678610a677948f7046eef8dadc6df1bc5df99ec.
-2. Validate desktop /admin sidebar open state: < / chevron becomes dark teal heart with no grey/teal hover square.
-3. Validate desktop /admin sidebar collapsed state: hamburger becomes red circle with white heart.
-4. Re-check mobile/iPhone admin sidebar to confirm no regression.
-5. Validate remaining customer portal mobile pages.
-6. Confirm Chrome iPhone bottom white gap is acceptable.
-7. Confirm Sequenzy footer badge/account settings.
-8. Keep Mailjet as fallback transactional provider.
+1. Validate remaining customer portal mobile pages.
+2. Confirm Chrome iPhone bottom white gap is acceptable.
+3. Confirm Sequenzy footer badge/account settings.
+4. Keep Mailjet as fallback transactional provider.
+5. Continue final launch cleanup.
 ```
 
 ---
