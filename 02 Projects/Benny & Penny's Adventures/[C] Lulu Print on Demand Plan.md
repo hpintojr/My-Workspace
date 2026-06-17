@@ -47,17 +47,19 @@ Even though production deployment is being used, do not assume public-live comme
 ```txt
 Phase 1: Complete / confirmed working.
 Phase 2: Implemented / Neon patched / ready for book data entry.
-Next: Phase 3 manual Submit to LuLu route/action.
+Phase 3: Backend foundation implemented and deployed.
+Next: Admin-facing Submit to LuLu button/tool page.
 Auto-submit remains disabled.
 ```
 
-Confirmed test:
+Confirmed tests/status:
 
 ```txt
 Order 26-0024 created a Hardcover print job.
 Print record 1 opened successfully after Neon lock-table patch.
 Shipping copied into print job.
-LuLu API was not called.
+Geoapify appears in Admin Dashboard System Status Check.
+LuLu Phase 3 backend route deployed successfully.
 ```
 
 ---
@@ -249,83 +251,127 @@ and the notes explain what setup is missing.
 
 ---
 
-## Important Website Commits
-
-```txt
-bd17cc82cbe2a9fef11b2b2594efb4ebcc329275
-Add print jobs collection
-
-fc7cb041a3dc632d62e34f59e8d716c0b7319723
-Register print jobs collection
-
-c1a82ef0eaa0d9186206780ad21d67f1d08cee07
-Add dry-run Lulu print job generator
-
-fcd736ce2c21361151a2136a6b51a6d3822bf024
-Create dry-run print jobs after checkout
-
-83038534b4da78352d8019ce9132fd396af69e57
-Allow Payload to create print jobs table
-
-60e457680af79a39b879aa5852f4e827aca42318
-Support print jobs sidebar active state
-
-a9383a2e68023a42db5dd7520004797147c5fb56
-Add print jobs under catalog sidebar
-
-de086edb7fcaa72be91bb903c8ce6df73b2654b6
-Add Lulu print setup fields to books
-
-60629f4fe74618fed9a94fb700c923215db1c977
-Require Lulu print setup before ready status
-```
-
----
-
 ## Phase 3 — Manual Submit to LuLu
 
 Status:
 
 ```txt
-Next active build
+Backend foundation implemented and deployed.
+Admin-facing submit UI is next.
 ```
 
-Goal:
+Implemented files:
 
 ```txt
-Admin reviews a ready print job and manually submits it to LuLu sandbox/test API.
+lib/luluApi.ts
+app/api/admin/print-jobs/[id]/submit-lulu/route.ts
 ```
 
-Recommended implementation order:
+Website commits:
 
 ```txt
-1. Add LuLu config helper that reads env vars only.
-2. Add LuLu auth/token helper.
-3. Add manual API route/action for one print job.
-4. Validate print job status is ready before submission.
-5. Build LuLu request payload from frozen print-job + book setup data.
-6. Submit to LuLu sandbox/test endpoint.
-7. Save raw request/response, LuLu IDs, and errors to print-jobs.
-8. Change status to submitted/accepted/error as appropriate.
-9. Keep LULU_AUTO_SUBMIT=false.
+bacd0891ac3ece58e5ce6eafc5f06ffdf5c4312a
+Add Lulu API submit helper
+
+166768e5007ac21e29bd08b58423a73d81ecd1c7
+Add manual Lulu submit route
 ```
 
-Environment variables already discussed:
+Deployment:
 
 ```txt
-LULU_CLIENT_KEY
-LULU_CLIENT_SECRET
-LULU_BASIC_AUTH
-LULU_BASE_URL
-LULU_AUTO_SUBMIT=false
-LULU_WEBHOOK_SECRET later
+Vercel READY on commit 166768e5007ac21e29bd08b58423a73d81ecd1c7
 ```
 
-Do not commit real values.
+Backend route:
+
+```txt
+POST /api/admin/print-jobs/[id]/submit-lulu
+```
+
+Current behavior:
+
+```txt
+Protected backend route.
+Requires a ready print job.
+Validates customer email and complete shipping snapshot.
+Validates linked book/product print setup.
+Builds LuLu request from frozen print job plus book setup data.
+Requests LuLu token.
+Submits to LuLu sandbox/test endpoint by default.
+Saves raw request and raw response.
+Saves LuLu print job ID and line item ID if returned.
+Updates status to submitted, accepted, or error.
+Stores error messages if blocked or failed.
+```
+
+Next Phase 3 task:
+
+```txt
+Build admin-facing Submit to LuLu button/tool page.
+```
+
+Suggested admin flow:
+
+```txt
+Admin opens Print Job
+-> sees setup/readiness
+-> clicks Submit to LuLu
+-> app calls protected backend route
+-> app shows success/error
+-> print job stores LuLu response and status
+```
 
 ---
 
-## Phase 4 — Optional Auto Submit
+## Important Website Commits
+
+```txt
+166768e5007ac21e29bd08b58423a73d81ecd1c7
+Add manual Lulu submit route
+
+bacd0891ac3ece58e5ce6eafc5f06ffdf5c4312a
+Add Lulu API submit helper
+
+c073738d8a74bd419ae265e12c161334740daa07
+Add Geoapify to admin system status
+
+60629f4fe74618fed9a94fb700c923215db1c977
+Require Lulu print setup before ready status
+
+de086edb7fcaa72be91bb903c8ce6df73b2654b6
+Add Lulu print setup fields to books
+
+a9383a2e68023a42db5dd7520004797147c5fb56
+Add print jobs under catalog sidebar
+
+fcd736ce2c21361151a2136a6b51a6d3822bf024
+Create dry-run print jobs after checkout
+```
+
+---
+
+## Phase 4 — Status and Tracking
+
+Status:
+
+```txt
+Deferred until manual submit is proven.
+```
+
+Need to add later:
+
+```txt
+tracking number
+tracking URL
+shipment status
+accepted/shipped/delivered timestamps
+webhook or polling strategy
+```
+
+---
+
+## Phase 5 — Optional Auto Submit
 
 Status:
 
@@ -335,39 +381,18 @@ Deferred
 
 Only after manual submission is proven should automation be enabled.
 
-Suggested environment flag:
-
 ```txt
 LULU_AUTO_SUBMIT=false
 ```
 
-When proven safe in controlled testing:
-
-```txt
-LULU_AUTO_SUBMIT=true
-```
-
-Behavior later:
-
-```txt
-Paid checkout -> print job created -> if ready and auto-submit enabled -> submit to LuLu automatically.
-```
-
 ---
 
-## Phase 5 — Customer Experience Update for Physical Delivery
+## Phase 6 — Customer Experience Update for Physical Delivery
 
 Status:
 
 ```txt
 Deferred until LuLu status/tracking exists.
-```
-
-Reason:
-
-```txt
-Print-on-demand adds shipping, tracking, delivery status, and fulfillment transparency.
-The customer experience should be updated after LuLu tracking/status data exists.
 ```
 
 Customer-facing improvements to plan:
@@ -384,7 +409,6 @@ Customer-facing improvements to plan:
 - Thank-you page should tell the customer what happens next for print books.
 - Order receipt emails should mention print fulfillment timing and future tracking email/portal updates.
 - A shipment/tracking email should be added after LuLu tracking is received.
-- Customer support messaging should make it easy to reference the order number and tracking status.
 
 ---
 
@@ -404,8 +428,8 @@ Customer-facing improvements to plan:
 
 ## Next Step
 
-Begin Phase 3 in `hpintojr/bennyandpennyadventures` on the `main` branch:
+Continue Phase 3 in `hpintojr/bennyandpennyadventures` on the `main` branch:
 
 ```txt
-Build LuLu API client + manual Submit to LuLu action for ready print jobs.
+Build admin-facing Submit to LuLu button/tool page for ready print jobs.
 ```
