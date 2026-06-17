@@ -1,7 +1,7 @@
 ---
-type: problems
+type: project-overview
 project: Benny & Penny's Adventures
-updated: 2026-06-15
+updated: 2026-06-17
 ---
 
 # Benny & Penny's Adventures Overview
@@ -18,6 +18,7 @@ Build a children's publishing business around the Benny & Penny medical adventur
 - Payload CMS admin backend.
 - Email list and contact management.
 - Private digital/audio fulfillment.
+- Physical book fulfillment and tracking.
 - Social media and brand presence.
 - Business infrastructure.
 
@@ -26,32 +27,45 @@ Build a children's publishing business around the Benny & Penny medical adventur
 - `bennyandpennyadventures.com` — main website.
 - `bennyandpenny.com` — communications/email domain.
 
-## Current Status
+---
 
-The project has moved from admin/order stabilization into the first **Client Portal** build.
+## Current Status — 2026-06-17
 
-Payload Admin is functional. Stripe sandbox checkout is working. Fresh checkout testing confirmed the thank-you page can show the real customer-facing order number. Billing and shipping are saving correctly. Orders, order details, customer addresses, and customer records are now usable enough to power the portal.
+The project has moved from admin/order stabilization into **LuLu print-on-demand fulfillment**.
 
-The Client Portal foundation is now live in code:
+The site is still a controlled working environment:
 
 ```txt
-/portal
-/portal/login
-/portal/orders
-/portal/addresses
-/portal/library
+Stay on main branch.
+Production deployment is being used for controlled testing.
+The site is not live for public order traffic yet.
+Stripe remains sandbox/test mode until further notice.
+LuLu remains sandbox/testing until further notice.
 ```
 
-Current portal status:
+Current active work:
 
-- Customer login works through Payload auth when a password exists.
-- `/portal/orders` shows live signed-in customer order history.
-- `/portal/addresses` shows live billing/shipping addresses.
-- `/portal/library` shows purchased books grouped by book and format.
-- Library access/status buttons exist for PDF/EPUB, audiobook, paperback, and hardcover.
-- `/api/portal/downloads` exists as a protected endpoint foundation for future private file delivery.
+```txt
+LuLu POD Phase 3 — build manual Submit to LuLu action/API for ready print jobs.
+```
 
-Digital delivery is not complete yet. PDF/EPUB and audiobook buttons currently show access placeholders until R2/private signed file delivery and active `downloads` records are wired.
+Phase 1 and Phase 2 are working:
+
+```txt
+Phase 1: Internal print-jobs queue works.
+Phase 2: Books have LuLu print setup fields and readiness logic.
+```
+
+Confirmed test:
+
+```txt
+Order 26-0024 created a Hardcover print job.
+Print record 1 opened successfully after Neon lock-table patch.
+Shipping copied into the print job.
+LuLu API was not called.
+```
+
+---
 
 ## Completed / Confirmed
 
@@ -60,51 +74,46 @@ Digital delivery is not complete yet. PDF/EPUB and audiobook buttons currently s
 - Cloudflare configured.
 - `bennyandpennyadventures.com` connected to Vercel.
 - GitHub deployment pipeline operational.
-- Vercel deployments are back to normal working conditions after the prior Hobby deployment limit reset.
 - Next.js route groups separated frontend and Payload Admin layouts.
 - Payload CMS added to the Next.js project.
 - Neon Postgres database created and connected.
 - Payload Admin `/admin` loads and admin login works.
 - First admin user was created.
-- Books catalog seeded into Neon/Payload with 9 records.
-- Payload API confirmed it can read 9 Books records.
+- Books catalog seeded into Neon/Payload with records.
 - Public `/books` and `/books/[slug]` pages read from Payload/Neon with a local fallback.
 
 ### Admin Dashboard and Admin Panel
 
 - Admin dashboard is connected to live Payload data.
-- Dashboard data sources include Orders, Order Items, Customer Addresses, Subscribers, Support Tickets, Books, and Users.
+- Dashboard data sources include Orders, Order Items, Customer Addresses, Subscribers, Support Tickets, Books, Users, and now Print Jobs.
 - Dashboard cards show live revenue/orders/items/subscribers.
-- Sales Performance graph is interactive by dropdown range.
-- Recent Orders table was cleaned up.
-- Recent Order Details table was removed from dashboard because it felt redundant.
-- System Status checks were restored.
-- Dashboard expands when sidebar collapses.
-- Dashboard search icon and top spacing were visually adjusted.
-- Breadcrumb/profile/avatar clutter was removed from the dashboard.
-- Sidebar active state now follows the current route instead of always highlighting Dashboard.
-- Native Payload sidebar/current-page labels are hidden.
-- Sidebar branding is centered with the rest of the nav elements.
-- Customers and Users are separated by route behavior.
-- Media link works by exposing the Downloads collection as Media.
-- Subscribers `Marketing Opt In` displays `Yes`/`No` instead of raw `true`/`false`.
-- Row checkbox styling was debugged and narrowed away from broad select/button styling.
-- Logout notification/toast styling has a global dark-teal override and needs final deploy verification.
+- Admin mobile polish is accepted/working on iPhone Chrome.
+- Admin desktop sidebar toggle polish is accepted/working.
+- Dashboard search is below the greeting.
+- Welcome renders as `Welcome, Hamilton Pinto!`.
+- Mobile and desktop sidebar toggle controls show the branded heart treatment.
+- Print Jobs appears under Catalog below Media.
 
 Current admin sidebar direction:
 
 ```txt
 Dashboard
-Adventure Hub
-Orders
-Customers
-Books
-Media
-Subscribers
-Users
-System Status Check
-Privacy Requests
-Log out
+Sales
+  Orders
+  Customers
+  Abandoned Carts — coming soon
+Catalog
+  Books
+  Media
+  Print Jobs
+Marketing
+  Promotions
+  Gifts
+  Subscribers
+Settings
+  Users
+  System Status Check
+  Privacy Requests
 ```
 
 ### Stripe / Orders
@@ -115,7 +124,8 @@ Log out
 - Order Details are stored separately in `order-items`.
 - Customer Addresses are structured with billing/shipping type.
 - Order detail pages are working after fixing the Payload locked-document schema issue.
-- Stripe fulfillment now reads shipping from both the old location and Stripe's newer `collected_information.shipping_details` location.
+- Stripe fulfillment reads shipping details from Stripe's current collected shipping location.
+- Physical formats are detected as `paperback` and `hardcover`.
 - Order number sequence uses yearly sequence style:
 
 ```txt
@@ -124,26 +134,82 @@ Log out
 26-0003
 ```
 
-Confirmed clean checkout result:
-
-```txt
-Order #26-0011 has been created.
-```
-
-Portal testing also showed customer order:
-
-```txt
-Order #26-0012
-Total: $80.96
-Status: paid
-```
-
 Current product tax decision:
 
 ```txt
 Do not collect tax for now.
 Stripe Automatic Tax is OFF by default.
 Tax remains $0 for current exempt-product assumption.
+```
+
+### LuLu Print-on-Demand
+
+Phase 1 status:
+
+```txt
+Complete / working
+```
+
+Implemented:
+
+```txt
+collections/PrintJobs.ts
+payload.config.ts
+lib/luluPrintJobs.ts
+lib/stripeFulfillment.ts
+```
+
+Working behavior:
+
+```txt
+Paid physical checkout
+-> order created
+-> order-items created
+-> print-jobs record created
+-> shipping snapshot copied
+-> status draft or ready
+-> no LuLu API call yet
+```
+
+Phase 2 status:
+
+```txt
+Implemented / Neon patched
+```
+
+Books now include:
+
+```txt
+LuLu project ID
+LuLu paperback SKU
+LuLu hardcover SKU
+Trim size
+Print interior file key or URL
+Print cover file key or URL
+Paperback print ready
+Hardcover print ready
+Print notes
+```
+
+Readiness logic:
+
+```txt
+Print job becomes ready only when shipping is complete and required book print setup fields exist.
+Otherwise it remains draft and notes explain what is missing.
+```
+
+Neon schema patches applied:
+
+```txt
+print_jobs table created
+payload_locked_documents_rels.print_jobs_id added
+books print setup columns added
+```
+
+Important note:
+
+```txt
+Do not assume Payload auto-push creates every schema object. Verify Neon after adding collections/fields.
 ```
 
 ### Client Portal
@@ -174,22 +240,8 @@ users = customers/auth
 orders = receipt/order history
 order-items = purchased formats
 customer-addresses = billing/shipping records
-downloads = future digital/audiobook delivery records
-```
-
-Portal pages now do the following:
-
-- `/portal` gives customer account dashboard cards.
-- `/portal/login` signs customers in through Payload auth.
-- `/portal/orders` shows order receipt/accounting view.
-- `/portal/addresses` shows billing and shipping addresses.
-- `/portal/library` shows purchased books and owned formats.
-
-My Orders vs My Library distinction:
-
-```txt
-My Orders = receipts, totals, shipping, payment/order status.
-My Library = books and formats the customer owns or can access.
+downloads = digital/audiobook delivery records
+print-jobs = physical fulfillment records, not yet surfaced to customers
 ```
 
 Current My Library status buttons:
@@ -201,17 +253,17 @@ Paperback → Paperback Order Recorded
 Hardcover → Hardcover Order Recorded
 ```
 
+The customer experience should be updated after LuLu status/tracking data exists.
+
 ### Contact, Newsletter, Legal, and Compliance
 
 - Contact page converted from `mailto:` behavior to an on-site form.
-- `/api/contact` exists and is connected to Mailjet client.
+- `/api/contact` exists and is connected to transactional email/client helpers.
 - Contact form includes required contact consent.
 - Contact form includes optional email opt-in.
 - Contact form includes optional SMS opt-in with TCPA-style language.
-- Contact form stores consent proof fields when schema is available.
 - Newsletter form requires email opt-in.
 - Newsletter signup logs consent events.
-- Newsletter thank-you page shows signup-specific copy instead of order copy.
 - Privacy Request form added.
 - Consent Logs collection added.
 - Privacy Requests collection added.
@@ -234,38 +286,43 @@ Important legal/business gap:
 - Do not invent the address.
 - Legal language still needs attorney review before launch.
 
+---
+
 ## Active Problem
 
-The active problem is now **finishing the Client Portal**, especially digital delivery.
+The active problem is now **manual LuLu submission**.
 
-The portal can show orders, addresses, and library ownership. It cannot yet deliver private PDF/EPUB/audiobook files.
+The internal queue and book setup foundation work. The app still needs a safe manual way to submit a ready print job to LuLu and store the response.
 
-Current blockers for portal completion:
+Current blockers for LuLu submission:
 
-- Actual PDF/EPUB/audiobook files need to be prepared/uploaded.
-- Private storage/signed delivery needs to be wired, likely Cloudflare R2.
-- `downloads` records need to be created/automated for customers.
-- Library access buttons need to connect to active `downloads` records.
-- Password reset/account activation emails are pending Mailjet approval.
-- Customer logout/profile/support flows still need to be built.
+- LuLu API config helper needs to read env vars only.
+- LuLu auth/token helper needs to be implemented.
+- Manual submit route/action needs to validate `ready` status before calling LuLu.
+- LuLu request/response payload needs to be stored in `print-jobs`.
+- Errors need to be captured in `errorMessage` and `rawResponse`.
+- Tracking/status from LuLu is not implemented yet.
+- Auto-submit must remain disabled until manual submission is proven.
+
+---
 
 ## Vercel Deployment Workflow
 
-Vercel is back to normal working conditions, but the workflow decision remains:
-
-- Stop committing/deploying every tiny fix directly to `main` when debugging.
-- Group related fixes into larger commits.
-- Prefer feature branches where practical.
-- Redeploy only when the batch is ready to test.
-
-Recommended future commit grouping:
+Current working rule for this project:
 
 ```txt
-1 commit = client portal data/display fix
-1 commit = download/R2 delivery integration
-1 commit = customer support workflow
-1 commit = admin CSS consolidation
-1 commit = setup/debug route removal
+Stay on main branch unless Hamilton explicitly requests otherwise.
+Use production deployment as controlled test environment.
+```
+
+Recommended commit grouping going forward:
+
+```txt
+1 commit = LuLu API config/auth helper
+1 commit = manual submit route/action
+1 commit = admin submit button/UI
+1 commit = status/tracking persistence
+1 commit = customer portal delivery-status update
 1 commit = workspace/docs update
 ```
 
@@ -278,13 +335,14 @@ Recommended future commit grouping:
 
 ## Current Payload Collections
 
-- Books.
+- Books / Product Catalog.
 - Users / Customers & Admins.
 - CustomerAddresses.
 - ContactSubmissions.
 - Subscribers.
 - Orders.
 - OrderItems.
+- PrintJobs.
 - Downloads / Media.
 - SupportTickets.
 - SupportMessages.
@@ -292,6 +350,9 @@ Recommended future commit grouping:
 - AuditLogs.
 - PrivacyRequests.
 - ConsentLogs.
+- Promotions.
+- Gifts.
+- PasswordTokens.
 - Payload system tables: preferences, locked documents, migrations.
 
 ## Temporary Setup / Debug Routes
@@ -308,22 +369,18 @@ manual Stripe reconciliation route
 
 These must be removed or locked down before production launch.
 
-Hamilton explicitly deferred rotating `PAYLOAD_SETUP_SECRET` until after the Client Portal is completed. Do not keep pushing it during active portal build work. Remind him after portal completion.
-
 ## Next Best Actions
 
-1. Verify `/portal/library` and access/status buttons after deploy.
-2. Add customer logout button/state.
-3. Add account/profile page.
-4. Prepare first real PDF/EPUB/audiobook files for Book 1.
-5. Wire private file delivery with signed links.
-6. Connect Library buttons to active Downloads records.
-7. Add customer support page/form connected to Support Tickets.
-8. Add password reset/account activation once Mailjet is approved.
-9. Confirm/run any remaining Neon SQL patches.
-10. Consolidate admin CSS files after final QA.
-11. Remove temporary setup/debug/reconcile routes before launch.
-12. After Client Portal completion, remind Hamilton to rotate `PAYLOAD_SETUP_SECRET`.
+1. Fill Book 1 LuLu print setup fields in Payload Admin.
+2. Build LuLu API config/auth helper using env vars only.
+3. Build manual Submit to LuLu route/action for a single ready print job.
+4. Validate that a print job must be `ready` before submit.
+5. Save LuLu request/response, IDs, and errors to `print-jobs`.
+6. Keep `LULU_AUTO_SUBMIT=false`.
+7. After LuLu tracking exists, update portal order experience for physical delivery.
+8. Continue customer portal mobile validation.
+9. Complete R2/live delivery E2E.
+10. Remove temporary setup/debug/reconcile routes before launch.
 
 ## Launch Blockers
 
@@ -333,15 +390,15 @@ Hamilton explicitly deferred rotating `PAYLOAD_SETUP_SECRET` until after the Cli
 - DBA.
 - Business bank account.
 - Stripe live account readiness.
-- Mailjet approval/configuration.
 - Attorney review of legal/compliance pages.
 
 ### Technical
 
-- Client Portal digital delivery not finished.
-- Password reset/account activation not finished.
+- Manual LuLu submit/status/tracking not finished.
+- Customer portal physical delivery status not finished.
+- Client Portal digital delivery E2E not finished.
+- Password reset/account activation not fully validated.
 - Customer support portal not finished.
-- Private file delivery/R2 signed links not finished.
-- Neon SQL patches still need to be run/confirmed.
+- Private file delivery/R2 signed links need real-file validation.
 - Temporary setup/debug/reconcile routes need cleanup before launch.
-- Admin CSS consolidation still recommended.
+- Customer-role access control needs live verification.
