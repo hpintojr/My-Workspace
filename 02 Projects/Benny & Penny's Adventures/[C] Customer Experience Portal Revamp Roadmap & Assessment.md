@@ -4,14 +4,14 @@ project: Benny & Penny's Adventures
 status: active
 updated_by: ChatGPT
 last_updated: 2026-06-17
-source: architectural-blueprint-developer-guidelines.md
+source: architectural-blueprint-developer-guidelines.md + Hamilton product/delivery direction
 ---
 
 # Customer Experience / Portal Revamp Roadmap & Assessment
 
 ## Purpose
 
-Use the updated architectural blueprint as the active roadmap for revamping the Benny & Penny customer experience, portal, checkout, address handling, fulfillment visibility, and support workflow.
+Use the updated architectural blueprint and Hamilton's latest product-delivery direction as the active roadmap for the Benny & Penny customer experience, portal, checkout, address handling, fulfillment visibility, gifting, and support workflow.
 
 This workstream is active while further LuLu testing is paused.
 
@@ -20,10 +20,22 @@ This workstream is active while further LuLu testing is paused.
 ## Current Decision
 
 ```txt
-Pause additional LuLu submit/testing work.
-Do not submit sandbox or live print jobs yet.
-Use the deployed LuLu submit tool only after Book 1 print setup and customer-experience priorities are aligned.
-Shift active focus to the customer portal / customer experience revamp.
+The immediate priority is correct product assets plus automated digital delivery.
+The portal UX/workflow must be redesigned around the real delivery process.
+LuLu sandbox/live testing stays paused until Book 1 setup, official LuLu specs, and print-file URL handling are understood.
+```
+
+---
+
+## Important Product Assumptions
+
+```txt
+Current product catalog data is placeholder material.
+Current book cover images are placeholders.
+Current page preview images are placeholders.
+Current cart thumbnail images are placeholders.
+Manual admin/media linkage was only meant as a customer-support reference view.
+Digital delivery now needs to be automated through R2.
 ```
 
 ---
@@ -42,269 +54,151 @@ LuLu submit backend and admin page exist, but testing is paused.
 Support collections exist, but the customer Helpdesk workflow is not built.
 ```
 
-Important gaps found:
+Important gaps:
 
 ```txt
+Correct product assets are not in place yet.
+Temporary digital files need to be uploaded to R2.
+Automated download record creation must replace manual digital file linkage.
 Verify or build the customer account setup page.
 Add Geoapify metadata fields and autocomplete to Portal > Addresses.
-Harden the existing saved-address checkout prefill with UX polish and E2E testing.
-Confirm LuLu print-file URL handling before sandbox/live submission.
-Expand support schema/API for affected order items and customer-visible threads.
+Simplify BPG gifting and connect it to cart/coupon tracking.
+Research official LuLu setup/templates before sandbox/live print submission.
 ```
 
 ---
 
-## Recommended Active Build Order
+## Recommended Build Order
 
-### Phase A — Account Setup and Portal IA
+### Phase A — Product Assets and R2 Digital Delivery
 
 Goal:
 
 ```txt
-Make post-purchase account setup and the portal entry path clear before deeper checkout changes.
+Replace placeholders and make paid digital access automatic.
+```
+
+Tasks:
+
+- Organize correct cover/page/cart image strategy.
+- Upload temporary PDF/EPUB/audio files to R2.
+- Decide R2 object-key convention for all books/formats.
+- Map product records to digital file keys.
+- Create download records automatically after paid checkout.
+- Keep manual admin/media linkage only as a support-reference tool.
+- Test paid checkout to Library to secure download end to end.
+
+---
+
+### Phase B — Portal UX and Account Setup
+
+Goal:
+
+```txt
+Make the customer portal workflow match how customers actually receive and manage products.
 ```
 
 Tasks:
 
 - Verify or build the customer account setup page.
-- Create or refine shared portal shell/navigation.
+- Redesign portal navigation and information architecture.
 - Add Account and Helpdesk areas.
-- Add active route highlighting.
-- Keep parent navigation links selectable.
-- Use the bookstore/editorial visual system.
-- Validate mobile first.
-
-Status:
-
-```txt
-Active next build.
-```
+- Improve Library around automated delivery.
+- Improve Orders around digital/audio/print/support status.
+- Add address confirmation after account setup.
+- Validate mobile workflow.
 
 ---
 
-### Phase B — Address Book + Geoapify Autocomplete
+### Phase C — Geoapify Address Experience
 
 Goal:
 
 ```txt
-Make shipping/billing address entry clean, structured, and reusable.
+Use Geoapify anywhere admins or customers enter addresses inside the Benny & Penny system.
 ```
 
 Tasks:
 
 - Add Geoapify metadata fields to customer-addresses.
-- Verify Neon after field creation if needed.
-- Add Geoapify autocomplete to Portal > Addresses.
-- Save parsed address data into existing address fields.
-- Store place ID, formatted address, confidence values, and confirmation date.
-- Add manual confirmation when confidence is low.
-- Keep frozen order snapshots unchanged when saved addresses are edited.
-
-Status:
-
-```txt
-Geoapify dashboard visibility complete.
-Vercel Geoapify values configured.
-Portal address autocomplete not built yet.
-```
+- Add autocomplete to Portal > Addresses.
+- Add autocomplete to admin/customer address-entry workflows.
+- For guest checkout, keep Stripe address capture for now and focus on confirming/capturing Stripe-collected address after payment.
+- Add low-confidence/manual confirmation.
 
 ---
 
-### Phase C — Account Setup Address Confirmation
+### Phase D — BPG Gifting and Cart/Coupon Tracking
 
 Goal:
 
 ```txt
-Keep guest checkout friction low while still creating a strong customer identity after purchase.
-```
-
-Current decision:
-
-```txt
-Do not force account creation before checkout.
-Keep guest-friendly checkout.
-Create/fetch customer by email after paid checkout.
-Send account setup prompt after purchase.
+Simplify gifting and make BPG codes trackable through the cart/coupon system.
 ```
 
 Tasks:
 
-- After account setup, route customer through address confirmation.
-- Confirm billing address.
-- Confirm shipping address if a physical order exists.
-- Save defaults.
-- Continue to portal.
-
-Status:
-
-```txt
-Backend customer creation exists.
-Address-confirmation flow not built yet.
-```
+- Tie BPG codes to cart/coupon tracking.
+- Track redemption from cart through order and download record.
+- Limit gifted digital access to one download/device allowance.
+- Keep full paid digital-license allowance separate from gift allowance.
+- Update Terms and Conditions for gifted vs full-license access.
+- Label gifted access clearly in Library.
 
 ---
 
-### Phase D — Cart and Checkout UX Revamp
+### Phase E — LuLu Research and Print Setup
 
 Goal:
 
 ```txt
-Improve checkout clarity before Stripe redirect.
+Create a repeatable LuLu setup plan before print submission testing.
 ```
 
-Confirmed already present:
+Open questions:
 
-```txt
-Basic cart thumbnails.
-Format labels.
-Plus/minus quantity controls.
-Remove item.
-Saved-address selector for signed-in customers.
-Partial saved-address checkout prefill.
-```
+- Does each book need one project or separate paperback/hardcover projects?
+- For 9 books, is the setup 9 projects or 18 projects?
+- What exact PDF, bleed, margin, cover, and template requirements apply?
+- What is the correct Canva export process for print-ready PDFs?
+- How should the final files be made accessible to LuLu?
 
-Still needed:
+Tasks:
 
-- Sticky mobile checkout CTA.
-- Stronger price/discount clarity.
-- Cleaner physical-shipping confirmation.
-- Saved-address picker polish and E2E validation.
-- Shipping-rate estimator later.
-- Catalog source-of-truth decision before deeper checkout changes.
+- Research official LuLu documentation/templates.
+- Create project/folder plan for all 9 books.
+- Confirm Books 1-4 Canva output requirements.
+- Confirm print-file URL handling before sandbox submission.
 
 ---
 
-### Phase E — Orders, Library, and Fulfillment Tracking
+### Phase F — Abandoned Cart and Marketing Planning
 
 Goal:
 
 ```txt
-Show customers what they bought, what is downloadable, what is printing, and what has shipped.
+Keep marketing expansion planned but do not overbuild before product delivery and portal workflow are fixed.
 ```
 
 Tasks:
 
-- Redesign order details around fulfillment sections.
-- Make download availability states clearer in Library.
-- Surface print-job status once LuLu tracking exists.
-- Add registered-customer physical tracking cards later.
-- Add guest read-only order tracking later.
-
-Status:
-
-```txt
-Current portal has orders/library/address foundations.
-Physical tracking is not yet surfaced.
-```
-
----
-
-### Phase F — Helpdesk / Support Ticket Revamp
-
-Goal:
-
-```txt
-Let customers open support tickets tied to a specific order and line item.
-```
-
-Tasks:
-
-- Add Helpdesk route in portal.
-- Add ticket creation API.
-- Verify selected order/item belongs to the customer.
-- Add affected item relationship.
-- Add customer/admin thread model.
-- Add customer-facing ticket timeline.
-- Add admin reply notification.
-
-Status:
-
-```txt
-Support collections exist.
-Customer support portal workflow not finished.
-```
-
----
-
-### Phase G — Digital Delivery Finalization
-
-Goal:
-
-```txt
-Make digital delivery secure, immediate, and easy to re-access.
-```
-
-Tasks:
-
-- Confirm real private object keys for PDF, EPUB, and audiobook assets.
-- Test paid-order-to-library-to-download E2E.
-- Keep links short-lived.
-- Track usage and limits.
-- Improve Library UI states.
-
-Status:
-
-```txt
-R2 code path exists.
-Live file E2E still open.
-```
-
----
-
-### Phase H — LuLu Tracking and Customer Communications
-
-Goal:
-
-```txt
-Connect physical fulfillment updates to portal and email after LuLu testing resumes.
-```
-
-Tasks:
-
-- Keep manual submit/testing paused until Book 1 print setup is complete.
-- Confirm print-file URL handling before sandbox/live submission.
-- Later test sandbox submit from the deployed admin page.
-- Add LuLu status/tracking persistence.
-- Add rejected/error admin alert.
-- Add shipment/tracking email.
-
-Status:
-
-```txt
-LuLu submit UI deployed but further LuLu testing paused.
-Status/tracking handling not built yet.
-```
-
----
-
-### Phase I — Privacy, Compliance, and Tax Assessment
-
-Goal:
-
-```txt
-Make data collection, tracking, and physical/digital tax handling launch-ready.
-```
-
-Tasks:
-
-- Review privacy policy for processors and data flows.
-- Add checkout/portal notice explaining address and fulfillment data usage.
-- Plan cookie/analytics consent before marketing pixels.
-- Reassess tax strategy before public physical-book launch.
-- Keep attorney/CPA review as a launch blocker.
+- Plan abandoned-cart recovery options.
+- Decide what event data to store first-party.
+- Research tagging/retargeting options after consent/privacy planning.
+- Keep subscriber/marketing panel on the back burner.
+- Future panel may support email, newsletters, SMS, outbound calls, and API/webhook integrations.
 
 ---
 
 ## Next Recommended Build
 
 ```txt
-1. Verify or build the customer account setup page.
-2. Redesign portal information architecture.
-3. Add Geoapify fields and autocomplete to Portal > Addresses.
-4. Add address confirmation after account setup.
-5. Harden the existing saved-address checkout prefill.
-6. Upgrade cart UX for mobile-first checkout clarity.
-7. Add customer support/helpdesk workflow tied to orders/items.
+1. Organize/replace correct product images and cart thumbnails.
+2. Upload temporary digital product files to R2.
+3. Automate download-record creation after paid checkout.
+4. Verify or build the customer account setup page.
+5. Redesign portal UX/workflow around automated delivery.
+6. Add Geoapify fields/autocomplete to customer/admin address entry points.
+7. Simplify BPG gifting and connect it to cart/coupon tracking.
+8. Research official LuLu setup/template requirements.
 ```
-
-Do not resume LuLu sandbox submission until Book 1 setup, print-file URL handling, and portal priorities are confirmed.
