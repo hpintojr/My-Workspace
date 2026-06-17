@@ -22,6 +22,7 @@ CLAUDE.md
 
 ```txt
 Geoapify has been added to the admin dashboard status check.
+Geoapify Vercel values are configured for browser autocomplete, server checks, and endpoint use.
 LuLu print fulfillment Phase 1 and Phase 2 are working.
 Phase 3 backend foundation is deployed.
 Next work is the admin tool for manually sending a ready print job to LuLu.
@@ -34,7 +35,8 @@ Next work is the admin tool for manually sending a ready print job to LuLu.
 2. Build the admin tool for ready print jobs.
 3. Test blocked states before sandbox testing.
 4. Keep automatic submission disabled.
-5. Later, continue Geoapify portal address work.
+5. Optionally upgrade Geoapify dashboard status to a real API ping.
+6. Later, continue Geoapify portal address work.
 ```
 
 ## Directory Notes
