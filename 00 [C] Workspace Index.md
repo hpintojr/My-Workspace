@@ -22,7 +22,7 @@ CLAUDE.md
 
 ```txt
 Active focus is customer experience / portal revamp.
-Updated architectural blueprint has been reviewed and converted into a roadmap.
+Repo review confirmed the portal, checkout, cart, R2, LuLu, Geoapify, and support foundations.
 LuLu print fulfillment Phase 1 and Phase 2 are working.
 LuLu submit backend and admin page are deployed, but further testing is paused.
 Geoapify dashboard status and Vercel values are configured.
@@ -31,12 +31,12 @@ Geoapify dashboard status and Vercel values are configured.
 ## Current Next Actions
 
 ```txt
-1. Audit current portal routes and components.
+1. Verify or build the customer account setup page.
 2. Redesign portal information architecture.
-3. Add Geoapify autocomplete to Portal > Addresses.
-4. Add address confirmation to account setup.
-5. Plan logged-in checkout address prefill.
-6. Redesign cart UX for mobile-first checkout clarity.
+3. Add Geoapify fields and autocomplete to Portal > Addresses.
+4. Add address confirmation after account setup.
+5. Harden the existing saved-address checkout prefill.
+6. Upgrade cart UX for mobile-first checkout clarity.
 7. Add customer support/helpdesk workflow tied to orders/items.
 8. Resume LuLu sandbox testing later.
 ```
