@@ -87,7 +87,8 @@ Current status:
 
 ```txt
 LuLu POD Phase 1 and Phase 2 are working.
-Geoapify now appears in Admin Dashboard System Status Check.
+Geoapify appears in Admin Dashboard System Status Check.
+Geoapify Vercel environment values are configured for browser autocomplete, server checks, and the autocomplete endpoint.
 LuLu POD Phase 3 backend foundation is deployed: submit helper plus protected manual-submit route.
 Next active build is the admin-facing Submit to LuLu button/tool page.
 Auto-submit remains disabled.
@@ -167,6 +168,15 @@ Builds LuLu request from frozen print-job data.
 Stores raw request/response, IDs, status, and errors back to print-jobs.
 ```
 
+Geoapify status:
+
+```txt
+Admin dashboard row is deployed.
+Vercel values are configured.
+Real API ping can be added later using the configured autocomplete endpoint.
+Portal/account setup autocomplete is queued after the LuLu submit UI.
+```
+
 Neon schema notes:
 
 ```txt
@@ -197,7 +207,8 @@ Next Benny focus:
 2. Fill Book 1 print setup fields before sandbox submission testing.
 3. Test that non-ready jobs are blocked safely.
 4. Test sandbox submission only; do not enable auto-submit.
-5. After tracking/status exists, update customer portal/order experience for physical delivery.
+5. Optionally upgrade Geoapify dashboard row from config check to real API ping.
+6. After tracking/status exists, update customer portal/order experience for physical delivery.
 ```
 
 Reference-only admin mobile files for debugging regressions:
