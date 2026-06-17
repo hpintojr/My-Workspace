@@ -1,8 +1,9 @@
 ---
 type: project-plan
 project: Benny & Penny's Adventures
-status: planned
+status: active
 updated_by: ChatGPT
+last_updated: 2026-06-17
 ---
 
 # LuLu Print-on-Demand Plan
@@ -11,9 +12,7 @@ updated_by: ChatGPT
 
 Build a safe LuLu print-on-demand foundation for Benny & Penny's Adventures.
 
-The immediate goal is **not** to send live print orders yet. The first step is to create an internal, admin-visible POD queue so paperback and hardcover purchases can be tracked safely after Stripe checkout.
-
-This will also set up the next customer-experience improvement phase, because physical book delivery introduces tracking, delivery status, and clearer customer communication needs.
+The workflow must support paperback and hardcover purchases, internal admin tracking, LuLu sandbox submission, status updates, tracking, and later customer-facing delivery visibility.
 
 ---
 
@@ -43,203 +42,296 @@ Even though production deployment is being used, do not assume public-live comme
 
 ---
 
-## Current Repo State
-
-The app already has the right checkout and fulfillment foundation:
-
-- Stripe Checkout supports cart items and payment.
-- Checkout can detect when cart items require shipping.
-- Stripe Checkout collects shipping details for physical products.
-- Successful checkout creates Payload `orders` records.
-- Successful checkout creates Payload `order-items` records.
-- Existing formats already include:
-  - `digital`
-  - `audiobook`
-  - `paperback`
-  - `hardcover`
-- Digital and audiobook purchases already have a protected R2 delivery direction.
-
-Missing feature:
+## Current Status — 2026-06-17
 
 ```txt
-POD/LuLu print fulfillment automation
+Phase 1: Complete / confirmed working.
+Phase 2: Implemented / Neon patched / ready for book data entry.
+Next: Phase 3 manual Submit to LuLu route/action.
+Auto-submit remains disabled.
 ```
 
----
+Confirmed test:
 
-## Safe Build Strategy
-
-Build in phases.
-
-Do **not** start with automatic live LuLu ordering. Start with an internal print-job queue and admin review workflow.
+```txt
+Order 26-0024 created a Hardcover print job.
+Print record 1 opened successfully after Neon lock-table patch.
+Shipping copied into print job.
+LuLu API was not called.
+```
 
 ---
 
 ## Phase 1 — Internal Print Job Queue
 
-Add a new Payload collection:
+Status:
+
+```txt
+Complete / working
+```
+
+Implemented files:
 
 ```txt
 collections/PrintJobs.ts
-```
-
-Register it in:
-
-```txt
 payload.config.ts
+lib/luluPrintJobs.ts
+lib/stripeFulfillment.ts
 ```
 
-Suggested collection slug:
+Behavior now working:
 
 ```txt
-print-jobs
+Stripe order paid
+-> orders record created
+-> order-items records created
+-> paperback/hardcover items create print-jobs records
+-> admin can review print jobs before LuLu submission
 ```
 
-Suggested labels:
-
-```txt
-Print Job
-Print Jobs
-```
-
-Suggested admin columns:
+Print-job fields include:
 
 ```txt
 order
 orderItem
 book
+provider
 format
 quantity
 status
-provider
+customerName
+customerEmail
+shippingName
+shippingLine1
+shippingLine2
+shippingCity
+shippingState
+shippingPostalCode
+shippingCountry
 luluPrintJobId
-createdAt
+luluLineItemId
+trackingNumber
+trackingUrl
+rawRequest
+rawResponse
+errorMessage
+submittedAt
+acceptedAt
+shippedAt
+deliveredAt
+notes
 ```
 
-Suggested fields:
+Admin placement:
 
 ```txt
-order                  relationship -> orders, required
-orderItem              relationship -> order-items
-book                   relationship -> books
-provider               select: lulu, default lulu
-format                 select: paperback | hardcover, required
-quantity               number, required
-status                 select: draft | ready | submitted | accepted | rejected | shipped | delivered | canceled | error
-customerName           text
-customerEmail          email
-shippingName           text
-shippingLine1          text
-shippingLine2          text
-shippingCity           text
-shippingState          text
-shippingPostalCode     text
-shippingCountry        text
-luluPrintJobId         text
-luluLineItemId         text
-trackingNumber         text
-trackingUrl            text
-rawRequest             json or textarea
-rawResponse            json or textarea
-errorMessage           textarea
-submittedAt            date
-acceptedAt             date
-shippedAt              date
-deliveredAt            date
-notes                  textarea
+Catalog
+  Books
+  Media
+  Print Jobs
 ```
 
-Purpose:
+---
+
+## Phase 1 Neon Patches Applied
+
+Because Payload did not automatically create every schema object, Neon was patched directly.
+
+Neon project:
 
 ```txt
-Stripe order paid -> order-items created -> paperback/hardcover items create print-jobs records -> admin can review before LuLu submission.
+Benny & Penny's Adventures
+Database: neondb
+```
+
+Patches applied:
+
+```txt
+print_jobs table created
+payload_locked_documents_rels.print_jobs_id added
+```
+
+Why the second patch mattered:
+
+```txt
+The print-jobs list page worked, but individual record pages were blank.
+Payload detail pages query payload_locked_documents_rels for document locks.
+That lock table was missing print_jobs_id.
+Adding the column fixed the print-job record detail page.
+```
+
+Schema rule going forward:
+
+```txt
+After adding a new collection or fields, verify Neon directly.
+Do not assume Payload auto-push completed the full schema.
 ```
 
 ---
 
 ## Phase 2 — Add Print Specs to Books
 
-The `books` collection currently has pricing, Stripe IDs, public cover paths, and R2 digital object keys. It needs print production metadata.
+Status:
 
-Add fields to `collections/Books.ts`:
+```txt
+Implemented in code and patched in Neon.
+```
+
+Implemented file:
+
+```txt
+collections/Books.ts
+```
+
+Book fields added:
 
 ```txt
 luluProjectId
 luluPaperbackSku
 luluHardcoverSku
 trimSize
-printInteriorFileKey or printInteriorFileUrl
-printCoverFileKey or printCoverFileUrl
+printInteriorFileKey
+printCoverFileKey
 paperbackPrintReady
 hardcoverPrintReady
 printNotes
 ```
 
-Recommended safe approach:
+Matching Neon columns added:
 
-- Use booleans for `paperbackPrintReady` and `hardcoverPrintReady`.
-- Only create LuLu-ready jobs when the matching format is marked print-ready.
-- Keep actual credentials and API values in environment variables only.
+```txt
+lulu_project_id
+lulu_paperback_sku
+lulu_hardcover_sku
+trim_size
+print_interior_file_key
+print_cover_file_key
+paperback_print_ready
+hardcover_print_ready
+print_notes
+```
 
 ---
 
-## Phase 3 — Generate Print Jobs After Checkout
+## Print Job Readiness Logic
 
-Add a new helper:
+Implemented in:
 
 ```txt
 lib/luluPrintJobs.ts
 ```
 
-Suggested exported function:
-
-```ts
-createPrintJobsForOrder(payload, order, items)
-```
-
-Behavior:
-
-- Runs after order-items are created in `lib/stripeFulfillment.ts`.
-- Only handles `paperback` and `hardcover` formats.
-- Skips `digital` and `audiobook` because those stay in the R2 digital delivery flow.
-- Uses order shipping fields as a frozen shipping snapshot.
-- Creates `print-jobs` records with status `draft` or `ready`.
-- Does not call the LuLu API yet.
-
-Suggested status logic:
+A new print job only becomes:
 
 ```txt
-If book has matching LuLu/print-ready data -> ready
-If missing print data or shipping data -> draft
+ready
+```
+
+when all requirements are met:
+
+```txt
+shipping address complete
+matching book marked paperback/hardcover print ready
+LuLu project ID exists
+matching LuLu SKU exists
+trim size exists
+print interior file key or URL exists
+print cover file key or URL exists
+```
+
+Otherwise the print job remains:
+
+```txt
+draft
+```
+
+and the notes explain what setup is missing.
+
+---
+
+## Important Website Commits
+
+```txt
+bd17cc82cbe2a9fef11b2b2594efb4ebcc329275
+Add print jobs collection
+
+fc7cb041a3dc632d62e34f59e8d716c0b7319723
+Register print jobs collection
+
+c1a82ef0eaa0d9186206780ad21d67f1d08cee07
+Add dry-run Lulu print job generator
+
+fcd736ce2c21361151a2136a6b51a6d3822bf024
+Create dry-run print jobs after checkout
+
+83038534b4da78352d8019ce9132fd396af69e57
+Allow Payload to create print jobs table
+
+60e457680af79a39b879aa5852f4e827aca42318
+Support print jobs sidebar active state
+
+a9383a2e68023a42db5dd7520004797147c5fb56
+Add print jobs under catalog sidebar
+
+de086edb7fcaa72be91bb903c8ce6df73b2654b6
+Add Lulu print setup fields to books
+
+60629f4fe74618fed9a94fb700c923215db1c977
+Require Lulu print setup before ready status
 ```
 
 ---
 
-## Phase 4 — Admin Review and Manual Submit
+## Phase 3 — Manual Submit to LuLu
 
-After the queue exists, add an admin action/button or admin route:
-
-```txt
-Submit to LuLu
-```
-
-Flow:
+Status:
 
 ```txt
-Admin reviews print job
--> clicks Submit to LuLu
--> app validates shipping + book print specs
--> app builds LuLu payload
--> app calls LuLu API
--> app stores raw request/response
--> print job status changes to submitted/accepted/error
+Next active build
 ```
 
-This is safer than immediate automatic ordering because it prevents accidental live print costs while the integration is still being tested.
+Goal:
+
+```txt
+Admin reviews a ready print job and manually submits it to LuLu sandbox/test API.
+```
+
+Recommended implementation order:
+
+```txt
+1. Add LuLu config helper that reads env vars only.
+2. Add LuLu auth/token helper.
+3. Add manual API route/action for one print job.
+4. Validate print job status is ready before submission.
+5. Build LuLu request payload from frozen print-job + book setup data.
+6. Submit to LuLu sandbox/test endpoint.
+7. Save raw request/response, LuLu IDs, and errors to print-jobs.
+8. Change status to submitted/accepted/error as appropriate.
+9. Keep LULU_AUTO_SUBMIT=false.
+```
+
+Environment variables already discussed:
+
+```txt
+LULU_CLIENT_KEY
+LULU_CLIENT_SECRET
+LULU_BASIC_AUTH
+LULU_BASE_URL
+LULU_AUTO_SUBMIT=false
+LULU_WEBHOOK_SECRET later
+```
+
+Do not commit real values.
 
 ---
 
-## Phase 5 — Optional Auto Submit
+## Phase 4 — Optional Auto Submit
+
+Status:
+
+```txt
+Deferred
+```
 
 Only after manual submission is proven should automation be enabled.
 
@@ -249,13 +341,13 @@ Suggested environment flag:
 LULU_AUTO_SUBMIT=false
 ```
 
-When ready:
+When proven safe in controlled testing:
 
 ```txt
 LULU_AUTO_SUBMIT=true
 ```
 
-Behavior:
+Behavior later:
 
 ```txt
 Paid checkout -> print job created -> if ready and auto-submit enabled -> submit to LuLu automatically.
@@ -263,14 +355,19 @@ Paid checkout -> print job created -> if ready and auto-submit enabled -> submit
 
 ---
 
-## Phase 6 — Customer Experience Update for Physical Delivery
+## Phase 5 — Customer Experience Update for Physical Delivery
 
-After the LuLu POD queue and submission flow are stable, update the customer experience around physical book delivery.
+Status:
+
+```txt
+Deferred until LuLu status/tracking exists.
+```
 
 Reason:
 
 ```txt
-Print-on-demand adds shipping, tracking, delivery status, and fulfillment transparency. The current customer experience should be improved after tracking data exists.
+Print-on-demand adds shipping, tracking, delivery status, and fulfillment transparency.
+The customer experience should be updated after LuLu tracking/status data exists.
 ```
 
 Customer-facing improvements to plan:
@@ -289,81 +386,26 @@ Customer-facing improvements to plan:
 - A shipment/tracking email should be added after LuLu tracking is received.
 - Customer support messaging should make it easy to reference the order number and tracking status.
 
-Recommended implementation order:
-
-```txt
-1. Add tracking/status fields to print-jobs.
-2. Surface print job status in admin.
-3. Surface physical delivery status in /portal/orders.
-4. Update thank-you page messaging for mixed carts.
-5. Update order receipt email copy for print items.
-6. Add shipment/tracking email once LuLu tracking webhooks or polling are available.
-```
-
-Do this after LuLu API setup, because the customer experience should be based on the actual tracking/status data returned by LuLu.
-
----
-
-## Environment Variables Needed Later
-
-Do not commit real values.
-
-Likely variables:
-
-```txt
-LULU_CLIENT_KEY
-LULU_CLIENT_SECRET
-LULU_BASE_URL
-LULU_AUTO_SUBMIT
-LULU_WEBHOOK_SECRET
-```
-
-Use sandbox/test API settings first if available.
-
----
-
-## First Coding Task
-
-Implement Phase 1 only:
-
-1. Create `collections/PrintJobs.ts`.
-2. Register `PrintJobs` in `payload.config.ts`.
-3. Create `lib/luluPrintJobs.ts` with a dry-run print-job generator.
-4. Hook it into `fulfillCheckoutSession()` after `order-items` are created.
-5. Confirm the admin dashboard can see generated print jobs.
-6. Do not submit anything to LuLu yet.
-
 ---
 
 ## Guardrails
 
-- Do not call the live LuLu API in Phase 1.
-- Do not store LuLu credentials in the repo.
-- Do not expose print file URLs publicly if they are private production files.
-- Do not block successful checkout if print-job creation fails; log error and leave order intact.
-- Keep digital/audiobook fulfillment separate from print fulfillment.
-- Build admin-visible state before automation.
-- Defer customer experience changes until tracking/status data exists from the LuLu integration.
-- Stay on the `main` branch unless Hamilton explicitly requests otherwise.
+- Stay on `main` unless Hamilton explicitly asks otherwise.
+- Do not commit secrets, credentials, API keys, or raw env values.
+- Keep `LULU_AUTO_SUBMIT=false` until manual submission is proven.
+- Use the controlled production deployment, but do not assume public-live commerce.
 - Treat Stripe as sandbox/test mode until further notice.
 - Treat LuLu as sandbox/test mode until further notice.
-
----
-
-## Acceptance Criteria for Phase 1
-
-A test Stripe checkout with a paperback or hardcover item should:
-
-1. Create an `orders` record.
-2. Create matching `order-items` records.
-3. Create one or more `print-jobs` records for physical formats only.
-4. Copy shipping details into the print-job snapshot.
-5. Leave digital/audiobook items out of the print-job queue.
-6. Not call LuLu yet.
-7. Not break checkout if print-job creation fails.
+- Do not block checkout if print-job creation fails.
+- Keep digital/audiobook delivery separate from print fulfillment.
+- Verify Neon schema after adding collections/fields.
 
 ---
 
 ## Next Step
 
-Begin Phase 1 implementation in `hpintojr/bennyandpennyadventures` on the `main` branch.
+Begin Phase 3 in `hpintojr/bennyandpennyadventures` on the `main` branch:
+
+```txt
+Build LuLu API client + manual Submit to LuLu action for ready print jobs.
+```
