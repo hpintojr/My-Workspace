@@ -52,7 +52,32 @@ Build status:
 Vercel build for 67b5cee completed successfully.
 ```
 
-## Vercel Values Needed for Testing
+## 2026-06-17 Test Finding and Correction
+
+Hamilton processed order `26-0027` with digital, audiobook, paperback, and hardcover items. Order items and print jobs were created, but Media/Downloads records did not appear automatically.
+
+Findings:
+
+```txt
+Order 26-0027 existed as order id 35.
+Digital and audiobook order items existed for Book 1.
+Downloads table had no records for order 26-0027.
+Book 1 still pointed to stale object keys: ebooks/... and audiobooks/...
+Current R2 bucket pattern is books/...
+Automation is gated by R2_AUTO_CREATE_DOWNLOADS=true.
+```
+
+Corrections applied:
+
+```txt
+Updated Book 1 keys to books/book-1.pdf, books/book-1.epub, and books/book-1-audiobook.mp3.
+Backfilled downloads for order 26-0027:
+- PDF record
+- EPUB record
+- Audiobook record
+```
+
+## Vercel Values Needed for Future Automatic Creation
 
 ```txt
 R2_AUTO_CREATE_DOWNLOADS=true
@@ -60,11 +85,13 @@ R2_KEY_PREFIX=books
 R2_DOWNLOADS_PER_LICENSE=3
 ```
 
+If these are missing or not redeployed, future orders may create orders/order-items/print-jobs but skip auto-creating Media/Downloads records.
+
 ## Remaining Work
 
 ```txt
 Polish Portal Library UI so PDF and EPUB appear as clear separate buttons.
-Test paid digital checkout to download record creation to portal download.
+Test a new paid digital order after confirming Vercel values are active.
 Connect BPG gifting to the same readable slot pool.
 Update Terms and Conditions for gifted vs full-license access.
 ```
