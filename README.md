@@ -32,7 +32,7 @@ if any file list, read order, active focus, or project status changed.
 Current priority:
 
 ```txt
-Continue LuLu POD Phase 3: the backend manual-submit foundation is deployed; next build is the admin-facing Submit to LuLu button/tool page.
+Pause further LuLu submission/testing work and shift the active build to the customer experience / portal revamp using the updated architectural blueprint.
 ```
 
 Read first for the next Benny & Penny chat:
@@ -40,12 +40,12 @@ Read first for the next Benny & Penny chat:
 ```txt
 00 [C] Workspace Index.md
 CLAUDE.md
-02 Projects/Benny & Penny's Adventures/[C] Lulu Print on Demand Plan.md
-01 Daily Logs/[C] 2026-06-17 Geoapify and Lulu Phase 3 Update.md
-01 Daily Logs/[C] 2026-06-17 Lulu POD Phase 1-2 Update.md
+02 Projects/Benny & Penny's Adventures/[C] Customer Experience Portal Revamp Roadmap & Assessment.md
 02 Projects/Benny & Penny's Adventures/[C] Backlog & Launch Checklist.md
 02 Projects/Benny & Penny's Adventures/Benny & Penny's Adventures Overview.md
 02 Projects/Benny & Penny's Adventures/[C] Geoapify Address Autocomplete and Checkout Strategy.md
+02 Projects/Benny & Penny's Adventures/[C] Lulu Print on Demand Plan.md
+01 Daily Logs/[C] 2026-06-17 Geoapify and Lulu Phase 3 Update.md
 ```
 
 Confirmed working:
@@ -54,20 +54,24 @@ Confirmed working:
 - Admin dashboard desktop sidebar toggle polish is working.
 - Dashboard search is below the greeting.
 - Welcome renders as `Welcome, Hamilton Pinto!`.
-- Mobile and desktop sidebar toggle controls show the branded heart treatment.
 - Print Jobs appears under Catalog below Media.
 - Internal LuLu/POD `print-jobs` queue works for physical orders.
 - Order `26-0024` created a Hardcover print job.
 - Print record `1` opened successfully after the Neon lock-table patch.
 - Books now include LuLu print setup fields.
-- Neon has been patched with the required `print_jobs`, lock-rel, and book print setup fields.
-- Geoapify API now appears in Admin Dashboard System Status Check.
-- Geoapify Vercel environment values are now configured for browser autocomplete, server checks, and the autocomplete endpoint.
-- LuLu Phase 3 backend foundation is deployed: API helper plus protected manual-submit route.
+- Geoapify API appears in Admin Dashboard System Status Check.
+- Geoapify Vercel values are configured for browser autocomplete, server checks, and endpoint use.
+- LuLu Phase 3 backend foundation and admin submit page/link are deployed.
 
 Latest important Benny & Penny commits:
 
 ```txt
+9268413354faac6f3a76b1aa44960a6711614fa7
+Add Lulu submit link to admin sidebar
+
+3d3d43ddbaab2d4cf0c791432784bc7d9fe9b554
+Allow admin session for Lulu submit route
+
 166768e5007ac21e29bd08b58423a73d81ecd1c7
 Add manual Lulu submit route
 
@@ -76,28 +80,16 @@ Add Lulu API submit helper
 
 c073738d8a74bd419ae265e12c161334740daa07
 Add Geoapify to admin system status
-
-60629f4fe74618fed9a94fb700c923215db1c977
-Require Lulu print setup before ready status
-
-de086edb7fcaa72be91bb903c8ce6df73b2654b6
-Add Lulu print setup fields to books
-```
-
-LuLu POD plan file:
-
-```txt
-02 Projects/Benny & Penny's Adventures/[C] Lulu Print on Demand Plan.md
 ```
 
 Next focus areas:
 
-- Build the admin-facing Submit to LuLu button or tool page for ready print jobs.
-- Keep manual-only LuLu submission; do not enable auto-submit.
-- Validate that the backend route blocks non-ready jobs.
-- Test sandbox submission only after Book 1 print setup data is filled.
-- Save/display LuLu response, IDs, and errors in Print Jobs.
-- Add a real Geoapify dashboard ping later if desired now that the endpoint value is configured.
-- After LuLu tracking exists, update the customer portal, thank-you page, receipt copy, and shipment/tracking email.
+- Audit current portal routes and components.
+- Redesign portal information architecture for Orders, Library, Addresses, Helpdesk, and Account.
+- Add Geoapify autocomplete to Portal > Addresses.
+- Add address confirmation to account setup.
+- Plan logged-in checkout address prefill.
+- Redesign cart UX for mobile-first checkout clarity.
+- Later resume LuLu sandbox testing only after Book 1 setup and portal priorities are aligned.
 
-Do not start broad rewrites. Future admin changes should be tiny final-layer fixes only.
+Do not start broad admin rewrites. Customer-facing portal/storefront work is the new active focus.
