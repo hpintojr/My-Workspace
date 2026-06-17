@@ -1,6 +1,6 @@
 # Workspace Index
 
-**Status:** Current as of 2026-06-16  
+**Status:** Current as of 2026-06-17  
 **Purpose:** Clean directory-tree index, read-order guide, and workspace update rule source for `hpintojr/My-Workspace`.
 
 Future assistants should use this file to quickly understand what exists, what to read first, and what must be updated when the workspace changes.
@@ -22,13 +22,14 @@ When Hamilton says **"read my workspace"**, read in this order:
 For the current Benny & Penny active focus, read these first after README/index/CLAUDE:
 
 ```txt
-02 Projects/Benny & Penny's Adventures/[C] Admin Mobile Accepted Working Update 2026-06-16.md
-02 Projects/Benny & Penny's Adventures/[C] Admin Desktop Toggle Status 2026-06-16.md
-02 Projects/Benny & Penny's Adventures/[C] Portal and Digital Delivery Implementation Notes.md
+02 Projects/Benny & Penny's Adventures/[C] Lulu Print on Demand Plan.md
+01 Daily Logs/[C] 2026-06-17 Lulu POD Phase 1-2 Update.md
 02 Projects/Benny & Penny's Adventures/[C] Backlog & Launch Checklist.md
+02 Projects/Benny & Penny's Adventures/Benny & Penny's Adventures Overview.md
+02 Projects/Benny & Penny's Adventures/[C] Portal and Digital Delivery Implementation Notes.md
 ```
 
-Do not read the older verbose admin-mobile progress logs first unless debugging a regression.
+Do not read older verbose admin-mobile progress logs first unless debugging an admin regression.
 
 ---
 
@@ -72,7 +73,8 @@ hpintojr/My-Workspace/
 │   ├── [C] 2026-06-15.md
 │   ├── [C] 2026-06-16.md
 │   ├── [C] 2026-06-16 Admin Desktop Toggle Update.md
-│   └── [C] 2026-06-16 Admin Mobile Final Polish Update.md
+│   ├── [C] 2026-06-16 Admin Mobile Final Polish Update.md
+│   └── [C] 2026-06-17 Lulu POD Phase 1-2 Update.md
 └── 02 Projects/
     ├── Benny & Penny's Adventures/
     │   ├── Benny & Penny's Adventures Overview.md
@@ -83,6 +85,7 @@ hpintojr/My-Workspace/
     │   ├── [C] Backlog & Launch Checklist.md
     │   ├── [C] Client Portal Build Notes.md
     │   ├── [C] Implementation Notes — Contact Forms, Legal Pages, R2 Ebook Delivery.md
+    │   ├── [C] Lulu Print on Demand Plan.md
     │   ├── [C] Order and Customer Purchase Data Fix.md
     │   ├── [C] Portal and Digital Delivery Implementation Notes.md
     │   ├── [C] Promotions, Gifting & Access Grants Plan.md
@@ -140,15 +143,13 @@ Main persistent assistant operating guide. Applies to ChatGPT, Claude, Gemini, a
 
 Session-level records. Use these only when a deeper reconstruction is needed.
 
-Latest important logs:
+Latest important log:
 
 ```txt
-01 Daily Logs/[C] 2026-06-16.md
-01 Daily Logs/[C] 2026-06-16 Admin Mobile Final Polish Update.md
-01 Daily Logs/[C] 2026-06-16 Admin Desktop Toggle Update.md
+01 Daily Logs/[C] 2026-06-17 Lulu POD Phase 1-2 Update.md
 ```
 
-These are no longer part of the default Benny & Penny read-first path because the accepted-working handoff is faster.
+Older admin logs are reference/debug-only unless an admin regression returns.
 
 ---
 
@@ -160,16 +161,16 @@ Project folder:
 02 Projects/Benny & Penny's Adventures/
 ```
 
-Primary website/business project. Includes public website, Payload CMS admin, customer portal, Stripe, R2/digital delivery, email, legal/compliance, promotions, gifting, and launch cleanup.
+Primary website/business project. Includes public website, Payload CMS admin, customer portal, Stripe, R2/digital delivery, email, legal/compliance, promotions, gifting, LuLu print-on-demand, physical delivery tracking, and launch cleanup.
 
 Fast read order for Benny & Penny continuation:
 
 ```txt
-1. 02 Projects/Benny & Penny's Adventures/[C] Admin Mobile Accepted Working Update 2026-06-16.md
-2. 02 Projects/Benny & Penny's Adventures/[C] Admin Desktop Toggle Status 2026-06-16.md
-3. 02 Projects/Benny & Penny's Adventures/[C] Portal and Digital Delivery Implementation Notes.md
-4. 02 Projects/Benny & Penny's Adventures/[C] Backlog & Launch Checklist.md
-5. 02 Projects/Benny & Penny's Adventures/Benny & Penny's Adventures Overview.md only if broader project context is needed
+1. 02 Projects/Benny & Penny's Adventures/[C] Lulu Print on Demand Plan.md
+2. 01 Daily Logs/[C] 2026-06-17 Lulu POD Phase 1-2 Update.md
+3. 02 Projects/Benny & Penny's Adventures/[C] Backlog & Launch Checklist.md
+4. 02 Projects/Benny & Penny's Adventures/Benny & Penny's Adventures Overview.md
+5. 02 Projects/Benny & Penny's Adventures/[C] Portal and Digital Delivery Implementation Notes.md
 ```
 
 Reference/archive files for debugging only:
@@ -185,37 +186,45 @@ Reference/archive files for debugging only:
 Current active status:
 
 ```txt
-Admin dashboard mobile polish is accepted/working on iPhone Chrome.
-Admin desktop sidebar toggle polish is accepted/working.
-Welcome now renders as: Welcome, Hamilton Pinto!
-Future admin changes should be tiny final-layer fixes only. Do not start broad rewrites.
+LuLu POD Phase 1 is complete and confirmed working.
+LuLu POD Phase 2 is implemented and Neon patched.
+Print Jobs appears under Catalog below Media.
+Order 26-0024 created a Hardcover print job.
+Print record 1 opened successfully after Neon lock-table patch.
+Books now have LuLu print setup fields.
+Next active build is Phase 3: manual Submit to LuLu action/API.
+Auto-submit remains disabled.
 ```
 
-Latest accepted Benny & Penny mobile website commit:
+Important Benny & Penny website commits:
 
 ```txt
+60629f4fe74618fed9a94fb700c923215db1c977
+Require Lulu print setup before ready status
+
+de086edb7fcaa72be91bb903c8ce6df73b2654b6
+Add Lulu print setup fields to books
+
+a9383a2e68023a42db5dd7520004797147c5fb56
+Add print jobs under catalog sidebar
+
+fcd736ce2c21361151a2136a6b51a6d3822bf024
+Create dry-run print jobs after checkout
+
 69d549e3160c38e87be80eafb00bdb700d0a66c6
 Hard override sidebar close icon to dark heart
-```
-
-Latest accepted Benny & Penny desktop/admin greeting commits:
-
-```txt
-e678610a677948f7046eef8dadc6df1bc5df99ec
-Retarget desktop nav toggles outside admin shell
-
-f0de9ab63cbe54407b262ffed100c74b18595447
-Add space after welcome comma
 ```
 
 Current Benny & Penny next focus:
 
 ```txt
-1. Validate remaining customer portal mobile pages.
-2. Confirm Chrome iPhone bottom white gap is acceptable.
-3. Confirm Sequenzy footer badge/account settings.
-4. Keep Mailjet as fallback transactional provider.
-5. Continue final launch cleanup.
+1. Fill Book 1 LuLu print setup fields in Payload Admin.
+2. Build LuLu API config/auth helper using env vars only.
+3. Build manual Submit to LuLu route/action for a single ready print job.
+4. Validate that a print job must be ready before submit.
+5. Save LuLu request/response, IDs, and errors to print-jobs.
+6. Keep LULU_AUTO_SUBMIT=false.
+7. After LuLu tracking exists, update customer portal physical delivery status.
 ```
 
 ---
