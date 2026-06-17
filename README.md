@@ -24,7 +24,7 @@ The workspace index contains the clean directory tree, read-order rules, and upd
 Current priority:
 
 ```txt
-Correct product assets, automated R2 digital delivery, and customer experience / portal workflow revamp. LuLu testing is paused until Book 1 setup, file URL handling, and official LuLu template/project requirements are clear.
+Product asset replacement, BPG gifting/license rules, and customer portal/workflow revamp. The R2 automated digital delivery foundation is now confirmed working in testing.
 ```
 
 Read first for the next Benny & Penny chat:
@@ -32,7 +32,9 @@ Read first for the next Benny & Penny chat:
 ```txt
 00 [C] Workspace Index.md
 CLAUDE.md
+01 Daily Logs/[C] 2026-06-17 End of Day Wrap Up.md
 02 Projects/Benny & Penny's Adventures/[C] Product Assets Digital Delivery Gifting and Marketing Handoff.md
+02 Projects/Benny & Penny's Adventures/[C] Digital Readable License Rule 2026-06-17.md
 02 Projects/Benny & Penny's Adventures/[C] Customer Experience Portal Revamp Roadmap & Assessment.md
 02 Projects/Benny & Penny's Adventures/[C] Backlog & Launch Checklist.md
 02 Projects/Benny & Penny's Adventures/Benny & Penny's Adventures Overview.md
@@ -40,30 +42,39 @@ CLAUDE.md
 02 Projects/Benny & Penny's Adventures/[C] Lulu Print on Demand Plan.md
 ```
 
+Confirmed working:
+
+- R2 automated digital delivery works in testing.
+- Digital orders auto-create Media/Downloads records.
+- Portal Library shows separate PDF, EPUB, and Audiobook download buttons.
+- R2 signed download links work.
+- Shared readable slot tracking is active.
+- Current R2 folder standard is `ebooks/`, `audio/`, and `print/`.
+- Admin dashboard polish is working.
+- Print Jobs appears under Catalog.
+- LuLu queue and manual submit foundation exist, but LuLu testing is paused.
+- Geoapify appears in Admin Dashboard System Status Check.
+
 Important current assumptions:
 
 - Product catalog data is placeholder material right now.
 - Book covers, page images, and cart thumbnails are placeholders.
-- Manual admin/media linkage for digital downloads was only a support-reference view, not the final customer delivery workflow.
-- Digital delivery needs to become automated through R2.
-- Portal foundation exists, but UX and workflow need a full customer-first redesign.
-- BPG gifting needs to be simplified and tied into cart/coupon tracking with one digital download/device allowance.
-- Full paid digital licenses may allow three downloads/devices.
-- Geoapify should be used for admin/customer address entry inside the system; Stripe can keep guest checkout address capture for now.
-- Abandoned cart, tagging/retargeting, and subscriber marketing panel are roadmap/back-burner items.
+- Current Library UI is a testing/proof UI, not final customer experience.
+- BPG gifting must consume from the same readable slot pool as PDF/EPUB downloads.
+- Full paid readable license = 3 total readable slots across PDF, EPUB, and gifts.
+- Gifted access = one download/device allowance.
 
 Next focus areas:
 
 ```txt
-1. Organize correct product images and placeholder replacement strategy.
-2. Upload temporary digital product files to R2.
-3. Automate download-record creation after paid checkout.
-4. Verify or build the customer account setup page.
-5. Redesign portal UX/workflow around automated delivery.
-6. Add Geoapify fields/autocomplete to customer and admin address entry points.
-7. Simplify BPG gifting and connect it to cart/coupon tracking.
-8. Research official LuLu project/template requirements.
-9. Keep abandoned cart and subscriber marketing panel planning on the roadmap but back burner.
+1. Replace placeholder book covers, page previews, cart thumbnails, and product assets.
+2. Replace dummy R2 files with real PDF, EPUB, and audio files as Books 1-4 are finalized.
+3. Build BPG gift-code logic against the shared readable slot pool.
+4. Update Terms for full license vs gifted access.
+5. Verify or build the customer account setup page.
+6. Redesign portal UX/workflow around the confirmed delivery foundation.
+7. Add Geoapify fields/autocomplete to customer and admin address entry points.
+8. Research official LuLu project/template requirements before print testing resumes.
 ```
 
-Do not start broad admin rewrites. Customer-facing product delivery, portal, and fulfillment workflow are the active focus.
+Do not start broad admin rewrites. Customer-facing product delivery, portal workflow, and fulfillment experience are the active focus.
