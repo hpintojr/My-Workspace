@@ -32,7 +32,7 @@ if any file list, read order, active focus, or project status changed.
 Current priority:
 
 ```txt
-Continue LuLu POD after Phase 1/2 success: build the manual Submit to LuLu layer while keeping auto-submit disabled.
+Continue LuLu POD Phase 3: the backend manual-submit foundation is deployed; next build is the admin-facing Submit to LuLu button/tool page.
 ```
 
 Read first for the next Benny & Penny chat:
@@ -41,10 +41,11 @@ Read first for the next Benny & Penny chat:
 00 [C] Workspace Index.md
 CLAUDE.md
 02 Projects/Benny & Penny's Adventures/[C] Lulu Print on Demand Plan.md
+01 Daily Logs/[C] 2026-06-17 Geoapify and Lulu Phase 3 Update.md
 01 Daily Logs/[C] 2026-06-17 Lulu POD Phase 1-2 Update.md
 02 Projects/Benny & Penny's Adventures/[C] Backlog & Launch Checklist.md
 02 Projects/Benny & Penny's Adventures/Benny & Penny's Adventures Overview.md
-02 Projects/Benny & Penny's Adventures/[C] Portal and Digital Delivery Implementation Notes.md
+02 Projects/Benny & Penny's Adventures/[C] Geoapify Address Autocomplete and Checkout Strategy.md
 ```
 
 Confirmed working:
@@ -60,21 +61,26 @@ Confirmed working:
 - Print record `1` opened successfully after the Neon lock-table patch.
 - Books now include LuLu print setup fields.
 - Neon has been patched with the required `print_jobs`, lock-rel, and book print setup fields.
+- Geoapify API now appears in Admin Dashboard System Status Check.
+- LuLu Phase 3 backend foundation is deployed: API helper plus protected manual-submit route.
 
 Latest important Benny & Penny commits:
 
 ```txt
+166768e5007ac21e29bd08b58423a73d81ecd1c7
+Add manual Lulu submit route
+
+bacd0891ac3ece58e5ce6eafc5f06ffdf5c4312a
+Add Lulu API submit helper
+
+c073738d8a74bd419ae265e12c161334740daa07
+Add Geoapify to admin system status
+
 60629f4fe74618fed9a94fb700c923215db1c977
 Require Lulu print setup before ready status
 
 de086edb7fcaa72be91bb903c8ce6df73b2654b6
 Add Lulu print setup fields to books
-
-a9383a2e68023a42db5dd7520004797147c5fb56
-Add print jobs under catalog sidebar
-
-fcd736ce2c21361151a2136a6b51a6d3822bf024
-Create dry-run print jobs after checkout
 ```
 
 LuLu POD plan file:
@@ -85,11 +91,11 @@ LuLu POD plan file:
 
 Next focus areas:
 
-- Build Phase 3: LuLu API client and manual Submit to LuLu action.
-- Validate print job is `ready` before manual submit.
-- Submit to LuLu sandbox/test environment only.
-- Store LuLu response, IDs, and errors back to `print-jobs`.
-- Keep `LULU_AUTO_SUBMIT=false`.
+- Build the admin-facing Submit to LuLu button or tool page for ready print jobs.
+- Keep manual-only LuLu submission; do not enable auto-submit.
+- Validate that the backend route blocks non-ready jobs.
+- Test sandbox submission only after Book 1 print setup data is filled.
+- Save/display LuLu response, IDs, and errors in Print Jobs.
 - After LuLu tracking exists, update the customer portal, thank-you page, receipt copy, and shipment/tracking email.
 
 Do not start broad rewrites. Future admin changes should be tiny final-layer fixes only.
