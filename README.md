@@ -32,7 +32,7 @@ if any file list, read order, active focus, or project status changed.
 Current priority:
 
 ```txt
-Validate the latest desktop admin sidebar toggle patch, then continue final launch cleanup. Customer portal mobile validation remains next after admin toggle/admin polish validation.
+Admin mobile and desktop sidebar toggle polish are accepted. Next focus is customer portal mobile validation and final launch cleanup.
 ```
 
 Read first for the next Benny & Penny chat:
@@ -46,18 +46,16 @@ CLAUDE.md
 02 Projects/Benny & Penny's Adventures/[C] Backlog & Launch Checklist.md
 ```
 
-Do **not** read the older verbose admin-mobile progress logs first unless debugging a regression. They are now reference/archive context only.
-
 Confirmed working:
 
 - Admin dashboard mobile polish is working on iPhone Chrome.
+- Admin dashboard desktop sidebar toggle polish is working.
 - Dashboard search is below the greeting.
-- Welcome renders as `Welcome,` then `Hamilton Pinto!` with punctuation attached to the name.
+- Welcome renders as `Welcome, Hamilton Pinto!`.
 - System Status, Recent Orders, and Community Growth rows use the right side of the cards again.
-- Collapsed mobile nav control shows the branded red circle with a white heart.
-- Open sidebar close control shows a dark/deep-teal heart instead of the X.
-- Filter/search controls remain normal and are not converted into hearts.
-- Latest desktop work removed the mobile grey hover square/artifact from desktop view.
+- Mobile and desktop sidebar toggle controls show the branded heart treatment.
+- Filter/search controls remain normal.
+- Mobile grey hover square/artifact is gone from desktop view.
 
 Latest accepted mobile website commit:
 
@@ -66,18 +64,18 @@ Latest accepted mobile website commit:
 Hard override sidebar close icon to dark heart
 ```
 
-Latest desktop sidebar toggle patch needing validation:
+Latest accepted desktop/admin greeting commits:
 
 ```txt
 e678610a677948f7046eef8dadc6df1bc5df99ec
 Retarget desktop nav toggles outside admin shell
+
+f0de9ab63cbe54407b262ffed100c74b18595447
+Add space after welcome comma
 ```
 
 Next focus areas:
 
-- Confirm Vercel deployed `e678610a677948f7046eef8dadc6df1bc5df99ec`.
-- Hard-refresh `/admin` on desktop and validate the desktop `<`/chevron and hamburger are replaced by heart controls.
-- Re-check mobile/iPhone admin sidebar to confirm no regression.
 - Validate remaining customer portal mobile pages.
 - Confirm Chrome iPhone bottom white gap is acceptable after safe-area filler removal.
 - Confirm Sequenzy footer badge/account settings.
