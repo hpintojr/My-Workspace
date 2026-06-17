@@ -1,29 +1,14 @@
 ---
 type: project-overview
 project: Benny & Penny's Adventures
-updated: 2026-06-17
+updated: 2026-06-17 end of day
 ---
 
 # Benny & Penny's Adventures Overview
 
 ## Goal
 
-Build a children's publishing business around the Benny & Penny medical adventure book series, including:
-
-- Public website.
-- Correct book/product assets.
-- Digital ebook and audiobook delivery.
-- Print-on-demand book sales.
-- Customer portal / member area.
-- Payload CMS admin backend.
-- Email list and contact management.
-- Private R2 digital/audio fulfillment.
-- Physical book fulfillment and tracking.
-- Geoapify-powered address autocomplete/saved address experience.
-- Gifting/BPG code workflow.
-- Customer support/helpdesk workflow.
-- Abandoned-cart and marketing roadmap.
-- Business infrastructure.
+Build a children's publishing business around the Benny & Penny medical adventure book series, including public website, correct product assets, digital ebook/audiobook delivery, print-on-demand, customer portal, Payload CMS admin, R2 fulfillment, LuLu fulfillment, Geoapify address entry, BPG gifting, support/helpdesk, and future marketing infrastructure.
 
 ## Domains
 
@@ -32,15 +17,25 @@ Build a children's publishing business around the Benny & Penny medical adventur
 
 ---
 
-## Current Status — 2026-06-17
+## Current Status — 2026-06-17 End of Day
 
-The active project focus is now:
+Active focus:
 
 ```txt
-Correct product assets + automated R2 digital delivery + customer portal/workflow revamp.
+Product asset replacement + BPG gifting/license rules + customer portal/workflow revamp.
 ```
 
-The site remains a controlled working environment:
+Confirmed today:
+
+```txt
+R2 automated digital delivery works in testing.
+Digital orders auto-create Media/Downloads records.
+Portal Library shows separate PDF, EPUB, and Audiobook buttons.
+R2 signed download links work.
+Shared readable slot tracking is active.
+```
+
+Controlled environment rule:
 
 ```txt
 Stay on main branch.
@@ -48,18 +43,6 @@ Production deployment is the controlled test environment.
 The site is not live for public order traffic yet.
 Stripe remains sandbox/test mode.
 LuLu remains sandbox/testing.
-```
-
-Active handoff file:
-
-```txt
-02 Projects/Benny & Penny's Adventures/[C] Product Assets Digital Delivery Gifting and Marketing Handoff.md
-```
-
-Active roadmap:
-
-```txt
-02 Projects/Benny & Penny's Adventures/[C] Customer Experience Portal Revamp Roadmap & Assessment.md
 ```
 
 ---
@@ -83,32 +66,45 @@ Replace placeholders with correct production assets and do not build final custo
 
 ---
 
-## Digital Delivery Direction
+## Digital Delivery Status
 
-Current manual linkage is not the final delivery workflow.
+Current R2 folder standard:
 
 ```txt
-Manual admin/media linkage for PDF/EPUB products was only intended as a support-reference viewpoint.
-Digital product delivery now needs to be automated through R2.
+ebooks/book-<number>.pdf
+ebooks/book-<number>.epub
+audio/book-<number>-audiobook.mp3
+print/
 ```
 
-Target flow:
+Validated flow:
 
 ```txt
 Customer buys digital/audio product
 -> checkout is paid
--> fulfillment creates download records automatically
+-> fulfillment creates Media/Downloads records automatically
 -> customer Library shows available product files
--> secure download link is generated on demand
+-> secure R2 download link is generated on demand
 ```
 
-Immediate digital-delivery blockers:
+Remaining digital-delivery work:
 
-- Upload temporary files for digital products to R2.
-- Decide R2 object-key convention.
-- Map product records to R2 file keys.
-- Automate download-record creation after checkout.
-- Test checkout to Library to secure file download end to end.
+- Replace dummy/zero-byte R2 files with real PDF, EPUB, and audio files as Books 1-4 are finalized.
+- Keep Book records as source of truth for exact R2 object keys.
+- Redesign the final Library UX later.
+
+---
+
+## Shared Readable License Rule
+
+```txt
+One purchased readable license grants access to both PDF and EPUB.
+The license has 3 total readable slots.
+PDF downloads, EPUB downloads, and BPG gifts spend from the same pool.
+Gifted access receives one download/device allowance.
+```
+
+This rule is validated at the delivery layer for PDF/EPUB downloads. BPG gifting still needs to be built against the same pool.
 
 ---
 
@@ -126,13 +122,14 @@ Hamilton's concern:
 
 ```txt
 The portal UX and workflow are wrong and need to be redesigned around the real customer journey.
+Current Library UI is testing/proof UI, not final UX.
 ```
 
 Portal priorities:
 
 - Verify or build the customer account setup page.
 - Redesign portal UX and navigation.
-- Make Library clearly show automated digital delivery.
+- Make Library clearly show digital delivery.
 - Make Orders show digital/audio/print/support status clearly.
 - Add Helpdesk workflow.
 - Add account/address confirmation flow.
@@ -151,11 +148,9 @@ Checkout has partial saved-address prefill for signed-in customers.
 Hamilton's direction:
 
 ```txt
-The cart and checkout elements exist, but they are not yet being used for the best customer experience.
 BPG gift codes should tie into the cart/coupon system and be trackable.
-Gifted access should allow one digital download/device only.
-Full paid licenses may allow three downloads/devices.
-Terms and Conditions must be updated to reflect the difference.
+Gifted access should consume one readable slot and allow one download/device.
+Terms and Conditions must be updated to reflect full-license vs gifted access.
 ```
 
 ---
@@ -192,45 +187,35 @@ Open LuLu planning questions:
 
 ```txt
 Do 9 books require 9 LuLu projects or 18 projects for paperback + hardcover?
-How should project folders be organized?
 What exact PDF, bleed, margin, and cover specs are required?
 What LuLu templates are available for the selected trim size?
 What is the correct Canva export process for print-ready PDFs?
-```
-
-Current book production note:
-
-```txt
-Books 1-4 are nearly assembled in Canva and need official print-ready output requirements before upload.
 ```
 
 ---
 
 ## Marketing / Abandoned Cart Status
 
-Abandoned cart and marketing expansion are on the roadmap, not the immediate build.
-
-Future planning areas:
+Back burner roadmap items:
 
 - Abandoned-cart recovery emails.
 - Cart event capture.
 - Google/Meta/tagging/retargeting options after privacy/consent planning.
 - Subscriber marketing panel for email/newsletters/SMS/outbound calls/API integrations.
-- API/data import-export as the likely first step before building a full marketing panel.
+- API/data import-export as first step before a full marketing panel.
 
 ---
 
 ## Next Best Actions
 
-1. Organize correct product images and placeholder replacement strategy.
-2. Upload temporary digital product files to R2.
-3. Automate download-record creation after paid checkout.
-4. Verify or build the customer account setup page.
-5. Redesign portal UX/workflow around automated delivery.
-6. Add Geoapify fields/autocomplete to customer and admin address entry points.
-7. Simplify BPG gifting and connect it to cart/coupon tracking.
-8. Research official LuLu setup/template requirements.
-9. Keep abandoned-cart and subscriber marketing panel planning on the roadmap but back burner.
+1. Replace placeholder product images: covers, page previews, cart thumbnails.
+2. Replace dummy R2 files with real files as Books 1-4 are finalized.
+3. Build BPG gift-code logic against the shared readable slot pool.
+4. Update Terms for full readable license vs gifted access.
+5. Verify or build the customer account setup page.
+6. Redesign portal UX/workflow around confirmed delivery behavior.
+7. Add Geoapify fields/autocomplete to customer/admin address flows.
+8. Research official LuLu setup/template requirements before print testing resumes.
 
 ## Launch Blockers
 
@@ -245,7 +230,7 @@ Future planning areas:
 ### Technical
 
 - Correct product assets not uploaded.
-- R2 digital delivery not fully automated/tested.
+- Real R2 files not uploaded yet.
 - Customer portal revamp not finished.
 - Account setup page/address confirmation not finished.
 - BPG gifting rules not implemented or reflected in Terms.
