@@ -16,6 +16,28 @@ This workstream is queued behind the immediate LuLu POD Phase 3 manual submissio
 
 ---
 
+## Current Status
+
+```txt
+Phase A admin visibility is complete.
+Portal/account setup/checkout address autocomplete is not built yet.
+```
+
+Implemented website commit:
+
+```txt
+c073738d8a74bd419ae265e12c161334740daa07
+Add Geoapify to admin system status
+```
+
+What works now:
+
+```txt
+Geoapify appears in Admin Dashboard System Status Check with Hamilton's provided logo.
+```
+
+---
+
 ## User Direction
 
 Hamilton wants to use Geoapify address autocomplete so customers can select structured addresses for shipping and billing.
@@ -109,7 +131,7 @@ Digital access must be tied to a customer email/account identity even if the che
 Why:
 
 - The customer should not be forced into account creation before payment.
-- But digital licenses need ownership records for downloads, limits, library access, and support.
+- Digital licenses need ownership records for downloads, limits, library access, and support.
 - The current backend already supports account creation after purchase.
 
 ### Mixed carts
@@ -137,7 +159,7 @@ Recommended places to implement:
 1. Customer portal address book
 2. Registration/account setup flow
 3. Checkout prefill flow before redirecting to Stripe
-4. Admin dashboard system status check
+4. Admin dashboard system status check — complete
 ```
 
 Do not replace Stripe's required checkout address collection until the checkout UX is intentionally redesigned.
@@ -182,26 +204,13 @@ Keep frozen order snapshots on `orders` even when customer addresses are later e
 
 ### Phase A — Admin visibility
 
-Add Geoapify to the Admin Dashboard System Status Check using Hamilton's provided logo.
-
-Status should show:
+Status:
 
 ```txt
-Geoapify API — CONNECTED/ACTIVE
+Complete
 ```
 
-when the expected env var exists, otherwise:
-
-```txt
-Geoapify API — READY TO CONFIGURE
-```
-
-Potential env vars:
-
-```txt
-NEXT_PUBLIC_GEOAPIFY_API_KEY
-GEOAPIFY_API_KEY
-```
+Geoapify is visible in Admin Dashboard System Status Check.
 
 ### Phase B — Portal address autocomplete
 
@@ -271,7 +280,7 @@ Address management
 
 ## Guardrails
 
-- Do not commit Geoapify API keys.
+- Do not commit Geoapify keys.
 - Use Vercel env vars.
 - If a key is exposed client-side, restrict it by allowed domain/referrer in Geoapify if available.
 - Validate and normalize address data server-side before saving.
@@ -286,13 +295,11 @@ Address management
 Keep the immediate active work as:
 
 ```txt
-LuLu POD Phase 3 — manual Submit to LuLu
+LuLu POD Phase 3 — admin-facing manual Submit to LuLu button/tool page
 ```
 
-Queue Geoapify as the next customer-experience workstream after LuLu submission/tracking foundation begins.
-
-Small safe task that can be done anytime:
+Next Geoapify build after LuLu submit UI:
 
 ```txt
-Add Geoapify API to Admin Dashboard System Status Check with the provided logo.
+Portal address autocomplete and account setup address confirmation.
 ```
