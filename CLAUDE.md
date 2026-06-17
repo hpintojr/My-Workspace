@@ -45,13 +45,14 @@ Do not automatically read every historical daily log. Read old logs only when de
 
 ## Workspace Update Rules
 
-When Hamilton says **update my workspace**:
+When Hamilton says **update my workspace** or **end of day**:
 
 ```txt
 1. Update the relevant active project handoff/status file.
 2. Update README.md if the active focus or next actions changed.
 3. Update 00 [C] Workspace Index.md if files, read order, or project status changed.
-4. Update CLAUDE.md only if persistent instructions or project handoff rules changed.
+4. Add or update a daily/end-of-day log when closing a work session.
+5. Update CLAUDE.md only if persistent instructions or project handoff rules changed.
 ```
 
 Use `[C]` in filenames for AI-authored files unless Hamilton asks otherwise.
@@ -69,19 +70,23 @@ Children's medical book and digital/print product business around Michelle's boo
 Current status:
 
 ```txt
-Product catalog data, book covers, page previews, and cart thumbnails are placeholders right now.
-Active focus is correct product assets, R2 automated digital delivery, and customer portal/workflow revamp.
-LuLu POD Phase 1 and Phase 2 are working.
-LuLu Phase 3 backend foundation and admin submit page/link are deployed.
-Further LuLu submit/testing work is paused.
-Geoapify appears in Admin Dashboard System Status Check.
-Geoapify Vercel values are configured.
+R2 automated digital delivery is confirmed working in testing.
+Digital orders auto-create Media/Downloads records.
+Portal Library shows separate PDF, EPUB, and Audiobook download buttons.
+R2 signed download links work.
+Shared readable slot tracking is active.
+Product catalog data, book covers, page previews, and cart thumbnails are placeholders.
+Active focus is product asset replacement, BPG gifting/license rules, and portal/workflow revamp.
+LuLu testing is paused until official project/template requirements are researched.
+Geoapify appears in Admin Dashboard System Status Check and Vercel values are configured.
 ```
 
 Read first for Benny continuation:
 
 ```txt
+01 Daily Logs/[C] 2026-06-17 End of Day Wrap Up.md
 02 Projects/Benny & Penny's Adventures/[C] Product Assets Digital Delivery Gifting and Marketing Handoff.md
+02 Projects/Benny & Penny's Adventures/[C] Digital Readable License Rule 2026-06-17.md
 02 Projects/Benny & Penny's Adventures/[C] Customer Experience Portal Revamp Roadmap & Assessment.md
 02 Projects/Benny & Penny's Adventures/[C] Backlog & Launch Checklist.md
 02 Projects/Benny & Penny's Adventures/Benny & Penny's Adventures Overview.md
@@ -109,40 +114,30 @@ Product and fulfillment rules to preserve:
 
 ```txt
 Do not treat current product catalog images as final.
-Manual admin/media file linkage was only a support reference concept, not the final customer delivery flow.
-Automated digital delivery through R2 is now a priority.
-BPG gift codes should connect to cart/coupon tracking and grant one digital download/device allowance.
-Full paid digital licenses may allow three downloads/devices.
+Current Library UI is a testing/proof UI, not the final customer experience.
+Manual admin/media linkage was only a support reference concept, not the final customer delivery flow.
+Automated digital delivery through R2 is working in testing.
+Current R2 folder standard is ebooks/, audio/, and print/.
+BPG gift codes should connect to cart/coupon tracking and consume from the shared readable slot pool.
+One paid readable license grants 3 total readable slots across PDF downloads, EPUB downloads, and BPG gifts.
+Gifted access grants one download/device allowance.
 Terms must be updated to match gifted vs full-license access.
 Use Geoapify for admin/customer address entry inside the system; guest Stripe checkout can keep Stripe's own address capture for now.
 Before LuLu testing, research official LuLu project/template/bleed requirements and whether 9 or 18 projects are needed.
 Abandoned cart, tagging, retargeting, and subscriber marketing panel are roadmap items, but back burner.
 ```
 
-Repo review corrections to preserve:
-
-```txt
-Cart already has basic thumbnails, plus/minus quantity controls, remove item, and saved-address selectors.
-Checkout already has partial saved-address prefill for signed-in customers.
-Portal routes and portal APIs exist, but the portal needs an IA/visual/workflow revamp.
-Geoapify autocomplete is not built into Portal > Addresses yet.
-Customer address records need Geoapify metadata fields.
-Support collections exist, but customer Helpdesk route/API and affected-item workflow are not built.
-LuLu file URL handling must be confirmed before any real print submission testing.
-```
-
 Next Benny focus:
 
 ```txt
-1. Organize correct product images and placeholder replacement strategy.
-2. Upload temporary digital product files to R2.
-3. Automate download-record creation after paid checkout.
-4. Verify or build the customer account setup page.
-5. Redesign portal UX/workflow around automated delivery.
-6. Add Geoapify fields/autocomplete to customer and admin address entry points.
-7. Simplify BPG gifting and connect it to cart/coupon tracking.
+1. Replace placeholder product assets.
+2. Replace dummy R2 files with real files as Books 1-4 are finalized.
+3. Build BPG gifting logic against the shared readable slot pool.
+4. Update Terms for full readable license vs gifted access.
+5. Verify or build the customer account setup page.
+6. Redesign portal UX/workflow around confirmed delivery behavior.
+7. Add Geoapify fields/autocomplete to customer and admin address entry points.
 8. Research official LuLu setup/template requirements.
-9. Keep abandoned cart and subscriber marketing panel planning on the roadmap but back burner.
 ```
 
 Reference-only admin mobile files for debugging regressions:
