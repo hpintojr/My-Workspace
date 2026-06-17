@@ -2,11 +2,31 @@
 type: project-update
 project: Benny & Penny's Adventures
 date: 2026-06-16
-status: active
+status: accepted
 updated_by: ChatGPT
 ---
 
 # Admin Desktop Toggle Status — 2026-06-16
+
+## Status
+
+Accepted by user.
+
+User confirmed after deploy/hard refresh:
+
+```txt
+looks good both desktop and mobile views
+```
+
+Accepted state:
+
+- Desktop greeting spacing reads `Welcome, Hamilton Pinto!`.
+- Desktop open sidebar toggle shows the dark teal heart instead of the `<` / chevron.
+- Desktop collapsed/sidebar-open toggle shows the branded heart treatment instead of the basic hamburger.
+- Mobile view still works and did not regress.
+- The mobile grey hover square/artifact is gone from desktop view.
+
+---
 
 ## Purpose
 
@@ -95,7 +115,7 @@ That means selectors like this may not hit the real desktop toggle:
 .template-default .template-default__nav-toggler-container > button.template-default__nav-toggler
 ```
 
-The final direction is to use global Payload toggle classes **inside a desktop media query**:
+The final direction was to use global Payload toggle classes **inside a desktop media query**:
 
 ```css
 @media (min-width: 901px) {
@@ -115,6 +135,7 @@ The final direction is to use global Payload toggle classes **inside a desktop m
 app/(payload)/admin-dashboard-final-polish.scss
 app/(payload)/admin-desktop-nav-toggle.scss
 app/(payload)/layout.tsx
+app/(payload)/components/BeforeDashboard.tsx
 ```
 
 A temporary runtime component was created during debugging and then removed:
@@ -123,7 +144,7 @@ A temporary runtime component was created during debugging and then removed:
 app/(payload)/components/AdminNavToggleStyler.tsx
 ```
 
-Do not reintroduce the runtime component unless absolutely necessary. CSS should be enough now that the exact DOM is known.
+Do not reintroduce the runtime component unless absolutely necessary. CSS was enough once the exact DOM was known.
 
 ---
 
@@ -160,7 +181,7 @@ Remove desktop toggle styler from admin layout
 Remove admin nav toggle styler experiment
 ```
 
-### Current targeted desktop CSS work
+### Accepted targeted desktop/admin greeting work
 
 ```txt
 112615cb484dc319219c4b0d23c8cdb98183b25c
@@ -174,31 +195,10 @@ Load desktop nav toggle override last
 
 e678610a677948f7046eef8dadc6df1bc5df99ec
 Retarget desktop nav toggles outside admin shell
+
+f0de9ab63cbe54407b262ffed100c74b18595447
+Add space after welcome comma
 ```
-
----
-
-## Current Known State
-
-### Confirmed by user after the final separate desktop CSS file
-
-- The mobile grey hover square is gone.
-- The mobile hover artifact is no longer showing on desktop.
-- No current evidence that the accepted mobile sidebar behavior was broken by the latest separate desktop CSS file.
-
-### Still needs validation
-
-- Desktop sidebar open state should turn the `<`/chevron into a dark teal heart.
-- Desktop collapsed/sidebar-open hamburger should turn into a red circle with white heart.
-- Latest global desktop selectors from commit `e678610a677948f7046eef8dadc6df1bc5df99ec` need validation after Vercel deploy and hard refresh.
-
-### User's latest reported state before `e678610a...` validation
-
-```txt
-no more mobile grey hovering square but desktop view is still the basic < and hamburger
-```
-
-The cause was identified: desktop toggle wrapper/button was outside `.template-default`, so the previous desktop selectors did not match. The latest commit removed the `.template-default` parent requirement.
 
 ---
 
@@ -225,22 +225,28 @@ import "./admin-desktop-nav-toggle.scss";
 
 ---
 
-## Next Validation Steps
+## Final Validation Result
 
-1. Wait for Vercel deployment containing commit `e678610a677948f7046eef8dadc6df1bc5df99ec`.
-2. Hard-refresh `/admin` on desktop.
-3. Validate sidebar open state:
+Accepted by user after latest patches:
+
+```txt
+looks good both desktop and mobile views
+```
+
+Validated items:
+
+1. Desktop open sidebar:
+   - Dark teal heart visible.
    - No grey/teal hover square.
-   - `<`/chevron is hidden.
-   - Dark teal heart appears.
    - Click still collapses sidebar.
-4. Validate sidebar collapsed state:
-   - Hamburger SVG is hidden.
-   - Red circle with white heart appears.
+
+2. Desktop collapsed sidebar:
+   - Branded heart treatment visible.
    - Click still opens sidebar.
-5. Validate desktop DOM mobile button remains hidden/non-interactive:
-   - `app-header__mobile-nav-toggler` should not show or create hover artifact on desktop.
-6. Re-check mobile/iPhone admin sidebar to confirm no regression.
+
+3. Mobile/iPhone:
+   - Accepted mobile heart behavior still works.
+   - No mobile grey hover artifact regression reported.
 
 ---
 
@@ -268,4 +274,14 @@ Preferred mobile selector area remains the existing mobile-only block in:
 
 ```txt
 app/(payload)/admin-dashboard-final-polish.scss
+```
+
+---
+
+## Next Focus
+
+Admin toggle work is accepted. Move to:
+
+```txt
+Customer portal mobile validation and final launch cleanup.
 ```
