@@ -20,6 +20,7 @@ This workstream is queued behind the immediate LuLu POD Phase 3 manual submissio
 
 ```txt
 Phase A admin visibility is complete.
+Geoapify Vercel values have been added.
 Portal/account setup/checkout address autocomplete is not built yet.
 ```
 
@@ -34,7 +35,30 @@ What works now:
 
 ```txt
 Geoapify appears in Admin Dashboard System Status Check with Hamilton's provided logo.
+The Vercel environment now has the public browser key, server key, and autocomplete endpoint URL configured.
 ```
+
+---
+
+## Vercel Environment Status
+
+Hamilton confirmed the following Geoapify values were added in Vercel:
+
+```txt
+Public browser key
+Server-side key
+Autocomplete endpoint URL
+```
+
+Purpose:
+
+```txt
+Public browser key: future customer-facing autocomplete component.
+Server-side key: future server-side ping, validation, and address normalization.
+Autocomplete endpoint URL: endpoint for future dashboard health check and autocomplete requests.
+```
+
+Do not store the actual values in this workspace.
 
 ---
 
@@ -280,9 +304,9 @@ Address management
 
 ## Guardrails
 
-- Do not commit Geoapify keys.
-- Use Vercel env vars.
-- If a key is exposed client-side, restrict it by allowed domain/referrer in Geoapify if available.
+- Use Vercel environment settings for service configuration.
+- Do not place actual service values in code or workspace docs.
+- If a browser-facing value is used, restrict it by allowed domain/referrer in Geoapify if available.
 - Validate and normalize address data server-side before saving.
 - Keep order address snapshots frozen.
 - Do not block checkout if account setup email fails.
