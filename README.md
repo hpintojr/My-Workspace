@@ -32,7 +32,7 @@ if any file list, read order, active focus, or project status changed.
 Current priority:
 
 ```txt
-Admin mobile and desktop sidebar toggle polish are accepted. Next focus is customer portal mobile validation and final launch cleanup.
+Begin LuLu print-on-demand Phase 1: create the internal print-job queue for paperback/hardcover purchases before any live LuLu API submission.
 ```
 
 Read first for the next Benny & Penny chat:
@@ -40,6 +40,7 @@ Read first for the next Benny & Penny chat:
 ```txt
 00 [C] Workspace Index.md
 CLAUDE.md
+02 Projects/Benny & Penny's Adventures/[C] Lulu Print on Demand Plan.md
 02 Projects/Benny & Penny's Adventures/[C] Admin Mobile Accepted Working Update 2026-06-16.md
 02 Projects/Benny & Penny's Adventures/[C] Admin Desktop Toggle Status 2026-06-16.md
 02 Projects/Benny & Penny's Adventures/[C] Portal and Digital Delivery Implementation Notes.md
@@ -74,11 +75,19 @@ f0de9ab63cbe54407b262ffed100c74b18595447
 Add space after welcome comma
 ```
 
+LuLu POD plan file:
+
+```txt
+02 Projects/Benny & Penny's Adventures/[C] Lulu Print on Demand Plan.md
+```
+
 Next focus areas:
 
-- Validate remaining customer portal mobile pages.
-- Confirm Chrome iPhone bottom white gap is acceptable after safe-area filler removal.
-- Confirm Sequenzy footer badge/account settings.
-- Keep Mailjet as fallback for transactional email.
+- Implement LuLu POD Phase 1: internal `print-jobs` queue only.
+- Add `collections/PrintJobs.ts` and register it in `payload.config.ts`.
+- Add dry-run print job generator in `lib/luluPrintJobs.ts`.
+- Hook generator into Stripe fulfillment after `order-items` are created.
+- Do not submit live LuLu orders yet.
+- After POD queue foundation, continue customer portal mobile validation and final launch cleanup.
 
 Do not start broad rewrites. Future admin changes should be tiny final-layer fixes only.
