@@ -23,6 +23,7 @@ For the current Benny & Penny active focus, read these first after README/index/
 
 ```txt
 02 Projects/Benny & Penny's Adventures/[C] Admin Mobile Accepted Working Update 2026-06-16.md
+02 Projects/Benny & Penny's Adventures/[C] Admin Desktop Toggle Status 2026-06-16.md
 02 Projects/Benny & Penny's Adventures/[C] Portal and Digital Delivery Implementation Notes.md
 02 Projects/Benny & Penny's Adventures/[C] Backlog & Launch Checklist.md
 ```
@@ -70,12 +71,14 @@ hpintojr/My-Workspace/
 │   ├── [C] 2026-06-14.md
 │   ├── [C] 2026-06-15.md
 │   ├── [C] 2026-06-16.md
+│   ├── [C] 2026-06-16 Admin Desktop Toggle Update.md
 │   └── [C] 2026-06-16 Admin Mobile Final Polish Update.md
 └── 02 Projects/
     ├── Benny & Penny's Adventures/
     │   ├── Benny & Penny's Adventures Overview.md
     │   ├── [C] Admin Mobile Accepted Working Update 2026-06-16.md
     │   ├── [C] Admin Mobile Final Polish Status 2026-06-16.md
+    │   ├── [C] Admin Desktop Toggle Status 2026-06-16.md
     │   ├── [C] Admin Dashboard and Portal Mobile Progress 2026-06-16.md
     │   ├── [C] Backlog & Launch Checklist.md
     │   ├── [C] Client Portal Build Notes.md
@@ -142,6 +145,7 @@ Latest important logs:
 ```txt
 01 Daily Logs/[C] 2026-06-16.md
 01 Daily Logs/[C] 2026-06-16 Admin Mobile Final Polish Update.md
+01 Daily Logs/[C] 2026-06-16 Admin Desktop Toggle Update.md
 ```
 
 These are no longer part of the default Benny & Penny read-first path because the accepted-working handoff is faster.
@@ -162,9 +166,10 @@ Fast read order for Benny & Penny continuation:
 
 ```txt
 1. 02 Projects/Benny & Penny's Adventures/[C] Admin Mobile Accepted Working Update 2026-06-16.md
-2. 02 Projects/Benny & Penny's Adventures/[C] Portal and Digital Delivery Implementation Notes.md
-3. 02 Projects/Benny & Penny's Adventures/[C] Backlog & Launch Checklist.md
-4. 02 Projects/Benny & Penny's Adventures/Benny & Penny's Adventures Overview.md only if broader project context is needed
+2. 02 Projects/Benny & Penny's Adventures/[C] Admin Desktop Toggle Status 2026-06-16.md
+3. 02 Projects/Benny & Penny's Adventures/[C] Portal and Digital Delivery Implementation Notes.md
+4. 02 Projects/Benny & Penny's Adventures/[C] Backlog & Launch Checklist.md
+5. 02 Projects/Benny & Penny's Adventures/Benny & Penny's Adventures Overview.md only if broader project context is needed
 ```
 
 Reference/archive files for debugging only:
@@ -172,6 +177,7 @@ Reference/archive files for debugging only:
 ```txt
 01 Daily Logs/[C] 2026-06-16.md
 01 Daily Logs/[C] 2026-06-16 Admin Mobile Final Polish Update.md
+01 Daily Logs/[C] 2026-06-16 Admin Desktop Toggle Update.md
 02 Projects/Benny & Penny's Adventures/[C] Admin Dashboard and Portal Mobile Progress 2026-06-16.md
 02 Projects/Benny & Penny's Adventures/[C] Admin Mobile Final Polish Status 2026-06-16.md
 ```
@@ -180,23 +186,39 @@ Current active status:
 
 ```txt
 Admin dashboard mobile polish is accepted/working on iPhone Chrome after the final sidebar dark-heart close fix. Future admin mobile changes should be tiny final-layer fixes only. Do not start broad rewrites.
+
+Current active issue is desktop admin sidebar toggle validation. The desktop Payload toggler DOM differs from mobile:
+- Desktop: button.nav-toggler.template-default__nav-toggler
+- Mobile: button.nav-toggler.app-header__mobile-nav-toggler
+
+Latest desktop patch retargets the desktop toggler outside the .template-default shell and needs Vercel deploy + hard-refresh validation.
 ```
 
-Latest accepted Benny & Penny website commit:
+Latest accepted Benny & Penny mobile website commit:
 
 ```txt
 69d549e3160c38e87be80eafb00bdb700d0a66c6
 Hard override sidebar close icon to dark heart
 ```
 
+Latest Benny & Penny desktop toggle patch needing validation:
+
+```txt
+e678610a677948f7046eef8dadc6df1bc5df99ec
+Retarget desktop nav toggles outside admin shell
+```
+
 Current Benny & Penny next focus:
 
 ```txt
-1. Confirm latest Vercel deployment if needed.
-2. Validate remaining customer portal mobile pages.
-3. Confirm Chrome iPhone bottom white gap is acceptable.
-4. Confirm Sequenzy footer badge/account settings.
-5. Keep Mailjet as fallback transactional provider.
+1. Confirm Vercel deployed e678610a677948f7046eef8dadc6df1bc5df99ec.
+2. Validate desktop /admin sidebar open state: < / chevron becomes dark teal heart with no grey/teal hover square.
+3. Validate desktop /admin sidebar collapsed state: hamburger becomes red circle with white heart.
+4. Re-check mobile/iPhone admin sidebar to confirm no regression.
+5. Validate remaining customer portal mobile pages.
+6. Confirm Chrome iPhone bottom white gap is acceptable.
+7. Confirm Sequenzy footer badge/account settings.
+8. Keep Mailjet as fallback transactional provider.
 ```
 
 ---
