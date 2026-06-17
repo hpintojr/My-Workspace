@@ -56,7 +56,7 @@ When Hamilton says **update my workspace**:
 
 Use `[C]` in filenames for AI-authored files unless Hamilton asks otherwise.
 
-Never commit secrets, API keys, database URLs, tokens, passwords, private env values, or credentials.
+Never commit private service values or credentials.
 
 ---
 
@@ -66,24 +66,6 @@ Never commit secrets, API keys, database URLs, tokens, passwords, private env va
 
 Children's medical book and digital/print product business around Michelle's book series.
 
-Includes:
-
-```txt
-Website
-Payload CMS admin
-Customer portal
-Stripe sandbox orders
-R2/private file delivery
-Digital ebook/audiobook products
-LuLu print-on-demand workflow
-Geoapify address autocomplete planning
-Sequenzy transactional email
-Mailjet fallback email
-Legal/compliance pages
-Promotions/gifting/access grants
-Customer experience / portal revamp
-```
-
 Current status:
 
 ```txt
@@ -92,7 +74,8 @@ LuLu Phase 3 backend foundation and admin submit page/link are deployed.
 Further LuLu submit/testing work is paused.
 Geoapify appears in Admin Dashboard System Status Check.
 Geoapify Vercel values are configured.
-Active build focus is now customer experience / portal revamp using the updated architectural blueprint.
+A repo review confirmed current portal, checkout, cart, R2, LuLu, Geoapify, and support foundations.
+Active build focus is customer experience / portal revamp using the updated architectural blueprint.
 ```
 
 Read first for Benny continuation:
@@ -119,7 +102,6 @@ Production deployment is being used as the controlled test environment.
 The site is not live for public order traffic yet.
 Stripe remains sandbox/test mode until further notice.
 LuLu remains sandbox/testing until further notice.
-Do not commit real LuLu or Geoapify keys or secrets.
 ```
 
 Latest important website commits:
@@ -141,33 +123,27 @@ c073738d8a74bd419ae265e12c161334740daa07
 Add Geoapify to admin system status
 ```
 
-LuLu status:
+Repo review corrections to preserve:
 
 ```txt
-Print-job queue works.
-Book print setup fields exist.
-Submit backend and admin page exist.
-Auto-submit remains disabled.
-Further submit/testing is paused until the customer portal/customer experience priorities are aligned.
-```
-
-Geoapify status:
-
-```txt
-Admin dashboard row is deployed.
-Vercel values are configured.
-Portal/account setup autocomplete is queued as part of the customer experience revamp.
+Cart already has basic thumbnails, plus/minus quantity controls, remove item, and saved-address selectors.
+Checkout already has partial saved-address prefill for signed-in customers.
+Portal routes and portal APIs exist, but the portal needs an IA/visual revamp.
+Geoapify autocomplete is not built into Portal > Addresses yet.
+Customer address records need Geoapify metadata fields.
+Support collections exist, but customer Helpdesk route/API and affected-item workflow are not built.
+LuLu file URL handling must be confirmed before any real print submission testing.
 ```
 
 Next Benny focus:
 
 ```txt
-1. Audit current portal routes and components.
+1. Verify or build the customer account setup page.
 2. Redesign portal information architecture.
-3. Add Geoapify autocomplete to Portal > Addresses.
-4. Add address confirmation to account setup.
-5. Plan logged-in checkout address prefill.
-6. Redesign cart UX for mobile-first checkout clarity.
+3. Add Geoapify fields and autocomplete to Portal > Addresses.
+4. Add address confirmation after account setup.
+5. Harden the existing saved-address checkout prefill.
+6. Upgrade cart UX for mobile-first checkout clarity.
 7. Add customer support/helpdesk workflow tied to orders/items.
 8. Resume LuLu sandbox testing later.
 ```
