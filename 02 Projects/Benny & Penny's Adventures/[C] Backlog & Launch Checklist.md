@@ -1,6 +1,6 @@
 # Benny & Penny's Adventures — Backlog & Launch Checklist
 
-Updated from repo review plus Hamilton's latest direction on product assets, R2 delivery, portal workflow, gifting, LuLu planning, and future marketing.
+Updated from repo review, Hamilton's product/delivery/gifting direction, and the confirmed R2 delivery test.
 
 ---
 
@@ -8,28 +8,31 @@ Updated from repo review plus Hamilton's latest direction on product assets, R2 
 
 - [x] Updated architectural blueprint reviewed.
 - [x] Repo review completed across Payload, portal, checkout, cart, R2, LuLu, Geoapify, and support foundations.
-- [x] Latest direction captured in `[C] Product Assets Digital Delivery Gifting and Marketing Handoff.md`.
+- [x] Latest product/delivery direction captured in `[C] Product Assets Digital Delivery Gifting and Marketing Handoff.md`.
+- [x] R2 automated digital delivery confirmed working in testing.
+- [x] Portal Library shows separate PDF, EPUB, and Audiobook buttons.
 - [ ] Replace placeholder product catalog images, book covers, page previews, and cart thumbnails.
-- [ ] Upload temporary digital product files to R2.
-- [ ] Automate digital download delivery after paid checkout.
+- [ ] Replace dummy R2 files with real files as Books 1-4 are finalized.
+- [ ] Build BPG gift-code logic against the shared readable slot pool.
+- [ ] Update Terms for full readable license vs gifted access.
 - [ ] Verify or build the customer account setup page.
 - [ ] Redesign portal UX/workflow around real delivery, orders, library, addresses, helpdesk, and account.
 - [ ] Add Geoapify to customer/admin address entry points.
-- [ ] Simplify BPG gifting and connect it to cart/coupon tracking.
 - [ ] Research official LuLu setup/templates before sandbox submission.
 
 ---
 
 ## 🔴 Product Assets and Digital Delivery
 
-- [ ] Create naming/folder strategy for all 9 books.
+- [x] Current R2 folder standard selected: `ebooks/`, `audio/`, and `print/`.
+- [x] Book records updated to use `ebooks/book-<number>.pdf`, `ebooks/book-<number>.epub`, and `audio/book-<number>-audiobook.mp3`.
+- [x] Downloads/Media auto-create after paid test order.
+- [x] R2 signed download links work.
+- [x] Shared readable slot tracking is active.
 - [ ] Replace placeholder cover/page/cart images with correct production assets.
-- [ ] Decide R2 object key convention for PDF, EPUB, and audio files.
-- [ ] Upload temporary digital files to R2.
-- [ ] Map R2 keys to product/book records.
-- [ ] Create download records automatically after paid checkout.
+- [ ] Replace dummy/zero-byte R2 files with real PDF, EPUB, and audio files.
 - [ ] Keep manual admin/media linkage only as customer-support reference, not final delivery.
-- [ ] Test paid checkout to customer Library to secure download end to end.
+- [ ] Redesign final Library UX during portal revamp.
 
 ---
 
@@ -40,7 +43,7 @@ Updated from repo review plus Hamilton's latest direction on product assets, R2 
 - [x] Underlying data foundation is mostly present.
 - [ ] Fix customer portal UX and workflow; current flow is not customer-friendly enough.
 - [ ] Add Account and Helpdesk sections.
-- [ ] Improve Library around automated digital delivery.
+- [ ] Improve Library around confirmed automated digital delivery.
 - [ ] Improve Orders around digital, audio, print, tracking, and support actions.
 - [ ] Add address confirmation after account setup.
 - [ ] Validate mobile workflow.
@@ -49,11 +52,12 @@ Updated from repo review plus Hamilton's latest direction on product assets, R2 
 
 ## 🟠 BPG Gifting and Coupon Tracking
 
+- [x] Shared readable license rule approved and documented.
 - [ ] Rethink and simplify gifting/sharing protocol.
 - [ ] Tie BPG codes to cart/coupon tracking.
 - [ ] Track BPG use from cart through order and download record.
+- [ ] Make BPG gifts consume from the purchaser's shared readable slot pool.
 - [ ] Limit BPG gift access to one digital download/device allowance.
-- [ ] Keep full paid digital-license allowance separate from gift allowance.
 - [ ] Update Terms and Conditions for gifted vs full-license digital access.
 - [ ] Label gifted access clearly in customer Library.
 
