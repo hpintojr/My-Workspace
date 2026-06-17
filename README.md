@@ -62,6 +62,7 @@ Confirmed working:
 - Books now include LuLu print setup fields.
 - Neon has been patched with the required `print_jobs`, lock-rel, and book print setup fields.
 - Geoapify API now appears in Admin Dashboard System Status Check.
+- Geoapify Vercel environment values are now configured for browser autocomplete, server checks, and the autocomplete endpoint.
 - LuLu Phase 3 backend foundation is deployed: API helper plus protected manual-submit route.
 
 Latest important Benny & Penny commits:
@@ -96,6 +97,7 @@ Next focus areas:
 - Validate that the backend route blocks non-ready jobs.
 - Test sandbox submission only after Book 1 print setup data is filled.
 - Save/display LuLu response, IDs, and errors in Print Jobs.
+- Add a real Geoapify dashboard ping later if desired now that the endpoint value is configured.
 - After LuLu tracking exists, update the customer portal, thank-you page, receipt copy, and shipment/tracking email.
 
 Do not start broad rewrites. Future admin changes should be tiny final-layer fixes only.
