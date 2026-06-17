@@ -32,7 +32,7 @@ if any file list, read order, active focus, or project status changed.
 Current priority:
 
 ```txt
-Begin LuLu print-on-demand Phase 1: create the internal print-job queue for paperback/hardcover purchases before any live LuLu API submission.
+Continue LuLu POD after Phase 1/2 success: build the manual Submit to LuLu layer while keeping auto-submit disabled.
 ```
 
 Read first for the next Benny & Penny chat:
@@ -41,10 +41,10 @@ Read first for the next Benny & Penny chat:
 00 [C] Workspace Index.md
 CLAUDE.md
 02 Projects/Benny & Penny's Adventures/[C] Lulu Print on Demand Plan.md
-02 Projects/Benny & Penny's Adventures/[C] Admin Mobile Accepted Working Update 2026-06-16.md
-02 Projects/Benny & Penny's Adventures/[C] Admin Desktop Toggle Status 2026-06-16.md
-02 Projects/Benny & Penny's Adventures/[C] Portal and Digital Delivery Implementation Notes.md
+01 Daily Logs/[C] 2026-06-17 Lulu POD Phase 1-2 Update.md
 02 Projects/Benny & Penny's Adventures/[C] Backlog & Launch Checklist.md
+02 Projects/Benny & Penny's Adventures/Benny & Penny's Adventures Overview.md
+02 Projects/Benny & Penny's Adventures/[C] Portal and Digital Delivery Implementation Notes.md
 ```
 
 Confirmed working:
@@ -53,26 +53,28 @@ Confirmed working:
 - Admin dashboard desktop sidebar toggle polish is working.
 - Dashboard search is below the greeting.
 - Welcome renders as `Welcome, Hamilton Pinto!`.
-- System Status, Recent Orders, and Community Growth rows use the right side of the cards again.
 - Mobile and desktop sidebar toggle controls show the branded heart treatment.
-- Filter/search controls remain normal.
-- Mobile grey hover square/artifact is gone from desktop view.
+- Print Jobs appears under Catalog below Media.
+- Internal LuLu/POD `print-jobs` queue works for physical orders.
+- Order `26-0024` created a Hardcover print job.
+- Print record `1` opened successfully after the Neon lock-table patch.
+- Books now include LuLu print setup fields.
+- Neon has been patched with the required `print_jobs`, lock-rel, and book print setup fields.
 
-Latest accepted mobile website commit:
-
-```txt
-69d549e3160c38e87be80eafb00bdb700d0a66c6
-Hard override sidebar close icon to dark heart
-```
-
-Latest accepted desktop/admin greeting commits:
+Latest important Benny & Penny commits:
 
 ```txt
-e678610a677948f7046eef8dadc6df1bc5df99ec
-Retarget desktop nav toggles outside admin shell
+60629f4fe74618fed9a94fb700c923215db1c977
+Require Lulu print setup before ready status
 
-f0de9ab63cbe54407b262ffed100c74b18595447
-Add space after welcome comma
+de086edb7fcaa72be91bb903c8ce6df73b2654b6
+Add Lulu print setup fields to books
+
+a9383a2e68023a42db5dd7520004797147c5fb56
+Add print jobs under catalog sidebar
+
+fcd736ce2c21361151a2136a6b51a6d3822bf024
+Create dry-run print jobs after checkout
 ```
 
 LuLu POD plan file:
@@ -83,11 +85,11 @@ LuLu POD plan file:
 
 Next focus areas:
 
-- Implement LuLu POD Phase 1: internal `print-jobs` queue only.
-- Add `collections/PrintJobs.ts` and register it in `payload.config.ts`.
-- Add dry-run print job generator in `lib/luluPrintJobs.ts`.
-- Hook generator into Stripe fulfillment after `order-items` are created.
-- Do not submit live LuLu orders yet.
-- After POD queue foundation, continue customer portal mobile validation and final launch cleanup.
+- Build Phase 3: LuLu API client and manual Submit to LuLu action.
+- Validate print job is `ready` before manual submit.
+- Submit to LuLu sandbox/test environment only.
+- Store LuLu response, IDs, and errors back to `print-jobs`.
+- Keep `LULU_AUTO_SUBMIT=false`.
+- After LuLu tracking exists, update the customer portal, thank-you page, receipt copy, and shipment/tracking email.
 
 Do not start broad rewrites. Future admin changes should be tiny final-layer fixes only.
