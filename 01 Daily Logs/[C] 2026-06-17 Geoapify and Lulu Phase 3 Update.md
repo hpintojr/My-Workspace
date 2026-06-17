@@ -38,6 +38,22 @@ What changed:
 - The dashboard displays Geoapify as connected when the configured key is present in Vercel environment settings.
 - If not configured, the dashboard shows Geoapify as ready to configure.
 
+Vercel environment status confirmed by Hamilton:
+
+```txt
+Geoapify public browser key added.
+Geoapify server key added.
+Geoapify autocomplete endpoint URL added.
+```
+
+Purpose of each value:
+
+```txt
+Public browser key: future customer-facing address autocomplete.
+Server key: dashboard/API ping, validation, and future server-side address normalization.
+Autocomplete URL: endpoint for future lightweight health check and autocomplete requests.
+```
+
 ---
 
 ## LuLu Phase 3 — Manual Submit Foundation
@@ -98,7 +114,7 @@ Current behavior:
 ```txt
 Auto-submit remains disabled.
 Do not submit live LuLu orders until manual sandbox submission is proven.
-Do not commit LuLu credentials, Geoapify keys, or private setup values.
+Do not commit service credentials or private environment values.
 ```
 
 ---
