@@ -11,17 +11,18 @@ updated: 2026-06-17
 Build a children's publishing business around the Benny & Penny medical adventure book series, including:
 
 - Public website.
-- Digital ebook sales.
-- Audiobook/audio sales.
+- Correct book/product assets.
+- Digital ebook and audiobook delivery.
 - Print-on-demand book sales.
 - Customer portal / member area.
 - Payload CMS admin backend.
 - Email list and contact management.
-- Private digital/audio fulfillment.
+- Private R2 digital/audio fulfillment.
 - Physical book fulfillment and tracking.
 - Geoapify-powered address autocomplete/saved address experience.
+- Gifting/BPG code workflow.
 - Customer support/helpdesk workflow.
-- Social media and brand presence.
+- Abandoned-cart and marketing roadmap.
 - Business infrastructure.
 
 ## Domains
@@ -31,9 +32,13 @@ Build a children's publishing business around the Benny & Penny medical adventur
 
 ---
 
-## Current Status — 2026-06-17 Repo Review
+## Current Status — 2026-06-17
 
-The active project focus is **Customer Experience / Portal Revamp** based on Hamilton's updated architectural blueprint and the latest repo review.
+The active project focus is now:
+
+```txt
+Correct product assets + automated R2 digital delivery + customer portal/workflow revamp.
+```
 
 The site remains a controlled working environment:
 
@@ -45,288 +50,187 @@ Stripe remains sandbox/test mode.
 LuLu remains sandbox/testing.
 ```
 
-Current active roadmap:
+Active handoff file:
+
+```txt
+02 Projects/Benny & Penny's Adventures/[C] Product Assets Digital Delivery Gifting and Marketing Handoff.md
+```
+
+Active roadmap:
 
 ```txt
 02 Projects/Benny & Penny's Adventures/[C] Customer Experience Portal Revamp Roadmap & Assessment.md
 ```
 
-LuLu status:
+---
+
+## Current Product Asset Assumptions
+
+Hamilton clarified:
+
+```txt
+Current product catalog data is placeholder material.
+Current cover images are placeholders.
+Current page preview images are placeholders.
+Current shopping cart thumbnails are placeholders.
+```
+
+Next product asset priority:
+
+```txt
+Replace placeholders with correct production assets and do not build final customer UX around placeholder images.
+```
+
+---
+
+## Digital Delivery Direction
+
+Current manual linkage is not the final delivery workflow.
+
+```txt
+Manual admin/media linkage for PDF/EPUB products was only intended as a support-reference viewpoint.
+Digital product delivery now needs to be automated through R2.
+```
+
+Target flow:
+
+```txt
+Customer buys digital/audio product
+-> checkout is paid
+-> fulfillment creates download records automatically
+-> customer Library shows available product files
+-> secure download link is generated on demand
+```
+
+Immediate digital-delivery blockers:
+
+- Upload temporary files for digital products to R2.
+- Decide R2 object-key convention.
+- Map product records to R2 file keys.
+- Automate download-record creation after checkout.
+- Test checkout to Library to secure file download end to end.
+
+---
+
+## Portal Status
+
+Repo review confirmed:
+
+```txt
+Portal routes exist for home, login, orders, addresses, and library.
+Portal APIs exist for account status, orders, addresses, library, and downloads.
+Underlying fields/database/components are mostly present.
+```
+
+Hamilton's concern:
+
+```txt
+The portal UX and workflow are wrong and need to be redesigned around the real customer journey.
+```
+
+Portal priorities:
+
+- Verify or build the customer account setup page.
+- Redesign portal UX and navigation.
+- Make Library clearly show automated digital delivery.
+- Make Orders show digital/audio/print/support status clearly.
+- Add Helpdesk workflow.
+- Add account/address confirmation flow.
+
+---
+
+## Cart / Checkout / Gifting Status
+
+Confirmed in code review:
+
+```txt
+Cart has thumbnails, quantity controls, remove item, clear cart, and saved-address selectors.
+Checkout has partial saved-address prefill for signed-in customers.
+```
+
+Hamilton's direction:
+
+```txt
+The cart and checkout elements exist, but they are not yet being used for the best customer experience.
+BPG gift codes should tie into the cart/coupon system and be trackable.
+Gifted access should allow one digital download/device only.
+Full paid licenses may allow three downloads/devices.
+Terms and Conditions must be updated to reflect the difference.
+```
+
+---
+
+## Geoapify Status
+
+```txt
+Geoapify appears in Admin Dashboard System Status Check.
+Geoapify Vercel values are configured.
+Geoapify autocomplete is not yet built into Portal > Addresses.
+```
+
+Hamilton's direction:
+
+```txt
+Use Geoapify anywhere admins or customers enter addresses inside the Benny & Penny system.
+Stripe already handles guest checkout address collection, so guest checkout should focus on confirming/capturing Stripe's address after payment when that phase is reached.
+```
+
+---
+
+## LuLu Status
 
 ```txt
 Print-job queue works.
-Book setup fields exist.
+Book print setup fields exist.
 Backend submit route exists.
 Admin Submit to LuLu page/link exists.
 Further LuLu testing is paused.
 Auto-submit remains disabled.
 ```
 
-Geoapify status:
+Open LuLu planning questions:
 
 ```txt
-Geoapify row appears in Admin Dashboard System Status Check.
-Geoapify Vercel values are configured.
-Portal/address autocomplete is not built yet.
+Do 9 books require 9 LuLu projects or 18 projects for paperback + hardcover?
+How should project folders be organized?
+What exact PDF, bleed, margin, and cover specs are required?
+What LuLu templates are available for the selected trim size?
+What is the correct Canva export process for print-ready PDFs?
+```
+
+Current book production note:
+
+```txt
+Books 1-4 are nearly assembled in Canva and need official print-ready output requirements before upload.
 ```
 
 ---
 
-## Repo Review Corrections to Preserve
+## Marketing / Abandoned Cart Status
 
-Confirmed during code review:
+Abandoned cart and marketing expansion are on the roadmap, not the immediate build.
 
-```txt
-Portal routes exist for home, login, orders, library, and addresses.
-Portal APIs exist for account status, orders, library, addresses, and file delivery.
-Cart already has thumbnails, format labels, plus/minus quantity controls, remove item, clear cart, and saved-address selectors.
-Checkout already has partial saved-address prefill for signed-in customers.
-R2 delivery code path exists and Library can show available digital records.
-Support collections exist, but customer-facing Helpdesk is not built.
-```
+Future planning areas:
 
-Important gaps found:
-
-```txt
-Verify or build the customer account setup page.
-Add Geoapify metadata fields and autocomplete to Portal > Addresses.
-Harden and test the existing saved-address checkout prefill.
-Confirm LuLu print-file URL handling before sandbox/live submission.
-Expand support model/API for affected order items and customer-visible threads.
-```
-
----
-
-## Completed / Confirmed
-
-### Platform and CMS
-
-- Cloudflare configured.
-- `bennyandpennyadventures.com` connected to Vercel.
-- GitHub deployment pipeline operational.
-- Next.js route groups separated frontend and Payload Admin layouts.
-- Payload CMS added to the Next.js project.
-- Neon Postgres database created and connected.
-- Payload Admin `/admin` loads and admin login works.
-- First admin user was created.
-- Books catalog seeded into Neon/Payload with records.
-- Public `/books` and `/books/[slug]` pages read from Payload/Neon with a local fallback.
-
-### Admin Dashboard and Admin Panel
-
-- Admin dashboard is connected to live Payload data.
-- Dashboard data sources include Orders, Order Items, Customer Addresses, Subscribers, Support Tickets, Books, Users, and Print Jobs.
-- Dashboard cards show live revenue/orders/items/subscribers.
-- Admin mobile polish is accepted/working on iPhone Chrome.
-- Admin desktop sidebar toggle polish is accepted/working.
-- Dashboard search is below the greeting.
-- Welcome renders as `Welcome, Hamilton Pinto!`.
-- Print Jobs appears under Catalog below Media.
-- Submit to LuLu appears under Catalog.
-- Geoapify API appears in System Status Check with the provided logo.
-
-Current admin sidebar direction:
-
-```txt
-Dashboard
-Sales
-  Orders
-  Customers
-  Abandoned Carts — coming soon
-Catalog
-  Books
-  Media
-  Print Jobs
-  Submit to LuLu
-Marketing
-  Promotions
-  Gifts
-  Subscribers
-Settings
-  Users
-  System Status Check
-  Privacy Requests
-```
-
-### Stripe / Orders / Cart
-
-- Stripe checkout works in sandbox.
-- Cart clears after checkout success.
-- Orders are created.
-- Order Details are stored separately in `order-items`.
-- Customer Addresses are structured with billing/shipping type.
-- Stripe fulfillment reads shipping details from Stripe's current collected shipping location.
-- Physical formats are detected as `paperback` and `hardcover`.
-- Guest-friendly checkout remains the preferred strategy.
-- Cart has basic polished commerce behavior.
-- Signed-in customer saved-address prefill is partially implemented.
-
-Current product tax decision:
-
-```txt
-Do not collect tax for now.
-Stripe Automatic Tax is OFF by default.
-This must be reviewed before public physical-book launch.
-```
-
-### LuLu Print-on-Demand
-
-Working behavior:
-
-```txt
-Paid physical checkout
--> order created
--> order-items created
--> print-jobs record created
--> shipping snapshot copied
--> status draft or ready
-```
-
-Books now include:
-
-```txt
-LuLu project ID
-LuLu paperback SKU
-LuLu hardcover SKU
-Trim size
-Print interior file key or URL
-Print cover file key or URL
-Paperback print ready
-Hardcover print ready
-Print notes
-```
-
-Implemented:
-
-```txt
-lib/luluApi.ts
-POST /api/admin/print-jobs/[id]/submit-lulu
-/admin/lulu-submit
-```
-
-Important note:
-
-```txt
-Do not submit LuLu jobs yet unless Hamilton explicitly resumes this path.
-Before real testing, confirm print-file URL handling.
-```
-
-### Geoapify / Address Experience
-
-Recommended route:
-
-```txt
-Guest-friendly checkout stays.
-Backend creates/fetches account by email after purchase.
-Customer gets setup-account prompt.
-Geoapify is added first to portal address book and account setup address confirmation.
-Logged-in checkout prefill is already partially implemented and needs hardening/testing.
-```
-
-Strategy file:
-
-```txt
-02 Projects/Benny & Penny's Adventures/[C] Geoapify Address Autocomplete and Checkout Strategy.md
-```
-
-### Client Portal
-
-Built routes:
-
-```txt
-/portal
-/portal/login
-/portal/orders
-/portal/addresses
-/portal/library
-```
-
-Built APIs:
-
-```txt
-/api/portal/me
-/api/portal/orders
-/api/portal/addresses
-/api/portal/library
-/api/portal/downloads
-```
-
-Portal data source approach:
-
-```txt
-users = customers/auth
-orders = receipt/order history
-order-items = purchased formats
-customer-addresses = billing/shipping records
-downloads = digital/audiobook delivery records
-print-jobs = physical fulfillment records, not yet surfaced to customers
-support-tickets = future customer helpdesk records
-```
-
-Current customer portal is functional but needs a full experience revamp.
-
-### Contact, Newsletter, Legal, and Compliance
-
-- Contact page converted from `mailto:` behavior to an on-site form.
-- `/api/contact` exists and is connected to transactional email/client helpers.
-- Contact form includes required contact consent.
-- Contact form includes optional email opt-in.
-- Contact form includes optional SMS opt-in with TCPA-style language.
-- Newsletter form requires email opt-in.
-- Newsletter signup logs consent events.
-- Privacy Request form added.
-- Consent Logs collection added.
-- Privacy Requests collection added.
-- Footer legal links expanded.
-
-Legal/compliance pages:
-
-```txt
-/privacy
-/terms
-/sms-terms
-/privacy/california
-/privacy/state-rights
-/privacy/requests
-```
-
-Important legal/business gaps:
-
-- Marketing emails still need a valid physical mailing address or PO Box.
-- Legal language still needs attorney review before launch.
-- Privacy policy should be reviewed for Stripe, LuLu, Geoapify, R2, and email-provider data flows.
-
----
-
-## Active Problem
-
-The active problem is **customer experience / portal revamp**.
-
-Current blockers:
-
-- Customer account setup page must be verified or built.
-- Portal information architecture needs redesign.
-- Portal visual system needs bookstore/editorial polish.
-- Address autocomplete is not built into portal yet.
-- Account setup address confirmation is not built.
-- Order details do not yet show clear digital vs physical fulfillment segments.
-- Helpdesk workflow is not customer-facing yet.
-- R2 live-file delivery E2E is still open.
-- Physical tracking is not implemented yet.
-- LuLu file URL handling needs confirmation before any submission testing.
+- Abandoned-cart recovery emails.
+- Cart event capture.
+- Google/Meta/tagging/retargeting options after privacy/consent planning.
+- Subscriber marketing panel for email/newsletters/SMS/outbound calls/API integrations.
+- API/data import-export as the likely first step before building a full marketing panel.
 
 ---
 
 ## Next Best Actions
 
-1. Verify or build the customer account setup page.
-2. Redesign portal information architecture.
-3. Add Geoapify fields and autocomplete to Portal > Addresses.
-4. Add address confirmation after account setup.
-5. Harden the existing saved-address checkout prefill.
-6. Upgrade cart UX for mobile-first checkout clarity.
-7. Add customer support/helpdesk workflow tied to orders/items.
-8. Later resume LuLu sandbox testing only when ready.
+1. Organize correct product images and placeholder replacement strategy.
+2. Upload temporary digital product files to R2.
+3. Automate download-record creation after paid checkout.
+4. Verify or build the customer account setup page.
+5. Redesign portal UX/workflow around automated delivery.
+6. Add Geoapify fields/autocomplete to customer and admin address entry points.
+7. Simplify BPG gifting and connect it to cart/coupon tracking.
+8. Research official LuLu setup/template requirements.
+9. Keep abandoned-cart and subscriber marketing panel planning on the roadmap but back burner.
 
 ## Launch Blockers
 
@@ -336,16 +240,16 @@ Current blockers:
 - DBA.
 - Business bank account.
 - Stripe live account readiness.
-- Attorney/CPA review of legal, tax, and compliance decisions.
+- Attorney/CPA review of legal, tax, licensing, and compliance decisions.
 
 ### Technical
 
+- Correct product assets not uploaded.
+- R2 digital delivery not fully automated/tested.
 - Customer portal revamp not finished.
-- Account setup page needs verification/build.
-- Address autocomplete/account confirmation not finished.
+- Account setup page/address confirmation not finished.
+- BPG gifting rules not implemented or reflected in Terms.
 - Helpdesk/customer support portal not finished.
-- Client Portal digital delivery E2E not finished.
+- LuLu project/template/file URL setup not resolved.
 - Customer portal physical delivery status not finished.
-- LuLu file URL/status/tracking not finished.
-- Temporary setup/debug/reconcile/submit routes need cleanup before launch.
 - Customer-role access control needs live verification.
