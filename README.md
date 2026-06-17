@@ -32,7 +32,7 @@ if any file list, read order, active focus, or project status changed.
 Current priority:
 
 ```txt
-Finish launch cleanup after admin mobile polish. Next focus is customer portal mobile validation and final deployment/device checks.
+Validate the latest desktop admin sidebar toggle patch, then continue final launch cleanup. Customer portal mobile validation remains next after admin toggle/admin polish validation.
 ```
 
 Read first for the next Benny & Penny chat:
@@ -41,6 +41,7 @@ Read first for the next Benny & Penny chat:
 00 [C] Workspace Index.md
 CLAUDE.md
 02 Projects/Benny & Penny's Adventures/[C] Admin Mobile Accepted Working Update 2026-06-16.md
+02 Projects/Benny & Penny's Adventures/[C] Admin Desktop Toggle Status 2026-06-16.md
 02 Projects/Benny & Penny's Adventures/[C] Portal and Digital Delivery Implementation Notes.md
 02 Projects/Benny & Penny's Adventures/[C] Backlog & Launch Checklist.md
 ```
@@ -56,20 +57,30 @@ Confirmed working:
 - Collapsed mobile nav control shows the branded red circle with a white heart.
 - Open sidebar close control shows a dark/deep-teal heart instead of the X.
 - Filter/search controls remain normal and are not converted into hearts.
+- Latest desktop work removed the mobile grey hover square/artifact from desktop view.
 
-Latest accepted website commit:
+Latest accepted mobile website commit:
 
 ```txt
 69d549e3160c38e87be80eafb00bdb700d0a66c6
 Hard override sidebar close icon to dark heart
 ```
 
+Latest desktop sidebar toggle patch needing validation:
+
+```txt
+e678610a677948f7046eef8dadc6df1bc5df99ec
+Retarget desktop nav toggles outside admin shell
+```
+
 Next focus areas:
 
-- Confirm the latest Vercel deployment if needed.
+- Confirm Vercel deployed `e678610a677948f7046eef8dadc6df1bc5df99ec`.
+- Hard-refresh `/admin` on desktop and validate the desktop `<`/chevron and hamburger are replaced by heart controls.
+- Re-check mobile/iPhone admin sidebar to confirm no regression.
 - Validate remaining customer portal mobile pages.
 - Confirm Chrome iPhone bottom white gap is acceptable after safe-area filler removal.
 - Confirm Sequenzy footer badge/account settings.
 - Keep Mailjet as fallback for transactional email.
 
-Do not start broad rewrites. Future admin mobile changes should be tiny final-layer fixes only.
+Do not start broad rewrites. Future admin changes should be tiny final-layer fixes only.
