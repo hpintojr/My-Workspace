@@ -46,11 +46,24 @@ Enforce shared readable download pool
 Expose PDF and EPUB download options in library API
 ```
 
-Build status:
+Latest redeploy status:
 
 ```txt
-Vercel build for 67b5cee completed successfully.
+Vercel production redeploy for 67b5cee completed successfully.
 ```
+
+## Current R2 Folder Pattern
+
+Hamilton simplified the R2 bucket into root folders:
+
+```txt
+ebooks/book-1.pdf
+ebooks/book-1.epub
+audio/book-1-audiobook.mp3
+print/
+```
+
+This is the current standard. The app should use book records as the source of truth for exact R2 object keys.
 
 ## 2026-06-17 Test Finding and Correction
 
@@ -62,15 +75,19 @@ Findings:
 Order 26-0027 existed as order id 35.
 Digital and audiobook order items existed for Book 1.
 Downloads table had no records for order 26-0027.
-Book 1 still pointed to stale object keys: ebooks/... and audiobooks/...
-Current R2 bucket pattern is books/...
+Book object keys did not match the latest R2 folder pattern.
 Automation is gated by R2_AUTO_CREATE_DOWNLOADS=true.
 ```
 
 Corrections applied:
 
 ```txt
-Updated Book 1 keys to books/book-1.pdf, books/book-1.epub, and books/book-1-audiobook.mp3.
+Updated all existing Book records to:
+- ebooks/book-<number>.pdf
+- ebooks/book-<number>.epub
+- audio/book-<number>-audiobook.mp3
+
+Updated existing Downloads records to the same R2 folder pattern.
 Backfilled downloads for order 26-0027:
 - PDF record
 - EPUB record
@@ -81,11 +98,18 @@ Backfilled downloads for order 26-0027:
 
 ```txt
 R2_AUTO_CREATE_DOWNLOADS=true
-R2_KEY_PREFIX=books
+R2_EBOOK_PREFIX=ebooks
+R2_AUDIO_PREFIX=audio
 R2_DOWNLOADS_PER_LICENSE=3
 ```
 
-If these are missing or not redeployed, future orders may create orders/order-items/print-jobs but skip auto-creating Media/Downloads records.
+Note:
+
+```txt
+The current fulfillment code uses Book-level R2 object keys first.
+Because all Book records were updated, future orders can create the correct keys from the database.
+A later code cleanup can make the fallback helper use R2_EBOOK_PREFIX and R2_AUDIO_PREFIX directly.
+```
 
 ## Remaining Work
 
