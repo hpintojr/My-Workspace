@@ -3,7 +3,7 @@ type: project-roadmap
 project: Benny & Penny's Adventures
 status: active
 updated_by: ChatGPT
-last_updated: 2026-06-17
+last_updated: 2026-06-17 end of day
 source: architectural-blueprint-developer-guidelines.md + Hamilton product/delivery direction
 ---
 
@@ -11,7 +11,7 @@ source: architectural-blueprint-developer-guidelines.md + Hamilton product/deliv
 
 ## Purpose
 
-Use the updated architectural blueprint and Hamilton's latest product-delivery direction as the active roadmap for the Benny & Penny customer experience, portal, checkout, address handling, fulfillment visibility, gifting, and support workflow.
+Use the updated architectural blueprint and Hamilton's product-delivery direction as the active roadmap for customer experience, portal, checkout, address handling, fulfillment visibility, gifting, and support workflow.
 
 This workstream is active while further LuLu testing is paused.
 
@@ -20,9 +20,9 @@ This workstream is active while further LuLu testing is paused.
 ## Current Decision
 
 ```txt
-The immediate priority is correct product assets plus automated digital delivery.
-The portal UX/workflow must be redesigned around the real delivery process.
-LuLu sandbox/live testing stays paused until Book 1 setup, official LuLu specs, and print-file URL handling are understood.
+R2 automated digital delivery is now validated in testing.
+The immediate priority moves to product asset replacement, BPG gifting/license rules, and portal UX/workflow redesign.
+LuLu sandbox/live testing stays paused until official LuLu specs and project/template requirements are understood.
 ```
 
 ---
@@ -34,63 +34,64 @@ Current product catalog data is placeholder material.
 Current book cover images are placeholders.
 Current page preview images are placeholders.
 Current cart thumbnail images are placeholders.
-Manual admin/media linkage was only meant as a customer-support reference view.
-Digital delivery now needs to be automated through R2.
+Manual admin/media linkage is only a support-reference view.
+R2 delivery is now the active automated delivery foundation.
 ```
 
 ---
 
-## Code Review Findings to Preserve
-
-Repo review confirmed:
+## Confirmed Delivery Foundation
 
 ```txt
-Portal routes exist for home, login, orders, library, and addresses.
-Portal APIs exist for account status, orders, library, addresses, and downloads.
-Cart already has thumbnails, plus/minus quantity controls, remove item, clear cart, and saved-address selectors.
-Checkout already has partial saved-address prefill for signed-in customers.
-R2 delivery code path exists and Library can show available download records.
-LuLu submit backend and admin page exist, but testing is paused.
-Support collections exist, but the customer Helpdesk workflow is not built.
-```
-
-Important gaps:
-
-```txt
-Correct product assets are not in place yet.
-Temporary digital files need to be uploaded to R2.
-Automated download record creation must replace manual digital file linkage.
-Verify or build the customer account setup page.
-Add Geoapify metadata fields and autocomplete to Portal > Addresses.
-Simplify BPG gifting and connect it to cart/coupon tracking.
-Research official LuLu setup/templates before sandbox/live print submission.
+Paid test order created Media/Downloads records automatically.
+Portal Library shows separate PDF, EPUB, and Audiobook buttons.
+R2 signed links work.
+Shared readable slot tracking is active.
+Current R2 folder standard: ebooks/, audio/, print/.
 ```
 
 ---
 
 ## Recommended Build Order
 
-### Phase A — Product Assets and R2 Digital Delivery
+### Phase A — Product Assets
 
 Goal:
 
 ```txt
-Replace placeholders and make paid digital access automatic.
+Replace placeholders before final customer-facing UX is polished.
 ```
 
 Tasks:
 
 - Organize correct cover/page/cart image strategy.
-- Upload temporary PDF/EPUB/audio files to R2.
-- Decide R2 object-key convention for all books/formats.
-- Map product records to digital file keys.
-- Create download records automatically after paid checkout.
-- Keep manual admin/media linkage only as a support-reference tool.
-- Test paid checkout to Library to secure download end to end.
+- Replace placeholder cover images.
+- Replace placeholder page preview images.
+- Replace placeholder cart thumbnails.
+- Replace dummy R2 files with real PDF, EPUB, and audio files as Books 1-4 are finalized.
 
 ---
 
-### Phase B — Portal UX and Account Setup
+### Phase B — BPG Gifting and Cart/Coupon Tracking
+
+Goal:
+
+```txt
+Simplify gifting and make BPG codes trackable through the cart/coupon system.
+```
+
+Tasks:
+
+- Tie BPG codes to cart/coupon tracking.
+- Track redemption from cart through order and download record.
+- Make BPG gifts consume from the purchaser's shared readable slot pool.
+- Limit gifted digital access to one download/device allowance.
+- Update Terms and Conditions for gifted vs full-license access.
+- Label gifted access clearly in Library.
+
+---
+
+### Phase C — Portal UX and Account Setup
 
 Goal:
 
@@ -103,14 +104,14 @@ Tasks:
 - Verify or build the customer account setup page.
 - Redesign portal navigation and information architecture.
 - Add Account and Helpdesk areas.
-- Improve Library around automated delivery.
+- Improve Library around confirmed digital delivery.
 - Improve Orders around digital/audio/print/support status.
 - Add address confirmation after account setup.
 - Validate mobile workflow.
 
 ---
 
-### Phase C — Geoapify Address Experience
+### Phase D — Geoapify Address Experience
 
 Goal:
 
@@ -125,25 +126,6 @@ Tasks:
 - Add autocomplete to admin/customer address-entry workflows.
 - For guest checkout, keep Stripe address capture for now and focus on confirming/capturing Stripe-collected address after payment.
 - Add low-confidence/manual confirmation.
-
----
-
-### Phase D — BPG Gifting and Cart/Coupon Tracking
-
-Goal:
-
-```txt
-Simplify gifting and make BPG codes trackable through the cart/coupon system.
-```
-
-Tasks:
-
-- Tie BPG codes to cart/coupon tracking.
-- Track redemption from cart through order and download record.
-- Limit gifted digital access to one download/device allowance.
-- Keep full paid digital-license allowance separate from gift allowance.
-- Update Terms and Conditions for gifted vs full-license access.
-- Label gifted access clearly in Library.
 
 ---
 
@@ -162,13 +144,6 @@ Open questions:
 - What exact PDF, bleed, margin, cover, and template requirements apply?
 - What is the correct Canva export process for print-ready PDFs?
 - How should the final files be made accessible to LuLu?
-
-Tasks:
-
-- Research official LuLu documentation/templates.
-- Create project/folder plan for all 9 books.
-- Confirm Books 1-4 Canva output requirements.
-- Confirm print-file URL handling before sandbox submission.
 
 ---
 
@@ -193,12 +168,12 @@ Tasks:
 ## Next Recommended Build
 
 ```txt
-1. Organize/replace correct product images and cart thumbnails.
-2. Upload temporary digital product files to R2.
-3. Automate download-record creation after paid checkout.
-4. Verify or build the customer account setup page.
-5. Redesign portal UX/workflow around automated delivery.
-6. Add Geoapify fields/autocomplete to customer/admin address entry points.
-7. Simplify BPG gifting and connect it to cart/coupon tracking.
+1. Replace placeholder product images and cart thumbnails.
+2. Replace dummy R2 files with real files as Books 1-4 are finalized.
+3. Build BPG gift-code logic against the shared readable slot pool.
+4. Update Terms for full readable license vs gifted access.
+5. Verify or build the customer account setup page.
+6. Redesign portal UX/workflow around confirmed delivery behavior.
+7. Add Geoapify fields/autocomplete to customer/admin address entry points.
 8. Research official LuLu setup/template requirements.
 ```
