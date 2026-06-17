@@ -1,6 +1,6 @@
 # Benny & Penny's Adventures — Backlog & Launch Checklist
 
-Derived from `[C] Site Assessment 2026-06-15.md` and updated with June 17 LuLu POD Phase 1/2 work.
+Derived from `[C] Site Assessment 2026-06-15.md` and updated with June 17 Geoapify + LuLu POD Phase 3 foundation.
 Severity: 🔴 Critical · 🟠 High · 🟡 Medium · 🟢 Low
 
 ---
@@ -11,8 +11,8 @@ Severity: 🔴 Critical · 🟠 High · 🟡 Medium · 🟢 Low
 - [x] 🔴 **Guard the `users.role` field** so only admins can change it.
 - [x] 🔴 **Add `access.admin` role gate on `users`** so only `role: admin` can reach `/admin`.
 - [ ] 🔴 **Verify the lockdown live:** as a customer, `fetch('/api/orders')` returns only own rows or 403; `PATCH /api/users/<id>` with `{role:'admin'}` is denied; `/admin` rejects customer login.
-- [x] 🟠 **Disable setup/debug routes in production.** `setup-payload*`, `debug-books`, and `debug-payload-books` return 404 in production unless `ALLOW_SETUP_ROUTES=true`.
-- [ ] 🟠 **Final setup/debug cleanup:** routes still exist and still use `?secret=` if temporarily re-enabled. Before public launch, delete unneeded routes or migrate any kept repair/reconcile route to header-only auth. Rotate `PAYLOAD_SETUP_SECRET` after confirming no longer needed.
+- [x] 🟠 **Disable setup/debug routes in production.** Temporary setup/debug routes return 404 in production unless explicitly enabled.
+- [ ] 🟠 **Final setup/debug cleanup:** before public launch, delete unneeded routes or migrate any kept repair/reconcile/submit route to admin-session auth instead of setup-secret auth.
 - [x] 🟠 **Ship missing assets** referenced in `layout.tsx`: `og-image.png`, `favicon.png`, and `apple-touch-icon.png`.
 - [x] 🟠 **Add baseline security headers site-wide** in `next.config.mjs`; keep admin CSP in middleware only.
 - [x] 🔴 **Admin dashboard mobile remediation.** Accepted/working on iPhone Chrome. Future admin changes should be tiny final-layer fixes only.
@@ -32,14 +32,24 @@ Severity: 🔴 Critical · 🟠 High · 🟡 Medium · 🟢 Low
 - [x] 🟡 **API-side bot/spam protection** on `/api/contact`, `/api/subscribe`, `/api/privacy-request`.
 - [ ] 🟡 **Frontend bot/spam protection wiring:** add hidden honeypot fields to public form components, add frontend challenge widget/token support, and end-to-end test contact/newsletter/privacy request submissions.
 - [x] 🟡 **Transactional email brand header:** shared email layout updated to match site-style hierarchy and mobile one-line subtitle.
-- [x] 🟡 **Admin System Status Check:** added Sequenzy API above Mailjet with supplied logo.
+- [x] 🟡 **Admin System Status Check:** added Sequenzy API, Mailjet, LuLu, and Geoapify status rows with logos.
 - [x] 🟡 **Payload admin dashboard export fix:** `BeforeDashboard` supports Payload's named import and default export.
 - [x] 🟡 **Admin search/sidebar/mobile pass:** accepted working; do not start broad admin rewrites.
 - [x] 🟡 **Customer portal mobile pass — phase 1:** session bar, Orders page, and Library page patched for mobile stacking, horizontal overflow, and long text handling.
 - [ ] 🟡 **Customer portal mobile validation:** test Portal Home, Orders, Library, Gifts, and Addresses on iPhone Safari, Chrome Mobile, and iPad portrait.
 - [ ] 🟡 **Resolve catalog dual-source-of-truth** (static `lib/books.ts` vs Payload `books`). Public pages can read Payload/Neon with fallback, but checkout validation still imports static `books` and `bookFormats` from `lib/books.ts`.
 - [ ] 🟡 **Per-page metadata + canonicals** on books index, for-parents, contact, legal; add Twitter card.
-- [ ] 🟡 **Throttle/gate thank-you fulfillment fallback;** keep webhook primary. Thank-you still calls `fulfillCheckoutSessionById(session_id)` as a fallback.
+- [ ] 🟡 **Throttle/gate thank-you fulfillment fallback;** keep webhook primary. Thank-you still calls fulfillment by session as a fallback.
+
+---
+
+## 🟡 Geoapify / Address Experience
+
+- [x] 🟡 **Add Geoapify to Admin Dashboard System Status Check.** Commit `c073738d8a74bd419ae265e12c161334740daa07` is deployed.
+- [ ] 🟡 **Portal address autocomplete:** add Geoapify autocomplete to customer address book forms.
+- [ ] 🟡 **Account setup address confirmation:** when a customer first sets up their account, confirm billing/shipping addresses.
+- [ ] 🟡 **Logged-in checkout prefill:** let logged-in customers choose saved billing/shipping addresses before checkout.
+- [ ] 🟡 **Guest checkout strategy:** keep guest-friendly checkout, then create/fetch account by email and send setup-account email after purchase.
 
 ---
 
@@ -52,7 +62,9 @@ Severity: 🔴 Critical · 🟠 High · 🟡 Medium · 🟢 Low
 - [x] 🟡 **Phase 2 — Book print setup fields:** Books now include LuLu project ID, format SKUs, trim size, print files, print-ready flags, and print notes.
 - [x] 🟡 **Phase 2 Neon schema:** matching `books` columns added in Neon.
 - [x] 🟡 **Phase 2 readiness logic:** new jobs become `ready` only if shipping and required book print setup are complete; otherwise they stay `draft` with setup notes.
-- [ ] 🟠 **Phase 3 — Manual Submit to LuLu:** build LuLu config/auth helper, manual submit route/action, ready-status validation, request/response persistence, and error handling.
+- [x] 🟠 **Phase 3 backend foundation:** LuLu API helper and protected manual submit route implemented/deployed. Commits `bacd0891ac3ece58e5ce6eafc5f06ffdf5c4312a` and `166768e5007ac21e29bd08b58423a73d81ecd1c7`.
+- [ ] 🟠 **Phase 3 admin submit UI:** build visible Submit to LuLu button or admin tool page for ready print jobs.
+- [ ] 🟠 **Phase 3 sandbox test:** after Book 1 setup data is filled, test a ready print job against LuLu sandbox only.
 - [ ] 🟠 **Phase 4 — LuLu status/tracking:** store tracking number/link and shipment/delivery dates from LuLu response/webhook/polling.
 - [ ] 🟠 **Phase 5 — Physical delivery customer experience:** show print/shipping/tracking status in portal, thank-you page, receipt copy, and tracking email.
 
@@ -76,8 +88,10 @@ Repo + runtime testing confirmed these items are now implemented or working:
 - Post-order account setup prompt exists.
 - API-side bot protection exists and is called by public write routes.
 - Admin mobile/sidebar/dashboard fixes are accepted.
+- Geoapify appears in System Status Check.
 - LuLu POD internal print-job queue works.
-- Books now support LuLu print setup fields.
+- Books support LuLu print setup fields.
+- LuLu manual-submit backend foundation is deployed.
 
 Items still open:
 
@@ -89,7 +103,7 @@ Items still open:
 - Customer portal mobile validation.
 - Admin actions: refund, resend receipt, regenerate download access.
 - Customer support portal workflow.
-- LuLu API manual submit/status/tracking.
+- LuLu admin submit UI, sandbox test, status, and tracking.
 - Business/legal readiness: PO Box or mailing address, DBA, bank account, Stripe live readiness, attorney review.
 
 ---
@@ -116,8 +130,8 @@ Items still open:
 
 ## Already strong (keep)
 
-Server-side price validation at checkout · verified Stripe webhook signatures · ownership checks in `/api/portal/*` · frozen address snapshots on orders · internal print-job queue · solid metadata base · compliance scaffolding.
+Server-side price validation at checkout · verified Stripe webhook signatures · ownership checks in `/api/portal/*` · frozen address snapshots on orders · internal print-job queue · LuLu submit backend foundation · solid metadata base · compliance scaffolding.
 
 ---
 
-*Source: `[C] Site Assessment 2026-06-15.md` plus 2026-06-16 admin/portal work and 2026-06-17 LuLu POD Phase 1/2 implementation.*
+*Source: `[C] Site Assessment 2026-06-15.md` plus 2026-06-16 admin/portal work and 2026-06-17 Geoapify/LuLu POD implementation.*
