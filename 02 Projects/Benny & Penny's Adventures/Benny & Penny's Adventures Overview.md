@@ -19,6 +19,7 @@ Build a children's publishing business around the Benny & Penny medical adventur
 - Email list and contact management.
 - Private digital/audio fulfillment.
 - Physical book fulfillment and tracking.
+- Geoapify-powered address autocomplete/saved address experience.
 - Social media and brand presence.
 - Business infrastructure.
 
@@ -31,7 +32,7 @@ Build a children's publishing business around the Benny & Penny medical adventur
 
 ## Current Status — 2026-06-17
 
-The project has moved from admin/order stabilization into **LuLu print-on-demand fulfillment**.
+The project is currently focused on **LuLu print-on-demand fulfillment** and queued customer-experience improvements.
 
 The site is still a controlled working environment:
 
@@ -46,14 +47,22 @@ LuLu remains sandbox/testing until further notice.
 Current active work:
 
 ```txt
-LuLu POD Phase 3 — build manual Submit to LuLu action/API for ready print jobs.
+LuLu POD Phase 3 — backend foundation is deployed; next build is admin-facing Submit to LuLu button/tool page.
 ```
 
-Phase 1 and Phase 2 are working:
+Current queued customer-experience workstream:
+
+```txt
+Geoapify address autocomplete for portal/account setup and later checkout prefill.
+```
+
+Confirmed status:
 
 ```txt
 Phase 1: Internal print-jobs queue works.
 Phase 2: Books have LuLu print setup fields and readiness logic.
+Phase 3: LuLu API helper and protected manual submit route deployed.
+Geoapify: Admin Dashboard System Status Check row added.
 ```
 
 Confirmed test:
@@ -62,7 +71,7 @@ Confirmed test:
 Order 26-0024 created a Hardcover print job.
 Print record 1 opened successfully after Neon lock-table patch.
 Shipping copied into the print job.
-LuLu API was not called.
+LuLu API was not called during Phase 1/2.
 ```
 
 ---
@@ -85,7 +94,7 @@ LuLu API was not called.
 ### Admin Dashboard and Admin Panel
 
 - Admin dashboard is connected to live Payload data.
-- Dashboard data sources include Orders, Order Items, Customer Addresses, Subscribers, Support Tickets, Books, Users, and now Print Jobs.
+- Dashboard data sources include Orders, Order Items, Customer Addresses, Subscribers, Support Tickets, Books, Users, and Print Jobs.
 - Dashboard cards show live revenue/orders/items/subscribers.
 - Admin mobile polish is accepted/working on iPhone Chrome.
 - Admin desktop sidebar toggle polish is accepted/working.
@@ -93,6 +102,7 @@ LuLu API was not called.
 - Welcome renders as `Welcome, Hamilton Pinto!`.
 - Mobile and desktop sidebar toggle controls show the branded heart treatment.
 - Print Jobs appears under Catalog below Media.
+- Geoapify API appears in System Status Check with the provided logo.
 
 Current admin sidebar direction:
 
@@ -126,6 +136,7 @@ Settings
 - Order detail pages are working after fixing the Payload locked-document schema issue.
 - Stripe fulfillment reads shipping details from Stripe's current collected shipping location.
 - Physical formats are detected as `paperback` and `hardcover`.
+- Guest-friendly checkout remains the preferred strategy; the backend creates/fetches a customer by email and sends setup-account email after purchase.
 - Order number sequence uses yearly sequence style:
 
 ```txt
@@ -168,7 +179,6 @@ Paid physical checkout
 -> print-jobs record created
 -> shipping snapshot copied
 -> status draft or ready
--> no LuLu API call yet
 ```
 
 Phase 2 status:
@@ -198,6 +208,31 @@ Print job becomes ready only when shipping is complete and required book print s
 Otherwise it remains draft and notes explain what is missing.
 ```
 
+Phase 3 status:
+
+```txt
+Backend foundation implemented and deployed.
+Admin UI is next.
+```
+
+Implemented:
+
+```txt
+lib/luluApi.ts
+POST /api/admin/print-jobs/[id]/submit-lulu
+```
+
+Backend route behavior:
+
+```txt
+Protected route.
+Requires a ready print job.
+Validates customer email, shipping snapshot, and linked book print setup.
+Builds LuLu request from frozen print-job data.
+Submits to LuLu sandbox/test endpoint by default.
+Stores raw request/response, IDs, status, and errors to print-jobs.
+```
+
 Neon schema patches applied:
 
 ```txt
@@ -210,6 +245,32 @@ Important note:
 
 ```txt
 Do not assume Payload auto-push creates every schema object. Verify Neon after adding collections/fields.
+```
+
+### Geoapify / Address Experience
+
+Status:
+
+```txt
+Strategy documented.
+Admin dashboard status row implemented.
+Portal/account setup/checkout prefill not built yet.
+```
+
+Recommended route:
+
+```txt
+Guest-friendly checkout stays.
+Backend creates/fetches account by email after purchase.
+Customer gets setup-account email.
+Geoapify is added first to portal address book and account setup address confirmation.
+Logged-in checkout prefill comes later.
+```
+
+Strategy file:
+
+```txt
+02 Projects/Benny & Penny's Adventures/[C] Geoapify Address Autocomplete and Checkout Strategy.md
 ```
 
 ### Client Portal
@@ -290,17 +351,15 @@ Important legal/business gap:
 
 ## Active Problem
 
-The active problem is now **manual LuLu submission**.
+The active problem is now **admin-facing manual LuLu submission**.
 
-The internal queue and book setup foundation work. The app still needs a safe manual way to submit a ready print job to LuLu and store the response.
+The backend submit helper and protected route are deployed. The app still needs an admin-visible way to trigger the submit route safely from a ready print job.
 
 Current blockers for LuLu submission:
 
-- LuLu API config helper needs to read env vars only.
-- LuLu auth/token helper needs to be implemented.
-- Manual submit route/action needs to validate `ready` status before calling LuLu.
-- LuLu request/response payload needs to be stored in `print-jobs`.
-- Errors need to be captured in `errorMessage` and `rawResponse`.
+- Admin button/tool page does not exist yet.
+- Book 1 print setup fields need to be filled before a sandbox submission test.
+- Non-ready print jobs should remain blocked.
 - Tracking/status from LuLu is not implemented yet.
 - Auto-submit must remain disabled until manual submission is proven.
 
@@ -318,9 +377,8 @@ Use production deployment as controlled test environment.
 Recommended commit grouping going forward:
 
 ```txt
-1 commit = LuLu API config/auth helper
-1 commit = manual submit route/action
-1 commit = admin submit button/UI
+1 commit = admin submit button/tool page
+1 commit = sandbox submit test polish/status display
 1 commit = status/tracking persistence
 1 commit = customer portal delivery-status update
 1 commit = workspace/docs update
@@ -357,7 +415,7 @@ Recommended commit grouping going forward:
 
 ## Temporary Setup / Debug Routes
 
-Temporary setup/debug/reconcile routes exist or have existed to bootstrap and repair Payload/Neon/Stripe setup.
+Temporary setup/debug/reconcile/submit routes exist or have existed to bootstrap and repair Payload/Neon/Stripe/LuLu setup.
 
 Known temporary route categories:
 
@@ -365,6 +423,7 @@ Known temporary route categories:
 setup routes
 debug routes
 manual Stripe reconciliation route
+manual LuLu submit route
 ```
 
 These must be removed or locked down before production launch.
@@ -372,15 +431,15 @@ These must be removed or locked down before production launch.
 ## Next Best Actions
 
 1. Fill Book 1 LuLu print setup fields in Payload Admin.
-2. Build LuLu API config/auth helper using env vars only.
-3. Build manual Submit to LuLu route/action for a single ready print job.
-4. Validate that a print job must be `ready` before submit.
-5. Save LuLu request/response, IDs, and errors to `print-jobs`.
-6. Keep `LULU_AUTO_SUBMIT=false`.
+2. Build admin-facing Submit to LuLu button/tool page.
+3. Test that non-ready jobs are blocked safely.
+4. Test sandbox submission only after Book 1 setup is complete.
+5. Save/display LuLu request/response, IDs, and errors in Print Jobs.
+6. Keep auto-submit disabled.
 7. After LuLu tracking exists, update portal order experience for physical delivery.
 8. Continue customer portal mobile validation.
 9. Complete R2/live delivery E2E.
-10. Remove temporary setup/debug/reconcile routes before launch.
+10. Remove temporary setup/debug/reconcile/submit routes before launch.
 
 ## Launch Blockers
 
@@ -394,11 +453,12 @@ These must be removed or locked down before production launch.
 
 ### Technical
 
-- Manual LuLu submit/status/tracking not finished.
+- Admin-facing manual LuLu submit UI not finished.
+- LuLu status/tracking not finished.
 - Customer portal physical delivery status not finished.
 - Client Portal digital delivery E2E not finished.
 - Password reset/account activation not fully validated.
 - Customer support portal not finished.
 - Private file delivery/R2 signed links need real-file validation.
-- Temporary setup/debug/reconcile routes need cleanup before launch.
+- Temporary setup/debug/reconcile/submit routes need cleanup before launch.
 - Customer-role access control needs live verification.
