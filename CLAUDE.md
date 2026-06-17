@@ -64,7 +64,7 @@ Never commit secrets, API keys, database URLs, tokens, passwords, private env va
 
 ### Benny & Penny's Adventures
 
-Children's medical book and digital-product business around Michelle's book series.
+Children's medical book and digital/print product business around Michelle's book series.
 
 Includes:
 
@@ -72,10 +72,10 @@ Includes:
 Website
 Payload CMS admin
 Customer portal
-Stripe orders
+Stripe sandbox orders
 R2/private file delivery
 Digital ebook/audiobook products
-Future print-on-demand
+LuLu print-on-demand workflow
 Sequenzy transactional email
 Mailjet fallback email
 Legal/compliance pages
@@ -85,38 +85,80 @@ Promotions/gifting/access grants
 Current status:
 
 ```txt
-Admin dashboard mobile polish is accepted/working on iPhone Chrome after the final sidebar dark-heart close fix.
+LuLu POD Phase 1 and Phase 2 are working.
+Internal print-jobs queue creates records for physical orders.
+Books now have LuLu print setup fields.
+Next active build is Phase 3: manual Submit to LuLu action/API, with auto-submit still disabled.
 ```
 
 Read first for Benny continuation:
 
 ```txt
-02 Projects/Benny & Penny's Adventures/[C] Admin Mobile Accepted Working Update 2026-06-16.md
-02 Projects/Benny & Penny's Adventures/[C] Portal and Digital Delivery Implementation Notes.md
+02 Projects/Benny & Penny's Adventures/[C] Lulu Print on Demand Plan.md
+01 Daily Logs/[C] 2026-06-17 Lulu POD Phase 1-2 Update.md
 02 Projects/Benny & Penny's Adventures/[C] Backlog & Launch Checklist.md
+02 Projects/Benny & Penny's Adventures/Benny & Penny's Adventures Overview.md
+02 Projects/Benny & Penny's Adventures/[C] Portal and Digital Delivery Implementation Notes.md
 ```
 
-Latest accepted website commit:
+Important website repo:
 
 ```txt
-69d549e3160c38e87be80eafb00bdb700d0a66c6
-Hard override sidebar close icon to dark heart
+hpintojr/bennyandpennyadventures
 ```
 
-Confirmed working:
+Branch/environment rule:
 
 ```txt
-Dashboard search sits below the greeting.
-Greeting renders as:
-Welcome,
-Hamilton Pinto!
-System Status, Recent Orders, and Community Growth rows use the right side of cards.
-Collapsed mobile nav = red circle with white heart.
-Open sidebar close = dark/deep-teal heart, not X.
-Filter/search controls remain normal and do not become hearts.
+Stay on main branch unless Hamilton explicitly says otherwise.
+Production deployment is being used as the controlled test environment.
+The site is not live for public order traffic yet.
+Stripe remains sandbox/test mode until further notice.
+LuLu remains sandbox/testing until further notice.
+Do not commit real LuLu keys or secrets.
 ```
 
-Important caution:
+Latest important website commits:
+
+```txt
+60629f4fe74618fed9a94fb700c923215db1c977
+Require Lulu print setup before ready status
+
+de086edb7fcaa72be91bb903c8ce6df73b2654b6
+Add Lulu print setup fields to books
+
+a9383a2e68023a42db5dd7520004797147c5fb56
+Add print jobs under catalog sidebar
+
+fcd736ce2c21361151a2136a6b51a6d3822bf024
+Create dry-run print jobs after checkout
+```
+
+Confirmed LuLu/POD working:
+
+```txt
+Order 26-0024 created a Hardcover print job.
+Print record 1 opened successfully after Neon lock-table patch.
+Shipping copied into the print job.
+Status remained Draft until book print-ready fields are completed.
+LuLu API was not called.
+```
+
+Neon schema notes:
+
+```txt
+Neon project: Benny & Penny's Adventures
+Database: neondb
+
+Patches applied:
+- Created print_jobs table.
+- Added payload_locked_documents_rels.print_jobs_id.
+- Added book print setup columns.
+
+Do not assume Payload auto-push creates every schema object. Verify Neon after adding new collections/fields.
+```
+
+Admin caution:
 
 ```txt
 Do not reintroduce broad Payload admin selectors like button[class*='toggle'], button[class*='menu'], or button[class*='close'].
@@ -128,11 +170,12 @@ app/(payload)/admin-dashboard-final-polish.scss
 Next Benny focus:
 
 ```txt
-1. Confirm latest Vercel deployment if needed.
-2. Validate remaining customer portal mobile pages.
-3. Confirm Chrome iPhone bottom white gap is acceptable.
-4. Confirm Sequenzy footer badge/account settings.
-5. Keep Mailjet as fallback transactional provider.
+1. Build LuLu API config/auth helper using env vars only.
+2. Build manual Submit to LuLu route/action for a single ready print job.
+3. Validate status is Ready before submit.
+4. Save LuLu response, IDs, and errors to print-jobs.
+5. Keep LULU_AUTO_SUBMIT=false.
+6. After tracking exists, update customer portal/order experience for physical delivery.
 ```
 
 Reference-only admin mobile files for debugging regressions:
