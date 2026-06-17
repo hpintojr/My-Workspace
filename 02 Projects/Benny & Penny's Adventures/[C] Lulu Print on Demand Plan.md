@@ -25,6 +25,24 @@ hpintojr/bennyandpennyadventures
 
 ---
 
+## Branch and Environment Rule
+
+Hamilton confirmed the working rule for this project:
+
+```txt
+Stay on main branch.
+Use the production deployment as the controlled working environment.
+The site is not live for public order traffic yet.
+Stripe remains in sandbox/test mode until further notice.
+LuLu should also be treated as sandbox/testing until Hamilton confirms otherwise.
+```
+
+Do not create feature branches unless Hamilton explicitly asks.
+
+Even though production deployment is being used, do not assume public-live commerce behavior yet.
+
+---
+
 ## Current Repo State
 
 The app already has the right checkout and fulfillment foundation:
@@ -326,6 +344,9 @@ Implement Phase 1 only:
 - Keep digital/audiobook fulfillment separate from print fulfillment.
 - Build admin-visible state before automation.
 - Defer customer experience changes until tracking/status data exists from the LuLu integration.
+- Stay on the `main` branch unless Hamilton explicitly requests otherwise.
+- Treat Stripe as sandbox/test mode until further notice.
+- Treat LuLu as sandbox/test mode until further notice.
 
 ---
 
@@ -345,4 +366,4 @@ A test Stripe checkout with a paperback or hardcover item should:
 
 ## Next Step
 
-Begin Phase 1 implementation in `hpintojr/bennyandpennyadventures`.
+Begin Phase 1 implementation in `hpintojr/bennyandpennyadventures` on the `main` branch.
