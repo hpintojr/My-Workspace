@@ -13,6 +13,8 @@ Build a safe LuLu print-on-demand foundation for Benny & Penny's Adventures.
 
 The immediate goal is **not** to send live print orders yet. The first step is to create an internal, admin-visible POD queue so paperback and hardcover purchases can be tracked safely after Stripe checkout.
 
+This will also set up the next customer-experience improvement phase, because physical book delivery introduces tracking, delivery status, and clearer customer communication needs.
+
 ---
 
 ## Current Website Repo
@@ -243,6 +245,47 @@ Paid checkout -> print job created -> if ready and auto-submit enabled -> submit
 
 ---
 
+## Phase 6 — Customer Experience Update for Physical Delivery
+
+After the LuLu POD queue and submission flow are stable, update the customer experience around physical book delivery.
+
+Reason:
+
+```txt
+Print-on-demand adds shipping, tracking, delivery status, and fulfillment transparency. The current customer experience should be improved after tracking data exists.
+```
+
+Customer-facing improvements to plan:
+
+- Order detail pages should clearly separate digital access from physical book delivery.
+- Physical items should show print status, shipment status, tracking number, and tracking link when available.
+- Customer portal order history should show simple status labels such as:
+  - Order received
+  - Preparing print order
+  - Sent to printer
+  - In production
+  - Shipped
+  - Delivered
+- Thank-you page should tell the customer what happens next for print books.
+- Order receipt emails should mention print fulfillment timing and future tracking email/portal updates.
+- A shipment/tracking email should be added after LuLu tracking is received.
+- Customer support messaging should make it easy to reference the order number and tracking status.
+
+Recommended implementation order:
+
+```txt
+1. Add tracking/status fields to print-jobs.
+2. Surface print job status in admin.
+3. Surface physical delivery status in /portal/orders.
+4. Update thank-you page messaging for mixed carts.
+5. Update order receipt email copy for print items.
+6. Add shipment/tracking email once LuLu tracking webhooks or polling are available.
+```
+
+Do this after LuLu API setup, because the customer experience should be based on the actual tracking/status data returned by LuLu.
+
+---
+
 ## Environment Variables Needed Later
 
 Do not commit real values.
@@ -282,6 +325,7 @@ Implement Phase 1 only:
 - Do not block successful checkout if print-job creation fails; log error and leave order intact.
 - Keep digital/audiobook fulfillment separate from print fulfillment.
 - Build admin-visible state before automation.
+- Defer customer experience changes until tracking/status data exists from the LuLu integration.
 
 ---
 
