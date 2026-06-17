@@ -69,18 +69,19 @@ Children's medical book and digital/print product business around Michelle's boo
 Current status:
 
 ```txt
+Product catalog data, book covers, page previews, and cart thumbnails are placeholders right now.
+Active focus is correct product assets, R2 automated digital delivery, and customer portal/workflow revamp.
 LuLu POD Phase 1 and Phase 2 are working.
 LuLu Phase 3 backend foundation and admin submit page/link are deployed.
 Further LuLu submit/testing work is paused.
 Geoapify appears in Admin Dashboard System Status Check.
 Geoapify Vercel values are configured.
-A repo review confirmed current portal, checkout, cart, R2, LuLu, Geoapify, and support foundations.
-Active build focus is customer experience / portal revamp using the updated architectural blueprint.
 ```
 
 Read first for Benny continuation:
 
 ```txt
+02 Projects/Benny & Penny's Adventures/[C] Product Assets Digital Delivery Gifting and Marketing Handoff.md
 02 Projects/Benny & Penny's Adventures/[C] Customer Experience Portal Revamp Roadmap & Assessment.md
 02 Projects/Benny & Penny's Adventures/[C] Backlog & Launch Checklist.md
 02 Projects/Benny & Penny's Adventures/Benny & Penny's Adventures Overview.md
@@ -98,29 +99,24 @@ Branch/environment rule:
 
 ```txt
 Stay on main branch unless Hamilton explicitly says otherwise.
-Production deployment is being used as the controlled test environment.
+Production deployment is the controlled test environment.
 The site is not live for public order traffic yet.
 Stripe remains sandbox/test mode until further notice.
 LuLu remains sandbox/testing until further notice.
 ```
 
-Latest important website commits:
+Product and fulfillment rules to preserve:
 
 ```txt
-9268413354faac6f3a76b1aa44960a6711614fa7
-Add Lulu submit link to admin sidebar
-
-3d3d43ddbaab2d4cf0c791432784bc7d9fe9b554
-Allow admin session for Lulu submit route
-
-166768e5007ac21e29bd08b58423a73d81ecd1c7
-Add manual Lulu submit route
-
-bacd0891ac3ece58e5ce6eafc5f06ffdf5c4312a
-Add Lulu API submit helper
-
-c073738d8a74bd419ae265e12c161334740daa07
-Add Geoapify to admin system status
+Do not treat current product catalog images as final.
+Manual admin/media file linkage was only a support reference concept, not the final customer delivery flow.
+Automated digital delivery through R2 is now a priority.
+BPG gift codes should connect to cart/coupon tracking and grant one digital download/device allowance.
+Full paid digital licenses may allow three downloads/devices.
+Terms must be updated to match gifted vs full-license access.
+Use Geoapify for admin/customer address entry inside the system; guest Stripe checkout can keep Stripe's own address capture for now.
+Before LuLu testing, research official LuLu project/template/bleed requirements and whether 9 or 18 projects are needed.
+Abandoned cart, tagging, retargeting, and subscriber marketing panel are roadmap items, but back burner.
 ```
 
 Repo review corrections to preserve:
@@ -128,7 +124,7 @@ Repo review corrections to preserve:
 ```txt
 Cart already has basic thumbnails, plus/minus quantity controls, remove item, and saved-address selectors.
 Checkout already has partial saved-address prefill for signed-in customers.
-Portal routes and portal APIs exist, but the portal needs an IA/visual revamp.
+Portal routes and portal APIs exist, but the portal needs an IA/visual/workflow revamp.
 Geoapify autocomplete is not built into Portal > Addresses yet.
 Customer address records need Geoapify metadata fields.
 Support collections exist, but customer Helpdesk route/API and affected-item workflow are not built.
@@ -138,14 +134,15 @@ LuLu file URL handling must be confirmed before any real print submission testin
 Next Benny focus:
 
 ```txt
-1. Verify or build the customer account setup page.
-2. Redesign portal information architecture.
-3. Add Geoapify fields and autocomplete to Portal > Addresses.
-4. Add address confirmation after account setup.
-5. Harden the existing saved-address checkout prefill.
-6. Upgrade cart UX for mobile-first checkout clarity.
-7. Add customer support/helpdesk workflow tied to orders/items.
-8. Resume LuLu sandbox testing later.
+1. Organize correct product images and placeholder replacement strategy.
+2. Upload temporary digital product files to R2.
+3. Automate download-record creation after paid checkout.
+4. Verify or build the customer account setup page.
+5. Redesign portal UX/workflow around automated delivery.
+6. Add Geoapify fields/autocomplete to customer and admin address entry points.
+7. Simplify BPG gifting and connect it to cart/coupon tracking.
+8. Research official LuLu setup/template requirements.
+9. Keep abandoned cart and subscriber marketing panel planning on the roadmap but back burner.
 ```
 
 Reference-only admin mobile files for debugging regressions:
