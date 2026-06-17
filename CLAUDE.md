@@ -76,6 +76,7 @@ Stripe sandbox orders
 R2/private file delivery
 Digital ebook/audiobook products
 LuLu print-on-demand workflow
+Geoapify address autocomplete planning
 Sequenzy transactional email
 Mailjet fallback email
 Legal/compliance pages
@@ -86,19 +87,21 @@ Current status:
 
 ```txt
 LuLu POD Phase 1 and Phase 2 are working.
-Internal print-jobs queue creates records for physical orders.
-Books now have LuLu print setup fields.
-Next active build is Phase 3: manual Submit to LuLu action/API, with auto-submit still disabled.
+Geoapify now appears in Admin Dashboard System Status Check.
+LuLu POD Phase 3 backend foundation is deployed: submit helper plus protected manual-submit route.
+Next active build is the admin-facing Submit to LuLu button/tool page.
+Auto-submit remains disabled.
 ```
 
 Read first for Benny continuation:
 
 ```txt
 02 Projects/Benny & Penny's Adventures/[C] Lulu Print on Demand Plan.md
+01 Daily Logs/[C] 2026-06-17 Geoapify and Lulu Phase 3 Update.md
 01 Daily Logs/[C] 2026-06-17 Lulu POD Phase 1-2 Update.md
 02 Projects/Benny & Penny's Adventures/[C] Backlog & Launch Checklist.md
 02 Projects/Benny & Penny's Adventures/Benny & Penny's Adventures Overview.md
-02 Projects/Benny & Penny's Adventures/[C] Portal and Digital Delivery Implementation Notes.md
+02 Projects/Benny & Penny's Adventures/[C] Geoapify Address Autocomplete and Checkout Strategy.md
 ```
 
 Important website repo:
@@ -115,23 +118,26 @@ Production deployment is being used as the controlled test environment.
 The site is not live for public order traffic yet.
 Stripe remains sandbox/test mode until further notice.
 LuLu remains sandbox/testing until further notice.
-Do not commit real LuLu keys or secrets.
+Do not commit real LuLu or Geoapify keys or secrets.
 ```
 
 Latest important website commits:
 
 ```txt
+166768e5007ac21e29bd08b58423a73d81ecd1c7
+Add manual Lulu submit route
+
+bacd0891ac3ece58e5ce6eafc5f06ffdf5c4312a
+Add Lulu API submit helper
+
+c073738d8a74bd419ae265e12c161334740daa07
+Add Geoapify to admin system status
+
 60629f4fe74618fed9a94fb700c923215db1c977
 Require Lulu print setup before ready status
 
 de086edb7fcaa72be91bb903c8ce6df73b2654b6
 Add Lulu print setup fields to books
-
-a9383a2e68023a42db5dd7520004797147c5fb56
-Add print jobs under catalog sidebar
-
-fcd736ce2c21361151a2136a6b51a6d3822bf024
-Create dry-run print jobs after checkout
 ```
 
 Confirmed LuLu/POD working:
@@ -140,8 +146,25 @@ Confirmed LuLu/POD working:
 Order 26-0024 created a Hardcover print job.
 Print record 1 opened successfully after Neon lock-table patch.
 Shipping copied into the print job.
-Status remained Draft until book print-ready fields are completed.
-LuLu API was not called.
+LuLu API was not called during Phase 1/2.
+Phase 3 route will submit only when a print job is ready and setup is complete.
+```
+
+LuLu Phase 3 backend foundation:
+
+```txt
+lib/luluApi.ts
+POST /api/admin/print-jobs/[id]/submit-lulu
+```
+
+Current route behavior:
+
+```txt
+Protected backend route.
+Requires a ready print job.
+Validates shipping and linked book print setup.
+Builds LuLu request from frozen print-job data.
+Stores raw request/response, IDs, status, and errors back to print-jobs.
 ```
 
 Neon schema notes:
@@ -170,12 +193,11 @@ app/(payload)/admin-dashboard-final-polish.scss
 Next Benny focus:
 
 ```txt
-1. Build LuLu API config/auth helper using env vars only.
-2. Build manual Submit to LuLu route/action for a single ready print job.
-3. Validate status is Ready before submit.
-4. Save LuLu response, IDs, and errors to print-jobs.
-5. Keep LULU_AUTO_SUBMIT=false.
-6. After tracking exists, update customer portal/order experience for physical delivery.
+1. Build admin-facing Submit to LuLu button/tool page for ready print jobs.
+2. Fill Book 1 print setup fields before sandbox submission testing.
+3. Test that non-ready jobs are blocked safely.
+4. Test sandbox submission only; do not enable auto-submit.
+5. After tracking/status exists, update customer portal/order experience for physical delivery.
 ```
 
 Reference-only admin mobile files for debugging regressions:
