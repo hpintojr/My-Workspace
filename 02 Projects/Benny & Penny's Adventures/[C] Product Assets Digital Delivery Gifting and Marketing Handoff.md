@@ -6,11 +6,11 @@ updated_by: ChatGPT
 last_updated: 2026-06-17
 ---
 
-# Product Assets, Digital Delivery, Gifting, and Marketing Handoff
+# Product Assets, Digital Delivery, Gifting, Address Autocomplete, and Marketing Handoff
 
 ## Purpose
 
-This file captures Hamilton's latest direction after the repo review and the confirmed R2 delivery test. The active work is now product asset replacement, BPG gifting/license rules, customer portal UX/workflow, and later LuLu/marketing planning.
+This file captures Hamilton's latest direction after the repo review, confirmed R2 delivery test, Portal v2 approval, gifting fixes, and the Google Places address-autocomplete switch. The active work is now Google Places live verification, order 26-0029 cleanup, product asset replacement, real R2 files, BPG gifting/license rules, Terms updates, email deliverability, and later LuLu/marketing planning.
 
 ---
 
@@ -80,7 +80,7 @@ Remaining digital-delivery work:
 - Replace dummy/zero-byte R2 files with real files as Books 1-4 are finalized.
 - Keep Book records as source of truth for exact R2 object keys.
 - Keep manual media/admin view only as support/admin reference.
-- Polish final Library UX later during portal revamp.
+- Polish final Library UX later only after real assets/files exist.
 
 ---
 
@@ -110,29 +110,29 @@ Buyer issues 1 gift -> buyer has 2 readable slots left across PDF/EPUB.
 
 ## Customer Portal Direction
 
-Hamilton's issue with the current portal is mainly UX and workflow, not the database foundation.
+Portal v2 has shipped and Hamilton approved it.
 
-Current view:
+Current portal status:
 
 ```txt
-Underlying fields and database components are mostly there.
-The portal UX and workflow are wrong and need to be improved and made customer-friendly.
-Current Library UI is a testing/proof UI, not final UX.
+Portal shell, dashboard, library, orders, gifting, addresses, account, help, shipment tracking, reading-slot meter, branded invoice, and admin sidebar refresh are built.
+The portal should not be broadly rewritten right now.
+Product assets, real R2 files, fulfillment details, gifting/coupon tracking, and legal/Terms updates are the current focus.
 ```
 
-Portal direction:
+Preserve these portal decisions:
 
-- Rework flow from the customer point of view.
-- Make Library, Orders, Addresses, Helpdesk, and Account feel intentional.
-- Show digital delivery clearly.
-- Show print fulfillment clearly once LuLu tracking is ready.
-- Avoid building around placeholder assets.
+- Portal pages do not import/wrap their own SiteShell or PortalSessionBar.
+- Portal layout owns the shell.
+- Login/post-auth redirect into portal should full-reload.
+- Admin palette stays teal/mint; do not reintroduce cream.
+- Business address appears only on the printable invoice for now.
 
 ---
 
 ## Gifting and BPG Code Protocol
 
-Current gifting/sharing protocol needs to be simplified and rethought.
+Current gifting works end-to-end for owned-copy redemption codes, but deeper BPG/cart/coupon tracking is still open.
 
 Hamilton's intended direction:
 
@@ -151,29 +151,69 @@ Open build items:
 - Track BPG usage from cart, order, customer, and download record.
 - Limit BPG redemption to one digital download/device allowance.
 - Update Terms and Conditions to define gifted digital access limits.
-- Update Library UI so gifted access is labeled clearly.
+- Decide whether to raise gift download allowance above 1 for recipient re-downloads.
 
 ---
 
-## Geoapify Usage
+## Google Places Address Autocomplete
 
-Geoapify should be used anywhere the admin or customer enters an address inside the Benny & Penny system.
+Geoapify has been removed. Address autocomplete now uses **Google Places API (New)**.
 
-Use cases:
+Current implementation:
 
 ```txt
-Admin-entered customer addresses
-Customer portal address book
-Account setup address confirmation
-Logged-in customer checkout/address selection flows
-Future internal support/order address correction workflows
+Portal: app/components/AddressAutocomplete.tsx in the customer address book.
+Admin: app/(payload)/components/AdminAddressField.tsx on CustomerAddresses.street1.
+Admin import: app/(payload)/admin/importMap.ts.
+Admin status: "Google Places API" tile in BeforeDashboard.
+Old /api/geo/autocomplete and /api/geo/place routes are retired no-op stubs.
 ```
 
-Guest checkout note:
+Critical environment/config requirement:
 
 ```txt
-Stripe already has its own address collection/autocomplete for guest checkout.
-For guest checkout, focus on confirming and capturing the address from Stripe after checkout rather than duplicating Stripe's guest address flow too early.
+Use NEXT_PUBLIC_GOOGLE_PLACES_API_KEY in Vercel.
+Enable Places API (New) and billing in Google Cloud.
+Referrer allowlist should include:
+- https://bennyandpennyadventures.com/*
+- https://www.bennyandpennyadventures.com/*
+- http://localhost:3000/*
+```
+
+Still open:
+
+```txt
+Confirm Google Places works live in portal + admin after env/referrer/redeploy.
+Diagnose in DevTools Network tab:
+- no request = missing client env var at build time
+- 403 = referrer/API/key restriction issue
+Later: account setup address confirmation and logged-in checkout address prefill polish.
+```
+
+---
+
+## Stripe Name Guard
+
+Problem found:
+
+```txt
+A customer can type an address into Stripe Checkout's free-text name field.
+Existing order 26-0029 has this issue and needs manual cleanup.
+```
+
+Code guard now exists:
+
+```txt
+lib/stripeFulfillment.ts has nameLooksLikeAddress + nameReviewNote.
+Digit-containing names are flagged with a "⚠ REVIEW" order note.
+When a linked account name is available, fulfillment uses that account name as fallback for customer/billing name.
+Original Stripe values are preserved; this is non-destructive.
+```
+
+Optional future improvement:
+
+```txt
+Prefill Stripe Checkout name/address for logged-in customers to reduce name-field mistakes.
 ```
 
 ---
@@ -186,7 +226,7 @@ Open LuLu questions:
 
 ```txt
 Do we need one LuLu project per book, or one per book per format?
-If paperback and hardcover use the same trim/output size, does LuLu still require separate project/package setup?
+If paperback and hardcover use the same trim/output size, does LuLu still require separate setup?
 For 9 books, is the correct setup 9 projects or 18 projects?
 How should final drafts be uploaded?
 What exact PDF format, bleed, margins, cover specs, and template are required?
@@ -234,13 +274,15 @@ May only need a clean way to API data in and out at first.
 The next practical build sequence should be:
 
 ```txt
-1. Replace/organize correct book product assets and image strategy.
-2. Replace dummy R2 files with real PDF, EPUB, and audio files as they are finalized.
-3. Build BPG gift-code logic against the shared readable slot pool.
-4. Update Terms for full readable license vs gifted access.
-5. Verify or build the customer account setup page.
-6. Rework portal UX around the confirmed delivery workflow.
-7. Add Geoapify to customer/admin address entry points.
+0. Confirm Google Places autocomplete works live in portal and admin.
+0b. Manually fix order 26-0029 and decide whether to prefill Stripe Checkout name/address for logged-in customers.
+1. Set email deliverability DNS (SPF/DKIM/DMARC) for bennyandpennyadventures.com / Sequenzy.
+2. Replace/organize correct book product assets and image strategy.
+3. Replace dummy R2 files with real PDF, EPUB, and audio files as they are finalized.
+4. Decide whether gift recipients should get more than 1 download allowance.
+5. Build deeper BPG gift-code/coupon tracking against the shared readable slot pool.
+6. Update Terms for full readable license vs gifted access.
+7. Add later address workflow polish: account setup confirmation + logged-in checkout prefill.
 8. Research official LuLu project/template setup before real print submission.
 9. Keep abandoned cart and marketing panel planning on the roadmap but back burner.
 ```
