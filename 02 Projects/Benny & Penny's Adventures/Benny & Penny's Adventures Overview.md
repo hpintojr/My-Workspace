@@ -1,14 +1,14 @@
 ---
 type: project-overview
 project: Benny & Penny's Adventures
-updated: 2026-06-17 end of day
+updated: 2026-06-17 workspace cleanup after Google Places switch
 ---
 
 # Benny & Penny's Adventures Overview
 
 ## Goal
 
-Build a children's publishing business around the Benny & Penny medical adventure book series, including public website, correct product assets, digital ebook/audiobook delivery, print-on-demand, customer portal, Payload CMS admin, R2 fulfillment, LuLu fulfillment, Geoapify address entry, BPG gifting, support/helpdesk, and future marketing infrastructure.
+Build a children's publishing business around the Benny & Penny medical adventure book series, including public website, correct product assets, digital ebook/audiobook delivery, print-on-demand, customer portal, Payload CMS admin, R2 fulfillment, LuLu fulfillment, Google Places address entry, BPG gifting, support/helpdesk, and future marketing infrastructure.
 
 ## Domains
 
@@ -17,22 +17,26 @@ Build a children's publishing business around the Benny & Penny medical adventur
 
 ---
 
-## Current Status — 2026-06-17 End of Day
+## Current Status — 2026-06-17 Workspace Cleanup
 
 Active focus:
 
 ```txt
-Product asset replacement + BPG gifting/license rules + customer portal/workflow revamp.
+Google Places live verification + order 26-0029 cleanup + product asset replacement + real R2 files + BPG gifting/license rules + Terms/email deliverability + LuLu research.
 ```
 
 Confirmed today:
 
 ```txt
+Customer Portal v2 shipped and was approved.
+Gifting fixes shipped.
 R2 automated digital delivery works in testing.
 Digital orders auto-create Media/Downloads records.
 Portal Library shows separate PDF, EPUB, and Audiobook buttons.
 R2 signed download links work.
 Shared readable slot tracking is active.
+Geoapify was removed and Google Places API (New) autocomplete was built for portal + admin.
+Stripe name guard was added for address-typed-into-name-field mistakes.
 ```
 
 Controlled environment rule:
@@ -91,7 +95,7 @@ Remaining digital-delivery work:
 
 - Replace dummy/zero-byte R2 files with real PDF, EPUB, and audio files as Books 1-4 are finalized.
 - Keep Book records as source of truth for exact R2 object keys.
-- Redesign the final Library UX later.
+- Redesign the final Library UX only after real product assets/files are available.
 
 ---
 
@@ -104,71 +108,103 @@ PDF downloads, EPUB downloads, and BPG gifts spend from the same pool.
 Gifted access receives one download/device allowance.
 ```
 
-This rule is validated at the delivery layer for PDF/EPUB downloads. BPG gifting still needs to be built against the same pool.
+This rule is validated at the delivery layer for PDF/EPUB downloads. Owned-copy gifting works through redemption codes. Deeper BPG/coupon/cart tracking still needs to be built against the same pool.
 
 ---
 
 ## Portal Status
 
-Repo review confirmed:
+Portal v2 shipped and was approved.
+
+Current portal capabilities:
 
 ```txt
-Portal routes exist for home, login, orders, addresses, and library.
-Portal APIs exist for account status, orders, addresses, library, and downloads.
-Underlying fields/database/components are mostly present.
+Persistent portal shell and navigation.
+Dashboard with reading slots and recent orders.
+Library with PDF, EPUB, Audiobook buttons and gift-only book support.
+Orders with shipment/print-job timeline and invoice button.
+Gifting flow and session-aware redeem.
+Addresses page with Google Places autocomplete built.
+Account page.
+Help/support ticket page.
+Branded printable invoice.
 ```
 
-Hamilton's concern:
+Portal guardrail:
 
 ```txt
-The portal UX and workflow are wrong and need to be redesigned around the real customer journey.
-Current Library UI is testing/proof UI, not final UX.
+Do not broadly rewrite Portal v2 right now.
+Do not reintroduce per-page SiteShell/PortalSessionBar wrappers.
+Do not reintroduce cream admin palette.
 ```
-
-Portal priorities:
-
-- Verify or build the customer account setup page.
-- Redesign portal UX and navigation.
-- Make Library clearly show digital delivery.
-- Make Orders show digital/audio/print/support status clearly.
-- Add Helpdesk workflow.
-- Add account/address confirmation flow.
 
 ---
 
 ## Cart / Checkout / Gifting Status
 
-Confirmed in code review:
+Confirmed in code review/build:
 
 ```txt
 Cart has thumbnails, quantity controls, remove item, clear cart, and saved-address selectors.
 Checkout has partial saved-address prefill for signed-in customers.
+Gift redemption code flow works end-to-end for owned-copy gifting.
 ```
 
 Hamilton's direction:
 
 ```txt
 BPG gift codes should tie into the cart/coupon system and be trackable.
-Gifted access should consume one readable slot and allow one download/device.
+Gifted access should consume one readable slot and allow the decided download/device allowance.
 Terms and Conditions must be updated to reflect full-license vs gifted access.
 ```
 
 ---
 
-## Geoapify Status
+## Google Places Status
+
+Geoapify has been removed.
+
+Current Google Places setup:
 
 ```txt
-Geoapify appears in Admin Dashboard System Status Check.
-Geoapify Vercel values are configured.
-Geoapify autocomplete is not yet built into Portal > Addresses.
+Portal AddressAutocomplete is built.
+Admin AdminAddressField is built on CustomerAddresses.street1.
+Old /api/geo/* proxy routes are retired no-op stubs.
+Admin System Status tile now says "Google Places API".
 ```
 
-Hamilton's direction:
+Still needs live verification:
 
 ```txt
-Use Geoapify anywhere admins or customers enter addresses inside the Benny & Penny system.
-Stripe already handles guest checkout address collection, so guest checkout should focus on confirming/capturing Stripe's address after payment when that phase is reached.
+Set NEXT_PUBLIC_GOOGLE_PLACES_API_KEY in Vercel.
+Enable Places API (New) and billing in Google Cloud.
+Add referrer allowlist entries for non-www, www, and localhost.
+Redeploy.
+Test portal and admin via DevTools Network tab.
 ```
+
+---
+
+## Stripe Name Guard Status
+
+Problem found:
+
+```txt
+Stripe Checkout's name field is free text. Existing order 26-0029 has an address typed into the name field.
+```
+
+Guard added:
+
+```txt
+Names containing digits are flagged with a "⚠ REVIEW" order note.
+When available, linked account name is used as fallback for customer/billing name.
+Original Stripe values are preserved.
+```
+
+Still open:
+
+- Manually fix order 26-0029.
+- Optionally prefill Stripe Checkout name/address for logged-in customers.
 
 ---
 
@@ -208,14 +244,15 @@ Back burner roadmap items:
 
 ## Next Best Actions
 
-1. Replace placeholder product images: covers, page previews, cart thumbnails.
-2. Replace dummy R2 files with real files as Books 1-4 are finalized.
-3. Build BPG gift-code logic against the shared readable slot pool.
-4. Update Terms for full readable license vs gifted access.
-5. Verify or build the customer account setup page.
-6. Redesign portal UX/workflow around confirmed delivery behavior.
-7. Add Geoapify fields/autocomplete to customer/admin address flows.
-8. Research official LuLu setup/template requirements before print testing resumes.
+1. Confirm Google Places autocomplete live in portal and admin.
+2. Manually fix order 26-0029.
+3. Set SPF/DKIM/DMARC for email deliverability.
+4. Replace placeholder product images: covers, page previews, cart thumbnails.
+5. Replace dummy R2 files with real files as Books 1-4 are finalized.
+6. Decide whether gifted access should remain 1 download/device allowance or increase.
+7. Build deeper BPG gift-code/coupon tracking against the shared readable slot pool.
+8. Update Terms for full readable license vs gifted access.
+9. Research official LuLu setup/template requirements before print testing resumes.
 
 ## Launch Blockers
 
@@ -229,12 +266,11 @@ Back burner roadmap items:
 
 ### Technical
 
+- Google Places live verification not complete.
+- Existing order 26-0029 needs manual cleanup.
 - Correct product assets not uploaded.
 - Real R2 files not uploaded yet.
-- Customer portal revamp not finished.
-- Account setup page/address confirmation not finished.
-- BPG gifting rules not implemented or reflected in Terms.
-- Helpdesk/customer support portal not finished.
+- BPG gift/coupon tracking not fully implemented or reflected in Terms.
+- Gift download allowance decision not finalized.
 - LuLu project/template/file URL setup not resolved.
-- Customer portal physical delivery status not finished.
 - Customer-role access control needs live verification.
