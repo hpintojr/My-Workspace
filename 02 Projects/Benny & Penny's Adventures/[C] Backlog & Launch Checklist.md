@@ -1,6 +1,6 @@
 # Benny & Penny's Adventures — Backlog & Launch Checklist
 
-Updated from repo review, Hamilton's product/delivery/gifting direction, the confirmed R2 delivery test, Portal v2 approval, gifting fixes, the Google Places switch, Hamilton's confirmation that autocomplete works for both customer and admin, code confirmation that checkout name/address mitigation is already implemented, and Hamilton's screenshot confirming email DNS verification.
+Updated from repo review, Hamilton's product/delivery/gifting direction, the confirmed R2 delivery test, Portal v2 approval, gifting fixes, the Google Places switch, Hamilton's confirmation that autocomplete works for both customer and admin, code confirmation that checkout name/address mitigation is already implemented, email DNS verification, and the June 17 sandbox cart/checkout tracking build.
 
 ---
 
@@ -19,6 +19,10 @@ Updated from repo review, Hamilton's product/delivery/gifting direction, the con
 - [x] Checkout name/address issue mitigated by saved-address Stripe prefill and fulfillment name guard.
 - [x] Existing order 26-0029 cleanup bypassed as an active blocker per Hamilton.
 - [x] Email authentication DNS verified: DKIM, SPF, SES feedback/inbound MX, and DMARC p=none.
+- [x] Abandoned-cart collection, cart token, cart event API, checkout-started tracking, and converted tracking built and sandbox-verified.
+- [x] Admin Abandoned Carts list and detail record views working after Neon schema migration.
+- [x] Guest checkout gate built: guests without a saved email must choose Create an account or Checkout as guest before Stripe.
+- [x] Guest cart email + optional cart-reminder consent capture built; real Sequenzy/email association still needs end-to-end validation.
 - [ ] Replace placeholder product catalog images, book covers, page previews, and cart thumbnails.
 - [ ] Replace dummy R2 files with real files as Books 1-4 are finalized.
 - [ ] Deepen BPG gift-code/cart/coupon tracking against the shared readable slot pool.
@@ -131,12 +135,22 @@ Updated from repo review, Hamilton's product/delivery/gifting direction, the con
 
 - [x] Cart has thumbnails, quantity controls, remove item, clear cart, and saved-address selectors.
 - [x] Checkout verifies selected addresses before use.
+- [x] `abandoned-carts` Payload collection created and exposed under Sales → Abandoned Carts.
+- [x] Neon schema created for `abandoned_carts`, nested cart items, and Payload document-lock relationship support.
+- [x] Anonymous guest cart token is stored in `bp_cart_token` and cart changes create/update an active-cart record.
+- [x] Stripe session creation moves the matching record to `checkout-started` and stores checkout metadata.
+- [x] Thank-you return moves the matching record to `converted` and clears cart state.
+- [x] Sandbox guest flow confirmed: Active Cart → Checkout Started → Converted.
+- [x] Guest recovery capture shows for guest carts: email plus optional cart-reminder consent.
+- [x] Guest checkout gate appears if no guest email has been captured: Create an account or Checkout as guest.
+- [x] Guest checkout modal requires a valid email before Stripe and includes optional reminder consent plus an existing-member Sign in link.
+- [ ] Run end-to-end test confirming guest email and marketing consent save to abandoned-carts and sync to Sequenzy as `ecommerce.in_cart`.
+- [ ] Add timed abandonment automation: active carts and checkout-started carts become `abandoned` only after a defined delay.
+- [ ] Add webhook/fulfillment-level converted fallback so conversion does not depend on the buyer returning to thank-you.
+- [ ] Add actual Sequenzy recovery workflow only after timing, consent copy, and suppression rules are approved.
 - [ ] Improve cart/checkout elements after product assets are real.
 - [ ] Add sticky mobile checkout CTA if needed after final mobile review.
 - [ ] Improve price and discount clarity.
-- [ ] Plan abandoned-cart recovery options.
-- [ ] Plan event capture for abandoned carts.
-- [ ] Research tagging/retargeting options later after consent/privacy plan.
 
 ---
 
@@ -155,7 +169,8 @@ Updated from repo review, Hamilton's product/delivery/gifting direction, the con
 ## 🟡 Compliance and Launch Readiness
 
 - [ ] Update Terms for BPG gifting vs full license access.
-- [ ] Update Privacy for Stripe, LuLu, Google Places API, R2, and email providers.
+- [ ] Update Privacy for Stripe, LuLu, Google Places API, R2, Sequenzy email/recovery tracking, and email providers.
+- [ ] Finalize cart-reminder consent wording, unsubscribe behavior, and suppression policy before enabling live recovery sends.
 - [ ] Create cookie/consent plan before marketing pixels.
 - [ ] Review physical vs digital tax strategy.
 - [ ] Complete business/legal readiness: PO Box or mailing address, DBA, bank account, Stripe live readiness, attorney/CPA review.
