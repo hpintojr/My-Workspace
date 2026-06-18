@@ -1,6 +1,6 @@
 # Benny & Penny's Adventures — Backlog & Launch Checklist
 
-Updated from repo review, Hamilton's product/delivery/gifting direction, the confirmed R2 delivery test, Portal v2 approval, gifting fixes, the Google Places switch, and Hamilton's confirmation that autocomplete works for both customer and admin.
+Updated from repo review, Hamilton's product/delivery/gifting direction, the confirmed R2 delivery test, Portal v2 approval, gifting fixes, the Google Places switch, Hamilton's confirmation that autocomplete works for both customer and admin, code confirmation that checkout name/address mitigation is already implemented, and Hamilton's screenshot confirming email DNS verification.
 
 ---
 
@@ -16,14 +16,16 @@ Updated from repo review, Hamilton's product/delivery/gifting direction, the con
 - [x] Portal Library shows separate PDF, EPUB, and Audiobook buttons.
 - [x] Geoapify removed; Google Places API (New) autocomplete built in portal + admin.
 - [x] Google Places autocomplete confirmed working for customer portal and admin.
-- [ ] Manually fix order 26-0029 (address typed into Stripe name field).
-- [ ] Decide whether to prefill Stripe Checkout name/address for logged-in customers.
+- [x] Checkout name/address issue mitigated by saved-address Stripe prefill and fulfillment name guard.
+- [x] Existing order 26-0029 cleanup bypassed as an active blocker per Hamilton.
+- [x] Email authentication DNS verified: DKIM, SPF, SES feedback/inbound MX, and DMARC p=none.
 - [ ] Replace placeholder product catalog images, book covers, page previews, and cart thumbnails.
 - [ ] Replace dummy R2 files with real files as Books 1-4 are finalized.
 - [ ] Deepen BPG gift-code/cart/coupon tracking against the shared readable slot pool.
 - [ ] Decide whether to raise gift download allowance above 1.
 - [ ] Update Terms for full readable license vs gifted access.
 - [ ] Research official LuLu setup/templates before sandbox submission.
+- [ ] Monitor real gift/order email inbox placement after DNS verification.
 
 ---
 
@@ -54,7 +56,7 @@ Updated from repo review, Hamilton's product/delivery/gifting direction, the con
 - [x] Address book exists and Google Places autocomplete is built.
 - [x] Google Places autocomplete confirmed live/working in customer portal address book.
 - [x] Google Places autocomplete confirmed live/working in admin.
-- [ ] Later: account setup address confirmation and logged-in checkout address prefill polish.
+- [ ] Later: account setup address confirmation and logged-in checkout address prefill polish if needed.
 - [ ] Validate final mobile workflow after assets/files are real.
 
 ---
@@ -88,13 +90,26 @@ Updated from repo review, Hamilton's product/delivery/gifting direction, the con
 
 ---
 
-## 🟠 Stripe Name Guard / Order Cleanup
+## 🟠 Stripe Name Guard / Checkout Prefill
 
 - [x] Added non-destructive Stripe name guard in `lib/stripeFulfillment.ts`.
 - [x] Suspicious digit-containing names now get a "⚠ REVIEW" order note.
 - [x] Linked account name is used as fallback for customer/billing name when available.
-- [ ] Manually fix existing order 26-0029.
-- [ ] Decide whether to prefill Stripe Checkout name/address for logged-in customers.
+- [x] Saved-address Stripe Checkout prefill exists for signed-in users who choose saved billing/shipping addresses.
+- [x] Existing order 26-0029 cleanup bypassed as an active blocker per Hamilton.
+- [ ] Later: refine logged-in checkout prefill only if future testing shows a recurring issue.
+
+---
+
+## 🟠 Email Deliverability
+
+- [x] DKIM TXT record verified.
+- [x] SPF TXT record verified.
+- [x] Amazon SES feedback MX for send verified.
+- [x] Amazon inbound MX verified.
+- [x] DMARC TXT record verified with `v=DMARC1; p=none`.
+- [ ] Monitor real gift/order email inbox placement.
+- [ ] Later: consider stricter DMARC only after stable sending.
 
 ---
 
