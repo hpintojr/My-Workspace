@@ -24,7 +24,7 @@ The workspace index contains the clean directory tree, read-order rules, and upd
 Current priority:
 
 ```txt
-Customer Portal v2 is BUILT and approved (shell, dashboard, shipment tracking, account, help, branded invoice) and the Payload admin sidebar now matches it (teal theme kept). R2 automated digital delivery is confirmed working in testing. Gifting fixes are shipped. Geoapify has been removed and address autocomplete now uses Google Places API (New). Google Places autocomplete is confirmed working for both customer and admin. Active priority is fixing order 26-0029, deciding whether to prefill Stripe Checkout name/address, product asset replacement, real R2 files, deeper BPG gift/coupon tracking, Terms updates, email deliverability, and LuLu research.
+Customer Portal v2 is BUILT and approved (shell, dashboard, shipment tracking, account, help, branded invoice) and the Payload admin sidebar now matches it (teal theme kept). R2 automated digital delivery is confirmed working in testing. Gifting fixes are shipped. Geoapify has been removed and Google Places API (New) autocomplete is confirmed working for both customer and admin. Checkout name/address issue is already mitigated by saved-address Stripe Checkout prefill plus a fulfillment guard. Email authentication DNS is verified. Active priority is product asset replacement, real R2 files, gift download allowance decision, deeper BPG gift/coupon tracking, Terms updates, and LuLu research.
 ```
 
 Read first for the next Benny & Penny chat:
@@ -32,6 +32,7 @@ Read first for the next Benny & Penny chat:
 ```txt
 00 [C] Workspace Index.md
 CLAUDE.md
+01 Daily Logs/[C] 2026-06-17 Checkout Name Guard and Email DNS Confirmed.md
 01 Daily Logs/[C] 2026-06-17 Google Places Confirmed.md
 01 Daily Logs/[C] 2026-06-17 Google Places and Stripe Name Guard.md
 01 Daily Logs/[C] 2026-06-17 Gifting Fixes.md
@@ -59,6 +60,8 @@ Confirmed working:
 - Print Jobs appears under Catalog.
 - LuLu queue and manual submit foundation exist, but LuLu testing is paused.
 - Google Places API (New) autocomplete is built and confirmed working for both the customer portal address book and admin CustomerAddresses.street1 field.
+- Stripe Checkout name/address issue is already mitigated by saved-address prefill and a non-destructive fulfillment guard.
+- Email authentication DNS is verified: DKIM, SPF, SES feedback/inbound MX, and DMARC p=none.
 
 Important current assumptions:
 
@@ -67,22 +70,22 @@ Important current assumptions:
 - Current Library UI is a testing/proof UI, not final customer experience.
 - BPG gifting must consume from the same readable slot pool as PDF/EPUB downloads.
 - Full paid readable license = 3 total readable slots across PDF, EPUB, and gifts.
-- Gifted access = one download/device allowance.
+- Gifted access = one download/device allowance unless Hamilton decides to increase it.
 - Geoapify remains removed; Google Places API (New) is the active address autocomplete provider.
-- Existing order `26-0029` has an address typed into Stripe's name field and needs manual cleanup.
+- Order `26-0029` cleanup is bypassed as an active blocker per Hamilton; keep the forward fix documented.
+- DMARC is currently verified at `p=none`; later consider a stricter policy only after sending remains stable.
 
 Next focus areas:
 
 ```txt
-0. Fix existing order 26-0029 (address typed into name field); optional: prefill Stripe Checkout name/address for logged-in customers to prevent recurrence.
-1. Email deliverability: set SPF/DKIM/DMARC DNS for bennyandpennyadventures.com (Sequenzy) so gift/order emails reach the inbox instead of junk.
-2. Decide whether to raise the gift download allowance above 1 (let recipients re-download on their device).
-3. Replace placeholder book covers, page previews, cart thumbnails, and product assets.
-4. Replace dummy R2 files with real PDF, EPUB, and audio files as Books 1-4 are finalized.
-5. Deepen BPG gift-code → cart/coupon tracking (current owned-copy gifting via redemption codes already works end-to-end).
-6. Update Terms for full license vs gifted access.
-7. Extend Google Places/address confirmation later to account setup and logged-in checkout refinements if needed.
-8. Research official LuLu project/template requirements before print testing resumes.
+1. Replace placeholder book covers, page previews, cart thumbnails, and product assets.
+2. Replace dummy R2 files with real PDF, EPUB, and audio files as Books 1-4 are finalized.
+3. Decide whether to raise the gift download allowance above 1 (let recipients re-download on their device).
+4. Deepen BPG gift-code → cart/coupon tracking (current owned-copy gifting via redemption codes already works end-to-end).
+5. Update Terms for full license vs gifted access.
+6. Extend Google Places/address confirmation later to account setup and logged-in checkout refinements if needed.
+7. Research official LuLu project/template requirements before print testing resumes.
+8. Monitor real gift/order email inbox placement now that DNS authentication is verified.
 ```
 
-Portal UX revamp, customer account setup page, Help, Orders, Addresses, Library, Gifting, Google Places autocomplete, and the admin sidebar are DONE for Portal v2. Do not start broad admin rewrites or reintroduce a cream admin palette. Customer-facing product assets, fulfillment, order 26-0029 cleanup, email deliverability, and gifting/coupon tracking are the active focus.
+Portal UX revamp, customer account setup page, Help, Orders, Addresses, Library, Gifting, Google Places autocomplete, checkout name/address mitigation, email authentication DNS, and the admin sidebar are DONE/verified for the current phase. Do not start broad admin rewrites or reintroduce a cream admin palette. Customer-facing product assets, real files, gift policy, BPG tracking, Terms, and LuLu research are the active focus.
