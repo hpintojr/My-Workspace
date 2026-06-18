@@ -131,22 +131,38 @@ gift-sender
 gift-recipient
 ```
 
-## Neon Schema Verification
+## Neon Order Attribution Migration — Applied
 
-Read-only inspection of the main Neon branch found that the new order-attribution columns are not yet present in `public.orders`.
+Hamilton approved the production order attribution migration.
 
-The code is deployed, but a safe schema migration is still required before paid orders can persist the newly added order-level coupon, BPG, gift, recovered-cart, and source-cart fields.
+```txt
+Migration ID: b96a922f-5623-410a-90ef-372afc354755
+Temporary branch: mcp-migration-2026-06-18T08-51-06
+Temporary branch ID: br-cool-sky-a6b5fxon
+Parent branch: br-wispy-bar-a6r2f0ix
+Result: Applied successfully; temporary branch deleted
+```
 
-This must be applied using a reviewed migration workflow before claiming order-level attribution reporting is complete.
+The main Neon branch was verified after completion. `public.orders` now contains the order attribution fields needed by the deployed code:
+
+```txt
+coupon_code
+gift_code
+bpg_code
+recovered_cart
+source_cart_id
+```
+
+The source-cart relationship is present and links an order to an Abandoned Cart while preserving orders if a source cart is removed.
 
 ## Next Validation Sequence
 
 ```txt
-1. Approve and apply the safe Neon schema migration for order attribution fields.
-2. Open a fresh non-converted consented cart record in Admin.
-3. Use Run email-safe test.
-4. Verify Abandoned / Recovery Eligible? / Recovery State in the record.
-5. Confirm Sequenzy gets cart-abandoned.
-6. Keep CART_RECOVERY_SEND_ENABLED=false through this dry-run.
-7. Later enable true for one controlled reminder, recovery-link, and unsubscribe test.
+1. Open a fresh non-converted consented cart record in Admin.
+2. Use Run email-safe test.
+3. Verify Abandoned / Recovery Eligible? / Recovery State in the record.
+4. Confirm Sequenzy gets cart-abandoned.
+5. Keep CART_RECOVERY_SEND_ENABLED=false through this dry-run.
+6. Later enable true for one controlled reminder, recovery-link, and unsubscribe test.
+7. Complete a Stripe test purchase with a coupon or BPG code and confirm it appears on the Order record.
 ```
