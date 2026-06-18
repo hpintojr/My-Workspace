@@ -1,6 +1,6 @@
 # Workspace Index
 
-**Status:** Current as of 2026-06-17 (Customer Portal v2 + admin theme + gifting fixes + Google Places switch shipped and confirmed working for customer + admin)
+**Status:** Current as of 2026-06-17 (Customer Portal v2 + admin theme + gifting fixes + Google Places confirmed + checkout-name mitigation confirmed + email DNS verified)
 
 ## Start Here
 
@@ -10,6 +10,7 @@ Read in this order:
 README.md
 00 [C] Workspace Index.md
 CLAUDE.md
+01 Daily Logs/[C] 2026-06-17 Checkout Name Guard and Email DNS Confirmed.md
 01 Daily Logs/[C] 2026-06-17 Google Places Confirmed.md
 01 Daily Logs/[C] 2026-06-17 Google Places and Stripe Name Guard.md
 01 Daily Logs/[C] 2026-06-17 Gifting Fixes.md
@@ -43,7 +44,8 @@ Current R2 folder standard is ebooks/, audio/, and print/.
 Product catalog data and images are still placeholders.
 LuLu Phase 1/2 work exists, but LuLu testing remains paused.
 Geoapify is removed. Address autocomplete now uses Google Places API (New). Portal address book and admin CustomerAddresses.street1 field are built client-side and confirmed working. Server proxy routes /api/geo/autocomplete and /api/geo/place are retired no-op stubs. Admin status tile says "Google Places API".
-Stripe name guard is built: digit-containing Stripe name values get a "⚠ REVIEW" order note and the linked account name is used as fallback when available. Existing order 26-0029 needs manual name cleanup.
+Checkout name/address issue is already mitigated: signed-in saved-address checkout creates a Stripe Customer for prefill, and fulfillment has a non-destructive name guard that flags address-like names and falls back to account name when available. Order 26-0029 cleanup is bypassed as an active blocker per Hamilton.
+Email authentication DNS is verified from Hamilton's domain screenshot: DKIM, SPF, SES feedback/inbound MX, and DMARC p=none.
 ```
 
 ## Build guardrails (website repo)
@@ -58,31 +60,33 @@ Stripe name guard is built: digit-containing Stripe name values get a "⚠ REVIE
 - Gifting = redemption-code model (free digital access), not Stripe checkout.
 - Reusable portal data logic lives in lib/portalData.ts.
 - Google Places is the active address autocomplete provider and is confirmed working in customer + admin.
+- Stripe Checkout name/address mitigation is already implemented; do not keep order 26-0029 as a launch blocker.
+- Email authentication DNS is verified. Continue to monitor inbox placement; later consider a stricter DMARC policy after stable sending.
 - Do not restore Geoapify unless Hamilton explicitly reverses the decision.
 ```
 
 ## Current Next Actions
 
 ```txt
-0. Fix existing order 26-0029 (address typed into name field); optional: prefill Stripe Checkout name/address for logged-in customers to prevent recurrence.
-1. Email deliverability: set SPF/DKIM/DMARC DNS for bennyandpennyadventures.com (Sequenzy) so gift/order emails reach the inbox, not junk.
-2. Decide whether to raise the gift download allowance above 1 (re-download on device).
-3. Replace placeholder product assets: covers, page previews, cart thumbnails.
-4. Replace dummy R2 files with real files as Books 1-4 are finalized.
-5. Deepen BPG gift-code -> cart/coupon tracking (owned-copy gifting already works end-to-end).
-6. Update Terms for full readable license vs gifted access.
-7. Later address workflow polish: account setup address confirmation, logged-in checkout prefill, and optional dashboard profile-completion nudge.
-8. Research official LuLu project/template setup before sandbox print testing resumes.
+1. Replace placeholder product assets: covers, page previews, cart thumbnails.
+2. Replace dummy R2 files with real files as Books 1-4 are finalized.
+3. Decide whether to raise the gift download allowance above 1 (re-download on device).
+4. Deepen BPG gift-code -> cart/coupon tracking (owned-copy gifting already works end-to-end).
+5. Update Terms for full readable license vs gifted access.
+6. Later address workflow polish: account setup address confirmation, logged-in checkout prefill refinements, and optional dashboard profile-completion nudge.
+7. Research official LuLu project/template setup before sandbox print testing resumes.
+8. Monitor real gift/order email inbox placement now that DNS authentication is verified.
 ```
 
 ## Directory Notes
 
 ```txt
-01 Daily Logs/[C] 2026-06-17 Google Places Confirmed.md                   (latest confirmation)
-01 Daily Logs/[C] 2026-06-17 Google Places and Stripe Name Guard.md        (Google Places build + Stripe guard)
-01 Daily Logs/[C] 2026-06-17 Gifting Fixes.md                              (gifting fix session)
-01 Daily Logs/[C] 2026-06-17 Customer Portal v2 and Admin Theme.md          (portal v2 build)
-01 Daily Logs/[C] 2026-06-17 End of Day Wrap Up.md                          (prior same-day state)
+01 Daily Logs/[C] 2026-06-17 Checkout Name Guard and Email DNS Confirmed.md (latest confirmation)
+01 Daily Logs/[C] 2026-06-17 Google Places Confirmed.md                    (Google Places confirmation)
+01 Daily Logs/[C] 2026-06-17 Google Places and Stripe Name Guard.md         (Google Places build + Stripe guard)
+01 Daily Logs/[C] 2026-06-17 Gifting Fixes.md                               (gifting fix session)
+01 Daily Logs/[C] 2026-06-17 Customer Portal v2 and Admin Theme.md           (portal v2 build)
+01 Daily Logs/[C] 2026-06-17 End of Day Wrap Up.md                           (prior same-day state)
 02 Projects/Benny & Penny's Adventures/[C] Customer Portal v2 and Admin Theme Handoff 2026-06-17.md
 02 Projects/Benny & Penny's Adventures/[C] Product Assets Digital Delivery Gifting and Marketing Handoff.md
 02 Projects/Benny & Penny's Adventures/[C] Digital Readable License Rule 2026-06-17.md
