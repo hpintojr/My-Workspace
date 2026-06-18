@@ -79,21 +79,23 @@ Portal Library shows separate PDF, EPUB, and Audiobook buttons, with self-heal t
 R2 signed download links work.
 Shared readable slot tracking is active (3 slots/title across PDF/EPUB/gifts).
 Product catalog data, book covers, page previews, and cart thumbnails are still placeholders.
-Active focus is product asset replacement, real R2 files, deeper BPG gift/coupon tracking, Terms updates, and Geoapify address autocomplete.
+Active focus is Google Places live verification, order 26-0029 cleanup, product asset replacement, real R2 files, deeper BPG gift/coupon tracking, Terms updates, email deliverability, and LuLu research.
 LuLu testing is paused until official project/template requirements are researched.
-Address autocomplete uses Google Places API (New) — Geoapify fully removed. It runs CLIENT-SIDE (the existing key is HTTP-referrer restricted, so it only works browser-side). Vercel var must be NEXT_PUBLIC_GOOGLE_PLACES_API_KEY (same key value); the old server-proxy routes (/api/geo/*) are retired no-ops. Customer: AddressAutocomplete in the portal address book. Admin: AdminAddressField custom Payload field on CustomerAddresses.street1 (fills city/state/zip/country via useForm dispatch); registered in app/(payload)/admin/importMap.ts. Google Cloud: enable "Places API (New)" + billing; referrer allowlist must include BOTH https://bennyandpennyadventures.com/* and https://www.bennyandpennyadventures.com/* (+ http://localhost:3000/*). Admin System Status tile is "Google Places API". Rollback for admin field: remove the admin.components block on street1 + its importMap line.
+Address autocomplete uses Google Places API (New) — Geoapify is fully removed. It runs CLIENT-SIDE because the existing key is HTTP-referrer restricted. Vercel var must be NEXT_PUBLIC_GOOGLE_PLACES_API_KEY (same key value); the old server-proxy routes (/api/geo/*) are retired no-op stubs. Customer: AddressAutocomplete in the portal address book. Admin: AdminAddressField custom Payload field on CustomerAddresses.street1 (fills city/state/zip/country via useForm dispatch); registered in app/(payload)/admin/importMap.ts. Google Cloud: enable Places API (New) + billing; referrer allowlist must include BOTH https://bennyandpennyadventures.com/* and https://www.bennyandpennyadventures.com/* plus http://localhost:3000/*. Admin System Status tile is "Google Places API". Rollback for admin field: remove the admin.components block on street1 + its importMap line.
+Stripe Checkout's name field cannot be validated by Stripe. lib/stripeFulfillment.ts guards new orders: a name containing digits is flagged with a "⚠ REVIEW" order note and the linked account's name is used for customer/billing name when available. This is non-destructive — original Stripe values are preserved. Existing order 26-0029 has this issue and needs a manual name fix.
 ```
 
 Read first for Benny continuation:
 
 ```txt
+01 Daily Logs/[C] 2026-06-17 Google Places and Stripe Name Guard.md
 01 Daily Logs/[C] 2026-06-17 Customer Portal v2 and Admin Theme.md
 02 Projects/Benny & Penny's Adventures/[C] Customer Portal v2 and Admin Theme Handoff 2026-06-17.md
 02 Projects/Benny & Penny's Adventures/[C] Product Assets Digital Delivery Gifting and Marketing Handoff.md
 02 Projects/Benny & Penny's Adventures/[C] Digital Readable License Rule 2026-06-17.md
 02 Projects/Benny & Penny's Adventures/[C] Backlog & Launch Checklist.md
 02 Projects/Benny & Penny's Adventures/Benny & Penny's Adventures Overview.md
-02 Projects/Benny & Penny's Adventures/[C] Geoapify Address Autocomplete and Checkout Strategy.md
+02 Projects/Benny & Penny's Adventures/[C] Google Places Address Autocomplete and Checkout Strategy.md
 02 Projects/Benny & Penny's Adventures/[C] Lulu Print on Demand Plan.md
 ```
 
@@ -125,7 +127,8 @@ BPG gift codes should connect to cart/coupon tracking and consume from the share
 One paid readable license grants 3 total readable slots across PDF downloads, EPUB downloads, and BPG gifts.
 Gifted access grants one download/device allowance.
 Terms must be updated to match gifted vs full-license access.
-Use Geoapify for admin/customer address entry inside the system; guest Stripe checkout can keep Stripe's own address capture for now.
+Use Google Places API (New) for admin/customer address entry inside the system; guest Stripe checkout can keep Stripe's own address capture for now.
+Do not restore Geoapify unless Hamilton explicitly reverses the Google Places decision.
 Before LuLu testing, research official LuLu project/template/bleed requirements and whether 9 or 18 projects are needed.
 Abandoned cart, tagging, retargeting, and subscriber marketing panel are roadmap items, but back burner.
 ```
@@ -144,20 +147,23 @@ Gifts deliver via a downloads record (no order); the Library must surface books 
 Gift redeem must honor the logged-in session (claim to current account) and must NEVER reset an existing member's password (password is only for creating a new account).
 Gift download allowance is currently 1 (gift.downloadsGranted); raising it is an open decision.
 Reusable portal data logic lives in lib/portalData.ts.
-Stripe Checkout's name field can't be validated (free text), so customers sometimes type an address into it. lib/stripeFulfillment.ts guards new orders: a name containing digits is flagged with a "⚠ REVIEW" order note and the linked account's name is used for customer/billing name when available (non-destructive — original Stripe values kept). Existing order 26-0029 had this and needs a manual name fix.
+Google Places is client-side: use NEXT_PUBLIC_GOOGLE_PLACES_API_KEY and test in browser. No Network request usually means the env var was missing at build time; 403 usually means referrer/API restriction.
+Stripe Checkout name guard is non-destructive. Never overwrite original Stripe values without preserving them; flag suspect names with review notes.
 Always run npm run build locally before deploy when touching routes/types.
 ```
 
-Next Benny focus (Portal v2 UX, account setup, and gifting flow are DONE):
+Next Benny focus (Portal v2 UX, account setup, Help, Orders, Addresses, Library, Gifting flow, and admin sidebar are DONE):
 
 ```txt
+0. Confirm Google Places autocomplete works live in portal and admin after Vercel/Google Cloud configuration + redeploy.
+0b. Manually fix order 26-0029 (address typed into name field); then decide whether to prefill Stripe Checkout name/address for logged-in customers.
 1. Email deliverability: set SPF/DKIM/DMARC DNS for bennyandpennyadventures.com (Sequenzy) so gift/order emails reach the inbox instead of junk.
 2. Decide whether to raise the gift download allowance above 1 (re-download on device).
 3. Replace placeholder product assets (covers, page previews, cart thumbnails).
 4. Replace dummy R2 files with real PDF/EPUB/audio files as Books 1-4 are finalized.
 5. Deepen BPG gift-code -> cart/coupon tracking (owned-copy gifting via redemption codes already works end-to-end).
 6. Update Terms for full readable license vs gifted access.
-7. Google Places autocomplete in the portal address book is DONE (Geoapify removed); add it to admin address entry next (AddressAutocomplete is reusable). Optional: dashboard "complete your profile for faster checkout" nudge.
+7. Later address workflow polish: account setup address confirmation, logged-in checkout prefill, and optional dashboard "complete your profile for faster checkout" nudge.
 8. Research official LuLu setup/template requirements before resuming print testing.
 ```
 
