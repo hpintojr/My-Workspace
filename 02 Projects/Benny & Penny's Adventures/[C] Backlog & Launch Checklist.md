@@ -1,6 +1,6 @@
 # Benny & Penny's Adventures — Backlog & Launch Checklist
 
-Updated from repo review, Hamilton's product/delivery/gifting direction, the confirmed R2 delivery test, Portal v2 approval, gifting fixes, and the Google Places switch.
+Updated from repo review, Hamilton's product/delivery/gifting direction, the confirmed R2 delivery test, Portal v2 approval, gifting fixes, the Google Places switch, and Hamilton's confirmation that autocomplete works for both customer and admin.
 
 ---
 
@@ -15,8 +15,9 @@ Updated from repo review, Hamilton's product/delivery/gifting direction, the con
 - [x] R2 automated digital delivery confirmed working in testing.
 - [x] Portal Library shows separate PDF, EPUB, and Audiobook buttons.
 - [x] Geoapify removed; Google Places API (New) autocomplete built in portal + admin.
-- [ ] Confirm Google Places live after Vercel/Google Cloud key/referrer/redeploy.
+- [x] Google Places autocomplete confirmed working for customer portal and admin.
 - [ ] Manually fix order 26-0029 (address typed into Stripe name field).
+- [ ] Decide whether to prefill Stripe Checkout name/address for logged-in customers.
 - [ ] Replace placeholder product catalog images, book covers, page previews, and cart thumbnails.
 - [ ] Replace dummy R2 files with real files as Books 1-4 are finalized.
 - [ ] Deepen BPG gift-code/cart/coupon tracking against the shared readable slot pool.
@@ -51,7 +52,8 @@ Updated from repo review, Hamilton's product/delivery/gifting direction, the con
 - [x] Account page shipped.
 - [x] Help/support ticket page shipped.
 - [x] Address book exists and Google Places autocomplete is built.
-- [ ] Confirm Google Places live in portal address book.
+- [x] Google Places autocomplete confirmed live/working in customer portal address book.
+- [x] Google Places autocomplete confirmed live/working in admin.
 - [ ] Later: account setup address confirmation and logged-in checkout address prefill polish.
 - [ ] Validate final mobile workflow after assets/files are real.
 
@@ -79,10 +81,8 @@ Updated from repo review, Hamilton's product/delivery/gifting direction, the con
 - [x] Client-side admin autocomplete built with `AdminAddressField` on CustomerAddresses.street1.
 - [x] Manual address book and default address foundation exist.
 - [x] Signed-in checkout saved-address prefill foundation exists.
-- [ ] Set/confirm `NEXT_PUBLIC_GOOGLE_PLACES_API_KEY` in Vercel.
-- [ ] Enable Places API (New) + billing in Google Cloud.
-- [ ] Add allowed referrers: non-www, www, and localhost.
-- [ ] Redeploy and test portal + admin autocomplete via DevTools Network tab.
+- [x] Google Places autocomplete confirmed working for customer portal.
+- [x] Google Places autocomplete confirmed working for admin.
 - [ ] Add low-confidence/manual-confirmation flow later if needed.
 - [ ] For guest checkout, capture/confirm Stripe-collected address after payment instead of duplicating Stripe's guest address flow too early.
 
