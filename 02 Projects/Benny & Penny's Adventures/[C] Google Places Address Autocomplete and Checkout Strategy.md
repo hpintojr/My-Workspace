@@ -1,7 +1,7 @@
 ---
 type: project-strategy
 project: Benny & Penny's Adventures
-status: active-live-verification-needed
+status: confirmed-working
 updated_by: ChatGPT
 last_updated: 2026-06-17
 supersedes: "[C] Geoapify Address Autocomplete and Checkout Strategy.md"
@@ -37,11 +37,12 @@ Focus first on confirming/capturing the Stripe-collected address after checkout.
 
 ```txt
 Geoapify has been fully removed.
-Google Places API (New) code is built for portal and admin.
-Live confirmation is still pending Vercel/Google Cloud configuration and redeploy.
+Google Places API (New) is the active provider.
+Customer portal autocomplete is confirmed working.
+Admin autocomplete is confirmed working.
 ```
 
-What is built:
+What is built and confirmed:
 
 ```txt
 Portal: app/components/AddressAutocomplete.tsx
@@ -65,21 +66,17 @@ Do not store actual key values in this workspace.
 
 ## Required Google / Vercel Configuration
 
-Vercel variable:
+This has been configured enough for the feature to be confirmed working in both customer and admin flows.
+
+Reference configuration:
 
 ```txt
-NEXT_PUBLIC_GOOGLE_PLACES_API_KEY
+Vercel variable: NEXT_PUBLIC_GOOGLE_PLACES_API_KEY
+Google Cloud: billing enabled + Places API (New) enabled
+Referrer allowlist includes the active site/admin origins
 ```
 
-Google Cloud requirements:
-
-```txt
-Billing enabled.
-Places API (New) enabled.
-HTTP referrer restrictions configured.
-```
-
-Referrer allowlist should include:
+If the feature breaks later, re-check:
 
 ```txt
 https://bennyandpennyadventures.com/*
@@ -91,12 +88,14 @@ After changing Vercel env values, redeploy. Next.js bakes `NEXT_PUBLIC_*` variab
 
 ---
 
-## Live Verification Checklist
+## Troubleshooting Checklist
 
-1. Set `NEXT_PUBLIC_GOOGLE_PLACES_API_KEY` in Vercel.
+Use this only if autocomplete regresses:
+
+1. Confirm `NEXT_PUBLIC_GOOGLE_PLACES_API_KEY` exists in Vercel.
 2. Confirm Google Cloud has billing + Places API (New) enabled.
-3. Confirm key referrers include non-www, www, and localhost.
-4. Redeploy the site.
+3. Confirm key referrers include the active production domain(s) and localhost.
+4. Redeploy the site after env changes.
 5. Test `/portal/addresses` autocomplete in the browser.
 6. Test Payload admin CustomerAddresses.street1 autocomplete in the browser.
 7. Use DevTools Network tab:
@@ -159,7 +158,7 @@ Geoapify was removed and Google Places API (New) replaced it.
 Status:
 
 ```txt
-Built; live confirmation pending.
+Built and confirmed working.
 ```
 
 The customer portal address book uses `AddressAutocomplete`.
@@ -169,7 +168,7 @@ The customer portal address book uses `AddressAutocomplete`.
 Status:
 
 ```txt
-Built; live confirmation pending.
+Built and confirmed working.
 ```
 
 Admin uses `AdminAddressField` on `CustomerAddresses.street1` and fills city/state/postal/country via Payload form dispatch.
@@ -254,5 +253,5 @@ Consider logged-in Stripe Checkout name/address prefill to prevent recurrence.
 ## Recommended Next Action
 
 ```txt
-Set NEXT_PUBLIC_GOOGLE_PLACES_API_KEY + referrer allowlist, redeploy, confirm autocomplete in portal and admin, then manually fix order 26-0029 and decide whether to add logged-in Stripe Checkout name/address prefill.
+Move on from Google Places verification. Fix existing order 26-0029, then decide whether to add logged-in Stripe Checkout name/address prefill to prevent future name-field mistakes.
 ```
