@@ -24,7 +24,7 @@ The workspace index contains the clean directory tree, read-order rules, and upd
 Current priority:
 
 ```txt
-Customer Portal v2 is BUILT and approved (shell, dashboard, shipment tracking, account, help, branded invoice) and the Payload admin sidebar now matches it (teal theme kept). R2 automated digital delivery is confirmed working in testing. Gifting fixes are shipped. Geoapify has been removed and Google Places API (New) autocomplete is confirmed working for both customer and admin. Checkout name/address issue is already mitigated by saved-address Stripe Checkout prefill plus a fulfillment guard. Email authentication DNS is verified. Abandoned-cart tracking is now sandbox-verified from guest cart through checkout and conversion, including guest email/consent capture, account-or-guest checkout gate, and a paid-order database safety net. Active priority is timed cart abandonment/recovery policy, product asset replacement, real R2 files, gift download allowance decision, deeper BPG gift/coupon tracking, Terms updates, and LuLu research.
+Customer Portal v2 is BUILT and approved (shell, dashboard, shipment tracking, account, help, branded invoice) and the Payload admin sidebar now matches it (teal theme kept). R2 automated digital delivery is confirmed working in testing. Gifting fixes are shipped. Geoapify has been removed and Google Places API (New) autocomplete is confirmed working for both customer and admin. Checkout name/address issue is already mitigated by saved-address Stripe Checkout prefill plus a fulfillment guard. Email authentication DNS is verified. Abandoned-cart tracking, guest email/consent capture, account-or-guest checkout gate, and paid-order conversion safety nets are verified. Timed abandonment, Sequenzy tagging, recovery links, unsubscribe handling, admin recovery reporting, coupon/BPG/gift attribution, Neon schema changes, and Vercel cron configuration are built. Production is in a safe dry-run: CART_RECOVERY_SEND_ENABLED=false. The immediate priority is controlled end-to-end validation before any recovery email is enabled.
 ```
 
 Read first for the next Benny & Penny chat:
@@ -32,6 +32,8 @@ Read first for the next Benny & Penny chat:
 ```txt
 00 [C] Workspace Index.md
 CLAUDE.md
+01 Daily Logs/[C] 2026-06-18 Cart Recovery Environment Configuration and Dry Run.md
+01 Daily Logs/[C] 2026-06-18 Cart Recovery Automation Sequenzy and Attribution Build.md
 01 Daily Logs/[C] 2026-06-18 Database Cart Conversion Safety Net Added.md
 01 Daily Logs/[C] 2026-06-18 Webhook Cart Conversion Fallback Added.md
 01 Daily Logs/[C] 2026-06-17 Cart Recovery Checkout Gate and Sandbox Verification.md
@@ -71,6 +73,8 @@ Confirmed working:
 - Guest checkout now requires a valid email before Stripe, offers Create an account or Checkout as guest, supports optional cart-reminder consent, and shows an existing-member Sign in link.
 - Cart reminder consent is stored in Neon as `marketing_consent` and renders as Yes/No in the admin list.
 - Paid-order database trigger now converts the matching cart even when a customer closes the browser before thank-you.
+- Recovery automation is configured hourly with 4-hour active-cart and 1-hour checkout-started thresholds; recovery email sending remains intentionally disabled.
+- Vercel environment variables were added for Production and Preview, and the successful production redeploy is `dpl_3wjSyLkKXVBWUgbsBAhWAz2Us9Da`.
 
 Important current assumptions:
 
@@ -83,20 +87,21 @@ Important current assumptions:
 - Geoapify remains removed; Google Places API (New) is the active address autocomplete provider.
 - Order `26-0029` cleanup is bypassed as an active blocker per Hamilton; keep the forward fix documented.
 - DMARC is currently verified at `p=none`; later consider a stricter policy only after sending remains stable.
-- Do not activate live cart-recovery messages until reminder timing, consent language, unsubscribe behavior, and suppression rules are finalized.
+- Do not enable live cart-recovery emails until controlled dry-run validation confirms the admin state, Sequenzy tag, recovery link, and unsubscribe behavior.
+- Do not store any environment-secret values in GitHub, workspace logs, screenshots, or chat transcripts.
 
 Next focus areas:
 
 ```txt
-1. Define and build timed abandonment policy: active carts and checkout-started carts should become abandoned only after approved delays.
-2. Validate Sequenzy end-to-end for consented cart reminders, then design the recovery sequence and conversion suppression.
-3. Replace placeholder book covers, page previews, cart thumbnails, and product assets.
-4. Replace dummy R2 files with real PDF, EPUB, and audio files as Books 1-4 are finalized.
-5. Decide whether to raise the gift download allowance above 1 (let recipients re-download on their device).
-6. Deepen BPG gift-code → cart/coupon tracking (current owned-copy gifting via redemption codes already works end-to-end).
+1. Run a consented guest-cart dry-run past the configured threshold; validate abandoned status, recovery eligibility/state, and Sequenzy cart-abandoned tag while email remains disabled.
+2. Enable CART_RECOVERY_SEND_ENABLED=true only for one controlled Reminder 1, recovery-link, and unsubscribe test.
+3. Confirm recovered purchase records Recovered Order Number and Recovered Revenue.
+4. Replace placeholder book covers, page previews, cart thumbnails, and product assets.
+5. Replace dummy R2 files with real PDF, EPUB, and audio files as Books 1-4 are finalized.
+6. Decide whether to raise the gift download allowance above 1 (let recipients re-download on their device).
 7. Update Terms for full license vs gifted access and cart-recovery consent/privacy treatment.
 8. Research official LuLu project/template requirements before print testing resumes.
 9. Monitor real gift/order email inbox placement now that DNS authentication is verified.
 ```
 
-Portal UX revamp, customer account setup page, Help, Orders, Addresses, Library, Gifting, Google Places autocomplete, checkout name/address mitigation, email authentication DNS, cart tracking, guest checkout gate, and the admin sidebar are DONE/verified for the current phase. Do not start broad admin rewrites or reintroduce a cream admin palette. Customer-facing product assets, real files, cart-recovery policy, gift policy, BPG tracking, Terms, and LuLu research are the active focus.
+Portal UX revamp, customer account setup page, Help, Orders, Addresses, Library, Gifting, Google Places autocomplete, checkout name/address mitigation, email authentication DNS, cart tracking, guest checkout gate, admin sidebar, recovery automation, and attribution foundations are DONE for the current phase. Do not start broad admin rewrites or reintroduce a cream admin palette. Controlled cart-recovery validation, real customer-facing assets/files, gift policy, Terms, and LuLu research are the active focus.
