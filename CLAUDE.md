@@ -81,7 +81,7 @@ Shared readable slot tracking is active (3 slots/title across PDF/EPUB/gifts).
 Product catalog data, book covers, page previews, and cart thumbnails are still placeholders.
 Active focus is product asset replacement, real R2 files, deeper BPG gift/coupon tracking, Terms updates, and Geoapify address autocomplete.
 LuLu testing is paused until official project/template requirements are researched.
-Geoapify address autocomplete is now wired into the customer portal address book via a server-key proxy (/api/geo/autocomplete); the reusable AddressAutocomplete component is ready to drop into admin address entry next. Confirm the Vercel key is named GEOAPIFY_API_KEY (or a supported fallback).
+Address autocomplete uses Google Places API (New) — Geoapify has been fully removed. Server-key proxy: /api/geo/autocomplete (predictions) + /api/geo/place (details by placeId); reusable AddressAutocomplete is wired into the portal address book and ready for admin address entry. Vercel key is GOOGLE_PLACES_API_KEY (server-side; enable "Places API (New)", no HTTP-referrer restriction). Admin System Status tile is now "Google Places API".
 ```
 
 Read first for Benny continuation:
@@ -156,7 +156,7 @@ Next Benny focus (Portal v2 UX, account setup, and gifting flow are DONE):
 4. Replace dummy R2 files with real PDF/EPUB/audio files as Books 1-4 are finalized.
 5. Deepen BPG gift-code -> cart/coupon tracking (owned-copy gifting via redemption codes already works end-to-end).
 6. Update Terms for full readable license vs gifted access.
-7. Geoapify autocomplete in the portal address book is DONE; add it to admin address entry next (AddressAutocomplete is reusable). Optional: dashboard "complete your profile for faster checkout" nudge.
+7. Google Places autocomplete in the portal address book is DONE (Geoapify removed); add it to admin address entry next (AddressAutocomplete is reusable). Optional: dashboard "complete your profile for faster checkout" nudge.
 8. Research official LuLu setup/template requirements before resuming print testing.
 ```
 

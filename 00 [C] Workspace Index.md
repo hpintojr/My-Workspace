@@ -40,7 +40,7 @@ Shared readable slot tracking is active (3 slots/title across PDF/EPUB/gifts).
 Current R2 folder standard is ebooks/, audio/, and print/.
 Product catalog data and images are still placeholders.
 LuLu Phase 1/2 work exists, but LuLu testing remains paused.
-Geoapify address autocomplete is wired into the customer portal address book via a server-key proxy (/api/geo/autocomplete); reusable AddressAutocomplete is ready for admin address entry. Confirm Vercel key name is GEOAPIFY_API_KEY (or supported fallback).
+Address autocomplete uses Google Places API (New) — Geoapify fully removed. Server-key proxy /api/geo/autocomplete + /api/geo/place; AddressAutocomplete wired into the portal address book, reusable for admin. Vercel key: GOOGLE_PLACES_API_KEY (enable Places API New, no referrer restriction). Admin status tile now "Google Places API".
 ```
 
 ## Build guardrails (website repo)
@@ -65,7 +65,7 @@ Geoapify address autocomplete is wired into the customer portal address book via
 4. Replace dummy R2 files with real files as Books 1-4 are finalized.
 5. Deepen BPG gift-code -> cart/coupon tracking (owned-copy gifting already works end-to-end).
 6. Update Terms for full readable license vs gifted access.
-7. Geoapify autocomplete: portal address book DONE; add to admin address entry (AddressAutocomplete reusable) + optional dashboard profile-completion nudge.
+7. Google Places autocomplete: portal address book DONE (Geoapify removed); add to admin address entry (AddressAutocomplete reusable) + optional dashboard profile-completion nudge.
 8. Research official LuLu project/template setup before sandbox print testing resumes.
 ```
 
