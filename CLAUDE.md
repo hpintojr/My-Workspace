@@ -81,7 +81,7 @@ Shared readable slot tracking is active (3 slots/title across PDF/EPUB/gifts).
 Product catalog data, book covers, page previews, and cart thumbnails are still placeholders.
 Active focus is product asset replacement, real R2 files, deeper BPG gift/coupon tracking, Terms updates, and Geoapify address autocomplete.
 LuLu testing is paused until official project/template requirements are researched.
-Address autocomplete uses Google Places API (New) — Geoapify has been fully removed. Server-key proxy: /api/geo/autocomplete (predictions) + /api/geo/place (details by placeId); reusable AddressAutocomplete is wired into the portal address book and ready for admin address entry. Vercel key is GOOGLE_PLACES_API_KEY (server-side; enable "Places API (New)", no HTTP-referrer restriction). Admin System Status tile is now "Google Places API".
+Address autocomplete uses Google Places API (New) — Geoapify fully removed. It runs CLIENT-SIDE (the existing key is HTTP-referrer restricted, so it only works browser-side). Vercel var must be NEXT_PUBLIC_GOOGLE_PLACES_API_KEY (same key value); the old server-proxy routes (/api/geo/*) are retired no-ops. Customer: AddressAutocomplete in the portal address book. Admin: AdminAddressField custom Payload field on CustomerAddresses.street1 (fills city/state/zip/country via useForm dispatch); registered in app/(payload)/admin/importMap.ts. Google Cloud: enable "Places API (New)" + billing; referrer allowlist must include BOTH https://bennyandpennyadventures.com/* and https://www.bennyandpennyadventures.com/* (+ http://localhost:3000/*). Admin System Status tile is "Google Places API". Rollback for admin field: remove the admin.components block on street1 + its importMap line.
 ```
 
 Read first for Benny continuation:
@@ -144,6 +144,7 @@ Gifts deliver via a downloads record (no order); the Library must surface books 
 Gift redeem must honor the logged-in session (claim to current account) and must NEVER reset an existing member's password (password is only for creating a new account).
 Gift download allowance is currently 1 (gift.downloadsGranted); raising it is an open decision.
 Reusable portal data logic lives in lib/portalData.ts.
+Stripe Checkout's name field can't be validated (free text), so customers sometimes type an address into it. lib/stripeFulfillment.ts guards new orders: a name containing digits is flagged with a "⚠ REVIEW" order note and the linked account's name is used for customer/billing name when available (non-destructive — original Stripe values kept). Existing order 26-0029 had this and needs a manual name fix.
 Always run npm run build locally before deploy when touching routes/types.
 ```
 

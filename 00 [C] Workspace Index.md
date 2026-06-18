@@ -10,6 +10,7 @@ Read in this order:
 README.md
 00 [C] Workspace Index.md
 CLAUDE.md
+01 Daily Logs/[C] 2026-06-17 Google Places and Stripe Name Guard.md
 01 Daily Logs/[C] 2026-06-17 Gifting Fixes.md
 01 Daily Logs/[C] 2026-06-17 Customer Portal v2 and Admin Theme.md
 02 Projects/Benny & Penny's Adventures/[C] Customer Portal v2 and Admin Theme Handoff 2026-06-17.md
@@ -59,6 +60,8 @@ Address autocomplete uses Google Places API (New) — Geoapify fully removed. Se
 ## Current Next Actions
 
 ```txt
+0. Confirm Google Places autocomplete works live: set NEXT_PUBLIC_GOOGLE_PLACES_API_KEY in Vercel (browser-readable), add https://bennyandpennyadventures.com/* (non-www) to the key's referrer allowlist, redeploy. Diagnose via Network tab (no request = key missing; 403 = referrer).
+0b. Fix existing order 26-0029 (address typed into name field); optional: prefill Stripe checkout name/address for logged-in customers to prevent recurrence.
 1. Email deliverability: set SPF/DKIM/DMARC DNS for bennyandpennyadventures.com (Sequenzy) so gift/order emails reach the inbox, not junk.
 2. Decide whether to raise the gift download allowance above 1 (re-download on device).
 3. Replace placeholder product assets: covers, page previews, cart thumbnails.
