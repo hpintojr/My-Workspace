@@ -24,7 +24,7 @@ The workspace index contains the clean directory tree, read-order rules, and upd
 Current priority:
 
 ```txt
-Customer Portal v2 is BUILT and approved (shell, dashboard, shipment tracking, account, help, branded invoice) and the Payload admin sidebar now matches it (teal theme kept). R2 automated digital delivery is confirmed working in testing. Gifting fixes are shipped. Geoapify has been removed and address autocomplete now uses Google Places API (New). Active priority is Google Places live verification, fixing order 26-0029, product asset replacement, real R2 files, deeper BPG gift/coupon tracking, Terms updates, email deliverability, and LuLu research.
+Customer Portal v2 is BUILT and approved (shell, dashboard, shipment tracking, account, help, branded invoice) and the Payload admin sidebar now matches it (teal theme kept). R2 automated digital delivery is confirmed working in testing. Gifting fixes are shipped. Geoapify has been removed and address autocomplete now uses Google Places API (New). Google Places autocomplete is confirmed working for both customer and admin. Active priority is fixing order 26-0029, deciding whether to prefill Stripe Checkout name/address, product asset replacement, real R2 files, deeper BPG gift/coupon tracking, Terms updates, email deliverability, and LuLu research.
 ```
 
 Read first for the next Benny & Penny chat:
@@ -32,6 +32,7 @@ Read first for the next Benny & Penny chat:
 ```txt
 00 [C] Workspace Index.md
 CLAUDE.md
+01 Daily Logs/[C] 2026-06-17 Google Places Confirmed.md
 01 Daily Logs/[C] 2026-06-17 Google Places and Stripe Name Guard.md
 01 Daily Logs/[C] 2026-06-17 Gifting Fixes.md
 01 Daily Logs/[C] 2026-06-17 Customer Portal v2 and Admin Theme.md
@@ -57,7 +58,7 @@ Confirmed working:
 - Admin sidebar now mirrors the portal (identity card + icon tiles); admin keeps its teal/mint palette (cream was rejected).
 - Print Jobs appears under Catalog.
 - LuLu queue and manual submit foundation exist, but LuLu testing is paused.
-- Google Places API (New) autocomplete code is built for the portal address book and admin CustomerAddresses.street1 field; live verification is still pending Vercel/Google Cloud configuration.
+- Google Places API (New) autocomplete is built and confirmed working for both the customer portal address book and admin CustomerAddresses.street1 field.
 
 Important current assumptions:
 
@@ -67,15 +68,13 @@ Important current assumptions:
 - BPG gifting must consume from the same readable slot pool as PDF/EPUB downloads.
 - Full paid readable license = 3 total readable slots across PDF, EPUB, and gifts.
 - Gifted access = one download/device allowance.
-- Google Places must use the browser-readable Vercel variable `NEXT_PUBLIC_GOOGLE_PLACES_API_KEY`.
-- Google Cloud must have Places API (New) enabled, billing enabled, and referrer allowlist entries for non-www, www, and localhost before autocomplete can be confirmed live.
+- Geoapify remains removed; Google Places API (New) is the active address autocomplete provider.
 - Existing order `26-0029` has an address typed into Stripe's name field and needs manual cleanup.
 
 Next focus areas:
 
 ```txt
-0. Confirm Google Places autocomplete works live: set NEXT_PUBLIC_GOOGLE_PLACES_API_KEY in Vercel, add https://bennyandpennyadventures.com/* and https://www.bennyandpennyadventures.com/* plus localhost to the key referrer allowlist, redeploy, and test portal + admin via DevTools Network tab.
-0b. Fix existing order 26-0029 (address typed into name field); optional: prefill Stripe Checkout name/address for logged-in customers to prevent recurrence.
+0. Fix existing order 26-0029 (address typed into name field); optional: prefill Stripe Checkout name/address for logged-in customers to prevent recurrence.
 1. Email deliverability: set SPF/DKIM/DMARC DNS for bennyandpennyadventures.com (Sequenzy) so gift/order emails reach the inbox instead of junk.
 2. Decide whether to raise the gift download allowance above 1 (let recipients re-download on their device).
 3. Replace placeholder book covers, page previews, cart thumbnails, and product assets.
@@ -86,4 +85,4 @@ Next focus areas:
 8. Research official LuLu project/template requirements before print testing resumes.
 ```
 
-Portal UX revamp, customer account setup page, Help, Orders, Addresses, Library, Gifting, and the admin sidebar are DONE for Portal v2. Do not start broad admin rewrites or reintroduce a cream admin palette. Customer-facing product assets, fulfillment, Google Places live verification, order 26-0029 cleanup, and gifting/coupon tracking are the active focus.
+Portal UX revamp, customer account setup page, Help, Orders, Addresses, Library, Gifting, Google Places autocomplete, and the admin sidebar are DONE for Portal v2. Do not start broad admin rewrites or reintroduce a cream admin palette. Customer-facing product assets, fulfillment, order 26-0029 cleanup, email deliverability, and gifting/coupon tracking are the active focus.
