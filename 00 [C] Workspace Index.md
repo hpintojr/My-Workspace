@@ -1,6 +1,6 @@
 # Workspace Index
 
-**Status:** Current as of 2026-06-19 (Customer Portal v2 + cart recovery validation + BennyAndPenny.com parent-brand portfolio v1 codebase)
+**Status:** Current as of 2026-06-19 (Customer Portal v2 + cart recovery validation + bennyandpenny.com portfolio repositioned to Hamilton's tech-portfolio concept; portfolio mixup recovered and workspace cleaned)
 
 ## Start Here
 
@@ -10,7 +10,8 @@ Read in this order:
 README.md
 00 [C] Workspace Index.md
 CLAUDE.md
-02 Projects/Benny & Penny's Adventures/00 Brand & Portfolio/[C] BennyAndPenny.com Parent Brand Portfolio Launch.md
+02 Projects/bennyandpenny.com — Portfolio/[C] PROJECT TRUTH — Read First.md
+01 Daily Logs/[C] 2026-06-19 Portfolio Mixup Recovery and Reposition.md
 01 Daily Logs/[C] 2026-06-18 Cart Recovery Email Delivery and CTA Visual Validation.md
 01 Daily Logs/[C] 2026-06-18 Cart Recovery Operations Controls and Attribution Reporting.md
 01 Daily Logs/[C] 2026-06-18 Cart Recovery Environment Configuration and Dry Run.md
@@ -26,34 +27,35 @@ CLAUDE.md
 02 Projects/Benny & Penny's Adventures/[C] Lulu Print on Demand Plan.md
 ```
 
-## BennyAndPenny.com — Parent Brand Portfolio
+## bennyandpenny.com — Portfolio
 
 ```txt
 Workspace location:
-02 Projects/Benny & Penny's Adventures/00 Brand & Portfolio/
+02 Projects/bennyandpenny.com — Portfolio/
+  ├─ [C] PROJECT TRUTH — Read First.md          (authoritative orientation)
+  ├─ [C] Version Comparison — Workspace vs GitHub.md
+  ├─ _github-version (ChatGPT)/                  (LIVE code: repositioned portfolio, mirrors the repo)
+  └─ app/ (root)                                 (RETIRED single-page JS version — reference only)
 
-Purpose: parent brand + creative portfolio for gaining aligned business, creative, publishing,
-family-resource, and mission-driven opportunities. The Adventures books are a featured branch,
-not the full identity of this site.
+Role: Hamilton Pinto Jr.'s personal/tech portfolio under the "Benny & Penny's — A Tech Company"
+banner. NOT the store, NOT the book-production system.
 
-Repository: hpintojr/bennyandpenny
-Platform: Next.js 15 + TypeScript, intended for Vercel
-Current state: launch v1 source code committed on 2026-06-19.
+Repository: hpintojr/bennyandpenny → Vercel (bennyandpenny.vercel.app)
+Platform: Next.js 15 + TypeScript (deployed). Visual system: teal/mint (kept).
 
-V1 includes: responsive Home, Our Work, For Families, Our Family, and Work With Us pages;
-brand copy; direct collaboration-email path; metadata; Organization JSON-LD; sitemap; robots;
-and a dynamic social-sharing image.
+Decided 2026-06-19: keep the deployed codebase and reposition it to the portfolio concept (done).
+- Ventures as work tiles: XBeton, AFF, Benny & Penny's Adventures, Mercury, 60+ Establishments.
+- Backlinks (dofollow): ACC, AFF, BAPA, XBeton, Mercury — footer + Person JSON-LD sameAs.
+The earlier single-page JS version and ChatGPT's "family-built creative brand" framing are retired.
 
 Read first:
-02 Projects/Benny & Penny's Adventures/00 Brand & Portfolio/[C] BennyAndPenny.com Parent Brand Portfolio Launch.md
+02 Projects/bennyandpenny.com — Portfolio/[C] PROJECT TRUTH — Read First.md
 
 Next actions:
-1. Import into Vercel, deploy main, attach bennyandpenny.com + www domain, and use that
-   production build as first build validation.
-2. Confirm hello@bennyandpenny.com is active and configure SPF/DKIM/DMARC.
-3. Replace visual placeholders with approved family, illustration, and book-preview assets.
-4. Decide lead routing (direct email, Resend, GoHighLevel, HubSpot, or another CRM).
-5. Add Privacy/Terms before collecting contact-form or newsletter data.
+1. Push _github-version (ChatGPT)/ contents to hpintojr/bennyandpenny main; confirm Vercel redeploy.
+2. Replace CSS placeholders with a Hamilton portrait, brand mark, and venture/book imagery.
+3. Add Privacy/Terms before any contact-form data collection.
+4. (Pending) image-prompt brief: Hero, XBeton, AFF, Mercury, 60+, book cover + dimensions.
 ```
 
 ## Current Benny & Penny Store Status

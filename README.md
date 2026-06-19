@@ -111,3 +111,17 @@ Read first:
 ```
 
 First actions: capture the live Lulu spec, approve the character/environment locks, build the Canva master, then run Book 01 end-to-end as the pattern.
+
+### bennyandpenny.com — Portfolio
+
+Hamilton's personal/tech portfolio under the "Benny & Penny's — A Tech Company" banner (repo `hpintojr/bennyandpenny`, deployed on Vercel). Separate from the store and the book-production projects. After a mixup where ChatGPT shipped an off-brief "family-built creative brand" site, the decision (2026-06-19) was to keep the deployed Next.js 15 / TypeScript codebase and reposition it to Hamilton's portfolio concept — done, with the five ventures as work tiles and ACC/AFF/BAPA/XBeton/Mercury backlinks wired. Workspace stray files were cleaned up.
+
+Read first:
+
+```txt
+02 Projects/bennyandpenny.com — Portfolio/[C] PROJECT TRUTH — Read First.md
+02 Projects/bennyandpenny.com — Portfolio/[C] Version Comparison — Workspace vs GitHub.md
+01 Daily Logs/[C] 2026-06-19 Portfolio Mixup Recovery and Reposition.md
+```
+
+The repositioned code lives in `_github-version (ChatGPT)/`. First actions: push it to `hpintojr/bennyandpenny` main and confirm the Vercel redeploy; replace CSS placeholders with real imagery; add Privacy/Terms before any form data. Do not deploy without Hamilton's confirmation.

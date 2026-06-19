@@ -246,6 +246,57 @@ AI-authored workspace files use the [C] prefix; never overwrite an approved asse
 
 ---
 
+### bennyandpenny.com — Portfolio
+
+Hamilton's personal / tech portfolio under the "Benny & Penny's — A Tech Company" banner. Public brand site at bennyandpenny.com. Separate from the store and the book-production projects. Read `[C] PROJECT TRUTH — Read First.md` first.
+
+```txt
+Role:   Hamilton Pinto Jr.'s portfolio + tech-company brand site (NOT a store, NOT book production).
+Domain: bennyandpenny.com
+Repo:   hpintojr/bennyandpenny  → Vercel (bennyandpenny.vercel.app)
+```
+
+Decided direction (2026-06-19): keep the deployed Next.js 15 / TypeScript codebase and reposition it to the portfolio concept (done). The earlier single-page editorial JS version and ChatGPT's "family-built creative brand" framing are both retired.
+
+```txt
+- Concept: Hamilton's personal/tech portfolio under the B&P tech-company banner.
+- Ventures as work tiles: XBeton, Advantage First Financial, Benny & Penny's Adventures,
+  Mercury Call Desk, 60+ Establishments.
+- Backlinks (dofollow, footer + Person JSON-LD sameAs):
+  ACC acc.capital · AFF advantagefirst.com · BAPA bennyandpennyadventures.com ·
+  XBeton xbeton.com · Mercury mercurycalldesk.com
+- Visual system: kept the deployed teal/mint design this round.
+```
+
+Source of truth + deploy:
+
+```txt
+Working copy: 02 Projects/bennyandpenny.com — Portfolio/_github-version (ChatGPT)/  (mirrors the repo, holds repositioned code)
+Deploy: copy that folder's contents over a local clone of hpintojr/bennyandpenny, commit, push main → Vercel.
+Claude cannot push here (no GitHub connector; sandbox network blocked).
+The old app/ at the portfolio project root (Next 14 JS) is the RETIRED single-page version — reference only.
+```
+
+Read first for portfolio continuation:
+
+```txt
+02 Projects/bennyandpenny.com — Portfolio/[C] PROJECT TRUTH — Read First.md
+02 Projects/bennyandpenny.com — Portfolio/[C] Version Comparison — Workspace vs GitHub.md
+02 Projects/bennyandpenny.com — Portfolio/_github-version (ChatGPT)/docs/[C] Portfolio Project Index & Commands.md
+01 Daily Logs/[C] 2026-06-19 Portfolio Mixup Recovery and Reposition.md
+```
+
+Guardrails:
+
+```txt
+Keep store, book-production, and portfolio projects separate; never merge codebases.
+Never treat hpintojr/bennyandpenny as blank because it is a new repo.
+Don't change concept/audience/nav/branding without quoting PROJECT TRUTH and getting approval.
+Don't create duplicate portfolio folders/repos. Deploy only by pushing main, with Hamilton's confirmation.
+```
+
+---
+
 ## Workspace Commands
 
 ```txt
