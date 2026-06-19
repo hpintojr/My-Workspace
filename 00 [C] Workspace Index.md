@@ -1,6 +1,6 @@
 # Workspace Index
 
-**Status:** Current as of 2026-06-18 (Customer Portal v2 + admin theme + gifting + Google Places + checkout mitigation + email DNS + cart recovery delivery/visual validation)
+**Status:** Current as of 2026-06-19 (Customer Portal v2 + cart recovery validation + BennyAndPenny.com parent-brand portfolio v1 codebase)
 
 ## Start Here
 
@@ -10,6 +10,7 @@ Read in this order:
 README.md
 00 [C] Workspace Index.md
 CLAUDE.md
+02 Projects/Benny & Penny Brand Portfolio/[C] BennyAndPenny.com Brand Portfolio Launch.md
 01 Daily Logs/[C] 2026-06-18 Cart Recovery Email Delivery and CTA Visual Validation.md
 01 Daily Logs/[C] 2026-06-18 Cart Recovery Operations Controls and Attribution Reporting.md
 01 Daily Logs/[C] 2026-06-18 Cart Recovery Environment Configuration and Dry Run.md
@@ -25,7 +26,34 @@ CLAUDE.md
 02 Projects/Benny & Penny's Adventures/[C] Lulu Print on Demand Plan.md
 ```
 
-## Current Benny & Penny Status
+## BennyAndPenny.com — Parent Brand Portfolio (new project)
+
+```txt
+Purpose: parent brand + creative portfolio for gaining aligned business, creative, publishing,
+family-resource, and mission-driven opportunities. The Adventures books are a featured branch,
+not the full identity of this site.
+
+Repository: hpintojr/bennyandpenny
+Platform: Next.js 15 + TypeScript, intended for Vercel
+Current state: launch v1 source code committed on 2026-06-19.
+
+V1 includes: responsive Home, Our Work, For Families, Our Family, and Work With Us pages;
+brand copy; direct collaboration-email path; metadata; Organization JSON-LD; sitemap; robots;
+and a dynamic social-sharing image.
+
+Read first:
+02 Projects/Benny & Penny Brand Portfolio/[C] BennyAndPenny.com Brand Portfolio Launch.md
+
+Next actions:
+1. Import into Vercel, deploy main, attach bennyandpenny.com + www domain, and use that
+   production build as first build validation.
+2. Confirm hello@bennyandpenny.com is active and configure SPF/DKIM/DMARC.
+3. Replace visual placeholders with approved family, illustration, and book-preview assets.
+4. Decide lead routing (direct email, Resend, GoHighLevel, HubSpot, or another CRM).
+5. Add Privacy/Terms before collecting contact-form or newsletter data.
+```
+
+## Current Benny & Penny Store Status
 
 ```txt
 Customer Portal v2 and the matching teal/mint Payload admin experience are live and approved.
@@ -65,7 +93,7 @@ must be confirmed and returned to false unless live recovery email is intentiona
 - Never store CRON_SECRET or recovery/unsubscribe token secrets in GitHub, workspace notes, screenshots, or chat.
 ```
 
-## Current Next Actions
+## Current Next Actions — Store
 
 ```txt
 1. Click Return to my cart in the controlled recovery email and confirm the signed link restores the cart.
@@ -99,6 +127,7 @@ must be confirmed and returned to false unless live recovery email is intentiona
 01 Daily Logs/[C] 2026-06-17 Google Places and Stripe Name Guard.md
 01 Daily Logs/[C] 2026-06-17 Gifting Fixes.md
 01 Daily Logs/[C] 2026-06-17 Customer Portal v2 and Admin Theme.md
+02 Projects/Benny & Penny Brand Portfolio/[C] BennyAndPenny.com Brand Portfolio Launch.md
 02 Projects/Benny & Penny's Adventures/[C] Backlog & Launch Checklist.md
 02 Projects/Benny & Penny's Adventures/[C] Product Assets Digital Delivery Gifting and Marketing Handoff.md
 02 Projects/Benny & Penny's Adventures/[C] Digital Readable License Rule 2026-06-17.md
@@ -111,7 +140,7 @@ must be confirmed and returned to false unless live recovery email is intentiona
 ```txt
 10-book print + digital + audio + multilingual production using Claude, ChatGPT, Gemini, and Canva.
 Coordinated through a shared MD index so every AI reads the same files and follows the same commands.
-Separate from the website project: this one produces the books; the website project sells/delivers them.
+Separate from the website project: this one produces the books; the store website project sells/delivers them.
 2026-06-18: Hamilton's full production kit migrated in as the canonical structure
 (numbered folders 00-series-control … 99-inbox are the source of truth).
 Series: 8.5×8.5 in, 32pp, ages 3–8, 8 locales; books 01–04 cover-ready, 05–10 coming-soon.
