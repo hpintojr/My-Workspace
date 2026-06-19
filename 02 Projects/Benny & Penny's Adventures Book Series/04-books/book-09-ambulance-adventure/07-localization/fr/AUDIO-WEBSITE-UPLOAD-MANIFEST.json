@@ -1,0 +1,22 @@
+{
+  "bookNumber": 9,
+  "sourceTitleEnglish": "Benny & Penny’s Ambulance Adventure",
+  "locale": "fr",
+  "language": "French",
+  "approvedTranslationVersion": "",
+  "audioScriptVersion": "v0.1.0",
+  "releaseVersion": "v0.0.0",
+  "websiteSlot": {
+    "audio_path": "/downloads/book-9-fr-audiobook.mp3"
+  },
+  "sourceFiles": {
+    "audioMaster": "",
+    "websiteAudiobookMp3": ""
+  },
+  "approval": {
+    "translator": "",
+    "nativeLanguageEditor": "",
+    "audioLanguageReviewer": "",
+    "websiteUpload": ""
+  }
+}

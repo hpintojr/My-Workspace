@@ -105,3 +105,24 @@ must be confirmed and returned to false unless live recovery email is intentiona
 02 Projects/Benny & Penny's Adventures/[C] Google Places Address Autocomplete and Checkout Strategy.md
 02 Projects/Benny & Penny's Adventures/[C] Lulu Print on Demand Plan.md
 ```
+
+## Benny & Penny's Adventures Book Series (new project)
+
+```txt
+10-book print + digital + audio + multilingual production using Claude, ChatGPT, Gemini, and Canva.
+Coordinated through a shared MD index so every AI reads the same files and follows the same commands.
+Separate from the website project: this one produces the books; the website project sells/delivers them.
+2026-06-18: Hamilton's full production kit migrated in as the canonical structure
+(numbered folders 00-series-control … 99-inbox are the source of truth).
+Series: 8.5×8.5 in, 32pp, ages 3–8, 8 locales; books 01–04 cover-ready, 05–10 coming-soon.
+
+Read first:
+02 Projects/Benny & Penny's Adventures Book Series/[C] AI Index & Commands.md
+02 Projects/Benny & Penny's Adventures Book Series/README.md
+02 Projects/Benny & Penny's Adventures Book Series/00-series-control/00-OFFICIAL-CATALOG.md
+02 Projects/Benny & Penny's Adventures Book Series/00-series-control/02-MASTER-PRODUCTION-DASHBOARD.md
+01 Daily Logs/[C] 2026-06-18 Book Series Production Kit Migration.md
+
+Pipeline per book: English text → locks → page briefs → Canva → PDF/EPUB → audio → locales → Lulu PB/HC → QA → release → website upload.
+Tracker = 00-series-control/02-MASTER-PRODUCTION-DASHBOARD.md.
+```

@@ -1,0 +1,22 @@
+{
+  "bookNumber": 5,
+  "sourceTitleEnglish": "Benny & Penny’s Special Line Adventure",
+  "locale": "zh-Hans",
+  "language": "Simplified Chinese",
+  "approvedTranslationVersion": "",
+  "audioScriptVersion": "v0.1.0",
+  "releaseVersion": "v0.0.0",
+  "websiteSlot": {
+    "audio_path": "/downloads/book-5-zh-Hans-audiobook.mp3"
+  },
+  "sourceFiles": {
+    "audioMaster": "",
+    "websiteAudiobookMp3": ""
+  },
+  "approval": {
+    "translator": "",
+    "nativeLanguageEditor": "",
+    "audioLanguageReviewer": "",
+    "websiteUpload": ""
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "bookNumber": 2,
+  "sourceTitleEnglish": "Benny & Penny’s Port Access Adventure",
+  "locale": "zh-Hant",
+  "language": "Traditional Chinese",
+  "approvedTranslationVersion": "",
+  "audioScriptVersion": "v0.1.0",
+  "releaseVersion": "v0.0.0",
+  "websiteSlot": {
+    "audio_path": "/downloads/book-2-zh-Hant-audiobook.mp3"
+  },
+  "sourceFiles": {
+    "audioMaster": "",
+    "websiteAudiobookMp3": ""
+  },
+  "approval": {
+    "translator": "",
+    "nativeLanguageEditor": "",
+    "audioLanguageReviewer": "",
+    "websiteUpload": ""
+  }
+}

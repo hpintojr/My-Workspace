@@ -1,0 +1,22 @@
+{
+  "bookNumber": 4,
+  "title": "Benny & Penny’s Subcutaneous Infusion Adventure",
+  "slug": "subcutaneous-infusion-adventure",
+  "locale": "en",
+  "releaseVersion": "v0.0.0",
+  "websiteSlots": {
+    "pdf_path": "/downloads/book-4.pdf",
+    "epub_path": "/downloads/book-4.epub",
+    "audio_path": "/downloads/book-4-audiobook.mp3"
+  },
+  "sourceFiles": {
+    "directPdf": "",
+    "epubOrKpf": "",
+    "audiobookMp3": ""
+  },
+  "approval": {
+    "layout": "",
+    "audio": "",
+    "websiteUpload": ""
+  }
+}

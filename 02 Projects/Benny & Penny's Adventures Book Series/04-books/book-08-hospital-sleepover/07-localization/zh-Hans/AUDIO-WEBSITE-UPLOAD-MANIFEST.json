@@ -1,0 +1,22 @@
+{
+  "bookNumber": 8,
+  "sourceTitleEnglish": "Benny & Penny’s Hospital Sleepover",
+  "locale": "zh-Hans",
+  "language": "Simplified Chinese",
+  "approvedTranslationVersion": "",
+  "audioScriptVersion": "v0.1.0",
+  "releaseVersion": "v0.0.0",
+  "websiteSlot": {
+    "audio_path": "/downloads/book-8-zh-Hans-audiobook.mp3"
+  },
+  "sourceFiles": {
+    "audioMaster": "",
+    "websiteAudiobookMp3": ""
+  },
+  "approval": {
+    "translator": "",
+    "nativeLanguageEditor": "",
+    "audioLanguageReviewer": "",
+    "websiteUpload": ""
+  }
+}

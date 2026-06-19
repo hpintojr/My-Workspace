@@ -1,0 +1,20 @@
+# Keep source art, paid releases, private family files, and master audio in private storage.
+*.pdf
+*.epub
+*.kpf
+*.wav
+*.mp3
+*.aiff
+*.psd
+*.ai
+*.indd
+*.afdesign
+*.afpub
+*.tif
+*.tiff
+*.zip
+*.tmx
+*.xliff
+*.sdlxliff
+.DS_Store
+Thumbs.db

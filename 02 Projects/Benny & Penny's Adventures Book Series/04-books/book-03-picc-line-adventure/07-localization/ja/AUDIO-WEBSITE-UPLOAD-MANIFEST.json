@@ -1,0 +1,22 @@
+{
+  "bookNumber": 3,
+  "sourceTitleEnglish": "Benny & Penny’s PICC Line Adventure",
+  "locale": "ja",
+  "language": "Japanese",
+  "approvedTranslationVersion": "",
+  "audioScriptVersion": "v0.1.0",
+  "releaseVersion": "v0.0.0",
+  "websiteSlot": {
+    "audio_path": "/downloads/book-3-ja-audiobook.mp3"
+  },
+  "sourceFiles": {
+    "audioMaster": "",
+    "websiteAudiobookMp3": ""
+  },
+  "approval": {
+    "translator": "",
+    "nativeLanguageEditor": "",
+    "audioLanguageReviewer": "",
+    "websiteUpload": ""
+  }
+}

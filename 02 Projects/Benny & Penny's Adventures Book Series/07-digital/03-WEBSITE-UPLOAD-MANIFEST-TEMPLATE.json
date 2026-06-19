@@ -1,0 +1,18 @@
+{
+  "bookNumber": "XX",
+  "slug": "book-slug",
+  "locale": "en",
+  "releaseVersion": "v0.0.0",
+  "websiteSlots": {
+    "pdf_path": "/downloads/book-XX.pdf",
+    "epub_path": "/downloads/book-XX.epub",
+    "audio_path": "/downloads/book-XX-audiobook.mp3"
+  },
+  "uploadFiles": {
+    "pdf": "",
+    "epub": "",
+    "audiobook": ""
+  },
+  "approvedBy": "",
+  "approvedDate": ""
+}

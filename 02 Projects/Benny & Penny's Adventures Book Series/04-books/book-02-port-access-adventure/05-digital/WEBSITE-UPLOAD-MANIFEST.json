@@ -1,0 +1,22 @@
+{
+  "bookNumber": 2,
+  "title": "Benny & Penny’s Port Access Adventure",
+  "slug": "port-access-adventure",
+  "locale": "en",
+  "releaseVersion": "v0.0.0",
+  "websiteSlots": {
+    "pdf_path": "/downloads/book-2.pdf",
+    "epub_path": "/downloads/book-2.epub",
+    "audio_path": "/downloads/book-2-audiobook.mp3"
+  },
+  "sourceFiles": {
+    "directPdf": "",
+    "epubOrKpf": "",
+    "audiobookMp3": ""
+  },
+  "approval": {
+    "layout": "",
+    "audio": "",
+    "websiteUpload": ""
+  }
+}

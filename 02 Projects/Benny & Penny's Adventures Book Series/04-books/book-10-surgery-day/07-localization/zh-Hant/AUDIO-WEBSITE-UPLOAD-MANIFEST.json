@@ -1,0 +1,22 @@
+{
+  "bookNumber": 10,
+  "sourceTitleEnglish": "Benny & Penny’s Surgery Day",
+  "locale": "zh-Hant",
+  "language": "Traditional Chinese",
+  "approvedTranslationVersion": "",
+  "audioScriptVersion": "v0.1.0",
+  "releaseVersion": "v0.0.0",
+  "websiteSlot": {
+    "audio_path": "/downloads/book-10-zh-Hant-audiobook.mp3"
+  },
+  "sourceFiles": {
+    "audioMaster": "",
+    "websiteAudiobookMp3": ""
+  },
+  "approval": {
+    "translator": "",
+    "nativeLanguageEditor": "",
+    "audioLanguageReviewer": "",
+    "websiteUpload": ""
+  }
+}

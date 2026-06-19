@@ -95,3 +95,19 @@ Next focus areas:
 ```
 
 Portal UX, account setup, Help, Orders, Addresses, Library, Gifting, Google Places autocomplete, checkout mitigation, email DNS, cart tracking, guest checkout gate, admin sidebar, recovery automation, recovery email visual treatment, and attribution foundations are done for this phase. End-to-end recovery behavior, real customer assets/files, policy copy, and LuLu preparation are now the active focus.
+
+### Benny & Penny's Adventures Book Series
+
+The 10-book print + digital + audio + multilingual production effort (Claude, ChatGPT, Gemini, Canva), coordinated through a shared MD index so every AI follows the same files and commands. Separate from the website project above — this one produces the books that feed the site's placeholders. On 2026-06-18 Hamilton's full production kit was migrated in as the canonical structure (numbered folders `00-series-control` … `99-inbox`). Series: 8.5×8.5 in, 32pp, ages 3–8, 8 locales; books 01–04 cover-ready, 05–10 coming-soon.
+
+Read first:
+
+```txt
+02 Projects/Benny & Penny's Adventures Book Series/[C] AI Index & Commands.md
+02 Projects/Benny & Penny's Adventures Book Series/README.md
+02 Projects/Benny & Penny's Adventures Book Series/00-series-control/00-OFFICIAL-CATALOG.md
+02 Projects/Benny & Penny's Adventures Book Series/00-series-control/02-MASTER-PRODUCTION-DASHBOARD.md
+01 Daily Logs/[C] 2026-06-18 Book Series Production Kit Migration.md
+```
+
+First actions: capture the live Lulu spec, approve the character/environment locks, build the Canva master, then run Book 01 end-to-end as the pattern.

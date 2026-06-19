@@ -193,6 +193,59 @@ Read first for XBeton continuation:
 
 ---
 
+### Benny & Penny's Adventures Book Series
+
+Full print + digital + audio + multilingual production of Michelle's 10-book children's medical series "Benny & Penny's Adventures" ("Medical Books for Brave Little Hearts"). Separate from the "Benny & Penny's Adventures" website project — this one produces the books; the website project sells/delivers them. Uses Claude, ChatGPT, Gemini, and Canva, coordinated through a shared MD index so all AIs follow the same files and commands.
+
+Mission: help Michelle (the author, Hamilton's wife) finish and publish her FIRST book series. Hamilton coordinates — completing manuscripts from drafts/fragments, laying out the books, and making the publishing process make sense. The website is updated later as key phases finish.
+
+Real status: the series is in CONCEPTION / DRAFTING. Books 1–4 are started; books 5–10 are not started. Nothing is print/digital/audio-final. The kit's "cover-ready / coming-soon" labels are directional notes from the website, NOT finished-product status — do not treat them as done. Real per-stage progress is tracked only in the master dashboard, which is intentionally unseeded until each stage is verified.
+
+On 2026-06-18 Hamilton's complete production kit (zip) was migrated in as the canonical structure. The numbered kit folders (`00-series-control` … `99-inbox`) are the source of truth; `[C] AI Index & Commands.md` is the cross-AI control layer that maps shared commands onto the kit. The master dashboard is the tracker. My earlier `[C] Series Style Guide.md` and `[C] Book Production Tracker.md` are now redirect stubs pointing to kit files — do not maintain status in them.
+
+**Goal:** Produce 10 books across paperback, hardcover, PDF, EPUB, audiobook, and 8 locales, with a cross-AI indexing system so every tool works from the same source of truth.
+**Key file:** `[C] AI Index & Commands.md` (read it first).
+
+Locked series facts:
+
+```txt
+Series:  Benny & Penny's Adventures — "Medical Books for Brave Little Hearts"
+Trim:    8.5 × 8.5 in · 32 pages · ages 3–8 · English source
+Locales: de, es, fr, it, ja, ru, zh-Hans, zh-Hant (8)
+Books:   01 home-infusion-day, 02 port-access-adventure, 03 picc-line-adventure,
+         04 subcutaneous-infusion-adventure (01–04 cover-ready),
+         05 special-line-adventure, 06 lab-draw-adventure, 07 mri-adventure,
+         08 hospital-sleepover, 09 ambulance-adventure, 10 surgery-day (05–10 coming-soon)
+```
+
+Read first for Book Series continuation:
+
+```txt
+02 Projects/Benny & Penny's Adventures Book Series/[C] AI Index & Commands.md
+02 Projects/Benny & Penny's Adventures Book Series/README.md
+02 Projects/Benny & Penny's Adventures Book Series/00-series-control/00-OFFICIAL-CATALOG.md
+02 Projects/Benny & Penny's Adventures Book Series/00-series-control/02-MASTER-PRODUCTION-DASHBOARD.md
+02 Projects/Benny & Penny's Adventures Book Series/Benny & Penny's Adventures Book Series Overview.md
+01 Daily Logs/[C] 2026-06-18 Book Series Production Kit Migration.md
+```
+
+Rules to preserve:
+
+```txt
+Any AI (Claude/ChatGPT/Gemini/Canva) reads [C] AI Index & Commands.md FIRST, then the kit's own files.
+The numbered kit folders are the source of truth; the AI Index maps shared commands onto them.
+Pipeline: English text → locks → page briefs → Canva → PDF/EPUB → audio → locales → Lulu PB/HC → QA → release → website upload.
+Track status only in 00-series-control/02-MASTER-PRODUCTION-DASHBOARD.md.
+Before any final print cover/interior, capture the live Lulu spec in 06-print/LULU/01-LULU-LIVE-SPEC-CAPTURE.md.
+Defer to character/environment/prop LOCK files + TYPOGRAPHY-AND-TEXT-STANDARDS.md on visual/text conflicts.
+Medical accuracy required (children's medical series); Gemini leads accuracy review, human signs off.
+Security: commit only Markdown/manifests/approved text/low-res review art. Keep master art, family photos, paid files, printer PDFs, and master audio in PRIVATE storage — not the repo.
+Final assets hand off to the website project (pdf_path/epub_path/audio_path); do NOT edit website/portal code from this project.
+AI-authored workspace files use the [C] prefix; never overwrite an approved asset version (increment the version).
+```
+
+---
+
 ## Workspace Commands
 
 ```txt

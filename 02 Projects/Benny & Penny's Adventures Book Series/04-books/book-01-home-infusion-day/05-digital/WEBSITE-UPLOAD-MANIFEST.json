@@ -1,0 +1,22 @@
+{
+  "bookNumber": 1,
+  "title": "Benny & Penny’s Home Infusion Day",
+  "slug": "home-infusion-day",
+  "locale": "en",
+  "releaseVersion": "v0.0.0",
+  "websiteSlots": {
+    "pdf_path": "/downloads/book-1.pdf",
+    "epub_path": "/downloads/book-1.epub",
+    "audio_path": "/downloads/book-1-audiobook.mp3"
+  },
+  "sourceFiles": {
+    "directPdf": "",
+    "epubOrKpf": "",
+    "audiobookMp3": ""
+  },
+  "approval": {
+    "layout": "",
+    "audio": "",
+    "websiteUpload": ""
+  }
+}

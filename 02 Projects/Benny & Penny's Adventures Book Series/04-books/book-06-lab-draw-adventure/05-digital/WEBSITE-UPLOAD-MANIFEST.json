@@ -1,0 +1,22 @@
+{
+  "bookNumber": 6,
+  "title": "Benny & Penny’s Lab Draw Adventure",
+  "slug": "lab-draw-adventure",
+  "locale": "en",
+  "releaseVersion": "v0.0.0",
+  "websiteSlots": {
+    "pdf_path": "/downloads/book-6.pdf",
+    "epub_path": "/downloads/book-6.epub",
+    "audio_path": "/downloads/book-6-audiobook.mp3"
+  },
+  "sourceFiles": {
+    "directPdf": "",
+    "epubOrKpf": "",
+    "audiobookMp3": ""
+  },
+  "approval": {
+    "layout": "",
+    "audio": "",
+    "websiteUpload": ""
+  }
+}

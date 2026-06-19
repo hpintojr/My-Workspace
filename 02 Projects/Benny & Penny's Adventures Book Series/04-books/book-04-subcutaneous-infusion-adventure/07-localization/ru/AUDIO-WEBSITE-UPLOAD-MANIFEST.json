@@ -1,0 +1,22 @@
+{
+  "bookNumber": 4,
+  "sourceTitleEnglish": "Benny & Penny’s Subcutaneous Infusion Adventure",
+  "locale": "ru",
+  "language": "Russian",
+  "approvedTranslationVersion": "",
+  "audioScriptVersion": "v0.1.0",
+  "releaseVersion": "v0.0.0",
+  "websiteSlot": {
+    "audio_path": "/downloads/book-4-ru-audiobook.mp3"
+  },
+  "sourceFiles": {
+    "audioMaster": "",
+    "websiteAudiobookMp3": ""
+  },
+  "approval": {
+    "translator": "",
+    "nativeLanguageEditor": "",
+    "audioLanguageReviewer": "",
+    "websiteUpload": ""
+  }
+}
