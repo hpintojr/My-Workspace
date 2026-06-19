@@ -10,7 +10,7 @@ Read in this order:
 README.md
 00 [C] Workspace Index.md
 CLAUDE.md
-02 Projects/Benny & Penny Brand Portfolio/[C] BennyAndPenny.com Brand Portfolio Launch.md
+02 Projects/Benny & Penny's Adventures/00 Brand & Portfolio/[C] BennyAndPenny.com Parent Brand Portfolio Launch.md
 01 Daily Logs/[C] 2026-06-18 Cart Recovery Email Delivery and CTA Visual Validation.md
 01 Daily Logs/[C] 2026-06-18 Cart Recovery Operations Controls and Attribution Reporting.md
 01 Daily Logs/[C] 2026-06-18 Cart Recovery Environment Configuration and Dry Run.md
@@ -26,9 +26,12 @@ CLAUDE.md
 02 Projects/Benny & Penny's Adventures/[C] Lulu Print on Demand Plan.md
 ```
 
-## BennyAndPenny.com — Parent Brand Portfolio (new project)
+## BennyAndPenny.com — Parent Brand Portfolio
 
 ```txt
+Workspace location:
+02 Projects/Benny & Penny's Adventures/00 Brand & Portfolio/
+
 Purpose: parent brand + creative portfolio for gaining aligned business, creative, publishing,
 family-resource, and mission-driven opportunities. The Adventures books are a featured branch,
 not the full identity of this site.
@@ -42,7 +45,7 @@ brand copy; direct collaboration-email path; metadata; Organization JSON-LD; sit
 and a dynamic social-sharing image.
 
 Read first:
-02 Projects/Benny & Penny Brand Portfolio/[C] BennyAndPenny.com Brand Portfolio Launch.md
+02 Projects/Benny & Penny's Adventures/00 Brand & Portfolio/[C] BennyAndPenny.com Parent Brand Portfolio Launch.md
 
 Next actions:
 1. Import into Vercel, deploy main, attach bennyandpenny.com + www domain, and use that
@@ -127,7 +130,7 @@ must be confirmed and returned to false unless live recovery email is intentiona
 01 Daily Logs/[C] 2026-06-17 Google Places and Stripe Name Guard.md
 01 Daily Logs/[C] 2026-06-17 Gifting Fixes.md
 01 Daily Logs/[C] 2026-06-17 Customer Portal v2 and Admin Theme.md
-02 Projects/Benny & Penny Brand Portfolio/[C] BennyAndPenny.com Brand Portfolio Launch.md
+02 Projects/Benny & Penny's Adventures/00 Brand & Portfolio/[C] BennyAndPenny.com Parent Brand Portfolio Launch.md
 02 Projects/Benny & Penny's Adventures/[C] Backlog & Launch Checklist.md
 02 Projects/Benny & Penny's Adventures/[C] Product Assets Digital Delivery Gifting and Marketing Handoff.md
 02 Projects/Benny & Penny's Adventures/[C] Digital Readable License Rule 2026-06-17.md
