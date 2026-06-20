@@ -3,6 +3,7 @@ author: claude
 type: project-truth
 project: bennyandpenny.com — Portfolio
 date: 2026-06-19
+updated: 2026-06-20
 status: AUTHORITATIVE — every AI (Claude, ChatGPT, Gemini) reads this FIRST
 ---
 
@@ -36,7 +37,9 @@ Hamilton reviewed two versions and chose: **keep the deployed Next.js 15 / TypeS
     Benny & Penny's Adventures https://www.bennyandpennyadventures.com/
     XBeton                     https://www.xbeton.com/
     Mercury Call Desk          https://mercurycalldesk.com/
-- Visual system: kept the deployed teal/mint design (not changed this round).
+- Visual system: teal/mint core system retained.
+- 2026-06-20: approved hero, portrait, venture, book-mockup, and social-sharing visuals
+  were integrated into the live main branch.
 ```
 
 The earlier single-page editorial JS version (built from Hamilton's JSX) is retired as the live direction. The "family-built creative brand" framing that ChatGPT first shipped is rejected.
@@ -46,17 +49,20 @@ The earlier single-page editorial JS version (built from Hamilton's JSX) is reti
 ```txt
 Working copy in this workspace:
   02 Projects/bennyandpenny.com — Portfolio/_github-version (ChatGPT)/
-  ^ This mirrors the GitHub repo and holds the repositioned portfolio code.
+  ^ Reference copy only; GitHub main is the live deploy source.
 
 Canonical deploy source:
   GitHub repo hpintojr/bennyandpenny (branch main) → Vercel auto-deploys.
 
-To go live: copy the contents of "_github-version (ChatGPT)/" over a local clone
-of hpintojr/bennyandpenny, commit, and push main. Vercel redeploys.
-(Claude cannot push from this environment — no GitHub connector, sandbox network blocked.)
+Current code status:
+  - Portfolio image integration merged to main:
+    0523e09819cf682f3808b24b71145c2ad44ba8ea
+  - Assets are in public/images/.
+  - Future routine changes must be made directly on main only.
+  - Do not create a branch or pull request unless Hamilton explicitly changes that instruction.
 ```
 
-Note: the old top-level `app/` at this project root (page.js/layout.js — Next 14 JS) is the retired single-page version, kept for reference only. The live code is under `_github-version (ChatGPT)/`.
+Note: the old top-level `app/` at this project root (page.js/layout.js — Next 14 JS) is the retired single-page version, kept for reference only. The live code is in `hpintojr/bennyandpenny` on `main`.
 
 ## The three separate Benny & Penny projects — do NOT merge
 
@@ -91,14 +97,29 @@ Never place store/checkout/customer/cart-recovery or book-production code in thi
 3. Don't change concept, audience, nav, or branding without quoting this file and getting approval.
 4. Don't create duplicate project folders/repos.
 5. State which folder + repo you're editing and which files change before major writes.
-6. Deploy only by pushing hpintojr/bennyandpenny main (Vercel). Confirm with Hamilton first.
+6. Make all routine portfolio changes directly on hpintojr/bennyandpenny main.
+7. Vercel deploys from main. Confirm with Hamilton before a consequential deployment or domain change.
+```
+
+## Current Visual Asset Map
+
+```txt
+public/images/home-hero-brandmark.webp        → Home hero
+public/images/about-portrait-context.webp     → About portrait feature
+public/images/work-xbeton-architecture.webp   → XBeton cards
+public/images/work-aff-dashboard.webp          → Advantage First Financial cards
+public/images/work-adventures-mockup.webp      → Adventures cards + Adventures page
+public/images/work-mercury-telephony.webp      → Mercury Call Desk cards
+public/images/work-establishments-collage.webp → 60+ Establishments cards
+public/images/og-social-background.webp        → Open Graph / X sharing image
 ```
 
 ## Open / next
 
 ```txt
-- Push the repositioned code to hpintojr/bennyandpenny and confirm the Vercel redeploy.
-- Replace CSS placeholders with a Hamilton portrait, brand mark, and venture/book imagery
-  (image-prompt brief still to be written — covers Hero, XBeton, AFF, Mercury, 60+, book cover + dimensions).
+- Confirm the Vercel deployment renders all eight image assets correctly on Home, Work, About,
+  and Adventures.
 - Add Privacy + Terms before any contact-form data collection.
+- Confirm each venture description and outbound destination is current and accurate.
+- Continue work directly on main only.
 ```
