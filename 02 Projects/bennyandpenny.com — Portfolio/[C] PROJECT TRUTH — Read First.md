@@ -37,6 +37,7 @@ Target: WCAG 2.2 Level AA engineering conformance. Do not claim legal accessibil
 - Contact labels, autocomplete, validation, error summary, inline errors, and status messages.
 - Native accessibility preferences: text size, high contrast, pause motion, readable font, reset, and local persistence.
 - Native floating lower-left accessibility launcher with a minimize button and a visible restore tab.
+- Approved universal-access person-in-circle icon at `public/images/accessibility-universal-icon.svg`, rendered as a theme-aware CSS mask.
 - Permanent footer text trigger and Accessibility page as alternate access paths.
 - Smoke-test and browser-audit tooling plus WCAG program, inventory, issue register, and author guide.
 - Production Neon submission storage is approved and the `contact_submissions` table is present.
@@ -44,6 +45,7 @@ Target: WCAG 2.2 Level AA engineering conformance. Do not claim legal accessibil
 ## Floating launcher contract
 
 ```txt
+Icon: approved universal-access person-in-circle SVG.
 Open launcher: opens native preferences dialog.
 Minimize: turns launcher into an Accessibility restore tab.
 Restore: returns focus to the full launcher.
