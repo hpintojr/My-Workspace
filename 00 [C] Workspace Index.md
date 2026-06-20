@@ -84,9 +84,15 @@ public/images/logo-mark-transparent.png        → Footer/dark-background monogr
 
 ```txt
 02 Projects/bennyandpenny.com — Portfolio/[C] PROJECT TRUTH — Read First.md
+01 Daily Logs/[C] 2026-06-20 Portfolio Honeypot and Legal Hardening.md
 01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio EOD SEO Social Footer and Content Updates.md
 01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio Image Integration.md
 ```
+
+Latest (2026-06-20, pending push): contact-form honeypot hardened (two traps + sub-2s time check); Terms +
+Privacy expanded beyond templates (Terms keeps the 3 core sections, adds IP/acceptable-use/warranties/
+liability/indemnification/governing-law/etc.; Privacy adds cookies/legal-bases/intl-transfers/CCPA — counsel
+review pending); mobile nav now an animated, auto-closing client component.
 
 ### Next actions
 

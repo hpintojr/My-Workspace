@@ -134,11 +134,13 @@ Current status:
 - SEO includes per-page metadata/canonicals, sitemap, robots, JSON-LD, LLM discovery files, and Markdown mirrors.
 - The approved 1200 × 630 static social preview is `public/images/og-social-background.webp`; metadata points to that asset with a revision query string.
 - Routine updates remain direct-to-`main`. A one-off PR was used only to resolve the final social-image sync conflict.
+- 2026-06-20 (pending push): contact-form honeypot hardened (two traps + sub-2s time check); mobile nav is now an animated, auto-closing client component; Privacy + Terms expanded beyond templates (Terms keeps the 3 core sections and adds IP, acceptable use, warranties, liability, indemnification, governing law, etc.; Privacy adds cookies, legal bases, international transfers, CCPA) — counsel review still recommended.
 
 Read first:
 
 ```txt
 02 Projects/bennyandpenny.com — Portfolio/[C] PROJECT TRUTH — Read First.md
+01 Daily Logs/[C] 2026-06-20 Portfolio Honeypot and Legal Hardening.md
 01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio EOD SEO Social Footer and Content Updates.md
 01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio Image Integration.md
 02 Projects/bennyandpenny.com — Portfolio/[C] Version Comparison — Workspace vs GitHub.md

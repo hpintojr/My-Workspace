@@ -163,6 +163,12 @@ Never place store, checkout, customer, cart-recovery, or book-production code in
 ## Read next
 
 ```txt
+01 Daily Logs/[C] 2026-06-20 Portfolio Honeypot and Legal Hardening.md
 01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio EOD SEO Social Footer and Content Updates.md
 01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio Image Integration.md
 ```
+
+Recent (2026-06-20, pending push to main): contact-form honeypot hardened (two traps + sub-2s time check);
+Terms + Privacy expanded beyond templates (Terms keeps the 3 core sections, adds IP/acceptable-use/warranties/
+liability/indemnification/governing-law/etc.; Privacy adds cookies/legal-bases/intl-transfers/CCPA — counsel
+review still pending, per Open/next #7); mobile nav is now an animated, auto-closing client component.

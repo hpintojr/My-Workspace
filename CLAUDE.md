@@ -285,7 +285,9 @@ Built so far (live code in the repo; commit/push main to deploy):
 - Contact form (/work-with-us): components/ContactForm.tsx + app/api/contact/route.ts → Neon insert + Mailjet
   email to hello@bennyandpenny.com. Env-driven; ChatGPT wires creds (docs/CONTACT-FORM-SETUP.md, db/contact_submissions.sql, .env.example).
 - Footer facelift: ventures alphabetized with full names (incl. American Colonial Capital), hover underline-wipe, Privacy/Terms links.
-- Privacy (/privacy) + Terms (/terms) pages added (contract/payment/arbitration + privacy policy). Have an attorney review.
+- Mobile nav (SiteHeader = client component): animated icon (Oreo → hot-dog hover → cascade into X) and auto-closes on link select (the old <details> never closed).
+- Contact form honeypot hardened: two hidden traps (company_url, nickname) + sub-2s time check (route silently drops bots).
+- Privacy (/privacy) + Terms (/terms) expanded beyond templates. Terms keeps the 3 core sections (Contract Execution, Payment, Arbitration) and adds Acceptance/IP/Acceptable Use/Confidentiality/Warranties/Liability/Indemnification/Governing Law (CA)/Changes/Miscellaneous. Privacy adds cookies, legal bases, intl transfers, CCPA. Still need attorney review.
 - Known issue: local repo git index corrupts on background-sync overlap; fix = rm .git/index .git/index.lock && git read-tree HEAD && git reset --mixed (non-destructive).
 ```
 
