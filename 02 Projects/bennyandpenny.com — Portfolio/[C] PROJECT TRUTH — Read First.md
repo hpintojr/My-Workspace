@@ -1,107 +1,105 @@
 ---
-author: claude
+author: ChatGPT
 type: project-truth
 project: bennyandpenny.com — Portfolio
 date: 2026-06-19
 updated: 2026-06-20
-status: AUTHORITATIVE — every AI (Claude, ChatGPT, Gemini) reads this FIRST
+status: AUTHORITATIVE — every AI reads this FIRST
 ---
 
 # bennyandpenny.com — Portfolio · PROJECT TRUTH (Read First)
 
-This is the single orientation file for this project. Read it before proposing or writing any code, copy, or structure. If anything elsewhere conflicts with this file, **this file wins** until Hamilton says otherwise.
+This is the single orientation file for this project. Read it before proposing or writing code, copy, design, SEO, or content. If another workspace note conflicts with this file, this file wins until Hamilton says otherwise.
 
 ## What this project is
 
 ```txt
 Name:    bennyandpenny.com — Portfolio
-Role:    Hamilton Pinto Jr.'s personal / tech portfolio under the
+Role:    Hamilton Pinto Jr.'s personal / technology portfolio under the
          "Benny & Penny's — A Tech Company" banner.
 Domain:  bennyandpenny.com
-Repo:    hpintojr/bennyandpenny  (deployed via Vercel → bennyandpenny.vercel.app)
+Repo:    hpintojr/bennyandpenny
+Deploy:  GitHub main → Vercel production
 ```
 
-It is a portfolio + tech-company brand site for Hamilton. It is NOT a family-resource brand, NOT a store, NOT the book-production system.
+It is a portfolio and technology-company brand site for Hamilton. It is **not** the Benny & Penny's Adventures ecommerce store and **not** the book-production system.
 
-## Decided direction (locked 2026-06-19)
+## Decided direction
 
-Hamilton reviewed two versions and chose: **keep the deployed Next.js 15 / TypeScript codebase in `hpintojr/bennyandpenny`, and reposition it to the portfolio concept.** Done:
+Hamilton chose the deployed Next.js 15 / TypeScript codebase in `hpintojr/bennyandpenny` and repositioned it as his personal / technology portfolio. The earlier single-page editorial JS version and the prior generic family-brand positioning are retired as live directions.
 
 ```txt
-- Concept: Hamilton's personal/tech portfolio under the B&P tech-company banner.
-- Ventures shown as work tiles: XBeton, Advantage First Financial,
-  Benny & Penny's Adventures, Mercury Call Desk, 60+ Establishments.
-- Backlinks (dofollow) in footer + Person JSON-LD sameAs:
-    ACC                        https://acc.capital/
-    Advantage First Financial  https://www.advantagefirst.com/
-    Benny & Penny's Adventures https://www.bennyandpennyadventures.com/
-    XBeton                     https://www.xbeton.com/
-    Mercury Call Desk          https://mercurycalldesk.com/
-- Visual system: teal/mint core system retained.
-- 2026-06-20: approved hero, portrait, venture, book-mockup, and social-sharing visuals
-  were integrated into the live main branch.
+Concept: Hamilton's personal and technology portfolio under the B&P tech-company banner.
+Visual system: teal / mint / cream / blush retained.
+Audience: businesses, founders, operators, and partners seeking technical, consulting, design, or publishing support.
 ```
 
-The earlier single-page editorial JS version (built from Hamilton's JSX) is retired as the live direction. The "family-built creative brand" framing that ChatGPT first shipped is rejected.
-
-## Source of truth & how to deploy
+## Portfolio content and ventures
 
 ```txt
+Core services:
+- Software architecture and custom platform builds
+- API, CRM, telephony, and business-intelligence integrations
+- Business consulting and development
+- Brand, web, and launch systems
+- Publishing and production workflows
+
+Current work / venture set:
+- XBeton
+- Advantage First Financial
+- Benny & Penny's Adventures
+- American Colonial Capital
+- Mercury Call Desk
+- 60+ Establishments
+```
+
+Outbound venture links are intentional portfolio backlinks. Footer and Person JSON-LD reference ACC, Advantage First Financial, Benny & Penny's Adventures, XBeton, and Mercury Call Desk.
+
+## Source of truth and deploy rule
+
+```txt
+Canonical live source:
+  GitHub repo hpintojr/bennyandpenny, branch main
+
+Deployment:
+  Vercel auto-deploys from main
+
 Working copy in this workspace:
   02 Projects/bennyandpenny.com — Portfolio/_github-version (ChatGPT)/
-  ^ Reference copy only; GitHub main is the live deploy source.
+  Reference only. It is not the live deploy source.
 
-Canonical deploy source:
-  GitHub repo hpintojr/bennyandpenny (branch main) → Vercel auto-deploys.
-
-Current code status:
-  - Portfolio image integration merged to main:
-    0523e09819cf682f3808b24b71145c2ad44ba8ea
-  - Assets are in public/images/.
-  - Future routine changes must be made directly on main only.
-  - Do not create a branch or pull request unless Hamilton explicitly changes that instruction.
+Routine rule:
+  Make normal portfolio changes directly on main.
+  Do not create a branch or pull request unless Hamilton explicitly asks or a technical recovery requires it.
 ```
 
-Note: the old top-level `app/` at this project root (page.js/layout.js — Next 14 JS) is the retired single-page version, kept for reference only. The live code is in `hpintojr/bennyandpenny` on `main`.
+A one-off short-lived branch/PR was used on 2026-06-20 to resolve a static social-image sync conflict. That was an exception, not a workflow change.
 
-## The three separate Benny & Penny projects — do NOT merge
+## Current live state — end of day 2026-06-20
 
 ```txt
-A. Benny & Penny's Adventures            → STORE (ecommerce, portal, orders, gifting,
-                                            cart recovery). Repo: hpintojr/bennyandpennyadventures
-B. Benny & Penny's Adventures Book Series → BOOK PRODUCTION (manuscripts, locks, Canva,
-                                            print/ebook/audio/locales)
-C. bennyandpenny.com — Portfolio (THIS)  → Hamilton's portfolio / tech-company brand site.
-                                            Repo: hpintojr/bennyandpenny
+Latest production merge:
+  7503abe6ab5e0afcde8b2147eee3180ad47fe459
+
+Latest production purpose:
+  Replace the social preview with the approved gold B / glass teal P WebP image
+  and point Open Graph / Twitter metadata at that static image.
+
+Footer:
+  BP monogram at left, custom wordmark to its right.
+  Footer mission describes Hamilton's development, design, API, consulting,
+  and publishing work, and names Benny and Penny as the motivation.
+
+Contact stack:
+  Vercel hosting + Sequenzy transactional delivery + Neon submission storage.
+  Do not reintroduce Mailjet without Hamilton's explicit instruction.
+
+SEO and discovery:
+  Per-page metadata/canonicals, sitemap.xml, robots.txt, JSON-LD,
+  llms.txt, llm.txt, llms-full.txt, and Markdown mirrors are present.
 ```
 
-Never place store/checkout/customer/cart-recovery or book-production code in this portfolio repo.
-
-## What went wrong (so it isn't repeated)
-
-```txt
-- ChatGPT treated the new repo hpintojr/bennyandpenny as blank and shipped a generic
-  "family-built creative brand" site (off-brief), before any project brief was available
-  in the repo (there was no CLAUDE.md in the repo).
-- It also created stray workspace folders/docs, including a portfolio doc placed INSIDE the
-  store project, and edited the Workspace Index to point there. Those have been cleaned up.
-- There was never a separate portfolio CLAUDE.md to "restore from"; the real brief was
-  Hamilton's request + the uploaded JSX (personal/tech portfolio). This file now records it.
-```
-
-## Guardrails for all future AI work
-
-```txt
-1. Read this PROJECT TRUTH file first; do not assume a repo is blank because it's new.
-2. Keep store, book-production, and portfolio projects separate.
-3. Don't change concept, audience, nav, or branding without quoting this file and getting approval.
-4. Don't create duplicate project folders/repos.
-5. State which folder + repo you're editing and which files change before major writes.
-6. Make all routine portfolio changes directly on hpintojr/bennyandpenny main.
-7. Vercel deploys from main. Confirm with Hamilton before a consequential deployment or domain change.
-```
-
-## Current Visual Asset Map
+## Visual asset map
 
 ```txt
 public/images/home-hero-brandmark.webp        → Home hero
@@ -109,25 +107,62 @@ public/images/about-portrait-context.webp     → About portrait feature
 public/images/work-xbeton-architecture.webp   → XBeton cards
 public/images/work-aff-dashboard.webp          → Advantage First Financial cards
 public/images/work-adventures-mockup.webp      → Adventures cards + Adventures page
+public/images/work-acc-capital.svg             → American Colonial Capital card background
+public/images/acc-logo.svg                     → American Colonial Capital card logo overlay
 public/images/work-mercury-telephony.webp      → Mercury Call Desk cards
 public/images/work-establishments-collage.webp → 60+ Establishments cards
-public/images/og-social-background.webp        → Open Graph / X sharing image
-public/images/logo-horizontal-transparent.png  → Header logo (transparent)
-public/images/logo-compact-transparent.png     → Compact logo (transparent)
-public/images/logo-mark-transparent.png        → Monogram mark (footer / dark bg)
-app/icon.png · app/favicon.ico · app/apple-icon.png → Favicon set (from favicon-source.png)
+public/images/og-social-background.webp        → Open Graph / X / text-share image, 1200 × 630
+public/images/logo-horizontal-transparent.png  → Header logo
+public/images/logo-compact-transparent.png     → Compact logo
+public/images/logo-mark-transparent.png        → Footer / dark-background monogram
+app/icon.png · app/favicon.ico · app/apple-icon.png → Favicon set
 ```
 
-## Open / next
+## The three separate Benny & Penny projects — do not merge
 
 ```txt
-- Commit + push the 2026-06-19 changes to main (logo, favicon, Adventures, contact form, footer,
-  /privacy, /terms) and confirm the Vercel deploy renders them.
-- Contact form is built (components/ContactForm.tsx + app/api/contact/route.ts → Neon + Mailjet to
-  hello@bennyandpenny.com). ChatGPT to wire creds: run db/contact_submissions.sql, set DATABASE_URL +
-  MAILJET_* env in Vercel (see docs/CONTACT-FORM-SETUP.md). Form succeeds if either channel is configured.
-- Privacy (/privacy) + Terms (/terms) DONE; have an attorney review (arbitration/class-waiver vary by state).
-- Optional: add a "By submitting you agree to Privacy/Terms" line under the contact button.
-- Confirm each venture description and outbound destination is current and accurate.
-- Continue work directly on main only.
+A. Benny & Penny's Adventures
+   Store / ecommerce / portal / orders / gifting / cart recovery
+   Repo: hpintojr/bennyandpennyadventures
+
+B. Benny & Penny's Adventures Book Series
+   Manuscripts / locks / Canva / print / ebook / audio / locales
+
+C. bennyandpenny.com — Portfolio (this project)
+   Hamilton's portfolio / technology-company brand site
+   Repo: hpintojr/bennyandpenny
+```
+
+Never place store, checkout, customer, cart-recovery, or book-production code in the portfolio repo.
+
+## Guardrails for future AI work
+
+```txt
+1. Read this PROJECT TRUTH file first.
+2. Keep the three projects separate.
+3. Do not change concept, audience, navigation, or branding without Hamilton's approval.
+4. Do not treat hpintojr/bennyandpenny as blank because it is a newer repo.
+5. State which repo and files will change before major writes.
+6. Keep routine portfolio changes on main.
+7. Never commit secrets, environment values, tokens, or database URLs.
+8. Preserve the approved static social image at public/images/og-social-background.webp unless Hamilton replaces it.
+```
+
+## Open / next actions
+
+```txt
+1. Confirm new Messages/SMS and social shares use the approved WebP card after platform preview caches refresh.
+2. Test the contact form end to end after verifying Vercel production variables and the Neon contact_submissions table.
+3. Confirm a single preferred-domain redirect: www.bennyandpenny.com → bennyandpenny.com.
+4. Submit sitemap.xml in Google Search Console and Bing Webmaster Tools.
+5. Consider X-Robots-Tag noindex,follow headers for Markdown and llm*.txt mirrors while keeping them public for AI discovery.
+6. Build service and case-study pages when approved.
+7. Have Privacy and Terms reviewed by counsel before relying on them as final legal text.
+```
+
+## Read next
+
+```txt
+01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio EOD SEO Social Footer and Content Updates.md
+01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio Image Integration.md
 ```
