@@ -9,7 +9,7 @@ status: AUTHORITATIVE — every AI reads this FIRST
 
 # bennyandpenny.com — Portfolio · PROJECT TRUTH (Read First)
 
-This is the single orientation file for this project. Read it before proposing or writing code, copy, design, SEO, or content. If another workspace note conflicts with this file, this file wins until Hamilton says otherwise.
+This is the single orientation file for this project. Read it before proposing or writing code, copy, design, SEO, accessibility, or content. If another workspace note conflicts with this file, this file wins until Hamilton says otherwise.
 
 ## What this project is
 
@@ -75,15 +75,26 @@ Routine rule:
 
 A one-off short-lived branch/PR was used on 2026-06-20 to resolve a static social-image sync conflict. That was an exception, not a workflow change.
 
-## Current live state — end of day 2026-06-20
+## Current live state — 2026-06-20
 
 ```txt
-Latest production merge:
-  7503abe6ab5e0afcde8b2147eee3180ad47fe459
+Latest production deployment:
+  dpl_ARdmofBZPVqdgkWyLvFtgsP3MCx5
 
-Latest production purpose:
-  Replace the social preview with the approved gold B / glass teal P WebP image
-  and point Open Graph / Twitter metadata at that static image.
+Latest deployment status:
+  READY
+
+Latest phase:
+  Accessibility Phase 1 foundation for WCAG 2.2 AA target.
+
+Accessibility code now includes:
+  - Skip link and named main landmark
+  - Global visible focus, reduced-motion, forced-colors, and visually-hidden utilities
+  - Keyboard-managed mobile navigation with Escape close and focus return
+  - Contact-form error summary, inline field errors, and announced status messages
+  - Destination-specific external card links with new-tab disclosure
+  - Accessibility statement at /accessibility and Markdown mirror at /accessibility.md
+  - Baseline remediation register at docs/accessibility/phase-1-baseline.md
 
 Footer:
   BP monogram at left, custom wordmark to its right.
@@ -97,6 +108,7 @@ Contact stack:
 SEO and discovery:
   Per-page metadata/canonicals, sitemap.xml, robots.txt, JSON-LD,
   llms.txt, llm.txt, llms-full.txt, and Markdown mirrors are present.
+  The accessibility statement is included in sitemap.xml and LLM/Markdown indexing.
 ```
 
 ## Visual asset map
@@ -104,6 +116,7 @@ SEO and discovery:
 ```txt
 public/images/home-hero-brandmark.webp        → Home hero
 public/images/about-portrait-context.webp     → About portrait feature
+public/images/Sig.png                          → About signature
 public/images/work-xbeton-architecture.webp   → XBeton cards
 public/images/work-aff-dashboard.webp          → Advantage First Financial cards
 public/images/work-adventures-mockup.webp      → Adventures cards + Adventures page
@@ -146,29 +159,32 @@ Never place store, checkout, customer, cart-recovery, or book-production code in
 6. Keep routine portfolio changes on main.
 7. Never commit secrets, environment values, tokens, or database URLs.
 8. Preserve the approved static social image at public/images/og-social-background.webp unless Hamilton replaces it.
+9. Treat WCAG 2.2 AA as the accessibility engineering target. Do not claim legal ADA compliance without independent audit and legal review.
+10. Maintain docs/accessibility/phase-1-baseline.md as fixes are verified and new barriers are found.
 ```
 
 ## Open / next actions
 
 ```txt
-1. Confirm new Messages/SMS and social shares use the approved WebP card after platform preview caches refresh.
-2. Test the contact form end to end after verifying Vercel production variables and the Neon contact_submissions table.
-3. Confirm a single preferred-domain redirect: www.bennyandpenny.com → bennyandpenny.com.
-4. Submit sitemap.xml in Google Search Console and Bing Webmaster Tools.
-5. Consider X-Robots-Tag noindex,follow headers for Markdown and llm*.txt mirrors while keeping them public for AI discovery.
-6. Build service and case-study pages when approved.
-7. Have Privacy and Terms reviewed by counsel before relying on them as final legal text.
+1. Complete manual keyboard testing for all public routes, including mobile navigation and the contact form.
+2. Test with NVDA + Chrome/Firefox and VoiceOver + Safari.
+3. Run a full contrast audit and remediate failures.
+4. Test 200% zoom, 400% reflow, text-spacing overrides, reduced motion, and forced-colors mode.
+5. Add automated axe and Playwright accessibility tests in a dedicated follow-up.
+6. Audit all images and remaining external links route by route.
+7. Confirm new Messages/SMS and social shares use the approved WebP card after platform preview caches refresh.
+8. Test the contact form end to end after verifying Vercel production variables and the Neon contact_submissions table.
+9. Resolve the preferred-domain/canonical mismatch: non-www currently redirects to www while canonical metadata uses non-www.
+10. Submit sitemap.xml in Google Search Console and Bing Webmaster Tools.
+11. Consider X-Robots-Tag noindex,follow headers for Markdown and llm*.txt mirrors while keeping them public for AI discovery.
+12. Have Privacy and Terms reviewed by counsel before relying on them as final legal text.
 ```
 
 ## Read next
 
 ```txt
+01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Accessibility Phase 1.md
 01 Daily Logs/[C] 2026-06-20 Portfolio Honeypot and Legal Hardening.md
 01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio EOD SEO Social Footer and Content Updates.md
 01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio Image Integration.md
 ```
-
-Recent (2026-06-20, pending push to main): contact-form honeypot hardened (two traps + sub-2s time check);
-Terms + Privacy expanded beyond templates (Terms keeps the 3 core sections, adds IP/acceptable-use/warranties/
-liability/indemnification/governing-law/etc.; Privacy adds cookies/legal-bases/intl-transfers/CCPA — counsel
-review still pending, per Open/next #7); mobile nav is now an animated, auto-closing client component.
