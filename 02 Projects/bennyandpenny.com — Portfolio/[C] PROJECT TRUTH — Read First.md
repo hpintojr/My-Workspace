@@ -2,128 +2,78 @@
 author: ChatGPT
 type: project-truth
 project: bennyandpenny.com — Portfolio
-date: 2026-06-19
 updated: 2026-06-20
-status: AUTHORITATIVE — every AI reads this FIRST
+status: AUTHORITATIVE
 ---
 
-# bennyandpenny.com — Portfolio · PROJECT TRUTH (Read First)
+# bennyandpenny.com — Portfolio · PROJECT TRUTH
 
-This is the orientation file for the portfolio project. Read it before changing code, content, design, SEO, accessibility, or documentation. The WCAG program below is now the active scope for this site.
-
-## Project identity
+## Identity
 
 ```txt
-Name:    bennyandpenny.com — Portfolio
-Role:    Hamilton Pinto Jr.'s personal and technology portfolio under the
-         Benny & Penny's — A Tech Company banner.
-Repo:    hpintojr/bennyandpenny
-Branch:  main
-Deploy:  GitHub main → Vercel production
-Domain:  https://www.bennyandpenny.com
+Repository: hpintojr/bennyandpenny
+Branch: main
+Deployment: GitHub main to Vercel production
+Preferred domain: https://www.bennyandpenny.com
+Role: Hamilton Pinto Jr.'s personal and technology portfolio
 ```
 
-This portfolio remains separate from the Benny & Penny's Adventures store and separate from the book-production system.
+This portfolio is separate from the Benny & Penny's Adventures store and the book-production project.
 
-## Current project direction
+## Accessibility scope
+
+The active standard is:
 
 ```txt
-Concept: Hamilton's personal and technology portfolio.
-Audience: businesses, founders, operators, and partners seeking technical,
-          consulting, design, or publishing support.
-Visual system: teal / mint / cream / blush remains approved.
+02 Projects/[C] Shared WCAG 2.2 AA Accessibility Design & Engineering Specification.md
 ```
 
-Current work set: XBeton, Advantage First Financial, Benny & Penny's Adventures, American Colonial Capital, Mercury Call Desk, and 60+ Establishments.
+Target: WCAG 2.2 Level AA engineering conformance. Do not claim legal accessibility certification without independent audit and review.
 
-## Scope change — WCAG 2.2 AA program
+## Implemented portfolio foundation
 
-The uploaded **Accessibility, ADA & WCAG 2.2 AA Design + Engineering Specification** is now the controlling accessibility scope. Start with `bennyandpenny.com`, then apply the same standard to `bennyandpennyadventures.com` in its own repo.
+- Skip link, named main landmark, visible focus, reduced motion, forced colors, and target-size support.
+- Keyboard mobile navigation with focus handling and Escape close.
+- Contact labels, autocomplete, validation, error summary, inline errors, and status messages.
+- Native accessibility preferences: text size, high contrast, pause motion, readable font, reset, and local persistence.
+- Native floating lower-left accessibility launcher with a minimize button and a visible restore tab.
+- Permanent footer text trigger and Accessibility page as alternate access paths.
+- Smoke-test and browser-audit tooling plus WCAG program, inventory, issue register, and author guide.
+
+## Floating launcher contract
 
 ```txt
-Target: WCAG 2.2 Level AA engineering target.
-Do not present the site as legally certified or fully accessible without an
-independent audit and appropriate review.
-
-Required portfolio scope:
-- Every public route and 404
-- Header, footer, desktop/mobile navigation, links, cards, forms, dialogs,
-  external-link patterns, and all new marketing/case-study pages
-- Complete portfolio process: navigation → page reading → Contact submission
-- Native accessibility preferences controller, not a third-party overlay
-- Automated and manual evidence for each release
+Open launcher: opens native preferences dialog.
+Minimize: turns launcher into an Accessibility restore tab.
+Restore: returns focus to the full launcher.
+Close/Done/Escape: returns focus to the initiating control.
+State: saved locally on the device only.
 ```
 
-## Current implementation status — 2026-06-20
+Never remove every access path. The footer trigger and Accessibility page remain permanent.
+
+## Current docs in the portfolio repo
 
 ```txt
-Latest production deployment:
-  dpl_Fxd5Wp5dbEGTt5x7TEXYsYPwpxcz
-Status:
-  READY
-
-Implemented shared foundation:
-- Skip link and named main landmark
-- Global visible focus, dark-surface focus, reduced-motion, forced-colors,
-  target-size, and visually-hidden utilities
-- Keyboard-managed mobile menu with focus entry, focus containment, Escape
-  close, focus return, and background-scroll lock
-- Accessible Contact validation: labels, autocomplete, required note,
-  error summary, inline errors, and status messages
-- Descriptive external links with new-tab disclosure
-- Accessibility statement and support channel
-- Native footer-based preferences controller with text size, high contrast,
-  pause animations, readable font, and local device persistence
-- Server-rendered smoke test and Playwright/axe browser-audit framework
-- Content-authoring guidance and WCAG program documentation
-
-Current docs in repo:
-- docs/accessibility/wcag-program.md
-- docs/accessibility/phase-1-baseline.md
-- docs/accessibility/manual-qa-checklist.md
-- docs/accessibility/automated-smoke-test.md
-- docs/accessibility/browser-audit.md
-- docs/accessibility/content-authoring-guide.md
+docs/accessibility/wcag-program.md
+docs/accessibility/inventory.md
+docs/accessibility/issues.md
+docs/accessibility/manual-qa-checklist.md
+docs/accessibility/browser-audit.md
+docs/accessibility/content-authoring-guide.md
 ```
 
-## Source and deploy rules
+## Next actions
 
-```txt
-Canonical live source: hpintojr/bennyandpenny, branch main
-Workspace copy: 02 Projects/bennyandpenny.com — Portfolio/_github-version (ChatGPT)/
-                is reference only, never the deployment source.
-Routine work: direct to main unless Hamilton explicitly requests a branch/PR.
-Never commit credentials, tokens, service values, or database URLs.
-```
-
-## Important preservation rules
-
-```txt
-- Keep the three Benny & Penny projects separate.
-- Preserve approved brand assets, page purpose, audience, and visual system.
-- Keep the approved social image at public/images/og-social-background.webp.
-- Contact stack remains Vercel + Sequenzy + intended Neon submission storage.
-- Do not reintroduce Mailjet without Hamilton's explicit instruction.
-- Preferred public hostname is www.bennyandpenny.com. Non-www redirects to www.
-- Public Markdown and LLM mirrors remain available but receive noindex,follow headers.
-```
-
-## Current open work
-
-```txt
-1. Run production accessibility smoke and browser-audit workflows; retain results.
-2. Complete full contrast measurements for text, borders, focus, gradients, and overlays.
-3. Complete 200% zoom, 400% reflow, text-spacing, reduced-motion, and forced-colors testing.
-4. Complete NVDA + Chrome/Firefox and VoiceOver + Safari tests for navigation and Contact.
-5. Complete route-by-route image alternative review.
-6. Verify production Contact success and failure behavior using real delivery configuration.
-7. Keep the issue register current in docs/accessibility/phase-1-baseline.md.
-8. Submit the www sitemap to Google Search Console and Bing Webmaster Tools.
-```
+1. Run and retain production smoke and browser audit reports.
+2. Complete contrast, zoom, reflow, text-spacing, forced-colors, and screen-reader evidence.
+3. Complete image and media alternative review.
+4. Complete real Contact delivery validation after production data storage is approved.
+5. Apply the shared specification to the separate Adventures repository when that work begins.
 
 ## Read next
 
 ```txt
-01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com WCAG Scope Reset and Foundation.md
-02 Projects/bennyandpenny.com — Portfolio/[C] PROJECT TRUTH — Read First.md
+02 Projects/[C] Shared WCAG 2.2 AA Accessibility Design & Engineering Specification.md
+01 Daily Logs/[C] 2026-06-20 Accessibility Launcher Progress.md
 ```
