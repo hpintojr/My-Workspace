@@ -40,7 +40,6 @@ CLAUDE.md
 01 Daily Logs/[C] 2026-06-18 Webhook Cart Conversion Fallback Added.md
 01 Daily Logs/[C] 2026-06-17 Cart Recovery Checkout Gate and Sandbox Verification.md
 01 Daily Logs/[C] 2026-06-17 Guest Cart Recovery Capture Added.md
-01 Daily Logs/[C] 2026-06-17 Abandoned Cart Tracking Build Started.md
 02 Projects/Benny & Penny's Adventures/[C] Backlog & Launch Checklist.md
 02 Projects/Benny & Penny's Adventures/[C] Product Assets Digital Delivery Gifting and Marketing Handoff.md
 02 Projects/Benny & Penny's Adventures/[C] Digital Readable License Rule 2026-06-17.md
@@ -114,21 +113,21 @@ First actions: capture the live Lulu spec, approve the character/environment loc
 
 ### bennyandpenny.com — Portfolio
 
-Hamilton's personal and technology portfolio under the **Benny & Penny's — A Tech Company** banner. This remains separate from the store and book-production projects.
+Hamilton's personal and technology portfolio under the **Benny & Penny's — A Tech Company** banner. This remains separate from the Adventures store and book-production projects.
 
 ```txt
 Repo: hpintojr/bennyandpenny
 Branch: main
 Deploy: Vercel production
 Preferred domain: https://www.bennyandpenny.com
-Latest production deployment: dpl_Fxd5Wp5dbEGTt5x7TEXYsYPwpxcz
+Latest production deployment: dpl_EbEX6ButzpuksGDSZjVACv9suwoE
 Status: READY
 ```
 
 Current portfolio priority:
 
 ```txt
-The scope is now the shared WCAG 2.2 AA accessibility program. The portfolio is the first site being remediated. The Adventures store will receive the same standard later in its own repository.
+The shared WCAG 2.2 AA accessibility program is active. The portfolio is the implementation reference for the Adventures site, including its native floating Accessibility preferences launcher and approved universal-access person-in-circle icon.
 ```
 
 Implemented:
@@ -136,15 +135,21 @@ Implemented:
 - Skip link, landmarks, visible focus, reduced motion, forced colors, and shared target-size support.
 - Keyboard mobile navigation with focus entry, containment, Escape close, focus return, and background scroll lock.
 - Accessible Contact validation, error summary, inline errors, autocomplete, and status messages.
-- Native footer accessibility preferences controller: text size, high contrast, pause animations, readable font, reset, and local device persistence.
+- Native Accessibility preferences: text size, high contrast, pause animations, readable font, reset, and local-device persistence.
+- Native lower-left launcher with a visible minimize control and a recoverable Accessibility restore tab.
+- Approved `accessibility-universal-icon.svg`, rendered as a theme-aware CSS mask instead of the former thin-line figure.
+- Footer trigger and `/accessibility` page remain permanent alternate paths to the same preferences dialog.
+- Production Neon storage now contains the `contact_submissions` table for valid Contact requests.
 - Accessibility statement, LLM and Markdown discovery mirrors, sitemap, robots, canonical metadata, and automated smoke/browser audit framework.
-- Content-author guide, inventory, manual checklist, and WCAG program documentation.
+- Content-author guide, inventory, manual checklist, WCAG program documentation, shared cross-site specification, and Adventures handoff.
 
 Read first:
 
 ```txt
+02 Projects/[C] Shared WCAG 2.2 AA Accessibility Design & Engineering Specification.md
 02 Projects/bennyandpenny.com — Portfolio/[C] PROJECT TRUTH — Read First.md
-01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com WCAG Update.md
+01 Daily Logs/[C] 2026-06-20 Universal Accessibility Icon Update.md
+01 Daily Logs/[C] 2026-06-20 Portfolio Contact Submission Storage Approved and Applied.md
 docs/accessibility/wcag-program.md in hpintojr/bennyandpenny
 docs/accessibility/inventory.md in hpintojr/bennyandpenny
 ```
@@ -153,8 +158,9 @@ Next actions:
 
 ```txt
 1. Run and retain production Accessibility Smoke Test and Browser Accessibility Audit results.
-2. Complete contrast measurements, 200% zoom, 400% reflow, text-spacing, reduced-motion, and forced-colors checks.
+2. Complete visual/keyboard validation of the new launcher, including minimize/restore, dialog focus return, 200% zoom, 400% reflow, text spacing, reduced motion, and forced colors.
 3. Complete NVDA plus Chrome/Firefox and VoiceOver plus Safari tests.
-4. Complete image-alternative review and real Contact delivery testing.
-5. Keep all portfolio changes direct to main unless Hamilton requests a branch or pull request.
+4. Complete image-alternative review.
+5. Run a controlled real Contact submission and verify visitor success state, Neon persistence, Sequenzy delivery, failure messaging, and retry/help handling.
+6. Keep all portfolio changes direct to main unless Hamilton requests a branch or pull request.
 ```
