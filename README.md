@@ -114,14 +114,19 @@ First actions: capture the live Lulu spec, approve the character/environment loc
 
 ### bennyandpenny.com — Portfolio
 
-Hamilton's personal/tech portfolio under the "Benny & Penny's — A Tech Company" banner (repo `hpintojr/bennyandpenny`, deployed on Vercel). Separate from the store and the book-production projects. After a mixup where ChatGPT shipped an off-brief "family-built creative brand" site, the decision (2026-06-19) was to keep the deployed Next.js 15 / TypeScript codebase and reposition it to Hamilton's portfolio concept — done, with the five ventures as work tiles and ACC/AFF/BAPA/XBeton/Mercury backlinks wired. Workspace stray files were cleaned up.
+Hamilton's personal/tech portfolio under the "Benny & Penny's — A Tech Company" banner (repo `hpintojr/bennyandpenny`, deployed on Vercel). It remains separate from the store and the book-production projects.
+
+As of 2026-06-20, the approved image integration is complete on `main`: the home hero uses the sculptural B/P image; Home and Work use the five venture images; About uses Hamilton's portrait; Adventures uses the book mockup; and the gradient is connected to Open Graph/X sharing metadata. The assets live in `public/images/`. The image integration merge commit is `0523e09819cf682f3808b24b71145c2ad44ba8ea`.
+
+All routine future work for this site is direct-to-`main` only. Do not create a branch or pull request unless Hamilton explicitly changes that instruction. Vercel deploys from `main`.
 
 Read first:
 
 ```txt
 02 Projects/bennyandpenny.com — Portfolio/[C] PROJECT TRUTH — Read First.md
+01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio Image Integration.md
 02 Projects/bennyandpenny.com — Portfolio/[C] Version Comparison — Workspace vs GitHub.md
 01 Daily Logs/[C] 2026-06-19 Portfolio Mixup Recovery and Reposition.md
 ```
 
-The repositioned code lives in `_github-version (ChatGPT)/`. First actions: push it to `hpintojr/bennyandpenny` main and confirm the Vercel redeploy; replace CSS placeholders with real imagery; add Privacy/Terms before any form data. Do not deploy without Hamilton's confirmation.
+Next actions: confirm Vercel rendering on Home, Work, About, and Adventures; add Privacy/Terms before contact-form data collection; confirm venture copy and outbound links; then continue directly on `main` only.
