@@ -50,7 +50,14 @@ The master shared WCAG specification now includes:
 
 ## Verification status
 
-The portfolio build for the approved icon asset and launcher styling is in the Vercel production pipeline. Confirm final READY status before marking this visual update fully verified.
+```txt
+Vercel production deployment: dpl_EbEX6ButzpuksGDSZjVACv9suwoE
+Deployment state: READY
+Production HTML confirms the named floating launcher, minimize control,
+footer trigger, native dialog, and new universal-icon element are present.
+The optimized SVG asset is served at:
+/images/accessibility-universal-icon.svg
+```
 
 ## Read next
 
