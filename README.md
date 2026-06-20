@@ -120,40 +120,41 @@ Hamilton's personal and technology portfolio under the **Benny & Penny's — A T
 Repo: hpintojr/bennyandpenny
 Branch: main
 Deploy: Vercel production
-Domain: https://bennyandpenny.com
-Latest production merge: 7503abe6ab5e0afcde8b2147eee3180ad47fe459
+Preferred domain: https://www.bennyandpenny.com
+Latest production deployment: dpl_Fxd5Wp5dbEGTt5x7TEXYsYPwpxcz
+Status: READY
 ```
 
-Current status:
+Current portfolio priority:
 
-- Home, Work, About, Adventures, Contact, Privacy, and Terms are live portfolio routes.
-- ACC is included in both Home and Work using the approved ACC graphic and logo overlay.
-- Header uses the approved horizontal logo; footer uses the BP monogram plus a custom Didot/Bodoni and geometric wordmark treatment.
-- Footer copy now positions the studio around custom API integrations, business consulting, and publishing solutions, proudly motivated by Benny and Penny.
-- Contact delivery is configured for Sequenzy and contact submission storage is intended for Neon; verify production variables and database table before relying on live submissions.
-- SEO includes per-page metadata/canonicals, sitemap, robots, JSON-LD, LLM discovery files, and Markdown mirrors.
-- The approved 1200 × 630 static social preview is `public/images/og-social-background.webp`; metadata points to that asset with a revision query string.
-- Routine updates remain direct-to-`main`. A one-off PR was used only to resolve the final social-image sync conflict.
-- 2026-06-20 (pending push): contact-form honeypot hardened (two traps + sub-2s time check); mobile nav is now an animated, auto-closing client component; Privacy + Terms expanded beyond templates (Terms keeps the 3 core sections and adds IP, acceptable use, warranties, liability, indemnification, governing law, etc.; Privacy adds cookies, legal bases, international transfers, CCPA) — counsel review still recommended.
+```txt
+The scope is now the shared WCAG 2.2 AA accessibility program. The portfolio is the first site being remediated. The Adventures store will receive the same standard later in its own repository.
+```
+
+Implemented:
+
+- Skip link, landmarks, visible focus, reduced motion, forced colors, and shared target-size support.
+- Keyboard mobile navigation with focus entry, containment, Escape close, focus return, and background scroll lock.
+- Accessible Contact validation, error summary, inline errors, autocomplete, and status messages.
+- Native footer accessibility preferences controller: text size, high contrast, pause animations, readable font, reset, and local device persistence.
+- Accessibility statement, LLM and Markdown discovery mirrors, sitemap, robots, canonical metadata, and automated smoke/browser audit framework.
+- Content-author guide, inventory, manual checklist, and WCAG program documentation.
 
 Read first:
 
 ```txt
 02 Projects/bennyandpenny.com — Portfolio/[C] PROJECT TRUTH — Read First.md
-01 Daily Logs/[C] 2026-06-20 Portfolio Honeypot and Legal Hardening.md
-01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio EOD SEO Social Footer and Content Updates.md
-01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio Image Integration.md
-02 Projects/bennyandpenny.com — Portfolio/[C] Version Comparison — Workspace vs GitHub.md
+01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com WCAG Update.md
+docs/accessibility/wcag-program.md in hpintojr/bennyandpenny
+docs/accessibility/inventory.md in hpintojr/bennyandpenny
 ```
 
 Next actions:
 
 ```txt
-1. Confirm a new Messages/SMS or social share receives the approved WebP preview after cache refresh.
-2. Test the contact form end to end after verifying Sequenzy, Neon, and Vercel production configuration.
-3. Confirm www.bennyandpenny.com redirects to bennyandpenny.com.
-4. Submit sitemap.xml to Google Search Console and Bing Webmaster Tools.
-5. Decide whether public Markdown/LLM mirrors should receive X-Robots-Tag: noindex, follow headers.
-6. Build approved service and case-study pages.
-7. Keep routine work directly on main only.
+1. Run and retain production Accessibility Smoke Test and Browser Accessibility Audit results.
+2. Complete contrast measurements, 200% zoom, 400% reflow, text-spacing, reduced-motion, and forced-colors checks.
+3. Complete NVDA plus Chrome/Firefox and VoiceOver plus Safari tests.
+4. Complete image-alternative review and real Contact delivery testing.
+5. Keep all portfolio changes direct to main unless Hamilton requests a branch or pull request.
 ```
