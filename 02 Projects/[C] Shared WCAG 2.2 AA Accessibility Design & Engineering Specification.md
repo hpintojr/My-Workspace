@@ -228,6 +228,8 @@ The Adventures site reuses this behavior and test contract while adapting routes
 ```txt
 Specification: CONFIRMED
 Approved icon: universal-access person-in-circle SVG
-Portfolio icon rollout: deployed pending final production-build confirmation
+Portfolio rollout: Vercel production READY (dpl_EbEX6ButzpuksGDSZjVACv9suwoE)
+Verified: deployed launcher markup and approved SVG asset are available in production
+Still required: manual visual, keyboard, contrast, reflow, screen-reader, and production Contact delivery validation
 Adventures implementation: not started; this file is the required starting reference
 ```
