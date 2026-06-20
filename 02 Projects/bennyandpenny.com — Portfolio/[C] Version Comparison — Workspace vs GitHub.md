@@ -1,70 +1,49 @@
 ---
-author: claude
-type: comparison
+author: ChatGPT
+type: historical-comparison
 project: bennyandpenny.com — Portfolio
-date: 2026-06-19
+created: 2026-06-19
+updated: 2026-06-20
+status: SUPERSEDED — retained only to explain the original direction decision
 ---
 
-# bennyandpenny.com — Two Versions, Side by Side
+# bennyandpenny.com — Historical Version Comparison
 
-There are two complete, different versions of this site. Neither was destroyed. Use this doc to decide which becomes the source of truth.
+## Current decision
 
-## Where each one lives
+This comparison is no longer an active decision document.
 
-```txt
-Version A — Workspace (Claude, from your JSX)
-  Location: app/ at this project root (page.js, layout.js, globals.css)
-  Status:   not deployed, not pushed to the GitHub repo
-
-Version B — GitHub (ChatGPT)
-  Location: _github-version (ChatGPT)/   (mirror of repo hpintojr/bennyandpenny)
-  Live:     https://bennyandpenny.vercel.app  ·  repo public, 26 commits
-```
-
-## Head-to-head
-
-| | Version A — Workspace (yours) | Version B — GitHub (ChatGPT) |
-|---|---|---|
-| Stack | Next 14 · React 18 · JavaScript | Next 15 · React 19 · TypeScript |
-| Pages | 1 (single-page scroll) | 5 (Home, Our Work, For Families, Our Story, Work With Us) |
-| Components | All inline in page.js | SiteHeader / SiteFooter, per-page files |
-| Design | Editorial: ink/espresso/cream + brass accent, serif display, SVG book-stack glyph, dark tile grid | Soft/warm: teal + mint + blush + sun, Playfair + DM Sans, rounded "storybook" shapes, CSS placeholders |
-| Concept | Hamilton's **personal/tech portfolio** under a B&P tech-company banner | **Family-built parent brand**; Adventures is one branch |
-| Backlinks | ACC, AFF, BAPA, XBeton, Mercury all wired (your brief) | None (no outbound venture links) |
-| Ventures shown | XBeton, AFF, BAPA, Mercury, 60+ establishments as work tiles | Storytelling / creative direction / family resources (no named companies) |
-| SEO | Basic metadata + OG only | Full: sitemap.ts, robots.ts, opengraph-image, icon, JSON-LD, canonical, not-found |
-| Primary CTA | "View services" / "Get in touch" | "Work With Us" |
-| Deployed | No | Yes (Vercel) |
-| AI index | (not yet finished) | docs/[C] Portfolio Project Index & Commands.md |
-
-## The real difference is concept, not just code
-
-These aren't two drafts of the same site — they're two different businesses' sites:
-
-- **Version A** sells *you* — Hamilton, the software architect / creative technologist / publisher — and links out to your ventures (the backlink goal from your original brief).
-- **Version B** sells *Benny & Penny as a family creative brand* — warm, mission-led, "Work With Us," with the books as the featured story world. It deliberately keeps your other companies out.
-
-Both are legitimate; they serve different goals. Version B is further along (live, multi-page, full SEO) but is off-brief on positioning and has no backlinks or your tech-portfolio framing. Version A matches your brief and design but is one page, not deployed, and lighter on SEO.
-
-## Options
+Hamilton selected the deployed **Next.js 15 / TypeScript** site in `hpintojr/bennyandpenny` and repositioned it as his personal / technology portfolio under the **Benny & Penny's — A Tech Company** banner. That implementation is now the live source of truth.
 
 ```txt
-A. Keep Version A (yours). Add SEO scaffolding + push to a repo. Replace/retire the GitHub site.
-B. Adopt Version B (GitHub). Keep the live multi-page brand site; refine from there. Retire Version A.
-C. Merge (recommended if you like the editorial look): take B's multi-page shell + SEO + live deploy,
-   reskin with A's editorial design, wire your ACC/AFF/BAPA/XBeton/Mercury backlinks, and add a
-   "Work / Ventures" section so it doubles as your tech portfolio.
-D. Run both: B stays as the family brand at bennyandpenny.com; A becomes a separate personal
-   portfolio at a different domain/subdomain. (Most work, two sites to maintain.)
+Canonical repo: hpintojr/bennyandpenny
+Canonical branch: main
+Deployment: Vercel production
+Current project orientation: 02 Projects/bennyandpenny.com — Portfolio/[C] PROJECT TRUTH — Read First.md
 ```
 
-## Note on what ChatGPT changed in the workspace (not yet cleaned up)
+## What this document preserves
+
+On 2026-06-19, there were two competing directions:
+
+- **Workspace Version A:** a retired single-page Next 14 / JavaScript editorial prototype at this project root under `app/`.
+- **GitHub Version B:** the deployed Next 15 / TypeScript site, initially more complete technically but needing repositioning as Hamilton's technology portfolio.
+
+Hamilton chose Version B as the base and the portfolio repositioning is complete. The retired local `app/` copy remains reference-only and must not be treated as a deployment target.
+
+## What is now live
 
 ```txt
-- Created 02 Projects/Benny & Penny's Adventures/00 Brand & Portfolio/ (a portfolio doc placed
-  inside the STOREFRONT project) — misplaced.
-- Left two near-duplicate launch docs (one here, one in that misplaced folder).
-- Edited 00 [C] Workspace Index.md to point the portfolio at that misplaced folder.
-- Stale .git/index.lock present (may block commits until removed).
-Cleanup is on hold until the direction above is chosen.
+- Hamilton's personal / technology portfolio framing
+- Named venture cards: XBeton, Advantage First Financial, Benny & Penny's Adventures,
+  American Colonial Capital, Mercury Call Desk, and 60+ Establishments
+- ACC, AFF, BAPA, XBeton, and Mercury outbound backlinks
+- Header logo, footer wordmark, Privacy, Terms, Contact, and the Adventures imprint page
+- Sequenzy + Neon intended contact pipeline
+- Canonicals, sitemap, robots, JSON-LD, LLM discovery files, and Markdown mirrors
+- Approved 1200 × 630 static WebP social-sharing image
 ```
+
+## Future use
+
+Read `[C] PROJECT TRUTH — Read First.md` and the latest portfolio daily log instead of using this file for implementation decisions.
