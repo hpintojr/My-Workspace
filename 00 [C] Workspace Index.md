@@ -1,6 +1,6 @@
 # Workspace Index
 
-**Status:** Current as of 2026-06-19 (Customer Portal v2 + cart recovery validation + bennyandpenny.com portfolio repositioned to Hamilton's tech-portfolio concept; portfolio mixup recovered and workspace cleaned)
+**Status:** Current as of 2026-06-20 (Customer Portal v2 + cart recovery validation + bennyandpenny.com portfolio image integration completed on `main`; later logo-change discussion intentionally not included here)
 
 ## Start Here
 
@@ -11,6 +11,7 @@ README.md
 00 [C] Workspace Index.md
 CLAUDE.md
 02 Projects/bennyandpenny.com — Portfolio/[C] PROJECT TRUTH — Read First.md
+01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio Image Integration.md
 01 Daily Logs/[C] 2026-06-19 Portfolio Mixup Recovery and Reposition.md
 01 Daily Logs/[C] 2026-06-18 Cart Recovery Email Delivery and CTA Visual Validation.md
 01 Daily Logs/[C] 2026-06-18 Cart Recovery Operations Controls and Attribution Reporting.md
@@ -34,28 +35,42 @@ Workspace location:
 02 Projects/bennyandpenny.com — Portfolio/
   ├─ [C] PROJECT TRUTH — Read First.md          (authoritative orientation)
   ├─ [C] Version Comparison — Workspace vs GitHub.md
-  ├─ _github-version (ChatGPT)/                  (LIVE code: repositioned portfolio, mirrors the repo)
+  ├─ _github-version (ChatGPT)/                  (reference copy only)
   └─ app/ (root)                                 (RETIRED single-page JS version — reference only)
 
 Role: Hamilton Pinto Jr.'s personal/tech portfolio under the "Benny & Penny's — A Tech Company"
 banner. NOT the store, NOT the book-production system.
 
 Repository: hpintojr/bennyandpenny → Vercel (bennyandpenny.vercel.app)
-Platform: Next.js 15 + TypeScript (deployed). Visual system: teal/mint (kept).
+Platform: Next.js 15 + TypeScript. Visual system: teal/mint core retained.
 
-Decided 2026-06-19: keep the deployed codebase and reposition it to the portfolio concept (done).
-- Ventures as work tiles: XBeton, AFF, Benny & Penny's Adventures, Mercury, 60+ Establishments.
-- Backlinks (dofollow): ACC, AFF, BAPA, XBeton, Mercury — footer + Person JSON-LD sameAs.
-The earlier single-page JS version and ChatGPT's "family-built creative brand" framing are retired.
+Current deployment source and change rule:
+- GitHub branch main is the canonical live source and deploys through Vercel.
+- Make routine portfolio changes directly on main only.
+- Do not create branches or pull requests unless Hamilton explicitly changes that instruction.
+
+Portfolio position: Hamilton's personal/tech portfolio; ventures are XBeton, AFF,
+Benny & Penny's Adventures, Mercury Call Desk, and 60+ Establishments.
+Backlinks (dofollow): ACC, AFF, BAPA, XBeton, Mercury — footer + Person JSON-LD sameAs.
+
+2026-06-20 image integration complete on main:
+- Homepage: sculptural B/P hero + image-led venture cards.
+- Work: image-led cards for all five ventures.
+- About: Hamilton portrait feature.
+- Adventures: book mockup visual.
+- Social: Open Graph and X/Twitter image metadata.
+- Asset path: hpintojr/bennyandpenny/public/images/.
+- Merge commit: 0523e09819cf682f3808b24b71145c2ad44ba8ea.
 
 Read first:
 02 Projects/bennyandpenny.com — Portfolio/[C] PROJECT TRUTH — Read First.md
+01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio Image Integration.md
 
 Next actions:
-1. Push _github-version (ChatGPT)/ contents to hpintojr/bennyandpenny main; confirm Vercel redeploy.
-2. Replace CSS placeholders with a Hamilton portrait, brand mark, and venture/book imagery.
-3. Add Privacy/Terms before any contact-form data collection.
-4. (Pending) image-prompt brief: Hero, XBeton, AFF, Mercury, 60+, book cover + dimensions.
+1. Confirm Vercel renders all asset paths on Home, Work, About, and Adventures.
+2. Add Privacy/Terms before any contact-form data collection.
+3. Confirm venture copy and outbound links are accurate.
+4. Continue directly on main only.
 ```
 
 ## Current Benny & Penny Store Status
@@ -118,6 +133,8 @@ must be confirmed and returned to false unless live recovery email is intentiona
 ## Directory Notes
 
 ```txt
+01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio Image Integration.md (main-branch image integration and asset map)
+01 Daily Logs/[C] 2026-06-19 Portfolio Mixup Recovery and Reposition.md (portfolio recovery and reorientation)
 01 Daily Logs/[C] 2026-06-18 Cart Recovery Email Delivery and CTA Visual Validation.md (safe test, real reminder delivery, CTA heart finalization)
 01 Daily Logs/[C] 2026-06-18 Cart Recovery Operations Controls and Attribution Reporting.md (admin controls, attribution, migration)
 01 Daily Logs/[C] 2026-06-18 Cart Recovery Environment Configuration and Dry Run.md (Vercel environment setup)
@@ -132,7 +149,7 @@ must be confirmed and returned to false unless live recovery email is intentiona
 01 Daily Logs/[C] 2026-06-17 Google Places and Stripe Name Guard.md
 01 Daily Logs/[C] 2026-06-17 Gifting Fixes.md
 01 Daily Logs/[C] 2026-06-17 Customer Portal v2 and Admin Theme.md
-02 Projects/Benny & Penny's Adventures/00 Brand & Portfolio/[C] BennyAndPenny.com Parent Brand Portfolio Launch.md
+02 Projects/bennyandpenny.com — Portfolio/[C] PROJECT TRUTH — Read First.md
 02 Projects/Benny & Penny's Adventures/[C] Backlog & Launch Checklist.md
 02 Projects/Benny & Penny's Adventures/[C] Product Assets Digital Delivery Gifting and Marketing Handoff.md
 02 Projects/Benny & Penny's Adventures/[C] Digital Readable License Rule 2026-06-17.md
