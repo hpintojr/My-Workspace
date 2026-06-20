@@ -10,7 +10,7 @@ scope: WCAG 2.2 AA accessibility remediation phase one
 
 ## Objective
 
-Begin code-level accessibility remediation for the portfolio site using the shared **Accessibility, ADA & WCAG 2.2 AA Design + Engineering Specification**. This phase establishes shared accessibility foundations and addresses high-impact keyboard, focus, form, link-purpose, and pointer-target issues.
+Begin code-level accessibility remediation for the portfolio site using the shared **Accessibility, ADA & WCAG 2.2 AA Design + Engineering Specification**. This phase establishes shared accessibility foundations and addresses high-impact keyboard, focus, form, link-purpose, pointer-target, semantic-heading, and regression-prevention issues.
 
 This is an engineering effort toward WCAG 2.2 Level AA. Do not claim legal ADA compliance, zero defects, or full accessibility without an independent audit and legal review.
 
@@ -20,8 +20,12 @@ This is an engineering effort toward WCAG 2.2 Level AA. Do not claim legal ADA c
 Repository: hpintojr/bennyandpenny
 Branch: main
 Deployment: Vercel production
-Latest phase-one deployment: dpl_9mRWUEagMwvvNq3SatfYbyZhCjHd
-Latest deployment status: READY
+Latest portfolio commit series:
+  - accessibility smoke test and manual GitHub Action
+  - accessible noindex 404 metadata
+  - full Benny & Penny's Adventures heading text for assistive technology
+Latest deployment status:
+  Building / verify latest Vercel production deployment before reporting final signoff.
 ```
 
 ## Implemented
@@ -46,7 +50,7 @@ Latest deployment status: READY
   - `<main id="main-content" tabIndex={-1}>`
   - programmatic focus to main content after skip-link use
 
-### Navigation
+### Navigation and page structure
 
 - Updated `components/SiteHeader.tsx`:
   - mobile menu trigger uses accurate expanded state
@@ -54,6 +58,8 @@ Latest deployment status: READY
   - Escape closes the menu and returns focus to the trigger
   - menu is hidden from keyboard users while closed
   - current page is exposed through `aria-current="page"`
+- Updated the Work and Adventures visual brand lockups so their screen-reader heading text includes the complete name: **Benny & Penny's Adventures**.
+- Updated the 404 route with `noindex, nofollow` metadata so unavailable pages are not treated as normal search content.
 
 ### Contact form
 
@@ -75,21 +81,29 @@ Latest deployment status: READY
 - Footer BP monogram is decorative because adjacent real text already identifies the brand.
 - About signature is decorative while adjacent visually hidden text provides its accessible text equivalent, avoiding duplicate screen-reader output.
 
-### Accessibility statement, discovery, and mirrors
+### Accessibility statement, discovery, mirrors, and regression controls
 
 - Added live statement page: `/accessibility`.
 - Added footer link to the statement.
 - Added `/accessibility.md` Markdown mirror.
 - Added the route to `sitemap.xml`.
 - Updated `llm.txt`, `llms.txt`, and `llms-full.txt` to index the new statement and its Markdown mirror.
-- Added `docs/accessibility/phase-1-baseline.md` in the portfolio repo with initial route inventory, remediation register, outstanding issues, and QA requirements.
+- Added `docs/accessibility/phase-1-baseline.md` in the portfolio repo with route inventory, remediation register, outstanding issues, and QA requirements.
+- Added `docs/accessibility/manual-qa-checklist.md` for keyboard, screen-reader, zoom/reflow, contrast, and evidence capture.
+- Added `scripts/accessibility-smoke.mjs`, a dependency-free server-rendered markup regression check.
+- Added `npm run a11y:smoke`.
+- Added manual GitHub Action `.github/workflows/accessibility-smoke.yml` to run the smoke test against production or a Vercel preview URL.
+- Added `docs/accessibility/automated-smoke-test.md` runbook.
 
 ## Important verification completed
 
 ```txt
-Latest Vercel production deployment completed successfully.
+Earlier Phase 1 Vercel builds completed successfully.
 Accessibility route, global skip link, accessible mobile-navigation markup,
-Adventures link changes, and shared accessibility CSS were confirmed in rendered production HTML.
+Adventures external-link changes, and shared accessibility CSS were confirmed in rendered production HTML.
+
+The latest smoke-test / semantic-heading commits require final production-build confirmation
+before their status is marked READY in this log.
 ```
 
 ## Not yet complete
@@ -97,20 +111,22 @@ Adventures link changes, and shared accessibility CSS were confirmed in rendered
 - This is not a completed audit or accessibility certification.
 - Contrast has been checked for several shared brand pairs; a full route-by-route visual contrast audit remains open.
 - Manual keyboard, screen-reader, zoom/reflow, text-spacing, forced-colors, and reduced-motion tests still need to be completed and logged.
-- Automated axe / Playwright / Lighthouse accessibility coverage has not yet been added to CI.
+- The smoke test is an automated markup baseline, not an axe, Playwright, Lighthouse, or screen-reader replacement.
 - All image alternatives and all remaining external links need a full route-by-route review.
 - The portfolio domain currently redirects `bennyandpenny.com` to `www.bennyandpenny.com`; canonical metadata still uses the non-www form. This is an SEO/domain-alignment issue, not an accessibility fix, and should be resolved separately before final SEO signoff.
 
 ## Next actions
 
-1. Manually test keyboard flow on Home, Work, Adventures, About, Contact, Privacy, Terms, Accessibility, and 404.
-2. Test the mobile menu at desktop, tablet, and phone widths with Tab, Shift+Tab, Enter, Space, and Escape.
-3. Test Contact validation with NVDA + Chrome/Firefox and VoiceOver + Safari.
-4. Run a full contrast audit and fix any remaining brand color-pair failures.
-5. Test 200% browser zoom, 400% narrow reflow, text-spacing overrides, reduced motion, and forced-colors mode.
-6. Add automated accessibility testing with axe and Playwright in a dedicated follow-up.
-7. Begin a full content/image-alt inventory.
-8. Resolve the preferred-domain / canonical mismatch separately.
+1. Confirm latest Vercel production deployment is READY.
+2. Run `SITE_URL=https://www.bennyandpenny.com npm run a11y:smoke` or the manual GitHub Action.
+3. Manually test keyboard flow on Home, Work, Adventures, About, Contact, Privacy, Terms, Accessibility, and 404.
+4. Test the mobile menu at desktop, tablet, and phone widths with Tab, Shift+Tab, Enter, Space, and Escape.
+5. Test Contact validation with NVDA + Chrome/Firefox and VoiceOver + Safari.
+6. Run a full contrast audit and fix any remaining brand color-pair failures.
+7. Test 200% browser zoom, 400% narrow reflow, text-spacing overrides, reduced motion, and forced-colors mode.
+8. Add automated browser-level axe and Playwright testing in a dedicated follow-up.
+9. Begin a full content/image-alt inventory.
+10. Resolve the preferred-domain / canonical mismatch separately.
 
 ## Read next
 
