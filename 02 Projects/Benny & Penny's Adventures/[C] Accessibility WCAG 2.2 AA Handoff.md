@@ -15,9 +15,25 @@ Read first:
 02 Projects/[C] Shared WCAG 2.2 AA Accessibility Design & Engineering Specification.md
 ```
 
+## Approved shared launcher asset
+
+Use the approved universal-access person-in-circle icon and interaction contract from the portfolio reference.
+
+```txt
+Reference asset:
+bennyandpenny.com repo → public/images/accessibility-universal-icon.svg
+
+Do not use:
+- the earlier thin-line stick figure
+- a non-recoverable hidden launcher
+- a third-party overlay as a substitute for accessible code
+```
+
+The Adventures implementation must render the icon through a theme-aware CSS mask, retain a visible minimized restore tab, and keep the footer trigger and Accessibility page as permanent alternatives.
+
 ## Site-specific implementation order
 
-1. Build the shared native accessibility provider, floating launcher, minimize/restore tab, footer trigger, and Accessibility page.
+1. Build the shared native accessibility provider, approved floating launcher, minimize/restore tab, footer trigger, and Accessibility page.
 2. Apply landmarks, skip links, visible focus, mobile navigation rules, and reduced-motion support.
 3. Audit catalog, product detail, cart, checkout, account, library, gifting, orders, address management, help, and parent-resource journeys.
 4. Audit book covers, book previews, PDF, EPUB, audio, captions, transcripts, download labels, and related materials.
@@ -35,4 +51,4 @@ Read first:
 
 ## Definition of done
 
-The Adventures implementation is not complete until the shared specification, issue register, manual evidence, automated checks, and task-based review are present in the Adventures repository.
+The Adventures implementation is not complete until the shared specification, approved icon asset, issue register, manual evidence, automated checks, and task-based review are present in the Adventures repository.
