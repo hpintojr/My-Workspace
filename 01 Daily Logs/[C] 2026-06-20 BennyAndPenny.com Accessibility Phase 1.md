@@ -10,7 +10,7 @@ scope: WCAG 2.2 AA accessibility remediation phase one
 
 ## Objective
 
-Begin code-level accessibility remediation for the portfolio site using the shared **Accessibility, ADA & WCAG 2.2 AA Design + Engineering Specification**. This phase establishes shared accessibility foundations and addresses high-impact keyboard, focus, form, and link-purpose issues.
+Begin code-level accessibility remediation for the portfolio site using the shared **Accessibility, ADA & WCAG 2.2 AA Design + Engineering Specification**. This phase establishes shared accessibility foundations and addresses high-impact keyboard, focus, form, link-purpose, and pointer-target issues.
 
 This is an engineering effort toward WCAG 2.2 Level AA. Do not claim legal ADA compliance, zero defects, or full accessibility without an independent audit and legal review.
 
@@ -20,7 +20,7 @@ This is an engineering effort toward WCAG 2.2 Level AA. Do not claim legal ADA c
 Repository: hpintojr/bennyandpenny
 Branch: main
 Deployment: Vercel production
-Latest phase-one deployment: dpl_ARdmofBZPVqdgkWyLvFtgsP3MCx5
+Latest phase-one deployment: dpl_9mRWUEagMwvvNq3SatfYbyZhCjHd
 Latest deployment status: READY
 ```
 
@@ -31,12 +31,15 @@ Latest deployment status: READY
 - Added `app/accessibility.css` with:
   - WCAG-oriented focus, error, success, warning, and text tokens
   - global `:focus-visible` treatment
+  - white focus treatment on dark teal surfaces
   - visually-hidden utility
   - keyboard skip-link styling
   - scroll padding for sticky header / focus targets
   - forced-colors focus support
   - global reduced-motion fallback
+  - `prefers-contrast: more` enhancements for borders, text, and controls
   - reusable contact-form error styling
+  - minimum shared hit-target sizes for desktop navigation, footer links, and card links
 - Added `components/SkipLink.tsx`.
 - Updated root layout with:
   - skip link before header
@@ -63,12 +66,14 @@ Latest deployment status: READY
   - announced success state and clearer submission status
   - honeypots remain hidden from keyboard and assistive technology
 
-### Links, images, and About content
+### Links, content structure, and images
 
 - Footer venture links announce that they open in a new tab.
 - Home and Work card links now identify their destination, such as `Visit XBeton`, and announce the new-tab behavior.
+- Adventures storefront links now identify their destination and new-tab behavior.
+- Adventures book-list markup was corrected so headings and paragraphs are contained in valid block content rather than a `span`.
 - Footer BP monogram is decorative because adjacent real text already identifies the brand.
-- About signature retains `alt="Hamilton Pinto Jr. signature"` and now has a separate text equivalent for assistive technology.
+- About signature is decorative while adjacent visually hidden text provides its accessible text equivalent, avoiding duplicate screen-reader output.
 
 ### Accessibility statement, discovery, and mirrors
 
@@ -82,14 +87,15 @@ Latest deployment status: READY
 ## Important verification completed
 
 ```txt
-Vercel production build completed successfully.
-Build generated the /accessibility route successfully.
+Latest Vercel production deployment completed successfully.
+Accessibility route, global skip link, accessible mobile-navigation markup,
+Adventures link changes, and shared accessibility CSS were confirmed in rendered production HTML.
 ```
 
 ## Not yet complete
 
 - This is not a completed audit or accessibility certification.
-- Contrast has not yet been measured across all branded text, gradients, borders, and focus states.
+- Contrast has been checked for several shared brand pairs; a full route-by-route visual contrast audit remains open.
 - Manual keyboard, screen-reader, zoom/reflow, text-spacing, forced-colors, and reduced-motion tests still need to be completed and logged.
 - Automated axe / Playwright / Lighthouse accessibility coverage has not yet been added to CI.
 - All image alternatives and all remaining external links need a full route-by-route review.
@@ -100,8 +106,8 @@ Build generated the /accessibility route successfully.
 1. Manually test keyboard flow on Home, Work, Adventures, About, Contact, Privacy, Terms, Accessibility, and 404.
 2. Test the mobile menu at desktop, tablet, and phone widths with Tab, Shift+Tab, Enter, Space, and Escape.
 3. Test Contact validation with NVDA + Chrome/Firefox and VoiceOver + Safari.
-4. Run a contrast audit and fix failing brand color pairs.
-5. Test 200% browser zoom, 400% narrow reflow, text-spacing overrides, reduced-motion, and forced-colors mode.
+4. Run a full contrast audit and fix any remaining brand color-pair failures.
+5. Test 200% browser zoom, 400% narrow reflow, text-spacing overrides, reduced motion, and forced-colors mode.
 6. Add automated accessibility testing with axe and Playwright in a dedicated follow-up.
 7. Begin a full content/image-alt inventory.
 8. Resolve the preferred-domain / canonical mismatch separately.
