@@ -39,6 +39,7 @@ Target: WCAG 2.2 Level AA engineering conformance. Do not claim legal accessibil
 - Native floating lower-left accessibility launcher with a minimize button and a visible restore tab.
 - Permanent footer text trigger and Accessibility page as alternate access paths.
 - Smoke-test and browser-audit tooling plus WCAG program, inventory, issue register, and author guide.
+- Production Neon submission storage is approved and the `contact_submissions` table is present.
 
 ## Floating launcher contract
 
@@ -68,7 +69,7 @@ docs/accessibility/content-authoring-guide.md
 1. Run and retain production smoke and browser audit reports.
 2. Complete contrast, zoom, reflow, text-spacing, forced-colors, and screen-reader evidence.
 3. Complete image and media alternative review.
-4. Complete real Contact delivery validation after production data storage is approved.
+4. Run a controlled production Contact submission and validate visitor success, database persistence, Sequenzy delivery, delivery-failure messaging, and retry/help handling.
 5. Apply the shared specification to the separate Adventures repository when that work begins.
 
 ## Read next
@@ -76,4 +77,5 @@ docs/accessibility/content-authoring-guide.md
 ```txt
 02 Projects/[C] Shared WCAG 2.2 AA Accessibility Design & Engineering Specification.md
 01 Daily Logs/[C] 2026-06-20 Accessibility Launcher Progress.md
+01 Daily Logs/[C] 2026-06-20 Portfolio Contact Submission Storage Approved and Applied.md
 ```
