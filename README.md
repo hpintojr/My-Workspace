@@ -114,22 +114,44 @@ First actions: capture the live Lulu spec, approve the character/environment loc
 
 ### bennyandpenny.com — Portfolio
 
-Hamilton's personal/tech portfolio under the "Benny & Penny's — A Tech Company" banner (repo `hpintojr/bennyandpenny`, deployed on Vercel). It remains separate from the store and the book-production projects.
+Hamilton's personal and technology portfolio under the **Benny & Penny's — A Tech Company** banner. This remains separate from the store and book-production projects.
 
-As of 2026-06-20, the approved image integration is complete on `main`: the home hero uses the sculptural B/P image; Home and Work use the five venture images; About uses Hamilton's portrait; Adventures uses the book mockup; and the gradient is connected to Open Graph/X sharing metadata. The assets live in `public/images/`. The image integration merge commit is `0523e09819cf682f3808b24b71145c2ad44ba8ea`.
+```txt
+Repo: hpintojr/bennyandpenny
+Branch: main
+Deploy: Vercel production
+Domain: https://bennyandpenny.com
+Latest production merge: 7503abe6ab5e0afcde8b2147eee3180ad47fe459
+```
 
-All routine future work for this site is direct-to-`main` only. Do not create a branch or pull request unless Hamilton explicitly changes that instruction. Vercel deploys from `main`.
+Current status:
+
+- Home, Work, About, Adventures, Contact, Privacy, and Terms are live portfolio routes.
+- ACC is included in both Home and Work using the approved ACC graphic and logo overlay.
+- Header uses the approved horizontal logo; footer uses the BP monogram plus a custom Didot/Bodoni and geometric wordmark treatment.
+- Footer copy now positions the studio around custom API integrations, business consulting, and publishing solutions, proudly motivated by Benny and Penny.
+- Contact delivery is configured for Sequenzy and contact submission storage is intended for Neon; verify production variables and database table before relying on live submissions.
+- SEO includes per-page metadata/canonicals, sitemap, robots, JSON-LD, LLM discovery files, and Markdown mirrors.
+- The approved 1200 × 630 static social preview is `public/images/og-social-background.webp`; metadata points to that asset with a revision query string.
+- Routine updates remain direct-to-`main`. A one-off PR was used only to resolve the final social-image sync conflict.
 
 Read first:
 
 ```txt
 02 Projects/bennyandpenny.com — Portfolio/[C] PROJECT TRUTH — Read First.md
-01 Daily Logs/[C] 2026-06-19 Portfolio Contact Form Footer and Legal Pages.md
+01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio EOD SEO Social Footer and Content Updates.md
 01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio Image Integration.md
 02 Projects/bennyandpenny.com — Portfolio/[C] Version Comparison — Workspace vs GitHub.md
-01 Daily Logs/[C] 2026-06-19 Portfolio Mixup Recovery and Reposition.md
 ```
 
-2026-06-19 session added (in repo, pending commit/push to `main`): real header logo + transparent favicon set; Adventures rebuilt as a ten-part series showcase (no status labels); a sleek contact form wired to Neon + Mailjet (hello@bennyandpenny.com, ChatGPT to add creds); footer facelift with alphabetized full-name ventures and Privacy/Terms links; and new `/privacy` + `/terms` pages.
+Next actions:
 
-Next actions: commit + push the 2026-06-19 changes to `main` and confirm the Vercel deploy; have ChatGPT wire the contact-form Neon/Mailjet env and run the schema; optionally add a Privacy/Terms agreement line under the contact button; attorney review of the legal pages; then continue directly on `main` only.
+```txt
+1. Confirm a new Messages/SMS or social share receives the approved WebP preview after cache refresh.
+2. Test the contact form end to end after verifying Sequenzy, Neon, and Vercel production configuration.
+3. Confirm www.bennyandpenny.com redirects to bennyandpenny.com.
+4. Submit sitemap.xml to Google Search Console and Bing Webmaster Tools.
+5. Decide whether public Markdown/LLM mirrors should receive X-Robots-Tag: noindex, follow headers.
+6. Build approved service and case-study pages.
+7. Keep routine work directly on main only.
+```
