@@ -1,6 +1,6 @@
 # Workspace Index
 
-**Status:** Current as of 2026-06-20. The portfolio end-of-day handoff, SEO/discovery work, final static social image, and current deployment state are now indexed.
+**Status:** Current as of 2026-06-20. Portfolio accessibility Phase 1, SEO/discovery, social preview, and current deployment state are indexed below.
 
 ## Start Here
 
@@ -11,12 +11,12 @@ README.md
 00 [C] Workspace Index.md
 CLAUDE.md
 02 Projects/bennyandpenny.com — Portfolio/[C] PROJECT TRUTH — Read First.md
+01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Accessibility Phase 1.md
 01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio EOD SEO Social Footer and Content Updates.md
 01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio Image Integration.md
-01 Daily Logs/[C] 2026-06-19 Portfolio Mixup Recovery and Reposition.md
 ```
 
-For the store project, then read the cart-recovery logs and project files listed under **Current Benny & Penny Store Status**.
+For the store project, read the cart-recovery logs and current project files listed under **Current Benny & Penny Store Status**.
 
 ## bennyandpenny.com — Portfolio
 
@@ -24,7 +24,7 @@ For the store project, then read the cart-recovery logs and project files listed
 Workspace location:
 02 Projects/bennyandpenny.com — Portfolio/
   ├─ [C] PROJECT TRUTH — Read First.md                    (authoritative orientation)
-  ├─ [C] Version Comparison — Workspace vs GitHub.md      (historical / superseded context)
+  ├─ [C] Version Comparison — Workspace vs GitHub.md      (historical / superseded)
   ├─ _github-version (ChatGPT)/                            (reference copy only)
   └─ app/ (root)                                          (retired single-page JS version — reference only)
 
@@ -34,33 +34,41 @@ Role: Hamilton Pinto Jr.'s personal / technology portfolio under the
 Repository: hpintojr/bennyandpenny
 Platform: Next.js 15 + TypeScript
 Deploy: GitHub main → Vercel production
-Domain: https://bennyandpenny.com
+Canonical source branch: main
 ```
 
-### Current source and change rule
-
-- `main` is the canonical live source and deploys through Vercel.
-- Make routine portfolio changes directly on `main`.
-- Do not create a branch or pull request unless Hamilton explicitly requests it or a technical recovery requires it.
-- The June 20 image-sync PR was a one-time recovery exception; it does not alter the normal direct-to-`main` workflow.
-
-### Current portfolio state — end of day 2026-06-20
+### Current portfolio state — Accessibility Phase 1
 
 ```txt
-Latest production merge:
-7503abe6ab5e0afcde8b2147eee3180ad47fe459
+Latest production deployment:
+dpl_EeSGSxBfDHmmYhcVmeVLBVudreSB
 
-Completed:
-- Home, Work, About, Adventures, Contact, Privacy, and Terms pages are live.
+Latest production status:
+READY
+
+Accessibility target:
+WCAG 2.2 Level AA. This is an ongoing remediation effort, not a claim of full ADA compliance.
+
+Implemented:
+- Skip link and named main landmark
+- Global visible-focus, reduced-motion, forced-colors, and visually-hidden utilities
+- Keyboard-managed mobile navigation: focus into menu, Escape close, focus return, current-page state
+- Accessible contact-form validation: error summary, inline errors, required labels, announced status
+- Destination-specific external links with new-tab disclosure
+- Accessibility statement at /accessibility and Markdown mirror at /accessibility.md
+- Accessibility statement added to sitemap.xml, llm.txt, llms.txt, and llms-full.txt
+- Initial accessibility issue register: docs/accessibility/phase-1-baseline.md
+
+Other current portfolio work:
+- Home, Work, About, Adventures, Contact, Privacy, Terms, and Accessibility are live.
 - Home and Work include XBeton, Advantage First Financial, Benny & Penny's Adventures,
   American Colonial Capital, Mercury Call Desk, and 60+ Establishments.
-- Header uses the approved horizontal logo.
-- Footer uses the BP monogram + custom wordmark typography and current studio mission copy.
-- Contact route is configured for Sequenzy delivery and Neon submission storage.
-- SEO/discovery includes page metadata, canonicals, JSON-LD, robots.txt, sitemap.xml,
+- Header uses the approved horizontal logo; footer uses BP monogram + custom wordmark.
+- About uses the approved Hamilton signature image with a text equivalent for assistive technology.
+- Contact route is configured for Sequenzy delivery and intended Neon submission storage.
+- SEO/discovery includes per-page metadata, canonicals, JSON-LD, robots.txt, sitemap.xml,
   llms.txt, llm.txt, llms-full.txt, and Markdown mirrors.
-- The approved social-sharing asset is public/images/og-social-background.webp (1200 × 630).
-  Open Graph and Twitter metadata point to this static WebP with a revision query string.
+- Approved social asset: public/images/og-social-background.webp (1200 × 630).
 ```
 
 ### Portfolio asset map
@@ -68,6 +76,7 @@ Completed:
 ```txt
 public/images/home-hero-brandmark.webp        → Home hero
 public/images/about-portrait-context.webp     → About portrait
+public/images/Sig.png                          → Hamilton signature mark
 public/images/work-xbeton-architecture.webp   → XBeton cards
 public/images/work-aff-dashboard.webp          → Advantage First Financial cards
 public/images/work-adventures-mockup.webp      → Adventures cards + Adventures page
@@ -80,29 +89,29 @@ public/images/logo-horizontal-transparent.png  → Header logo
 public/images/logo-mark-transparent.png        → Footer/dark-background monogram
 ```
 
-### Read first
+### Portfolio read first
 
 ```txt
 02 Projects/bennyandpenny.com — Portfolio/[C] PROJECT TRUTH — Read First.md
-01 Daily Logs/[C] 2026-06-20 Portfolio Honeypot and Legal Hardening.md
+01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Accessibility Phase 1.md
 01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio EOD SEO Social Footer and Content Updates.md
-01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio Image Integration.md
+01 Daily Logs/[C] 2026-06-20 Portfolio Honeypot and Legal Hardening.md
 ```
 
-Latest (2026-06-20, pending push): contact-form honeypot hardened (two traps + sub-2s time check); Terms +
-Privacy expanded beyond templates (Terms keeps the 3 core sections, adds IP/acceptable-use/warranties/
-liability/indemnification/governing-law/etc.; Privacy adds cookies/legal-bases/intl-transfers/CCPA — counsel
-review pending); mobile nav now an animated, auto-closing client component.
-
-### Next actions
+### Portfolio next actions
 
 ```txt
-1. Confirm new Messages/SMS and social shares pick up the approved WebP preview after cache refresh.
-2. Test the contact form end to end after confirming Vercel production variables and the Neon table.
-3. Confirm www.bennyandpenny.com redirects to bennyandpenny.com.
-4. Submit sitemap.xml to Google Search Console and Bing Webmaster Tools.
-5. Decide whether public Markdown/LLM mirrors should receive noindex response headers.
-6. Build approved service and case-study pages.
+1. Complete keyboard-only testing across every public route.
+2. Test desktop and mobile navigation with Tab, Shift+Tab, Enter, Space, and Escape.
+3. Test Contact with NVDA + Chrome/Firefox and VoiceOver + Safari.
+4. Run a full contrast audit, including branded typography, borders, hover, and focus states.
+5. Test 200% zoom, 400% reflow, text-spacing overrides, reduced motion, and forced-colors mode.
+6. Add automated axe and Playwright accessibility testing in a dedicated follow-up.
+7. Audit all images and remaining external links route by route.
+8. Test contact form end to end after confirming Sequenzy, Neon, and Vercel production configuration.
+9. Resolve preferred-domain/canonical mismatch: non-www redirects to www while canonical metadata uses non-www.
+10. Submit sitemap.xml to Google Search Console and Bing Webmaster Tools.
+11. Decide whether Markdown and llm*.txt mirrors need X-Robots-Tag: noindex, follow headers.
 ```
 
 ## Current Benny & Penny Store Status
@@ -120,12 +129,11 @@ admin recovery controls, recovery reporting, coupon/BPG/gift attribution, and Ne
 Manual safe recovery test passed for cart #7: Checkout Started → Abandoned → Recovery Eligible Yes → Eligible state.
 A controlled Recovery Reminder 1 reached Gmail via Sequenzy. Email body visual QA is approved: mobile was
 confirmed good; desktop CTA has a final Gmail-safe small white heart via table markup.
-The latest visual-email deployment is dpl_2NSnwNJzPd2ihetiEY1H8A44ocX1, commit fe886dffad60f0a3e43c6ca5cf9e9b972f6d9b02.
 CART_RECOVERY_SEND_ENABLED was intentionally enabled to test delivery. Its current Vercel Production value
 must be confirmed and returned to false unless live recovery email is intentionally being activated.
 ```
 
-## Build Guardrails — Website Repo
+## Build Guardrails — Store Repo
 
 ```txt
 - tsconfig target is es5: use Array.from() for Set/Map/iterator results; avoid bare iterable spread / for-of.
@@ -140,8 +148,8 @@ must be confirmed and returned to false unless live recovery email is intentiona
 - Stripe Checkout saved-address prefill + fulfillment name guard are already implemented.
 - Paid order must keep converting matching cart by Stripe Checkout Session ID.
 - Recovery defaults: active cart 4h; checkout started 1h; second reminder 24h.
-- Standard email hearts are .75em. Do not place Unicode heart characters inside recovery CTA links: Sequenzy/Gmail converts them into red emoji images. CTA heart uses Gmail-safe white table markup.
-- The recovery sender uses Sequenzy. Payload default email-adapter warning does not govern recovery-email delivery.
+- Standard email hearts are .75em. Do not place Unicode heart characters inside recovery CTA links.
+- The recovery sender uses Sequenzy. Payload default email-adapter warning does not govern recovery email delivery.
 - Never store CRON_SECRET or recovery/unsubscribe token secrets in GitHub, workspace notes, screenshots, or chat.
 ```
 
@@ -149,24 +157,26 @@ must be confirmed and returned to false unless live recovery email is intentiona
 
 ```txt
 1. Click Return to my cart in the controlled recovery email and confirm the signed link restores the cart.
-2. Click Stop cart reminders in a controlled test and verify subscriber/cart suppression.
-3. Confirm that a suppressed cart cannot receive another controlled reminder.
+2. Click Stop cart reminders and verify subscriber/cart suppression.
+3. Confirm a suppressed cart cannot receive another controlled reminder.
 4. Complete a recovered checkout and verify Recovered Order Number + Recovered Revenue.
-5. Run a Welcome10 test checkout and verify coupon fields and Sequenzy coupon-user attribution.
-6. Run BPG525 flow and verify BPG fields and Sequenzy bpg-gift-code-user attribution.
-7. Confirm current Vercel CART_RECOVERY_SEND_ENABLED state; set false unless intentionally enabling live recovery sends.
-8. Replace placeholder product assets and dummy R2 files with final book assets.
-9. Decide whether gifted download allowance should exceed one.
-10. Update Terms / Privacy for licensing and cart-recovery consent.
-11. Research official LuLu project/template setup before print testing resumes.
-12. Monitor real inbox placement for gift, order, and recovery email.
+5. Run Welcome10 and BPG525 test checkouts; verify order and Sequenzy attribution.
+6. Confirm current Vercel CART_RECOVERY_SEND_ENABLED state; set false unless intentionally enabling live recovery sends.
+7. Replace placeholder product assets and dummy R2 files with final book assets.
+8. Decide whether gifted download allowance should exceed one.
+9. Update Terms / Privacy for licensing and cart-recovery consent.
+10. Research official LuLu project/template setup before print testing resumes.
+11. Monitor real inbox placement for gift, order, and recovery email.
 ```
 
 ## Directory Notes
 
 ```txt
+01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Accessibility Phase 1.md
+  (current portfolio accessibility implementation, verification list, and next actions)
+
 01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio EOD SEO Social Footer and Content Updates.md
-  (current portfolio handoff: footer, ACC, contact stack, SEO, discovery files, and final social WebP)
+  (footer, ACC, contact stack, SEO, discovery files, and final social WebP)
 
 01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio Image Integration.md
   (initial portfolio image integration and asset map)
@@ -183,11 +193,6 @@ must be confirmed and returned to false unless live recovery email is intentiona
 01 Daily Logs/[C] 2026-06-17 Cart Recovery Checkout Gate and Sandbox Verification.md
 01 Daily Logs/[C] 2026-06-17 Guest Cart Recovery Capture Added.md
 01 Daily Logs/[C] 2026-06-17 Abandoned Cart Tracking Build Started.md
-01 Daily Logs/[C] 2026-06-17 Checkout Name Guard and Email DNS Confirmed.md
-01 Daily Logs/[C] 2026-06-17 Google Places Confirmed.md
-01 Daily Logs/[C] 2026-06-17 Google Places and Stripe Name Guard.md
-01 Daily Logs/[C] 2026-06-17 Gifting Fixes.md
-01 Daily Logs/[C] 2026-06-17 Customer Portal v2 and Admin Theme.md
 02 Projects/bennyandpenny.com — Portfolio/[C] PROJECT TRUTH — Read First.md
 02 Projects/Benny & Penny's Adventures/[C] Backlog & Launch Checklist.md
 02 Projects/Benny & Penny's Adventures/[C] Product Assets Digital Delivery Gifting and Marketing Handoff.md
