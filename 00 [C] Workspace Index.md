@@ -39,6 +39,13 @@ Repository: hpintojr/bennyandpennyadventures
 
 The shared WCAG specification is required before accessibility implementation begins in this separate repository.
 
+Read next:
+
+```txt
+02 Projects/[C] Shared WCAG 2.2 AA Accessibility Design & Engineering Specification.md
+02 Projects/Benny & Penny's Adventures/[C] Accessibility WCAG 2.2 AA Handoff.md
+```
+
 ## Book Series
 
 The shared specification also applies to accessible customer-facing digital books, media, downloads, and support resources.
