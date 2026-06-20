@@ -1,6 +1,6 @@
 # Workspace Index
 
-**Status:** Current as of 2026-06-20 (Customer Portal v2 + cart recovery validation + bennyandpenny.com portfolio image integration completed on `main`; later logo-change discussion intentionally not included here)
+**Status:** Current as of 2026-06-20. The portfolio end-of-day handoff, SEO/discovery work, final static social image, and current deployment state are now indexed.
 
 ## Start Here
 
@@ -11,75 +11,92 @@ README.md
 00 [C] Workspace Index.md
 CLAUDE.md
 02 Projects/bennyandpenny.com — Portfolio/[C] PROJECT TRUTH — Read First.md
+01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio EOD SEO Social Footer and Content Updates.md
 01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio Image Integration.md
 01 Daily Logs/[C] 2026-06-19 Portfolio Mixup Recovery and Reposition.md
-01 Daily Logs/[C] 2026-06-18 Cart Recovery Email Delivery and CTA Visual Validation.md
-01 Daily Logs/[C] 2026-06-18 Cart Recovery Operations Controls and Attribution Reporting.md
-01 Daily Logs/[C] 2026-06-18 Cart Recovery Environment Configuration and Dry Run.md
-01 Daily Logs/[C] 2026-06-18 Cart Recovery Automation Sequenzy and Attribution Build.md
-01 Daily Logs/[C] 2026-06-18 Database Cart Conversion Safety Net Added.md
-01 Daily Logs/[C] 2026-06-18 Webhook Cart Conversion Fallback Added.md
-01 Daily Logs/[C] 2026-06-17 Cart Recovery Checkout Gate and Sandbox Verification.md
-01 Daily Logs/[C] 2026-06-17 Guest Cart Recovery Capture Added.md
-01 Daily Logs/[C] 2026-06-17 Abandoned Cart Tracking Build Started.md
-02 Projects/Benny & Penny's Adventures/[C] Backlog & Launch Checklist.md
-02 Projects/Benny & Penny's Adventures/Benny & Penny's Adventures Overview.md
-02 Projects/Benny & Penny's Adventures/[C] Google Places Address Autocomplete and Checkout Strategy.md
-02 Projects/Benny & Penny's Adventures/[C] Lulu Print on Demand Plan.md
 ```
+
+For the store project, then read the cart-recovery logs and project files listed under **Current Benny & Penny Store Status**.
 
 ## bennyandpenny.com — Portfolio
 
 ```txt
 Workspace location:
 02 Projects/bennyandpenny.com — Portfolio/
-  ├─ [C] PROJECT TRUTH — Read First.md          (authoritative orientation)
-  ├─ [C] Version Comparison — Workspace vs GitHub.md
-  ├─ _github-version (ChatGPT)/                  (reference copy only)
-  └─ app/ (root)                                 (RETIRED single-page JS version — reference only)
+  ├─ [C] PROJECT TRUTH — Read First.md                    (authoritative orientation)
+  ├─ [C] Version Comparison — Workspace vs GitHub.md      (historical / superseded context)
+  ├─ _github-version (ChatGPT)/                            (reference copy only)
+  └─ app/ (root)                                          (retired single-page JS version — reference only)
 
-Role: Hamilton Pinto Jr.'s personal/tech portfolio under the "Benny & Penny's — A Tech Company"
-banner. NOT the store, NOT the book-production system.
+Role: Hamilton Pinto Jr.'s personal / technology portfolio under the
+      "Benny & Penny's — A Tech Company" banner.
 
-Repository: hpintojr/bennyandpenny → Vercel (bennyandpenny.vercel.app)
-Platform: Next.js 15 + TypeScript. Visual system: teal/mint core retained.
+Repository: hpintojr/bennyandpenny
+Platform: Next.js 15 + TypeScript
+Deploy: GitHub main → Vercel production
+Domain: https://bennyandpenny.com
+```
 
-Current deployment source and change rule:
-- GitHub branch main is the canonical live source and deploys through Vercel.
-- Make routine portfolio changes directly on main only.
-- Do not create branches or pull requests unless Hamilton explicitly changes that instruction.
+### Current source and change rule
 
-Portfolio position: Hamilton's personal/tech portfolio; ventures are XBeton, AFF,
-Benny & Penny's Adventures, Mercury Call Desk, and 60+ Establishments.
-Backlinks (dofollow): ACC, AFF, BAPA, XBeton, Mercury — footer + Person JSON-LD sameAs.
+- `main` is the canonical live source and deploys through Vercel.
+- Make routine portfolio changes directly on `main`.
+- Do not create a branch or pull request unless Hamilton explicitly requests it or a technical recovery requires it.
+- The June 20 image-sync PR was a one-time recovery exception; it does not alter the normal direct-to-`main` workflow.
 
-2026-06-20 image integration complete on main:
-- Homepage: sculptural B/P hero + image-led venture cards.
-- Work: image-led cards for all five ventures.
-- About: Hamilton portrait feature.
-- Adventures: book mockup visual.
-- Social: Open Graph and X/Twitter image metadata.
-- Asset path: hpintojr/bennyandpenny/public/images/.
-- Merge commit: 0523e09819cf682f3808b24b71145c2ad44ba8ea.
+### Current portfolio state — end of day 2026-06-20
 
-2026-06-19 session (built; commit/push main to deploy):
-- Real horizontal logo in header + transparent favicon set (app/icon.png, favicon.ico, apple-icon.png).
-- Adventures (/families): full ten-part series showcase, all 10 official titles, no status labels.
-- Contact form (/work-with-us): ContactForm + /api/contact → Neon insert + Mailjet to hello@bennyandpenny.com
-  (env-driven; ChatGPT wires creds via docs/CONTACT-FORM-SETUP.md + db/contact_submissions.sql + .env.example).
-- Footer facelift: ventures alphabetized, full names (incl. American Colonial Capital), hover underline-wipe, Privacy/Terms links.
-- Privacy (/privacy) + Terms (/terms) pages added.
+```txt
+Latest production merge:
+7503abe6ab5e0afcde8b2147eee3180ad47fe459
 
-Read first:
+Completed:
+- Home, Work, About, Adventures, Contact, Privacy, and Terms pages are live.
+- Home and Work include XBeton, Advantage First Financial, Benny & Penny's Adventures,
+  American Colonial Capital, Mercury Call Desk, and 60+ Establishments.
+- Header uses the approved horizontal logo.
+- Footer uses the BP monogram + custom wordmark typography and current studio mission copy.
+- Contact route is configured for Sequenzy delivery and Neon submission storage.
+- SEO/discovery includes page metadata, canonicals, JSON-LD, robots.txt, sitemap.xml,
+  llms.txt, llm.txt, llms-full.txt, and Markdown mirrors.
+- The approved social-sharing asset is public/images/og-social-background.webp (1200 × 630).
+  Open Graph and Twitter metadata point to this static WebP with a revision query string.
+```
+
+### Portfolio asset map
+
+```txt
+public/images/home-hero-brandmark.webp        → Home hero
+public/images/about-portrait-context.webp     → About portrait
+public/images/work-xbeton-architecture.webp   → XBeton cards
+public/images/work-aff-dashboard.webp          → Advantage First Financial cards
+public/images/work-adventures-mockup.webp      → Adventures cards + Adventures page
+public/images/work-acc-capital.svg             → ACC card background
+public/images/acc-logo.svg                     → ACC logo overlay
+public/images/work-mercury-telephony.webp      → Mercury Call Desk cards
+public/images/work-establishments-collage.webp → 60+ Establishments cards
+public/images/og-social-background.webp        → Open Graph / Twitter / text-share image
+public/images/logo-horizontal-transparent.png  → Header logo
+public/images/logo-mark-transparent.png        → Footer/dark-background monogram
+```
+
+### Read first
+
+```txt
 02 Projects/bennyandpenny.com — Portfolio/[C] PROJECT TRUTH — Read First.md
-01 Daily Logs/[C] 2026-06-19 Portfolio Contact Form Footer and Legal Pages.md
+01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio EOD SEO Social Footer and Content Updates.md
 01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio Image Integration.md
+```
 
-Next actions:
-1. Commit + push the 2026-06-19 changes to main; confirm Vercel renders logo, Adventures, footer, /privacy, /terms.
-2. ChatGPT: wire Neon + Mailjet env and run the contact-form schema.
-3. Optional: "By submitting you agree to Privacy/Terms" line under the contact button; attorney review of legal pages.
-4. Continue directly on main only.
+### Next actions
+
+```txt
+1. Confirm new Messages/SMS and social shares pick up the approved WebP preview after cache refresh.
+2. Test the contact form end to end after confirming Vercel production variables and the Neon table.
+3. Confirm www.bennyandpenny.com redirects to bennyandpenny.com.
+4. Submit sitemap.xml to Google Search Console and Bing Webmaster Tools.
+5. Decide whether public Markdown/LLM mirrors should receive noindex response headers.
+6. Build approved service and case-study pages.
 ```
 
 ## Current Benny & Penny Store Status
@@ -142,17 +159,24 @@ must be confirmed and returned to false unless live recovery email is intentiona
 ## Directory Notes
 
 ```txt
-01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio Image Integration.md (main-branch image integration and asset map)
-01 Daily Logs/[C] 2026-06-19 Portfolio Mixup Recovery and Reposition.md (portfolio recovery and reorientation)
-01 Daily Logs/[C] 2026-06-18 Cart Recovery Email Delivery and CTA Visual Validation.md (safe test, real reminder delivery, CTA heart finalization)
-01 Daily Logs/[C] 2026-06-18 Cart Recovery Operations Controls and Attribution Reporting.md (admin controls, attribution, migration)
-01 Daily Logs/[C] 2026-06-18 Cart Recovery Environment Configuration and Dry Run.md (Vercel environment setup)
-01 Daily Logs/[C] 2026-06-18 Cart Recovery Automation Sequenzy and Attribution Build.md (automation architecture)
-01 Daily Logs/[C] 2026-06-18 Database Cart Conversion Safety Net Added.md (paid-order trigger confirmation)
-01 Daily Logs/[C] 2026-06-18 Webhook Cart Conversion Fallback Added.md (webhook fallback build)
-01 Daily Logs/[C] 2026-06-17 Cart Recovery Checkout Gate and Sandbox Verification.md (guest cart / checkout tests)
-01 Daily Logs/[C] 2026-06-17 Guest Cart Recovery Capture Added.md (guest email and consent capture)
-01 Daily Logs/[C] 2026-06-17 Abandoned Cart Tracking Build Started.md (tracking collection/API foundation)
+01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio EOD SEO Social Footer and Content Updates.md
+  (current portfolio handoff: footer, ACC, contact stack, SEO, discovery files, and final social WebP)
+
+01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio Image Integration.md
+  (initial portfolio image integration and asset map)
+
+01 Daily Logs/[C] 2026-06-19 Portfolio Mixup Recovery and Reposition.md
+  (portfolio recovery and reorientation)
+
+01 Daily Logs/[C] 2026-06-18 Cart Recovery Email Delivery and CTA Visual Validation.md
+01 Daily Logs/[C] 2026-06-18 Cart Recovery Operations Controls and Attribution Reporting.md
+01 Daily Logs/[C] 2026-06-18 Cart Recovery Environment Configuration and Dry Run.md
+01 Daily Logs/[C] 2026-06-18 Cart Recovery Automation Sequenzy and Attribution Build.md
+01 Daily Logs/[C] 2026-06-18 Database Cart Conversion Safety Net Added.md
+01 Daily Logs/[C] 2026-06-18 Webhook Cart Conversion Fallback Added.md
+01 Daily Logs/[C] 2026-06-17 Cart Recovery Checkout Gate and Sandbox Verification.md
+01 Daily Logs/[C] 2026-06-17 Guest Cart Recovery Capture Added.md
+01 Daily Logs/[C] 2026-06-17 Abandoned Cart Tracking Build Started.md
 01 Daily Logs/[C] 2026-06-17 Checkout Name Guard and Email DNS Confirmed.md
 01 Daily Logs/[C] 2026-06-17 Google Places Confirmed.md
 01 Daily Logs/[C] 2026-06-17 Google Places and Stripe Name Guard.md
@@ -166,7 +190,7 @@ must be confirmed and returned to false unless live recovery email is intentiona
 02 Projects/Benny & Penny's Adventures/[C] Lulu Print on Demand Plan.md
 ```
 
-## Benny & Penny's Adventures Book Series (new project)
+## Benny & Penny's Adventures Book Series
 
 ```txt
 10-book print + digital + audio + multilingual production using Claude, ChatGPT, Gemini, and Canva.
