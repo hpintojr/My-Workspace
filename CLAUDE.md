@@ -277,12 +277,25 @@ Claude cannot push here (no GitHub connector; sandbox network blocked).
 The old app/ at the portfolio project root (Next 14 JS) is the RETIRED single-page version — reference only.
 ```
 
+Built so far (live code in the repo; commit/push main to deploy):
+
+```txt
+- Header uses the real horizontal logo; transparent favicon set (app/icon.png, favicon.ico, apple-icon.png).
+- Adventures page (/families) = full ten-part series showcase with all 10 official titles (no status labels).
+- Contact form (/work-with-us): components/ContactForm.tsx + app/api/contact/route.ts → Neon insert + Mailjet
+  email to hello@bennyandpenny.com. Env-driven; ChatGPT wires creds (docs/CONTACT-FORM-SETUP.md, db/contact_submissions.sql, .env.example).
+- Footer facelift: ventures alphabetized with full names (incl. American Colonial Capital), hover underline-wipe, Privacy/Terms links.
+- Privacy (/privacy) + Terms (/terms) pages added (contract/payment/arbitration + privacy policy). Have an attorney review.
+- Known issue: local repo git index corrupts on background-sync overlap; fix = rm .git/index .git/index.lock && git read-tree HEAD && git reset --mixed (non-destructive).
+```
+
 Read first for portfolio continuation:
 
 ```txt
 02 Projects/bennyandpenny.com — Portfolio/[C] PROJECT TRUTH — Read First.md
 02 Projects/bennyandpenny.com — Portfolio/[C] Version Comparison — Workspace vs GitHub.md
 02 Projects/bennyandpenny.com — Portfolio/_github-version (ChatGPT)/docs/[C] Portfolio Project Index & Commands.md
+01 Daily Logs/[C] 2026-06-19 Portfolio Contact Form Footer and Legal Pages.md
 01 Daily Logs/[C] 2026-06-19 Portfolio Mixup Recovery and Reposition.md
 ```
 

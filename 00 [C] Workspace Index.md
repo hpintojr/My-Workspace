@@ -62,14 +62,23 @@ Backlinks (dofollow): ACC, AFF, BAPA, XBeton, Mercury — footer + Person JSON-L
 - Asset path: hpintojr/bennyandpenny/public/images/.
 - Merge commit: 0523e09819cf682f3808b24b71145c2ad44ba8ea.
 
+2026-06-19 session (built; commit/push main to deploy):
+- Real horizontal logo in header + transparent favicon set (app/icon.png, favicon.ico, apple-icon.png).
+- Adventures (/families): full ten-part series showcase, all 10 official titles, no status labels.
+- Contact form (/work-with-us): ContactForm + /api/contact → Neon insert + Mailjet to hello@bennyandpenny.com
+  (env-driven; ChatGPT wires creds via docs/CONTACT-FORM-SETUP.md + db/contact_submissions.sql + .env.example).
+- Footer facelift: ventures alphabetized, full names (incl. American Colonial Capital), hover underline-wipe, Privacy/Terms links.
+- Privacy (/privacy) + Terms (/terms) pages added.
+
 Read first:
 02 Projects/bennyandpenny.com — Portfolio/[C] PROJECT TRUTH — Read First.md
+01 Daily Logs/[C] 2026-06-19 Portfolio Contact Form Footer and Legal Pages.md
 01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio Image Integration.md
 
 Next actions:
-1. Confirm Vercel renders all asset paths on Home, Work, About, and Adventures.
-2. Add Privacy/Terms before any contact-form data collection.
-3. Confirm venture copy and outbound links are accurate.
+1. Commit + push the 2026-06-19 changes to main; confirm Vercel renders logo, Adventures, footer, /privacy, /terms.
+2. ChatGPT: wire Neon + Mailjet env and run the contact-form schema.
+3. Optional: "By submitting you agree to Privacy/Terms" line under the contact button; attorney review of legal pages.
 4. Continue directly on main only.
 ```
 

@@ -112,14 +112,22 @@ public/images/work-adventures-mockup.webp      → Adventures cards + Adventures
 public/images/work-mercury-telephony.webp      → Mercury Call Desk cards
 public/images/work-establishments-collage.webp → 60+ Establishments cards
 public/images/og-social-background.webp        → Open Graph / X sharing image
+public/images/logo-horizontal-transparent.png  → Header logo (transparent)
+public/images/logo-compact-transparent.png     → Compact logo (transparent)
+public/images/logo-mark-transparent.png        → Monogram mark (footer / dark bg)
+app/icon.png · app/favicon.ico · app/apple-icon.png → Favicon set (from favicon-source.png)
 ```
 
 ## Open / next
 
 ```txt
-- Confirm the Vercel deployment renders all eight image assets correctly on Home, Work, About,
-  and Adventures.
-- Add Privacy + Terms before any contact-form data collection.
+- Commit + push the 2026-06-19 changes to main (logo, favicon, Adventures, contact form, footer,
+  /privacy, /terms) and confirm the Vercel deploy renders them.
+- Contact form is built (components/ContactForm.tsx + app/api/contact/route.ts → Neon + Mailjet to
+  hello@bennyandpenny.com). ChatGPT to wire creds: run db/contact_submissions.sql, set DATABASE_URL +
+  MAILJET_* env in Vercel (see docs/CONTACT-FORM-SETUP.md). Form succeeds if either channel is configured.
+- Privacy (/privacy) + Terms (/terms) DONE; have an attorney review (arbitration/class-waiver vary by state).
+- Optional: add a "By submitting you agree to Privacy/Terms" line under the contact button.
 - Confirm each venture description and outbound destination is current and accurate.
 - Continue work directly on main only.
 ```

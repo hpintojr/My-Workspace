@@ -124,9 +124,12 @@ Read first:
 
 ```txt
 02 Projects/bennyandpenny.com — Portfolio/[C] PROJECT TRUTH — Read First.md
+01 Daily Logs/[C] 2026-06-19 Portfolio Contact Form Footer and Legal Pages.md
 01 Daily Logs/[C] 2026-06-20 BennyAndPenny.com Portfolio Image Integration.md
 02 Projects/bennyandpenny.com — Portfolio/[C] Version Comparison — Workspace vs GitHub.md
 01 Daily Logs/[C] 2026-06-19 Portfolio Mixup Recovery and Reposition.md
 ```
 
-Next actions: confirm Vercel rendering on Home, Work, About, and Adventures; add Privacy/Terms before contact-form data collection; confirm venture copy and outbound links; then continue directly on `main` only.
+2026-06-19 session added (in repo, pending commit/push to `main`): real header logo + transparent favicon set; Adventures rebuilt as a ten-part series showcase (no status labels); a sleek contact form wired to Neon + Mailjet (hello@bennyandpenny.com, ChatGPT to add creds); footer facelift with alphabetized full-name ventures and Privacy/Terms links; and new `/privacy` + `/terms` pages.
+
+Next actions: commit + push the 2026-06-19 changes to `main` and confirm the Vercel deploy; have ChatGPT wire the contact-form Neon/Mailjet env and run the schema; optionally add a Privacy/Terms agreement line under the contact button; attorney review of the legal pages; then continue directly on `main` only.
