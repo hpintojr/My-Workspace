@@ -10,26 +10,21 @@ status: deployed — Chrome share-sheet behavior still requires real-device conf
 
 ## Evidence reviewed
 
-The screenshots show two separate behaviors:
+The screenshots show two distinct behaviors:
 
 1. Safari and Messages can render the approved BP social image in a normal shared link card.
 2. Chrome's iOS share-sheet header can remain text-only even when a Messages link card later renders the proper image.
-3. Earlier blank cards inside Messages are cached historical cards and do not retroactively refresh after metadata changes.
+3. Earlier blank cards inside Messages are historical cards and do not update in place after metadata changes.
 
-The browser share-sheet header and the final Messages link preview are separate presentation layers. The first is chosen by the browser; the second is created by the receiving/link-preview system.
+The browser share-sheet header and the final Messages link preview are separate presentation layers. The first is selected by the browser; the second is created by the receiving/link-preview system.
 
-## Existing implementation retained
+## Previous generated-preview path
 
-```txt
-Dynamic image route: /og-image
-Route implementation: app/og-image/route.tsx
-Format: image/png
-Size: 1200 × 630
-```
+The original `/og-image` route generated a PNG at request time with Next `ImageResponse`. The root and homepage metadata referenced that route with explicit image URL, secure URL, MIME type, and dimensions.
 
-## Follow-up fallback deployed
+## Static-art compatibility fallback
 
-Added `app/head.tsx` as a static-image fallback for clients that inspect direct head tags or `image_src`:
+Added `app/head.tsx` with a direct static-image fallback for clients that inspect direct head tags or `image_src`:
 
 ```txt
 Static source:
@@ -44,30 +39,46 @@ Declared fallback tags:
 - twitter:image
 ```
 
-The fallback points to the approved BP artwork already demonstrated in Safari and the successful Messages screenshot. The dynamic PNG route remains in place as a second compatible path.
+The fallback uses the approved BP artwork shown in the successful Safari and Messages screenshots.
+
+## Static-art preview route
+
+The `/og-image` route was then changed from generated artwork to a direct raw-byte proxy for the approved static WebP asset:
+
+```txt
+Route: app/og-image/route.tsx
+Source: /images/og-social-background.webp
+Response content type: image/webp
+Cache: long shared-cache lifetime with stale-while-revalidate
+Safety header: X-Content-Type-Options nosniff
+```
+
+This removes generated-image rendering from the primary preview request while preserving the existing preview URL used by current metadata.
 
 ## Deployment
 
 ```txt
 Repository: hpintojr/bennyandpenny
 Branch: main
-Commit: c9280ce8a43baed65e277679f70623bb7f01886f
-Commit message: Add static image fallback for mobile share previews
-Vercel status: success
+Static fallback commit: c9280ce8a43baed65e277679f70623bb7f01886f
+Static proxy commit: 04c9d5c19939da9a820c39ca9073c0d8355b3481
+Vercel status: success for both commits
 ```
 
 ## Important boundary
 
-No website metadata can force Chrome on iOS to show a thumbnail in Chrome's own share-sheet header. The metadata can control the normal webpage link card that Messages and other preview systems fetch. The success criteria are:
+Website metadata can improve the normal webpage link card. It cannot force Chrome on iOS to show a thumbnail in Chrome's own share-sheet header.
 
-- a new message link card shows the approved BP social art;
+Success criteria:
+
+- a new final Messages link card shows the approved BP social art;
 - the card title and domain are correct;
 - the direct preview image remains reachable;
-- old blank cards are treated as cached historical previews.
+- old blank cards are treated as historical cached previews.
 
 ## Next device check
 
 1. In Chrome iOS, load the root domain and use Share.
 2. Send the link to a new recipient or new message thread.
 3. Confirm the final Messages card—not only Chrome's share sheet—uses the BP social image.
-4. If it is still blank, capture the Chrome version and whether the blank occurs in the share sheet, the compose preview, or the delivered Messages card.
+4. If it is still blank, capture the Chrome version and whether the blank occurs in the share sheet, compose preview, or delivered Messages card.
