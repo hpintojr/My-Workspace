@@ -120,14 +120,14 @@ Repo: hpintojr/bennyandpenny
 Branch: main
 Deploy: Vercel production
 Preferred domain: https://www.bennyandpenny.com
-Latest production deployment: dpl_EbEX6ButzpuksGDSZjVACv9suwoE
+Latest production deployment: dpl_5bAsWNCX7CxXakii2H8uEqrgtqY3
 Status: READY
 ```
 
 Current portfolio priority:
 
 ```txt
-The shared WCAG 2.2 AA accessibility program is active. The portfolio is the implementation reference for the Adventures site, including its native floating Accessibility preferences launcher and approved universal-access person-in-circle icon.
+The shared WCAG 2.2 AA accessibility program remains active. A Chrome/mobile share-preview hardening pass is deployed: the homepage and root layout use an absolute PNG Open Graph card at /og-image. The remaining share task is a real-device Chrome test from a new message thread; existing message previews may be cached.
 ```
 
 Implemented:
@@ -142,12 +142,14 @@ Implemented:
 - Production Neon storage now contains the `contact_submissions` table for valid Contact requests.
 - Accessibility statement, LLM and Markdown discovery mirrors, sitemap, robots, canonical metadata, and automated smoke/browser audit framework.
 - Content-author guide, inventory, manual checklist, WCAG program documentation, shared cross-site specification, and Adventures handoff.
+- Dedicated `/og-image` PNG social-preview route. Homepage and root layout supply the same absolute image URL, secure URL, MIME type, and 1200 × 630 dimensions for standard link cards.
 
 Read first:
 
 ```txt
-02 Projects/[C] Shared WCAG 2.2 AA Accessibility Design & Engineering Specification.md
 02 Projects/bennyandpenny.com — Portfolio/[C] PROJECT TRUTH — Read First.md
+01 Daily Logs/[C] 2026-06-20 Portfolio Mobile Chrome Share Preview Fix.md
+02 Projects/[C] Shared WCAG 2.2 AA Accessibility Design & Engineering Specification.md
 01 Daily Logs/[C] 2026-06-20 Universal Accessibility Icon Update.md
 01 Daily Logs/[C] 2026-06-20 Portfolio Contact Submission Storage Approved and Applied.md
 docs/accessibility/wcag-program.md in hpintojr/bennyandpenny
@@ -157,10 +159,12 @@ docs/accessibility/inventory.md in hpintojr/bennyandpenny
 Next actions:
 
 ```txt
-1. Run and retain production Accessibility Smoke Test and Browser Accessibility Audit results.
-2. Complete visual/keyboard validation of the new launcher, including minimize/restore, dialog focus return, 200% zoom, 400% reflow, text spacing, reduced motion, and forced colors.
-3. Complete NVDA plus Chrome/Firefox and VoiceOver plus Safari tests.
-4. Complete image-alternative review.
-5. Run a controlled real Contact submission and verify visitor success state, Neon persistence, Sequenzy delivery, failure messaging, and retry/help handling.
-6. Keep all portfolio changes direct to main unless Hamilton requests a branch or pull request.
+1. Share https://www.bennyandpenny.com/ from Chrome mobile in a new message thread and confirm the standard link card is no longer blank.
+2. Record device, Chrome version, and receiver app if the share card remains blank; Chrome's screenshot-style page capture is separate from Open Graph metadata.
+3. Run and retain production Accessibility Smoke Test and Browser Accessibility Audit results.
+4. Complete visual/keyboard validation of the new launcher, including minimize/restore, dialog focus return, 200% zoom, 400% reflow, text spacing, reduced motion, and forced colors.
+5. Complete NVDA plus Chrome/Firefox and VoiceOver plus Safari tests.
+6. Complete image-alternative review.
+7. Run a controlled real Contact submission and verify visitor success state, Neon persistence, Sequenzy delivery, failure messaging, and retry/help handling.
+8. Keep all portfolio changes direct to main unless Hamilton requests a branch or pull request.
 ```
