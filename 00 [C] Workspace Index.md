@@ -14,10 +14,10 @@ Updated: 2026-06-21
 Project: bennyandpenny.com  
 Repository: hpintojr/bennyandpenny  
 Branch: main  
-Latest verified share-preview commit: c9280ce8a43baed65e277679f70623bb7f01886f  
+Latest verified share-preview commit: 04c9d5c19939da9a820c39ca9073c0d8355b3481  
 Vercel status: success
 
-The portfolio includes the native accessibility launcher, approved universal-access icon, footer trigger, native preferences dialog, and approved Neon Contact storage. Social sharing now has two compatible paths: the generated PNG preview at `/og-image` and a static approved-art fallback in `app/head.tsx` for clients that inspect direct head tags. Chrome iOS may show a text-only browser share-sheet header even when the final Messages link card renders correctly; a real-device final-card test remains open.
+The portfolio includes the native accessibility launcher, approved universal-access icon, footer trigger, native preferences dialog, and approved Neon Contact storage. Social sharing now sends the approved static BP artwork through the existing `/og-image` URL as raw WebP bytes, with direct static fallback head tags in `app/head.tsx`. Chrome iOS may show a text-only browser share-sheet header even when the final Messages link card renders correctly; a real-device final-card test remains open.
 
 ### Portfolio read next
 
