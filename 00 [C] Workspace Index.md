@@ -4,50 +4,41 @@ Updated: 2026-06-20
 
 ## First read
 
-```txt
-README.md
-00 [C] Workspace Index.md
-CLAUDE.md
-02 Projects/[C] Shared WCAG 2.2 AA Accessibility Design & Engineering Specification.md
-```
+1. README.md
+2. 00 [C] Workspace Index.md
+3. CLAUDE.md
+4. 02 Projects/[C] Shared WCAG 2.2 AA Accessibility Design & Engineering Specification.md
 
 ## Portfolio
 
-```txt
-Project: bennyandpenny.com
-Repository: hpintojr/bennyandpenny
-Branch: main
-Latest production deployment: dpl_EbEX6ButzpuksGDSZjVACv9suwoE
+Project: bennyandpenny.com  
+Repository: hpintojr/bennyandpenny  
+Branch: main  
+Latest production deployment: dpl_5bAsWNCX7CxXakii2H8uEqrgtqY3  
 Status: READY
-```
 
-Current accessibility work includes a native floating launcher using the approved universal-access person-in-circle icon, a restore tab after minimizing, a shared footer trigger, and a native preferences dialog. The optimized vector is theme-aware and replaces the earlier ambiguous thin-line figure. Production Contact submission storage is approved and present in Neon. The next meaningful verification is a controlled end-to-end Contact delivery test plus the remaining accessibility evidence.
+The portfolio includes the native accessibility launcher, approved universal-access icon, footer trigger, native preferences dialog, and approved Neon Contact storage. Standard webpage sharing now uses the dedicated PNG preview route `/og-image`. Root and homepage metadata agree on the absolute preview URL, PNG format, and 1200 by 630 size. A real device Chrome share check remains open.
 
-Read next:
+### Portfolio read next
 
-```txt
-02 Projects/[C] Shared WCAG 2.2 AA Accessibility Design & Engineering Specification.md
-02 Projects/bennyandpenny.com — Portfolio/[C] PROJECT TRUTH — Read First.md
-01 Daily Logs/[C] 2026-06-20 Workspace Sync — Portfolio Accessibility Icon and Contact Storage.md
-01 Daily Logs/[C] 2026-06-20 Universal Accessibility Icon Update.md
-01 Daily Logs/[C] 2026-06-20 Portfolio Contact Submission Storage Approved and Applied.md
-```
+1. 02 Projects/bennyandpenny.com — Portfolio/[C] PROJECT TRUTH — Read First.md
+2. 01 Daily Logs/[C] 2026-06-20 Portfolio Mobile Chrome Share Preview Fix.md
+3. 02 Projects/[C] Shared WCAG 2.2 AA Accessibility Design & Engineering Specification.md
+4. 01 Daily Logs/[C] 2026-06-20 Workspace Sync — Portfolio Accessibility Icon and Contact Storage.md
+5. 01 Daily Logs/[C] 2026-06-20 Universal Accessibility Icon Update.md
+6. 01 Daily Logs/[C] 2026-06-20 Portfolio Contact Submission Storage Approved and Applied.md
 
 ## Adventures Store
 
-```txt
-Project: bennyandpennyadventures.com
+Project: bennyandpennyadventures.com  
 Repository: hpintojr/bennyandpennyadventures
-```
 
 The shared WCAG specification is required before accessibility implementation begins in this separate repository. It includes the approved universal-access person-in-circle icon, native launcher behavior, and the required store, account, library, gift, order, and support testing scope.
 
-Read next:
+### Adventures read next
 
-```txt
-02 Projects/[C] Shared WCAG 2.2 AA Accessibility Design & Engineering Specification.md
-02 Projects/Benny & Penny's Adventures/[C] Accessibility WCAG 2.2 AA Handoff.md
-```
+1. 02 Projects/[C] Shared WCAG 2.2 AA Accessibility Design & Engineering Specification.md
+2. 02 Projects/Benny & Penny's Adventures/[C] Accessibility WCAG 2.2 AA Handoff.md
 
 ## Book Series
 
