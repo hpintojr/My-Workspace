@@ -15,7 +15,7 @@ Repository: hpintojr/bennyandpenny
 Branch: main
 Deployment: GitHub main to Vercel production
 Preferred domain: https://www.bennyandpenny.com
-Latest production deployment: dpl_EbEX6ButzpuksGDSZjVACv9suwoE
+Latest production deployment: dpl_5bAsWNCX7CxXakii2H8uEqrgtqY3
 Deployment state: READY
 Role: Hamilton Pinto Jr.'s personal and technology portfolio
 ```
@@ -43,11 +43,12 @@ Target: WCAG 2.2 Level AA engineering conformance. Do not claim legal accessibil
 - Permanent footer text trigger and Accessibility page as alternate access paths.
 - Smoke-test and browser-audit tooling plus WCAG program, inventory, issue register, and author guide.
 - Production Neon submission storage is approved and the `contact_submissions` table is present.
+- Dedicated PNG social-preview route at `/og-image` for consistent webpage sharing.
 
 ## Production verification snapshot
 
 ```txt
-Vercel deployment: dpl_EbEX6ButzpuksGDSZjVACv9suwoE
+Vercel deployment: dpl_5bAsWNCX7CxXakii2H8uEqrgtqY3
 State: READY
 Verified production output:
 - Floating launcher markup
@@ -56,9 +57,25 @@ Verified production output:
 - Native dialog markup
 - Approved universal-icon element
 - /images/accessibility-universal-icon.svg asset returns HTTP 200
+- /og-image returns HTTP 200 with content-type image/png
 ```
 
 This verifies the deployed implementation and asset availability. Visual browser review, assistive-technology testing, contrast evidence, and automated audit evidence remain open work.
+
+## Social sharing preview contract
+
+```txt
+Canonical Open Graph image: https://www.bennyandpenny.com/og-image
+Format: PNG
+Dimensions: 1200 × 630
+Metadata: absolute public URL, secure URL, explicit type and dimensions
+Implemented in: app/layout.tsx and app/page.tsx
+Image route: app/og-image/route.tsx
+```
+
+The homepage has page-specific metadata, so it must remain aligned with the root layout metadata. The PNG route is the source for standard link cards in Messages, Chrome, and social clients. It is not the same feature as Chrome's browser-generated clipped-page or screenshot-style share behavior.
+
+Chrome/mobile device confirmation remains open. A cached preview in an existing message thread is not a valid regression result; test from a new share in a new thread or recipient.
 
 ## Floating launcher contract
 
@@ -86,15 +103,17 @@ docs/accessibility/content-authoring-guide.md
 
 ## Next actions
 
-1. Run and retain production smoke and browser audit reports.
-2. Complete visual launcher validation, contrast, zoom, reflow, text-spacing, forced-colors, and screen-reader evidence.
-3. Complete image and media alternative review.
-4. Run a controlled production Contact submission and validate visitor success, database persistence, Sequenzy delivery, delivery-failure messaging, and retry/help handling.
-5. Apply the shared specification to the separate Adventures repository when that work begins.
+1. Test a normal Chrome-mobile share of `https://www.bennyandpenny.com/` from a new message thread and record the result.
+2. Run and retain production smoke and browser audit reports.
+3. Complete visual launcher validation, contrast, zoom, reflow, text-spacing, forced-colors, and screen-reader evidence.
+4. Complete image and media alternative review.
+5. Run a controlled production Contact submission and validate visitor success, database persistence, Sequenzy delivery, delivery-failure messaging, and retry/help handling.
+6. Apply the shared specification to the separate Adventures repository when that work begins.
 
 ## Read next
 
 ```txt
+01 Daily Logs/[C] 2026-06-20 Portfolio Mobile Chrome Share Preview Fix.md
 02 Projects/[C] Shared WCAG 2.2 AA Accessibility Design & Engineering Specification.md
 01 Daily Logs/[C] 2026-06-20 Workspace Sync — Portfolio Accessibility Icon and Contact Storage.md
 01 Daily Logs/[C] 2026-06-20 Universal Accessibility Icon Update.md
