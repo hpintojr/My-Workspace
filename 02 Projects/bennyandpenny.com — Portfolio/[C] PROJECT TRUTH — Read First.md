@@ -15,7 +15,7 @@ Repository: hpintojr/bennyandpenny
 Branch: main
 Deployment: GitHub main to Vercel production
 Preferred domain: https://www.bennyandpenny.com
-Latest verified share-preview commit: c9280ce8a43baed65e277679f70623bb7f01886f
+Latest verified share-preview commit: 04c9d5c19939da9a820c39ca9073c0d8355b3481
 Vercel status for that commit: success
 Role: Hamilton Pinto Jr.'s personal and technology portfolio
 ```
@@ -40,7 +40,7 @@ Do not claim legal accessibility certification without independent audit and rev
 - Keyboard mobile navigation with focus handling and Escape close.
 - Contact labels, autocomplete, validation, error summary, inline errors, and status messages.
 - Native accessibility preferences: text size, high contrast, pause motion, readable font, reset, and local persistence.
-- Native lower-left accessibility launcher with a minimize button and a visible restore tab.
+- Native floating lower-left accessibility launcher with a minimize button and a visible restore tab.
 - Approved universal-access person-in-circle icon at `public/images/accessibility-universal-icon.svg`, rendered as a theme-aware CSS mask.
 - Permanent footer text trigger and Accessibility page as alternate access paths.
 - Smoke-test and browser-audit tooling plus WCAG program, inventory, issue register, and author guide.
@@ -48,27 +48,26 @@ Do not claim legal accessibility certification without independent audit and rev
 
 ## Social-sharing preview contract
 
-### Primary generated preview
-
 ```txt
-URL: https://www.bennyandpenny.com/og-image
-Format: PNG
-Dimensions: 1200 × 630
-Code: app/og-image/route.tsx
+Metadata URL used by existing root and homepage metadata:
+https://www.bennyandpenny.com/og-image
+
+Route implementation:
+app/og-image/route.tsx
+
+Route behavior:
+Returns the approved static BP social artwork as raw WebP bytes.
+
+Direct static artwork:
+https://www.bennyandpenny.com/images/og-social-background.webp?rev=20260621-static
+
+Fallback head markup:
+app/head.tsx
 ```
 
-The root layout and homepage both declare the generated preview with absolute image URLs, secure URLs, explicit MIME type, and dimensions.
+The generated preview has been removed from the primary request path. `/og-image` now proxies the approved static image with `image/webp`, a long shared-cache policy, and `nosniff`. The fallback head markup adds `image_src`, Open Graph image, secure image, MIME type, dimensions, alt text, and Twitter image hints for clients that inspect direct head markup.
 
-### Static image fallback
-
-```txt
-URL: https://www.bennyandpenny.com/images/og-social-background.webp?rev=20260621-static
-Format: WebP
-Dimensions: 1200 × 630
-Code: app/head.tsx
-```
-
-The static fallback uses the approved BP social artwork that Safari and successful Messages cards have already rendered. It adds `image_src`, Open Graph image, secure image, MIME type, dimensions, alt text, and Twitter image hints for clients that inspect direct head markup.
+The approved artwork is 1200 × 630 and is the image that Safari and successful Messages cards have already rendered.
 
 ### Screenshot interpretation
 
@@ -76,10 +75,10 @@ The static fallback uses the approved BP social artwork that Safari and successf
 Safari share sheet thumbnail: browser/Apple rich-preview behavior.
 Chrome iOS share-sheet header: Chrome-controlled; may remain text-only.
 Messages card: the final externally rendered link preview that matters.
-Old blank Messages cards: cached historical previews; they do not refresh in place.
+Old blank Messages cards: historical/cached previews; they do not refresh in place.
 ```
 
-The website can improve the final link-card metadata but cannot force Chrome's own iOS share-sheet header to display a thumbnail. Test final Messages output using a new share to a new thread or recipient.
+The website can improve final link-card metadata but cannot force Chrome's own iOS share-sheet header to display a thumbnail. Test final Messages output using a new share to a new thread or recipient.
 
 ## Floating launcher contract
 
