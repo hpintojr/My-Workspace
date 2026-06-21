@@ -2,7 +2,7 @@
 author: ChatGPT
 type: project-truth
 project: bennyandpenny.com — Portfolio
-updated: 2026-06-20
+updated: 2026-06-21
 status: AUTHORITATIVE
 ---
 
@@ -15,67 +15,71 @@ Repository: hpintojr/bennyandpenny
 Branch: main
 Deployment: GitHub main to Vercel production
 Preferred domain: https://www.bennyandpenny.com
-Latest production deployment: dpl_5bAsWNCX7CxXakii2H8uEqrgtqY3
-Deployment state: READY
+Latest verified share-preview commit: c9280ce8a43baed65e277679f70623bb7f01886f
+Vercel status for that commit: success
 Role: Hamilton Pinto Jr.'s personal and technology portfolio
 ```
 
 This portfolio is separate from the Benny & Penny's Adventures store and the book-production project.
 
-## Accessibility scope
-
-The active standard is:
+## Active standard
 
 ```txt
+Shared accessibility standard:
 02 Projects/[C] Shared WCAG 2.2 AA Accessibility Design & Engineering Specification.md
+
+Target:
+WCAG 2.2 Level AA engineering conformance.
 ```
 
-Target: WCAG 2.2 Level AA engineering conformance. Do not claim legal accessibility certification without independent audit and review.
+Do not claim legal accessibility certification without independent audit and review.
 
-## Implemented portfolio foundation
+## Implemented foundation
 
-- Skip link, named main landmark, visible focus, reduced motion, forced colors, and target-size support.
+- Skip link, landmarks, visible focus, reduced motion, forced colors, and target-size support.
 - Keyboard mobile navigation with focus handling and Escape close.
 - Contact labels, autocomplete, validation, error summary, inline errors, and status messages.
 - Native accessibility preferences: text size, high contrast, pause motion, readable font, reset, and local persistence.
-- Native floating lower-left accessibility launcher with a minimize button and a visible restore tab.
-- Approved universal-access person-in-circle icon at `public/images/accessibility-universal-icon.svg`, rendered as a theme-aware CSS mask rather than the previous thin-line figure.
+- Native lower-left accessibility launcher with a minimize button and a visible restore tab.
+- Approved universal-access person-in-circle icon at `public/images/accessibility-universal-icon.svg`, rendered as a theme-aware CSS mask.
 - Permanent footer text trigger and Accessibility page as alternate access paths.
 - Smoke-test and browser-audit tooling plus WCAG program, inventory, issue register, and author guide.
 - Production Neon submission storage is approved and the `contact_submissions` table is present.
-- Dedicated PNG social-preview route at `/og-image` for consistent webpage sharing.
 
-## Production verification snapshot
+## Social-sharing preview contract
 
-```txt
-Vercel deployment: dpl_5bAsWNCX7CxXakii2H8uEqrgtqY3
-State: READY
-Verified production output:
-- Floating launcher markup
-- Named open and minimize buttons
-- Footer preferences trigger
-- Native dialog markup
-- Approved universal-icon element
-- /images/accessibility-universal-icon.svg asset returns HTTP 200
-- /og-image returns HTTP 200 with content-type image/png
-```
-
-This verifies the deployed implementation and asset availability. Visual browser review, assistive-technology testing, contrast evidence, and automated audit evidence remain open work.
-
-## Social sharing preview contract
+### Primary generated preview
 
 ```txt
-Canonical Open Graph image: https://www.bennyandpenny.com/og-image
+URL: https://www.bennyandpenny.com/og-image
 Format: PNG
 Dimensions: 1200 × 630
-Metadata: absolute public URL, secure URL, explicit type and dimensions
-Implemented in: app/layout.tsx and app/page.tsx
-Image route: app/og-image/route.tsx
+Code: app/og-image/route.tsx
 ```
 
-The homepage has page-specific metadata, so it must remain aligned with the root layout metadata. The PNG route is the source for standard link cards in Messages, Chrome, and social clients. It is not the same feature as Chrome's browser-generated clipped-page or screenshot-style share behavior.
+The root layout and homepage both declare the generated preview with absolute image URLs, secure URLs, explicit MIME type, and dimensions.
 
-Chrome/mobile device confirmation remains open. A cached preview in an existing message thread is not a valid regression result; test from a new share in a new thread or recipient.
+### Static image fallback
+
+```txt
+URL: https://www.bennyandpenny.com/images/og-social-background.webp?rev=20260621-static
+Format: WebP
+Dimensions: 1200 × 630
+Code: app/head.tsx
+```
+
+The static fallback uses the approved BP social artwork that Safari and successful Messages cards have already rendered. It adds `image_src`, Open Graph image, secure image, MIME type, dimensions, alt text, and Twitter image hints for clients that inspect direct head markup.
+
+### Screenshot interpretation
+
+```txt
+Safari share sheet thumbnail: browser/Apple rich-preview behavior.
+Chrome iOS share-sheet header: Chrome-controlled; may remain text-only.
+Messages card: the final externally rendered link preview that matters.
+Old blank Messages cards: cached historical previews; they do not refresh in place.
+```
+
+The website can improve the final link-card metadata but cannot force Chrome's own iOS share-sheet header to display a thumbnail. Test final Messages output using a new share to a new thread or recipient.
 
 ## Floating launcher contract
 
@@ -88,9 +92,9 @@ Close/Done/Escape: returns focus to the initiating control.
 State: saved locally on the device only.
 ```
 
-Never remove every access path. The footer trigger and Accessibility page remain permanent.
+The footer trigger and Accessibility page remain permanent alternate access paths.
 
-## Current docs in the portfolio repo
+## Current portfolio docs
 
 ```txt
 docs/accessibility/wcag-program.md
@@ -103,19 +107,18 @@ docs/accessibility/content-authoring-guide.md
 
 ## Next actions
 
-1. Test a normal Chrome-mobile share of `https://www.bennyandpenny.com/` from a new message thread and record the result.
-2. Run and retain production smoke and browser audit reports.
-3. Complete visual launcher validation, contrast, zoom, reflow, text-spacing, forced-colors, and screen-reader evidence.
-4. Complete image and media alternative review.
-5. Run a controlled production Contact submission and validate visitor success, database persistence, Sequenzy delivery, delivery-failure messaging, and retry/help handling.
-6. Apply the shared specification to the separate Adventures repository when that work begins.
+1. Test a Chrome-iOS share to a new Messages thread or recipient; record whether the final card renders correctly.
+2. If the final Messages card is blank, record Chrome version and whether the failure is in the share sheet, compose preview, or delivered card.
+3. Run and retain production smoke and browser audit reports.
+4. Complete visual launcher validation, contrast, zoom, reflow, text-spacing, forced-colors, and screen-reader evidence.
+5. Complete image and media alternative review.
+6. Run a controlled production Contact submission and validate visitor success, database persistence, Sequenzy delivery, delivery-failure messaging, and retry/help handling.
+7. Apply the shared specification to the separate Adventures repository when that work begins.
 
 ## Read next
 
 ```txt
+01 Daily Logs/[C] 2026-06-21 Portfolio Chrome iOS Share Preview Follow-Up.md
 01 Daily Logs/[C] 2026-06-20 Portfolio Mobile Chrome Share Preview Fix.md
 02 Projects/[C] Shared WCAG 2.2 AA Accessibility Design & Engineering Specification.md
-01 Daily Logs/[C] 2026-06-20 Workspace Sync — Portfolio Accessibility Icon and Contact Storage.md
-01 Daily Logs/[C] 2026-06-20 Universal Accessibility Icon Update.md
-01 Daily Logs/[C] 2026-06-20 Portfolio Contact Submission Storage Approved and Applied.md
 ```
