@@ -45,6 +45,18 @@ The shared WCAG specification is required before accessibility implementation be
 
 The shared specification also applies to accessible customer-facing digital books, media, downloads, and support resources.
 
+## MCD - Mercury Call Desk
+
+AI receptionist / call-desk platform (on a Sulus.ai base) sold by commission-only 1099 sales partners, managed in GoHighLevel, with a reseller-partner pathway. Separate project. Phases: 1) agent onboarding (now) · 2) GoHighLevel CRM (next, incl. planned GHL MCP) · 3) reseller channel (later). The 14-file Sales Partner Launch Kit was migrated in as canonical onboarding on 2026-06-24.
+
+Read first:
+
+```txt
+02 Projects/MCD - Mercury Call Desk/[C] AI Index & Commands.md
+02 Projects/MCD - Mercury Call Desk/[C] Owner Setup & Open Decisions.md
+01 Daily Logs/[C] 2026-06-24 MCD Project Setup.md
+```
+
 ## Rules
 
 - Keep portfolio, store, and book production separate.

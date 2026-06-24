@@ -168,3 +168,18 @@ Next actions:
 7. Run a controlled real Contact submission and verify visitor success state, Neon persistence, Sequenzy delivery, failure messaging, and retry/help handling.
 8. Keep all portfolio changes direct to main unless Hamilton requests a branch or pull request.
 ```
+
+### MCD - Mercury Call Desk
+
+New project (2026-06-24): the AI receptionist / call-desk platform business — recruiting and onboarding commission-only 1099 sales partners now, GoHighLevel CRM next, reseller channel later. Separate from the portfolio, store, and book projects. Coordinated through a shared MD index so Claude/ChatGPT/Gemini follow the same files. Hamilton's Sales Partner Launch Kit (14 files) was migrated in as the canonical onboarding.
+
+Read first:
+
+```txt
+02 Projects/MCD - Mercury Call Desk/[C] AI Index & Commands.md
+02 Projects/MCD - Mercury Call Desk/MCD - Mercury Call Desk Overview.md
+02 Projects/MCD - Mercury Call Desk/[C] Owner Setup & Open Decisions.md
+01 Daily Logs/[C] 2026-06-24 MCD Project Setup.md
+```
+
+First actions: fill in `[C] Owner Setup & Open Decisions.md` (brand + commission/payout rules), draft the Sales Partner Agreement + NDA, then move to the GoHighLevel CRM phase (incl. the planned GHL MCP).

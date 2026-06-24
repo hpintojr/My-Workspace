@@ -312,6 +312,40 @@ Don't create duplicate portfolio folders/repos. Deploy only by pushing main, wit
 
 ---
 
+### MCD - Mercury Call Desk
+
+AI receptionist / call-desk platform (on a Sulus.ai base) sold by commission-only 1099 sales partners, managed in GoHighLevel, with a reseller-partner pathway. Separate project from the portfolio, store, and book work. Read `[C] AI Index & Commands.md` first.
+
+```txt
+Phases (in order): 1) Agent onboarding (NOW) · 2) GoHighLevel CRM (NEXT, incl. planned GHL MCP) · 3) Reseller channel (LATER).
+Divisions/commission on GROSS PROFIT: Small 40% ($350–$1,000/mo) · Medium/Call Desk 35% ($999–$1,995/mo) · Enterprise 30% ($5,000–$10,000/mo). Annual ≈ 25% off, paid upfront.
+Model: "no-cost demo" outbound; leads are company records worked only in the CRM.
+Confidential: pricing, commission math, scripts, ICP. The signed Sales Partner Agreement controls (kit is ops guidance, not a contract).
+```
+
+On 2026-06-24 Hamilton's Sales Partner Launch Kit (14 files) was migrated in as the canonical onboarding under `01-agent-onboarding/`; the Gemini master ops manual + conversation record are in `99-reference/`.
+
+Read first for MCD continuation:
+
+```txt
+02 Projects/MCD - Mercury Call Desk/[C] AI Index & Commands.md
+02 Projects/MCD - Mercury Call Desk/MCD - Mercury Call Desk Overview.md
+02 Projects/MCD - Mercury Call Desk/[C] Owner Setup & Open Decisions.md
+02 Projects/MCD - Mercury Call Desk/01-agent-onboarding/00_READ_ME_FIRST.md
+01 Daily Logs/[C] 2026-06-24 MCD Project Setup.md
+```
+
+Guardrails:
+
+```txt
+Keep MCD separate from the other projects. Don't publish confidential pricing/commission/scripts.
+Use approved claims language only (no guarantees like "never miss a lead"/"fully compliant"/"replaces staff").
+Finalize Owner Setup + signed Sales Partner Agreement + NDA before any agent sells live (attorney review recommended).
+Outbound calling is subject to TCPA/related rules; confirm before scaling. AI-authored files use the [C] prefix.
+```
+
+---
+
 ## Workspace Commands
 
 ```txt
