@@ -222,10 +222,12 @@ Read first for Book Series continuation:
 
 ```txt
 02 Projects/Benny & Penny's Adventures Book Series/[C] AI Index & Commands.md
+02 Projects/Benny & Penny's Adventures Book Series/01-characters/[C] CHARACTER-BIBLE-MASTER.md
 02 Projects/Benny & Penny's Adventures Book Series/README.md
 02 Projects/Benny & Penny's Adventures Book Series/00-series-control/00-OFFICIAL-CATALOG.md
 02 Projects/Benny & Penny's Adventures Book Series/00-series-control/02-MASTER-PRODUCTION-DASHBOARD.md
 02 Projects/Benny & Penny's Adventures Book Series/Benny & Penny's Adventures Book Series Overview.md
+01 Daily Logs/[C] 2026-06-25 Book Series Character Locks.md
 01 Daily Logs/[C] 2026-06-18 Book Series Production Kit Migration.md
 ```
 
@@ -314,7 +316,7 @@ Don't create duplicate portfolio folders/repos. Deploy only by pushing main, wit
 
 ### MCD - Mercury Call Desk
 
-AI receptionist / call-desk platform (on a Sulus.ai base) sold by commission-only 1099 sales partners, managed in GoHighLevel, with a reseller-partner pathway. Separate project from the portfolio, store, and book work. Read `[C] AI Index & Commands.md` first.
+AI receptionist / call-desk platform (built on a third-party platform base — vendor name CONFIDENTIAL, do not disclose) sold by commission-only 1099 sales partners, managed in GoHighLevel, with a reseller-partner pathway. Separate project from the portfolio, store, and book work. Read `[C] AI Index & Commands.md` first.
 
 ```txt
 Phases (in order): 1) Agent onboarding (NOW) · 2) GoHighLevel CRM (NEXT, incl. planned GHL MCP) · 3) Reseller channel (LATER).

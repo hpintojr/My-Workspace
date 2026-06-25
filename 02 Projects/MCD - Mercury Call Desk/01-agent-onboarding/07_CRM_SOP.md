@@ -6,22 +6,22 @@ Sales Partners work only in the Sales HQ workspace. Your account is configured s
 
 Do not request or attempt access to another partner’s leads, client accounts, billing, commission records, workflows, integrations, or settings.
 
-## Sales Pipeline stages
+## Sales Pipeline stages (live GHL pipeline)
+
+These match the live GoHighLevel pipeline in the Mercury Call Desk sub-account.
 
 | Stage | What it means | Required next action |
 |---|---|---|
-| New Lead - Unworked | Lead has not received a documented outreach attempt | Contact promptly; create next task |
-| Contact Attempted | Initial outreach occurred, but no meaningful conversation yet | Schedule follow-up |
-| Connected / Discovery | Meaningful conversation began | Document need and qualification notes |
-| Qualified | Prospect has a real use case and next step | Book demo or advance to proposal process |
-| Demo Scheduled | Calendar invitation is sent | Confirm attendance and prepare notes |
-| Demo Held | Demo occurred | Send recap and create proposal / next-step task |
-| Proposal / Checkout Sent | Proposal or checkout has been delivered | Follow up by due date |
-| Agreement Sent | Agreement is awaiting completion | Follow up and answer approved questions |
-| Payment Pending | Agreement is complete but payment is not confirmed | Notify / follow approved payment process |
-| Nurture / Future Follow-Up | Real prospect with deferred timing | Set a specific future task |
-| Client Paid / Won | Payment is confirmed | Stop sales outreach; operations handoff begins |
-| Closed Lost | Prospect will not move forward | Select lost reason and stop active sequence |
+| New Lead | Lead has not received a documented outreach attempt | Contact promptly; create next task |
+| Initial Contact Made | Outreach occurred (call/email/text); may not be a full conversation yet | Log it; schedule follow-up or discovery |
+| Demo Scheduled | A qualified demo is booked on the calendar | Confirm attendance; share notes with the demo lead |
+| Demo Completed | The demo occurred | Send recap; set the next step (estimate / proposal / close) |
+| 2nd Demo & Review | A follow-up demo or review session is needed | Schedule it; document open questions/decision-makers |
+| Estimate Sent (Enterprise) | An estimate/proposal has been delivered (enterprise deals) | Follow up by the due date |
+| Closed Won | Payment confirmed / deal won | Stop sales outreach; operations/onboarding handoff begins |
+| Closed Lost | Prospect will not move forward | Select a lost reason; stop the active sequence |
+
+> Tip: keep a **Nurture** tag or task for real prospects with deferred timing so they don't get lost between stages.
 
 ## Non-negotiable CRM rules
 

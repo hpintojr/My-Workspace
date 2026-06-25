@@ -34,19 +34,17 @@ Commission is **not** a percentage of retail price; it is 50% of the gross profi
 
 Annual plans are billed upfront (Site ~25% off, Enterprise ~20% off); your commission on an annual deal is 50% of the annual gross profit, paid as an upfront commission. See the company pricing model for exact figures.
 
-## Payout rules to finalize in the signed agreement
+## Payout rules (finalized — the signed Sales Partner Agreement controls)
 
-The company must finalize these items before an agent sells live:
-
-- [ ] Commission trigger: signed contract, cleared first payment, or another defined event.
-- [ ] Timing of monthly residual payments.
-- [ ] Timing of annual-plan commission payments.
-- [ ] Refund, cancellation, failed-payment, and chargeback treatment.
-- [ ] Downgrade, pause, upgrade, and expansion treatment.
-- [ ] Split commission rules.
-- [ ] Lead reassignment rules.
-- [ ] Client ownership after agent separation.
-- [ ] Commission statement and dispute process.
+- **Commission trigger:** cleared first customer payment.
+- **Monthly residuals:** paid net-15 (within 15 days after the payment clears for that cycle).
+- **Annual-plan commission:** 50% of annual gross profit, paid after the annual funds clear.
+- **Refunds / chargebacks / cancellations:** reversed or offset against future payouts within 90 days.
+- **Downgrade / pause / upgrade:** commission adjusts to the new collected amount going forward.
+- **Split commission:** the manager decides case-by-case.
+- **Lead reassignment:** leads with no documented activity for 7 days may be reassigned.
+- **Client ownership after separation:** the client remains the company's; residuals cease at termination.
+- **Commission statements:** issued monthly; raise any dispute in writing within 30 days or the statement is final.
 
 ## Lead ownership rules
 

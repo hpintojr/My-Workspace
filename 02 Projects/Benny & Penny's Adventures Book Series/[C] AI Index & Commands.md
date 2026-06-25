@@ -58,7 +58,9 @@ Canonical catalog lives in `00-series-control/00-OFFICIAL-CATALOG.md` and `offic
 3. 00-series-control/01-SERIES-TITLE-AND-BRAND.md     (brand + reader promise)
 4. 00-series-control/00-OFFICIAL-CATALOG.md           (titles, slugs, status)
 5. 00-series-control/02-MASTER-PRODUCTION-DASHBOARD.md(status of all 10 books — THE tracker)
-6. 01-characters/  +  03-props-wardrobe/TYPOGRAPHY-AND-TEXT-STANDARDS.md  (visual + text locks)
+6. 01-characters/[C] CHARACTER-BIBLE-MASTER.md  (READ FIRST for any character art — cast, references, precedence rule)
+   then the specific character lock(s): PENNY / BENNY / NURSE-IVY (-CHARACTER-LOCK.md)
+   + 03-props-wardrobe/TYPOGRAPHY-AND-TEXT-STANDARDS.md  (text locks)
 7. The specific book: 04-books/book-NN-<slug>/00-BOOK-OVERVIEW.md, then its numbered subfolders
 ```
 
@@ -70,7 +72,9 @@ Do not produce content or layout before reading items 1–6.
 
 ```txt
 00-series-control/   catalog, brand, master production dashboard, release versioning
-01-characters/       Benny + Penny + new-character LOCK files (visual canon)
+01-characters/       [C] CHARACTER-BIBLE-MASTER.md (index) + per-character LOCK files
+                     (PENNY, BENNY, NURSE-IVY locked; POLLY-PUMP/DANNY/ELLIE draft) +
+                     _reference-images/ (drop 0449/3991/8745 here) + Author Bible PDF
 02-environments/     per-book environment LOCK files + bedroom lock + template
 03-props-wardrobe/   medical prop glossary + typography/text standards
 04-books/book-NN-*/  per book: 00-overview, 01-manuscript, 02-page-briefs, 03-canva,
@@ -146,6 +150,7 @@ Never overwrite an approved asset version — increment it.
 - Lock control point: before any final print cover/interior, record the exact current Lulu requirement/template
   in 06-print/LULU/01-LULU-LIVE-SPEC-CAPTURE.md. Final cover size depends on final product + page count.
 - Defer to character/environment LOCK files and TYPOGRAPHY-AND-TEXT-STANDARDS.md on any visual/text conflict.
+- Character precedence: an APPROVED REFERENCE IMAGE always beats a text description. Match the reference, then apply the lock's fixes. Read [C] CHARACTER-BIBLE-MASTER.md before drawing any character.
 - Git/security: commit Markdown, manifests, approved text, low-res review art only.
   Keep master art, family photos, paid customer files, printer PDFs, and master audio in PRIVATE storage.
 - Final assets feed the separate "Benny & Penny's Adventures" website project (pdf_path/epub_path/audio_path).

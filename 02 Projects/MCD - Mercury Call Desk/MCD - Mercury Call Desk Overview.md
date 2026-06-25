@@ -5,7 +5,7 @@ project: MCD - Mercury Call Desk
 ---
 
 ## Goal
-Stand up everything needed to run Mercury Call Desk (MCD) — an AI receptionist / call-desk platform — as a sales-driven business: recruit and onboard commission-only sales partners now, then build out the GoHighLevel (GHL) CRM, and ultimately a reseller channel (Hamilton's own version of reselling Sulus.ai).
+Stand up everything needed to run Mercury Call Desk (MCD) — an AI receptionist / call-desk platform — as a sales-driven business: recruit and onboard commission-only sales partners now, then build out the GoHighLevel (GHL) CRM, and ultimately a reseller channel (Hamilton's own reseller channel on the underlying platform).
 
 ## Why
 MCD's growth depends on a repeatable way to hire, certify, and equip sales agents, and on a CRM that keeps every lead and commission clean. Getting onboarding and the CRM right first makes the reseller channel — and hands-off scaling — possible. A shared MD index keeps Claude, ChatGPT, and Gemini all working from the same source of truth.
@@ -17,7 +17,7 @@ MCD's growth depends on a repeatable way to hire, certify, and equip sales agent
 
 ## Business at a glance
 ```txt
-Platform:    Mercury Call Desk (AI telephony / call-desk automation) — built on a Sulus.ai base + dev.
+Platform:    Mercury Call Desk (AI telephony / call-desk automation) — built on a third-party platform base + dev (vendor confidential; do not disclose).
 Sells via:   commission-only 1099 Sales Partners (remote), "no-cost demo" outbound model.
 Divisions:   Small Business (40% comm), Medium/Call Desk (35%), Enterprise (30%) — commission on GROSS PROFIT.
 Pricing:     Small $350–$1,000/mo · Medium $999–$1,995/mo · Enterprise $5,000–$10,000/mo (annual ≈ 25% off).
@@ -38,5 +38,5 @@ Reseller:    partners reaching ~$10k–$30k+/mo residual unlock Reseller Partner
 2. Finalize commission/payout rules in the signed Sales Partner Agreement (trigger, residual timing, refund/chargeback, splits, lead reassignment, client ownership on separation).
 3. Get the Sales Partner Agreement + NDA + W-9 / direct-deposit forms drafted and into the onboarding flow (attorney review recommended).
 4. Build the GoHighLevel CRM (pipelines, routing, doc safe, onboarding workflow) — and the planned GHL MCP for Claude.
-5. Define the reseller-partner pathway terms and the relationship to Sulus.ai reselling.
-6. Confirm legal/compliance posture (TCPA/outbound calling rules, non-compete enforceability, claims language).
+5. Define the reseller-partner pathway terms and the underlying-platform reseller relationship.
+6. Confirm legal/compliance posture (TCPA/outbound calling rules, non-solicitation scope, claims language).
