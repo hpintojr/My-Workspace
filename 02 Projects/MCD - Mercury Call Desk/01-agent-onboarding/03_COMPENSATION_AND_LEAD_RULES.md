@@ -4,21 +4,35 @@
 
 ## Commission framework
 
-Sales-partner commissions are calculated from **gross profit**, not simply from the customer’s retail price. Gross profit is the collected retail revenue minus approved platform, development, processing, and other direct costs defined by the company.
+Sales Partners earn a flat **50% of gross profit** on every package — Standard (Site) and Enterprise alike. One simple split, easy to understand and easy to account for.
 
-| Division | Target customer | Standard commission rate on gross profit |
-|---|---:|---:|
-| Small Business | 1-3 employees; straightforward call handling | 40% |
-| Medium Business / Call Desk | 2-10 employees; standard automation and routing | 35% |
-| Enterprise | complex work, larger teams, integrations, custom development | 30% |
+**Gross profit = collected retail revenue − partner wholesale cost − payment-processing fee** (Stripe 2.9% + $0.30 per charge) for that billing.
 
-## Package reference
+Commission is **not** a percentage of retail price; it is 50% of the gross profit defined above.
 
-| Division | Monthly package range | Annual package range |
-|---|---:|---:|
-| Small Business | $350 - $1,000 | $3,150 - $9,000 |
-| Medium Business / Call Desk | $999 - $1,995 | $8,995 - $17,955 |
-| Enterprise | $5,000 - $10,000 | $45,000 - $90,000 |
+## Partner wholesale schedule (your cost basis)
+
+| Set | Tier | Retail/mo | Partner wholesale/mo |
+|---|---|---:|---:|
+| Standard (Site) | Starter | $1,595 | $1,000 |
+| Standard (Site) | Growth | $1,995 | $1,250 |
+| Standard (Site) | Pro | $3,995 | $1,500 |
+| Enterprise | Starter | $5,295 | $2,500 |
+| Enterprise | Growth | $7,595 | $3,500 |
+| Enterprise | Pro | $9,995 | $5,000 |
+
+## Example monthly commission (at 50%)
+
+| Package | Retail | Wholesale | Stripe | Gross profit | Your commission |
+|---|---:|---:|---:|---:|---:|
+| Site Starter | $1,595 | $1,000 | ~$47 | ~$548 | **~$274** |
+| Site Growth | $1,995 | $1,250 | ~$58 | ~$687 | **~$343** |
+| Site Pro | $3,995 | $1,500 | ~$116 | ~$2,379 | **~$1,189** |
+| Ent Starter | $5,295 | $2,500 | ~$154 | ~$2,641 | **~$1,321** |
+| Ent Growth | $7,595 | $3,500 | ~$220 | ~$3,874 | **~$1,937** |
+| Ent Pro | $9,995 | $5,000 | ~$290 | ~$4,705 | **~$2,352** |
+
+Annual plans are billed upfront (Site ~25% off, Enterprise ~20% off); your commission on an annual deal is 50% of the annual gross profit, paid as an upfront commission. See the company pricing model for exact figures.
 
 ## Payout rules to finalize in the signed agreement
 
@@ -45,4 +59,4 @@ The company must finalize these items before an agent sells live:
 
 ## Important
 
-Compensation examples, rates, product costs, and payout rules are confidential. The signed Sales Partner Agreement controls. No Sales Partner may quote, promise, or independently alter compensation arrangements for another agent.
+Compensation rates, the partner wholesale schedule, product costs, and payout rules are confidential. The signed Sales Partner Agreement controls. No Sales Partner may quote, promise, or independently alter compensation arrangements for another agent.

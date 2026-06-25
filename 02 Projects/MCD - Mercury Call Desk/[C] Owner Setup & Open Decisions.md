@@ -37,6 +37,9 @@ Approved escalation channel:     __________
 ```
 
 ## Compensation / payout rules to lock in the signed agreement
+
+**DECIDED 2026-06-25:** Commission = **flat 50% of gross profit** on all packages. Gross profit = retail − partner wholesale − Stripe. Partner wholesale shown to agents: Site $1,000/$1,250/$1,500; Enterprise $2,500/$3,500/$5,000. True cost (internal): Site $50/$150/$500; Enterprise $2,500/$3,500/$5,000. Retail/pricing finalized (Site 25% annual, Enterprise 20% annual). Full math: `01-agent-onboarding/[C] Pricing and Commission Model.xlsx`.
+
 ```txt
 [ ] Commission trigger (signed contract / cleared first payment / other)
 [ ] Monthly residual payment timing
@@ -54,9 +57,9 @@ Approved escalation channel:     __________
 
 ## Legal / compliance to prepare
 ```txt
-[ ] Sales Partner Agreement (owner + attorney review)
-[ ] NDA / confidentiality agreement (owner + attorney review)
-[ ] 3-month vertical non-compete clause (confirm enforceability by state)
+[~] Sales Partner Agreement — DRAFT created (01-agent-onboarding/agreements/); fill [ ] blanks + attorney review
+[~] Confidentiality/IP/Non-Compete — DRAFT created (01-agent-onboarding/agreements/); fill [ ] blanks + attorney review
+[ ] 3-month vertical non-compete clause (confirm enforceability by state — see draft §5)
 [ ] W-9 collection + Direct Deposit authorization in onboarding flow
 [ ] TCPA / outbound-calling compliance review before scaling dialing
 [ ] Approved claims language enforced (no guarantees)

@@ -35,25 +35,37 @@ Do not change pricing, commission rates, scripts, or compliance language without
 ```txt
 00 (root)                MCD Overview · this index · Owner Setup & Open Decisions
 01-agent-onboarding/     The Sales Partner Launch Kit (canonical onboarding). Files 00–13:
+                         + agreements/ : [C] Sales Partner Agreement (DRAFT) · [C] Confidentiality IP and Non-Compete (DRAFT)
+                           — drafts only; fill blanks + attorney review before use.
                          00 read-me · 01 welcome · 02 first-7-days · 03 comp & lead rules ·
                          04 product catalog · 05 ICP & discovery · 06 outbound script ·
                          07 CRM SOP · 08 compliance · 09 certification scorecard ·
                          10 first-30-days · 11 manager checklist · 12 new-hire acknowledgment ·
-                         13 owner brand setup sheet · + distributable .docx
+                         13 owner brand setup sheet · 14 demo process & handoff · + distributable .docx
 02-crm-gohighlevel/      GHL CRM phase (NEXT): pipelines, routing, doc safe, onboarding workflow, comp tracking, planned GHL MCP.
 03-reseller-channel/     Reseller-partner channel (LATER).
 99-reference/            Gemini master ops manual + the source conversation record.
 ```
 
-## 4. Pricing & commission (from the kit / master manual — confidential)
+## 4. Pricing & commission (LOCKED 2026-06-25 — confidential)
 
 ```txt
-Commission is on GROSS PROFIT (retail − Sulus base/dev − Stripe 2.9%+$0.30), not retail.
-Small Business   40%   $350–$1,000/mo  ($3,150–$9,000/yr)
-Medium/Call Desk 35%   $999–$1,995/mo  ($8,995–$17,955/yr)
-Enterprise       30%   $5,000–$10,000/mo ($45,000–$90,000/yr)
-Annual ≈ 25% discount, paid as upfront commission. Reseller status unlocks ~$10k–$30k+/mo residual.
-Exact rates/costs are CONFIDENTIAL; the signed Sales Partner Agreement controls.
+Two pricing sets, each Starter/Growth/Pro. Commission = flat 50% of GROSS PROFIT on ALL packages.
+GROSS PROFIT = retail − PARTNER WHOLESALE − Stripe (2.9%+$0.30). (Agents are paid on the partner
+wholesale schedule, NOT Hamilton's true cost, which is internal/confidential.)
+
+                 Retail/mo            Annual (upfront)     Partner wholesale/mo
+Standard (Site):
+  Starter        $1,595               $14,355/yr (25% off) $1,000
+  Growth         $1,995               $17,955/yr           $1,250
+  Pro            $3,995               $35,955/yr           $1,500
+Enterprise:
+  Starter        $5,295               $50,832/yr (20% off) $2,500
+  Growth         $7,595               $72,912/yr           $3,500
+  Pro            $9,995               $95,952/yr           $5,000
+
+Reseller status unlocks ~$10k–$30k+/mo residual. Exact rates/costs are CONFIDENTIAL; signed agreement controls.
+Full model: 01-agent-onboarding/[C] Pricing and Commission Model.xlsx (Agent View + Internal/Confidential sheet).
 ```
 
 ## 5. Shared commands (same meaning in any AI)
