@@ -3,7 +3,7 @@ type: tracker
 date: 2026-06-24
 updated: 2026-06-25
 project: MCD - Mercury Call Desk
-status: Mostly LOCKED. A few setup items open (calendar, per-agent GHL env, MCP, branding).
+status: Mostly LOCKED. A few setup items open (calendar, per-agent GHL env, MCP, final font/outlined logo release).
 ---
 
 # Owner Setup & Open Decisions
@@ -20,8 +20,10 @@ Apply / general:        hello@mercurycalldesk.com  ·  Instagram @hpintojr
 Support email:          support@mercurycalldesk.com
 Sales email:            sales@mercurycalldesk.com
 Business phone / caller ID: (909) 276-7631  (interim — moving to AI assistant later)
-Primary logo / colors:  [ TBD ]
+Primary logo / colors:  `04-brand-assets/` SVG system added — blue/cyan icon; navy wordmark for light backgrounds; white wordmark for dark backgrounds. Final font + outlined release pending.
 ```
+
+Brand source of truth: `02 Projects/MCD - Mercury Call Desk/04-brand-assets/00_READ_ME_FIRST.md` and `04-brand-documentation/[C] Logo Asset Catalog.md`.
 
 ## Sales operations
 ```txt
