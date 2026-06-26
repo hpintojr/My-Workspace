@@ -49,7 +49,7 @@ The shared specification also applies to accessible customer-facing digital book
 
 AI receptionist / call-desk platform (built on a third-party platform base — vendor confidential, do not disclose) sold by commission-only 1099 sales partners, managed in GoHighLevel, with a reseller-partner pathway. Separate project. Phases: 1) agent onboarding (now) · 2) GoHighLevel CRM (next, incl. planned GHL MCP) · 3) reseller channel (later). The 14-file Sales Partner Launch Kit was migrated in as canonical onboarding on 2026-06-24.
 
-A dedicated `04-brand-assets/` system is now added: editable SVG masters, light/dark wordmark variants, icon-only SVG, provisional brand colors, and a catalog. A new branded 18-page Sales Partner Launch Kit now consolidates the current agent onboarding workflow into a company-ready onboarding booklet. The final font and an outlined production release remain open.
+A dedicated `04-brand-assets/` system is now added: editable SVG masters, light/dark wordmark variants, icon-only SVG, provisional brand colors, and a catalog. The new branded 18-page Sales Partner Launch Kit is company-ready. Its cover has been corrected: the logo is now integrated into the navy artwork with no hard-edged image block. The final font and an outlined production release remain open.
 
 Read first:
 
@@ -60,6 +60,7 @@ Read first:
 02 Projects/MCD - Mercury Call Desk/04-brand-assets/04-brand-documentation/[C] Logo Asset Catalog.md
 02 Projects/MCD - Mercury Call Desk/01-agent-onboarding/00_READ_ME_FIRST.md
 02 Projects/MCD - Mercury Call Desk/01-agent-onboarding/15_BRANDED_SALES_PARTNER_LAUNCH_KIT.md
+02 Projects/MCD - Mercury Call Desk/01-agent-onboarding/[C] Sales Partner Launch Kit Cover Revision.md
 01 Daily Logs/[C] 2026-06-25 MCD Branded Sales Partner Launch Kit.md
 01 Daily Logs/[C] 2026-06-25 MCD Brand Assets Cataloged.md
 01 Daily Logs/[C] 2026-06-25 MCD Remove Non-Compete and Confidential Vendor.md
