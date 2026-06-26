@@ -16,6 +16,14 @@ project: MCD - Mercury Call Desk
 - Added `01-agent-onboarding/15_BRANDED_SALES_PARTNER_LAUNCH_KIT.md` as the workspace source and maintenance map.
 - Updated `01-agent-onboarding/00_READ_ME_FIRST.md` so the branded package is part of the required onboarding read path.
 
+## Cover correction - completed
+
+- Rebuilt the front cover after the original logo placement appeared inside a hard-edged rectangular raster background.
+- Replaced that treatment with a fully integrated navy cover design, so the Mercury Call Desk logo now sits directly in the cover artwork with no visible image box or pasted-on panel.
+- Updated the editable DOCX, print/share PDF, and bundled ZIP with the corrected cover.
+- Re-rendered the revised DOCX and reviewed all 18 pages for layout quality after the cover replacement.
+- Added `01-agent-onboarding/[C] Sales Partner Launch Kit Cover Revision.md` as the permanent workspace record of the correction.
+
 ## What the branded package includes
 
 - First 7 days launch plan
@@ -37,4 +45,4 @@ project: MCD - Mercury Call Desk
 
 ## Start here next
 
-Review the final branded launch kit against the desired agent experience. After approval, use it as the standard new-hire packet and regenerate it whenever the numbered onboarding source files change.
+Use the corrected branded launch kit as the standard new-hire packet. Regenerate it whenever the numbered onboarding source files or approved brand system change.
