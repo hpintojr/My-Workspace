@@ -171,7 +171,13 @@ Next actions:
 
 ### MCD - Mercury Call Desk
 
-New project (2026-06-24): the AI receptionist / call-desk platform business — recruiting and onboarding commission-only 1099 sales partners now, GoHighLevel CRM next, reseller channel later. Separate from the portfolio, store, and book projects. Coordinated through a shared MD index so Claude/ChatGPT/Gemini follow the same files. Hamilton's Sales Partner Launch Kit (14 files) was migrated in as the canonical onboarding.
+AI receptionist / call-desk platform business — recruiting and onboarding commission-only 1099 sales partners now, GoHighLevel CRM next, reseller channel later. Separate from the portfolio, store, and book projects. Coordinated through a shared MD index so Claude/ChatGPT/Gemini follow the same files. Hamilton's Sales Partner Launch Kit (14 files) is the canonical onboarding.
+
+Current MCD status:
+
+```txt
+Owner setup and compensation rules are mostly locked. A dedicated brand asset system now exists in 04-brand-assets/ with editable SVG masters, icon-only artwork, light-background navy-text and dark-background white-text variants, plus a provisional blue/cyan color system. Final font approval and an outlined production release are still open.
+```
 
 Read first:
 
@@ -179,7 +185,11 @@ Read first:
 02 Projects/MCD - Mercury Call Desk/[C] AI Index & Commands.md
 02 Projects/MCD - Mercury Call Desk/MCD - Mercury Call Desk Overview.md
 02 Projects/MCD - Mercury Call Desk/[C] Owner Setup & Open Decisions.md
+02 Projects/MCD - Mercury Call Desk/04-brand-assets/00_READ_ME_FIRST.md
+02 Projects/MCD - Mercury Call Desk/04-brand-assets/04-brand-documentation/[C] Logo Asset Catalog.md
+01 Daily Logs/[C] 2026-06-25 MCD Brand Assets Cataloged.md
+01 Daily Logs/[C] 2026-06-25 MCD Remove Non-Compete and Confidential Vendor.md
 01 Daily Logs/[C] 2026-06-24 MCD Project Setup.md
 ```
 
-First actions: fill in `[C] Owner Setup & Open Decisions.md` (brand + commission/payout rules), draft the Sales Partner Agreement + NDA, then move to the GoHighLevel CRM phase (incl. the planned GHL MCP).
+First actions: review and approve the SVG geometry and final wordmark font; then create an outlined production release. In parallel, create the dedicated sales/demo calendar and move into the GoHighLevel CRM phase (including the planned GHL MCP).
