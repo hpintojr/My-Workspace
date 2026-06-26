@@ -3,7 +3,7 @@
 Phased document package prepared outside this repository.
 
 01 Phase 1 - Pre-access return packet
-02 Phase 2 - Training and live authorization
+02 Phase 2 - Training and live authorization, including the corrected cover launch kit
 03 Phase 3 - Ongoing operations
 04 Phase 4 - Offboarding
 05 Phase 5 - Company administration
