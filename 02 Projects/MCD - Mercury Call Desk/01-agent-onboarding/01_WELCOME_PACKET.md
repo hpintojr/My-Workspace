@@ -1,41 +1,57 @@
 # Welcome to Mercury Call Desk
 
-## Your role
+## Your opportunity and role
 
-You are a Sales Partner helping business owners discover how Mercury Call Desk Platform can answer, route, qualify, and follow up on calls using AI-assisted telephony and call-desk automation.
+You are an Independent Sales Partner building business through Mercury Call Desk (MCD), an AI receptionist / call-desk automation platform. MCD gives you approved tools, brand assets, CRM/portal support, customer-contract handling, implementation support, billing, accounting, and escalation structure so you can independently prospect and build a recurring-revenue book of business.
 
-Your role is not to promise a result. Your role is to identify a real business need, explain the potential value clearly, book a qualified demo, and guide the business through an honest sales process.
+You control your schedule, work location, prospecting approach, and non-competing business activity. MCD does not guarantee income, results, customer volume, commissions, reseller status, or any future authority level.
 
-**Your #1 job is to set the appointment.** Once you book a qualified demo, Hamilton or a company service rep joins and — at first — leads the demo with you (we are a wholesaler). As you get certified and comfortable, you'll run demos on your own and bring in company help only when you want it. Most demos are over the phone or video, using a pre-trained sample AI assistant we set up for the prospect. See `14_DEMO_PROCESS_AND_HANDOFF.md` for the full process and the honesty guardrail.
+## Your initial authority
 
-## What we help businesses improve
+After completing the required onboarding and CRM certification, your primary authority is to:
 
-- Missed inbound calls and after-hours leads
-- Slow call response and voicemail overflow
-- Appointment booking and inquiry routing
-- Repetitive front-desk questions
-- Inconsistent call handling across staff
-- Lost opportunities caused by delayed response
+- independently prospect using approved positioning;
+- explain MCD's approved published package pricing;
+- identify a real business need;
+- book qualified demos with decision-makers; and
+- maintain accurate CRM attribution, notes, follow-up, and client-service records.
+
+You may not independently discount, waive setup fees, alter scope, promise outcomes, execute contracts, bind MCD, or quote nonstandard terms. Advanced Partner authority to run demos end-to-end, close authorized deals, and customize pricing is granted only in separate written approval.
+
+## How MCD supports the deal
+
+At first, Hamilton or an authorized MCD service representative may join/lead demos so you can learn the sales and implementation process. As you become certified and receive advanced authority, you may run approved demos independently while using MCD support for complex, technical, regulated, custom, or escalation-sensitive matters.
+
+MCD owns the customer contract, implementation, billing, accounting, support intake, and Level 2 escalation. You receive the eligible Sales Partner share only when a deal closes, cleared payment is received, and you meet ongoing residual/service requirements.
+
+## What we help businesses explore
+
+- missed inbound calls and after-hours opportunities;
+- appointment booking and inquiry routing;
+- repetitive front-desk questions and call handling;
+- response delays and voicemail overflow;
+- inconsistent call handling across staff; and
+- a more tailored AI-assisted call-desk workflow.
 
 ## The customer promise
 
-We help businesses explore an AI-assisted call-handling solution tailored to their workflow. Every solution begins with a discovery conversation and a demo. Package fit, timing, integrations, pricing, and expected outcomes are confirmed during the sales and implementation process.
+We help businesses explore an AI-assisted call-handling solution tailored to their workflow. Every solution begins with discovery and a representative demo. Package fit, exact setup, integrations, pricing, support cadence, and expected outcomes are confirmed through the approved sales and implementation process.
 
-## Sales Partner standards
+## Non-negotiable Partner standards
 
-- Be honest about why you are calling.
-- Use only approved scripts, messaging, pricing, and collateral.
-- Log every meaningful activity in the CRM the same day.
-- Never share client information or internal materials.
-- Never make guarantees about results, revenue, savings, approval, compliance, or technical functionality.
-- Respect opt-out and do-not-contact requests immediately.
-- Ask for help early when a deal involves custom integrations, legal questions, regulated industries, or pricing outside the standard package.
+- Be accurate, professional, and honest about why you are contacting the prospect.
+- Use only approved MCD positioning, materials, brand assets, published pricing, proposals, and systems.
+- Log meaningful activity, two-way contact, demos, next steps, client service, and opt-outs in CRM.
+- Never make guarantees about income, revenue, savings, compliance, staffing reduction, implementation timing, technical functionality, customer results, or reseller status.
+- Never share Company data, internal pricing/costs, commission mechanics, scripts, vendor relationships, or client information.
+- Respect DNC/opt-out requests immediately across every channel.
+- Escalate custom integrations, regulated use, legal/privacy/compliance questions, special pricing, contract changes, complaints, payment issues, and security concerns.
 
 ## What success looks like in your first 30 days
 
-- Complete onboarding and certification.
-- Demonstrate package knowledge and clean CRM use.
-- Build a consistent outreach routine.
-- Book qualified demos using approved messaging.
-- Maintain accurate notes, next steps, and follow-up tasks.
-- Represent the company professionally on every call, email, text, and demo.
+- Complete the onboarding gate and certification.
+- Demonstrate package knowledge and accurate CRM use.
+- Build a self-directed, consistent prospecting routine.
+- Generate clean, documented two-way contact and qualified demos.
+- Protect lead attribution, customer experience, DNC, and data.
+- Represent MCD professionally in every communication and demo.
