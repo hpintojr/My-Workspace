@@ -348,6 +348,59 @@ Outbound calling is subject to TCPA/related rules; confirm before scaling. AI-au
 
 ---
 
+### MCD CRM - Agent and Admin Portals
+
+Build project for the Mercury Call Desk Mini CRM — an Agent portal and an Admin portal — with GoHighLevel wired in as a one-way backend. This is the software build; the parent **MCD - Mercury Call Desk** project (above) covers the sales-partner program/onboarding. Keep them separate; never expose confidential pricing/commission math/scripts to agents.
+
+**Goal:** Secure Mini CRM (Agent + Admin portals) for prospecting, agent workflow, compliance, client servicing, and commission accounting, with GHL feeding booking/payment/servicing data in without exposing GHL to agents.
+**Why:** If agents had GHL access they would see Hamilton's other clients, his true (wholesale) pricing instead of the set partner pricing, and the full pipeline. The Mini CRM is the access-control + compliance layer and the system of record for source/ownership/commission lineage.
+
+Confirmed environment:
+
+```txt
+GHL plan: Agency (Unlimited/Pro) — API v2 + Private Integration Tokens
+Structure: one GHL sub-account (location) per client
+Stripe: already connected inside GHL (native)
+Agents: NO GHL logins — Mini CRM only
+Funding: Stripe -> GHL -> Mini CRM relay (no direct Stripe integration in v1)
+```
+
+Decided design (scope v1.1, 2026-06-29):
+
+```txt
+GHL is a one-way backend: data flows GHL -> Mini CRM by default; agents never touch GHL.
+Connection: Private Integration Token (Mini CRM -> GHL writes at demo handoff) + workflow Custom Webhooks (GHL -> Mini CRM events).
+Funding relay: GHL fires FUNDED/FAILED/REFUND/DISPUTE webhooks (sourced from Stripe-in-GHL); Mini CRM commission engine fires on ACTUAL collected payments; every recurring charge fires its own event; idempotent; Finance approves payout.
+Agent attribution WITHOUT GHL logins: stamp GHL contact/opportunity custom fields (mini_crm_agent_id, originating_agent_id, etc.); do NOT create per-agent GHL staff users. If GHL needs an assigned user (round-robin calendars), use a small pool of service users.
+Calendar/Meet host: a FREE Gmail (mcd@gmail.com) is sufficient for GHL Google Calendar + Google Meet — Google Workspace is NOT required to book demos (confirmed 2026-06-30). Connect mcd@gmail to GHL, set meeting location = Google Meet, assigned user = you or a small 'MCD Booking' service user, enable Add Guests. Agents book through the Mini CRM (app holds the GHL token server-side) and are added as guests; NEVER share the mcd@gmail password with agents. Workspace stays optional later for company email deliverability only, not a launch blocker.
+```
+
+**Key files:**
+
+```txt
+02 Projects/MCD CRM - Agent and Admin Portals/MCD CRM - Agent and Admin Portals Overview.md
+02 Projects/MCD CRM - Agent and Admin Portals/[C] Master Product Scope v1.1.md  (Part B = GHL backend, sections 31-37)
+02 Projects/MCD CRM - Agent and Admin Portals/[C] GHL Backend Integration Spec.md  (webhook payloads, field maps, booking/calendar mechanics sec 9)
+02 Projects/MCD CRM - Agent and Admin Portals/[C] GHL Mini-CRM Data Flow.svg
+02 Projects/MCD CRM - Agent and Admin Portals/[C] GHL Booking Sequence.svg
+02 Projects/MCD CRM - Agent and Admin Portals/[C] Master Product Scope v1.1.docx
+02 Projects/MCD CRM - Agent and Admin Portals/[C] Agent Registration, Knowledge Base & Training Integration.md  (maps the MCD onboarding library to CRM gates + KB/training)
+```
+
+**Open problems:** confirm/generate a scoped Private Integration Token; finalize the funding-webhook contract + idempotency; lock the GHL custom-field attribution model; stand up mercurycalldesk@ Workspace + re-point the GHL calendar; define inbound webhook endpoints + signature verification; sequence GHL work into scope Phase 1 (booking handoff) and Phase 2 (funding/servicing relay). Onboarding/training: the CRM consumes the existing agent-onboarding library in 02 Projects/MCD - Mercury Call Desk/01-agent-onboarding/ as the single source of truth — Sales Partner Agreement/NDA-IP/W-9/Acknowledgment are registration gates (R2 e-sign; store W-9 completion state only), the Certification Scorecard flips a can_claim_leads flag (ACTIVE != allowed to claim), the Manager New Hire Checklist becomes the admin activation screen, and Welcome/Product/ICP/Scripts/CRM SOP/Compliance/Demo + collateral become the NDA-gated knowledge base + training modules. Do NOT fork those files; CRM ingests/publishes versions. Map lives in [C] Agent Registration, Knowledge Base & Training Integration.md.
+
+Guardrails:
+
+```txt
+Stack (decided in scope): Next.js + TypeScript on Vercel, PostgreSQL system of record, Cloudflare R2 for sensitive docs, Python workers, Mailjet/Sequenzy provider abstraction.
+GHL is backend-only and one-direction by default; never render GHL links/pricing/other-client data to agents.
+No per-agent GHL logins. Stripe stays untouched in v1 (relayed through GHL); optional read-only Stripe reconciliation later.
+Commissions: calculate automatically, but never auto-pay without Finance approval (scope section 17.9). Refund/dispute = ON_HOLD, never auto-clawback.
+AI-authored files use the [C] prefix.
+```
+
+---
+
 ## Workspace Commands
 
 ```txt

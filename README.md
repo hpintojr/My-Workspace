@@ -193,3 +193,30 @@ Read first:
 ```
 
 First actions: review and approve the SVG geometry and final wordmark font; then create an outlined production release. In parallel, create the dedicated sales/demo calendar and move into the GoHighLevel CRM phase (including the planned GHL MCP).
+
+
+### MCD CRM - Agent and Admin Portals
+
+The software build for Mercury Call Desk: a secure Mini CRM with an Agent portal and an Admin portal, with GoHighLevel wired in as a one-way backend. Separate from the MCD sales-partner program project above — this one builds the system that program will run on. Scoped 2026-06-29 from Hamilton's Master Product Scope (now v1.1, with the GHL backend layer added).
+
+Confirmed environment: GHL Agency (Unlimited/Pro, API v2 + Private Integration Tokens), one GHL sub-account per client, Stripe already inside GHL, agents get NO GHL logins, funding relays Stripe -> GHL -> Mini CRM.
+
+Decided design: GHL is a one-way backend (GHL -> Mini CRM via workflow webhooks; Mini CRM -> GHL only at demo handoff via API v2). Agents are attributed through GHL custom fields, not GHL logins. A dedicated mercurycalldesk@ Google Workspace account replaces personal Gmail for the GHL calendar/email identity.
+
+Read first:
+
+```txt
+02 Projects/MCD CRM - Agent and Admin Portals/MCD CRM - Agent and Admin Portals Overview.md
+02 Projects/MCD CRM - Agent and Admin Portals/[C] Master Product Scope v1.1.md
+02 Projects/MCD CRM - Agent and Admin Portals/[C] GHL Backend Integration Spec.md
+02 Projects/MCD CRM - Agent and Admin Portals/[C] GHL Mini-CRM Data Flow.svg
+```
+
+Next actions:
+
+```txt
+1. Confirm GHL Private Integration access and generate a scoped token.
+2. Stand up mercurycalldesk@ on Google Workspace; set SPF/DKIM/DMARC; re-point GHL calendar/email off hpintojr@gmail.com (keep old integration until verified).
+3. Lock the GHL custom-field attribution model (no per-agent GHL logins).
+4. Define the funding-relay webhook contract + idempotency, then build Phase 1 (booking handoff) and Phase 2 (funding/servicing relay).
+```

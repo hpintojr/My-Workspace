@@ -1,6 +1,6 @@
 # Workspace Index
 
-Updated: 2026-06-25
+Updated: 2026-06-29
 
 ## First read
 
@@ -68,6 +68,21 @@ Read first:
 ```
 
 Standing rules: **no non-compete** in any agreement (confidentiality + IP + non-solicit only); **do not disclose the underlying platform vendor** to agents, prospects, or public/marketing materials.
+
+## MCD CRM - Agent and Admin Portals
+
+Software build for Mercury Call Desk: a secure Mini CRM (Agent portal + Admin portal) with GoHighLevel as a one-way backend. Separate from the MCD sales-partner program project above. Scoped 2026-06-29; the Master Product Scope is now v1.1 with a full GHL backend layer (Part B, sections 31-37), a standalone GHL integration spec, and a data-flow diagram. Confirmed: GHL Agency plan (API v2 + Private Integration Tokens), one sub-account per client, Stripe inside GHL, agents get no GHL logins, funding relays Stripe -> GHL -> Mini CRM.
+
+Read first:
+
+```txt
+02 Projects/MCD CRM - Agent and Admin Portals/MCD CRM - Agent and Admin Portals Overview.md
+02 Projects/MCD CRM - Agent and Admin Portals/[C] Master Product Scope v1.1.md
+02 Projects/MCD CRM - Agent and Admin Portals/[C] GHL Backend Integration Spec.md
+02 Projects/MCD CRM - Agent and Admin Portals/[C] GHL Mini-CRM Data Flow.svg
+```
+
+Standing rules: GHL is backend-only; never expose GHL/pricing/other-client data to agents; no per-agent GHL logins; Stripe untouched in v1 (relayed via GHL); commissions auto-calculated but Finance approves payouts.
 
 ## Rules
 
