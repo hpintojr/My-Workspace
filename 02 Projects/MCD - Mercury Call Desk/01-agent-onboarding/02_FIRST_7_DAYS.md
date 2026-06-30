@@ -1,49 +1,56 @@
 # First 7 Days: Sales Partner Launch Plan
 
-## Day 1 - Foundation
+> Complete the mandatory onboarding gate first. **No paperwork, no active CRM access, no exceptions.** MCD countersigns and enables active access only after the completed profile, W-9, Sales Partner Agreement, Confidentiality/IP Agreement, and CRM training/check-in are complete.
 
+## Day 1 — Foundation and access gate
+
+- [ ] Complete CRM profile with verified personal email, mobile number, mailing address, and required contact information.
 - [ ] Sign the Sales Partner Agreement.
-- [ ] Sign confidentiality / IP paperwork.
-- [ ] Complete tax and payment onboarding through the company-approved secure process.
-- [ ] Review the Welcome Packet and Product Catalog.
-- [ ] Receive and activate CRM access.
-- [ ] Update your profile photo, name, time zone, and email signature.
+- [ ] Sign the Confidentiality and Intellectual Property Agreement.
+- [ ] Complete W-9 and payment onboarding through the company-approved secure process.
+- [ ] Review the Welcome Packet, Business Terms, and Product Catalog.
+- [ ] Complete CRM training/check-in.
+- [ ] Receive MCD countersignature and activate CRM access only after all required items are approved.
 
-## Day 2 - Product and Customer Fit
+## Day 2 — Product and customer fit
 
 - [ ] Review all package families and package tiers.
 - [ ] Study the Ideal Customer Profile.
 - [ ] Review approved use cases by industry.
-- [ ] Listen to or review two approved demo examples.
+- [ ] Review two approved demo examples.
 - [ ] Complete the Product Knowledge Check.
+- [ ] Understand Standard Partner authority: published pricing/demo booking only; no discounts, setup-fee waivers, scope changes, or contracts without approval.
 
-## Day 3 - Outreach and Discovery
+## Day 3 — Outreach, discovery, and compliance
 
-- [ ] Read the approved call script aloud.
-- [ ] Practice the opener, discovery questions, and demo invitation.
-- [ ] Complete one manager roleplay.
-- [ ] Review objection handling.
-- [ ] Pass the outreach compliance acknowledgment.
+- [ ] Practice the approved opener, discovery questions, and demo invitation.
+- [ ] Complete one CRM-documented roleplay or coaching review.
+- [ ] Review objection handling and the demo honesty guardrail.
+- [ ] Complete the outreach/DNC/data-security compliance acknowledgment.
+- [ ] Learn that no Partner phone/SMS program is currently approved; CRM/company email is required for customer/prospect email.
 
-## Day 4 - CRM Operations
+## Day 4 — CRM attribution and operations
 
-- [ ] Learn the Sales Pipeline and stage definitions.
+- [ ] Learn pipeline stages and stage definitions.
 - [ ] Learn how to add a lead and prevent duplicates.
-- [ ] Learn how to create a task, add notes, and schedule a demo.
-- [ ] Learn how to use Smart Lists: My New Leads, My Follow-Ups Due Today, My Demos, and My Payment Pending Deals.
+- [ ] Learn the difference between a cold lead, documented two-way contact, self-sourced referral, OpenPool, Shark Tank, and House Account.
+- [ ] Learn how to create tasks, complete notes, schedule demos, and document client service.
+- [ ] Learn Smart Lists and required DNC/opt-out handling.
 - [ ] Complete the CRM practical exercise.
 
-## Day 5 - Certification and Launch
+## Day 5 — Certification and launch approval
 
 - [ ] Complete a mock prospect conversation.
-- [ ] Enter the mock lead correctly in the CRM.
-- [ ] Book a mock demo and complete the handoff notes.
-- [ ] Review lead ownership and data security rules.
-- [ ] Receive manager approval for live outreach.
+- [ ] Enter the mock lead correctly and document two-way contact.
+- [ ] Book a mock demo and complete handoff notes.
+- [ ] Review commission, setup-fee, residual-eligibility, lead, client-service, and data-security rules.
+- [ ] Complete the Certification Scorecard.
+- [ ] Receive manager approval for live outreach and standard demo booking.
 
-## Days 6-7 - Controlled live outreach
+## Days 6–7 — Controlled live outreach
 
-- [ ] Begin outreach only after certification approval.
-- [ ] Complete your first approved outreach block.
-- [ ] Review first conversations and CRM records with your manager.
-- [ ] Correct script, qualification, or documentation issues immediately.
+- [ ] Begin live outreach only after certification approval.
+- [ ] Prospect independently using approved MCD positioning and independent methods.
+- [ ] Log meaningful contact and every next step in CRM.
+- [ ] Review first conversations, notes, and demo bookings through the approved coaching process.
+- [ ] Correct documentation, qualification, DNC, or messaging issues immediately.
