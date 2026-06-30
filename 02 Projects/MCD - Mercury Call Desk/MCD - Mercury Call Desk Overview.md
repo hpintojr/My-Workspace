@@ -1,42 +1,80 @@
 ---
-type: problems
+type: project-overview
 date: 2026-06-24
+updated: 2026-06-30
 project: MCD - Mercury Call Desk
 ---
 
+# MCD — Mercury Call Desk Overview
+
 ## Goal
-Stand up everything needed to run Mercury Call Desk (MCD) — an AI receptionist / call-desk platform — as a sales-driven business: recruit and onboard commission-only sales partners now, then build out the GoHighLevel (GHL) CRM, and ultimately a reseller channel (Hamilton's own reseller channel on the underlying platform).
 
-## Why
-MCD's growth depends on a repeatable way to hire, certify, and equip sales agents, and on a CRM that keeps every lead and commission clean. Getting onboarding and the CRM right first makes the reseller channel — and hands-off scaling — possible. A shared MD index keeps Claude, ChatGPT, and Gemini all working from the same source of truth.
+Build Mercury Call Desk (MCD) into a sales-driven AI receptionist / call-desk automation business with a **business-in-a-box Independent Sales Partner pathway**. Partners independently create business, use MCD's approved portal/tools, receive 50% of Net Commissionable Profit on eligible paid accounts, and may later qualify for a separate reseller opportunity.
 
-## Phase focus (in order)
-1. **Agent onboarding (NOW)** — finalize and ship the Sales Partner Launch Kit so new 1099 partners can be hired, certified, and given live leads.
-2. **CRM (NEXT)** — build the GoHighLevel setup: pipelines, lead routing, document safe, onboarding workflow, commission tracking. A GHL MCP is planned so Claude can help configure it.
-3. **Reseller channel (LATER)** — a partner pathway for resellers to run their own agency model on the platform.
+## Company and program at a glance
 
-## Business at a glance
 ```txt
-Platform:    Mercury Call Desk (AI telephony / call-desk automation) — built on a third-party platform base + dev (vendor confidential; do not disclose).
-Sells via:   commission-only 1099 Sales Partners (remote), "no-cost demo" outbound model.
-Divisions:   Small Business (40% comm), Medium/Call Desk (35%), Enterprise (30%) — commission on GROSS PROFIT.
-Pricing:     Small $350–$1,000/mo · Medium $999–$1,995/mo · Enterprise $5,000–$10,000/mo (annual ≈ 25% off).
-CRM:         GoHighLevel (leads are company records; work only inside the CRM).
-Reseller:    partners reaching ~$10k–$30k+/mo residual unlock Reseller Partner status.
+Contracting company: Charter Oaks Assets, Inc. d/b/a Mercury Call Desk
+Authorized company signer: Hamilton Pinto Jr., Manager and Authorized Signatory
+Business address: 231 E Alessandro Blvd A-208, Riverside, CA 92508
+Customer-facing brand: Mercury Call Desk
+Product: AI telephony / call-desk automation built on a confidential third-party platform base + development
+Sales model: commission-only 1099 Independent Sales Partners; remote and self-directed
+CRM/portal: GoHighLevel plus MiniCRM controls
+Partner pathway: Standard Sales Partner → Advanced Partner / Manager → separate Reseller Agreement if offered
 ```
 
-## Tangible Outcomes
-- A finished, distributable Sales Partner Launch Kit (14-part onboarding) ready to hand to new hires.
-- An owner setup completed: brand details, calendars, agreements (Sales Partner Agreement + NDA), and the comp/payout rules finalized.
-- A GoHighLevel CRM configured for lead routing, onboarding, the document safe, and commission tracking.
-- A recruitment pipeline (e.g., Indeed posting) and a certification path before agents get live leads.
-- A reseller-channel model defined for scaling.
-- A cross-AI MD index so every tool follows the same files and commands.
+## Operating model
 
-## Open Problems
-1. Finalize the Owner Brand & Launch Setup sheet (legal entity, mercurycalldesk.com, support/sales email, caller ID, calendars). See `[C] Owner Setup & Open Decisions.md`.
-2. Finalize commission/payout rules in the signed Sales Partner Agreement (trigger, residual timing, refund/chargeback, splits, lead reassignment, client ownership on separation).
-3. Get the Sales Partner Agreement + NDA + W-9 / direct-deposit forms drafted and into the onboarding flow (attorney review recommended).
-4. Build the GoHighLevel CRM (pipelines, routing, doc safe, onboarding workflow) — and the planned GHL MCP for Claude.
-5. Define the reseller-partner pathway terms and the underlying-platform reseller relationship.
-6. Confirm legal/compliance posture (TCPA/outbound calling rules, non-solicitation scope, claims language).
+- **Independent Sales Partners** control their own schedules, work location, prospecting methods, and non-competing business activity.
+- MCD provides approved brand assets, CRM/portal tools, training, customer contracts, implementation, billing, accounting, support intake, and Level 2 escalation.
+- Standard Partners sell published pricing and book qualified demos after CRM training. Advanced Partners may receive written authority to run demos, close deals, and customize price above MCD's confidential floor.
+- MCD owns all CRM/customer records. A Partner earns residuals only while the customer is current and the Partner remains in good standing and services the account under the approved cadence.
+- The current Partner Agreement grants no franchise, reseller status, territory, exclusivity, ownership interest, or right to sublicense MCD. A later reseller arrangement requires a separate agreement.
+
+## Phase focus
+
+1. **Partner program and onboarding — NOW**
+   - Finalize the attorney-reviewed Sales Partner and Confidentiality/IP agreements.
+   - Configure mandatory onboarding, document safe, countersignature, role-based access, and CRM audit trail.
+   - Certify Partners before active lead access.
+
+2. **CRM / MiniCRM operations — NOW**
+   - Build lead attribution, two-way-contact protection, OpenPool, Shark Tank, House Account, service-cadence, DNC, commission, and restricted former-Partner access controls.
+   - Maintain all customer contracts, support activity, and commission evidence inside approved systems.
+
+3. **Advanced Partner / reseller pathway — LATER**
+   - Establish qualification standards, custom-pricing floor, separate reseller terms, and independent business requirements.
+
+## Controlling business terms
+
+Read this record before changing commissions, leads, servicing, access, or agreement language:
+
+```txt
+[C] Partner Program Business Terms — Approved 2026-06-30.md
+```
+
+The current business terms establish, among other things:
+
+- mandatory W-9, agreements, profile, and training before access;
+- a protected self-sourced referral model and two-way-contact rule for cold leads;
+- OpenPool after 45 days with no demo and Shark Tank for stalled pitched leads;
+- 50/50 Net Commissionable Profit, setup-fee economics, 30-day first-account payout, and net-15 established-account payout;
+- package-level client-service cadence, 24-calendar-hour standard support target, and residual eligibility;
+- total DNC blackout, CRM-only email, data restrictions, and a 24-hour incident/deletion requirement;
+- JAMS arbitration in Riverside County, California, with a good-faith resolution step and fee split subject to applicable law/rules.
+
+## Tangible outcomes
+
+- Attorney-ready business specification and two coordinated agreement drafts.
+- A partner onboarding package that clearly distinguishes active access, certification, authority level, and account-service eligibility.
+- A GoHighLevel/MiniCRM model that preserves attribution, commissions, client protection, documents, and audit evidence.
+- An Advanced Partner pathway and a later, separate reseller-channel model.
+
+## Remaining launch gates
+
+1. California attorney review of independent-contractor structure, arbitration, cancellation terms, residuals, and corporate signer title.
+2. Confirm the confidential Advanced Partner minimum-margin schedule.
+3. Build the GHL/MiniCRM onboarding/countersignature workflow and restricted access roles.
+4. Align customer contracts and public pricing with the approved setup-fee, annual-plan, support, and cancellation rules.
+5. Complete outbound-compliance review before a phone/SMS program is activated.
