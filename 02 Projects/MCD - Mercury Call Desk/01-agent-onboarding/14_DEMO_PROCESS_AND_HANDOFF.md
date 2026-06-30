@@ -1,42 +1,47 @@
 # Demo Process and Handoff
 
-## Your primary job: set the appointment
+## 1. Standard Partner role
 
-For now, your #1 job as a Sales Partner is to **book a qualified demo** — a confirmed appointment with the right decision-maker. That booked, qualified demo is the win this training is built around, and it's what moves a deal toward your commission.
+After completing the CRM training/certification gate, a Standard Sales Partner may prospect independently, explain approved published pricing, and **book qualified demos**.
 
-You are **not** expected to run the demo or be the product expert on day one.
+A Standard Partner may not independently change pricing, waive setup fees, alter scope, generate nonstandard customer terms, bind MCD, or promise implementation outcomes. Any exception requires explicit manager approval before a customer contract is generated.
 
-## Who runs the demo
+## 2. Who runs the demo
 
-- **At first:** once you set the appointment, Hamilton or one of our service reps from the main company joins the demo with you. We are a wholesaler, so the main company's rep can **lead the demo** when needed. You attend, support, learn, and own the relationship and follow-up.
-- **As you grow:** once you're comfortable and certified on the demo, you'll run demos on your own and only bring in a company rep when you want backup or the deal is complex.
-- The goal is for you to become self-sufficient on demos — with company help always available when you need it.
+- **Entry / learning phase:** Hamilton or an authorized MCD service representative may lead or join the demo. The Partner attends, supports the relationship, learns the process, and documents follow-up.
+- **Certified Advanced Partner:** a Partner with separate written Advanced authority may run demos end-to-end, close authorized deals, and customize price above MCD's confidential minimum-margin floor.
+- **Complex or regulated deal:** bring in MCD management/service support before promising scope, timeline, integration, pricing exception, or outcome.
 
-## How the demo usually works
+The pathway is designed to help a Partner learn the full business model while MCD protects the client, contracts, implementation, billing, and Level 2 support.
 
-- **Format:** nine times out of ten it's over the phone or a video conference — no travel.
-- **The sample assistant:** you bring in a pre-trained sample AI assistant that we've set up with the basics of the prospect's company so it understands and can speak to who they are.
-- **Personalization:** the company can add custom details so the assistant feels tailored to that specific client and the conversation feels natural.
-- **Real integrations are possible:** the platform can do real API connections and pull actual information when a customer signs on and it's set up for them.
+## 3. Demo honesty guardrail
 
-## Honesty guardrail (read this)
+The sample/demo assistant is a **representative demonstration** of platform capabilities.
 
-The sample/demo assistant is a **representative demonstration** of what the platform can do. Keep it honest:
+- Present it as a sample of how the platform may work for a business like the prospect's.
+- Do not say that the demo is live-connected to the prospect's systems or pulling real data unless that integration is actually configured.
+- Do not promise a specific integration, service level, result, savings, revenue outcome, staffing reduction, compliance result, or implementation date.
+- Use approved language: “We can show you a tailored demo and confirm what is practical for your workflow during the discovery and implementation process.”
 
-- Present it as a **sample/demo** of the platform's capabilities.
-- **Do not tell a prospect the demo is live-connected to their systems, or that it is pulling their real data, unless that integration has actually been set up for them.**
-- Do not promise specific integrations, timelines, or outcomes. Use approved positioning: "This is a sample of how it would work for a business like yours; we confirm the exact setup during implementation."
-- This protects you and the company. See `08_COMPLIANCE_AND_COMMUNICATIONS.md` — misrepresentation and unapproved claims are prohibited.
+## 4. Booking and CRM handoff checklist
 
-## Booking & handoff checklist
+When booking a demo:
 
-When you book a demo:
+- [ ] Confirm the decision-maker and other needed stakeholders will attend.
+- [ ] Document two-way contact, discovery needs, pain points, existing workflow, and timing in CRM.
+- [ ] Confirm whether the lead is self-sourced, MCD-provided, OpenPool, Shark Tank, or manager-assigned.
+- [ ] Schedule through the approved demo calendar and send confirmation through approved systems.
+- [ ] Move the opportunity to **Demo Scheduled** and create prep/confirmation tasks.
+- [ ] Request MCD demo support through the approved escalation channel when needed.
+- [ ] Do not quote any unapproved price, waive fees, or make a nonstandard offer.
 
-- [ ] Confirm the decision-maker (and any other needed attendee) will be on the call.
-- [ ] Capture discovery notes (current call process, pain points, goals) in the CRM.
-- [ ] Schedule on the approved demo calendar and send the confirmation.
-- [ ] Move the opportunity to **Demo Scheduled** and create the prep/confirm task.
-- [ ] Request a company demo lead through the approved escalation channel, sharing the CRM record + notes so we can pre-train the sample assistant.
+## 5. Sales credit and handoff
 
-## What success looks like
-A clean, confirmed, well-documented demo with the right person in the room and the company rep prepped — that's a great day's work as a Sales Partner.
+- The Partner who books the qualified demo is eligible for the Sales Partner share only when the customer closes and MCD receives cleared payment.
+- A demo that never closes earns no commission.
+- If a lead moves to OpenPool or Shark Tank and another Partner re-engages, rebooks, closes, and receives payment, the new credited Partner receives the eligible share.
+- Once a customer is won, MCD controls customer contract, implementation, billing, accounting, support intake, and Level 2 escalation. The credited Partner remains responsible for the required client-service relationship and documentation that supports ongoing residual eligibility.
+
+## 6. What success looks like
+
+A clean, confirmed, well-documented demo with the decision-maker present, honest expectations, correct attribution, and the right MCD support involved is a successful Partner handoff.
