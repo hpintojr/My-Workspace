@@ -1,124 +1,187 @@
 ---
 type: agreement-draft
 date: 2026-06-24
+updated: 2026-06-30
 project: MCD - Mercury Call Desk
-status: DRAFT — internal template, NOT legal advice. Have a licensed attorney review and finalize before use.
+status: BUSINESS TERMS APPROVED — DRAFT ONLY. Not legal advice; California attorney review and final signature workflow required before use.
 ---
 
 # Sales Partner Agreement (DRAFT)
 
-> **Important:** This is an internal working draft built from the Sales Partner Launch Kit. It is **not legal advice** and is **not** ready to sign. A licensed attorney in the company's jurisdiction must review and finalize it — particularly the commission, clawback, arbitration, and independent-contractor provisions — before any partner signs. Bracketed `[ ]` items are owner inputs to finalize (see `[C] Owner Setup & Open Decisions.md`).
+> **Important:** This is an internal business-term draft, not legal advice and not yet ready for signature. It is intended to reflect the approved MCD Partner Program Business Terms dated June 30, 2026. California counsel must review independent-contractor classification, arbitration, commission/residual, cancellation, data, and corporate-signature language before use.
 
-This Sales Partner Agreement (the "Agreement") is entered into as of **[Effective Date]** between **Hamilton Pinto Jr., a sole proprietor doing business as Mercury Call Desk** ("Company"), and **[Sales Partner Name]** ("Sales Partner," "you"). Company and Sales Partner are each a "Party."
+This Sales Partner Agreement ("Agreement") is entered into as of **[Effective Date]** by and between **Charter Oaks Assets, Inc. d/b/a Mercury Call Desk** ("MCD" or "Company"), with an address at 231 E Alessandro Blvd A-208, Riverside, CA 92508, and **[Sales Partner Legal Name / Business Name]** ("Sales Partner" or "Partner"). Hamilton Pinto Jr. signs for MCD as **Manager and Authorized Signatory**.
 
-## 1. Engagement and Role
-1.1 Company engages Sales Partner as an independent, commission-only sales representative to market and promote the Mercury Call Desk platform and related services ("Services") to prospective customers using only Company-approved materials, pricing, scripts, and processes.
-1.2 Sales Partner has **no authority** to enter contracts, set or alter pricing, make commitments, or bind Company in any way. All customer agreements are between the customer and Company.
-1.3 This Agreement is **non-exclusive**; Company may engage other partners and sell through other channels.
-1.4 **Primary deliverable — appointments.** Sales Partner's core role is to source and book qualified product demonstrations with appropriate decision-makers. Demonstrations are conducted or led by Company or its authorized service representatives (Company is a wholesaler/reseller of the underlying platform) until Company certifies Sales Partner to conduct demonstrations independently. Sales Partner must present demonstrations honestly as representative samples and must not represent that a demonstration is live-connected to a prospect's systems or data unless Company has actually configured that integration (see the Demo Process and Compliance materials).
+## 1. Engagement and Independent Partner Relationship
 
-## 2. Independent Contractor Status
-2.1 Sales Partner is an independent contractor (1099), not an employee, partner, agent, or joint venturer of Company. Nothing creates an employment relationship.
-2.2 Sales Partner is solely responsible for all taxes, withholdings, and self-employment obligations, and will provide a completed **IRS Form W-9** before any payout.
-2.3 Sales Partner receives no wages, benefits, insurance, paid leave, or expense reimbursement, and controls their own hours, methods, and means of performing, consistent with Company's approved materials and compliance rules.
-2.4 Sales Partner supplies their own equipment and internet unless Company expressly provides a tool (e.g., CRM access).
+1.1 MCD engages Partner as a commission-only independent Sales Partner to independently market approved MCD services, identify prospects, book qualified demonstrations, and, when separately authorized, conduct demonstrations and close approved deals.
 
-## 3. Compensation
-3.1 Sales Partner is paid **commission only**, calculated on **gross profit** as defined in **Exhibit A**, not on retail price. There is no base pay, draw, or guarantee.
-3.2 Commission rates by division and the calculation method are set out in **Exhibit A**.
-3.3 **Commission trigger:** commission is earned only upon the **cleared first customer payment** for a deal properly recorded in the CRM and assigned to Sales Partner.
-3.4 **Payout timing:** monthly residual commissions are paid **net-15 (within 15 days after the customer's payment clears for that cycle)**; annual-plan upfront commissions are paid **after the annual funds clear**.
-3.5 **Residual nature:** monthly residuals continue only while the customer remains active and current, and only while this Agreement is in effect, subject to Section 7.
-3.6 **Adjustments and clawbacks:** commissions are reversed or offset against future payouts for refunds, chargebacks, failed/disputed payments, cancellations within **90 days**, downgrades, or fraud. Company may withhold disputed amounts pending resolution.
-3.7 **Splits/reassignment:** split-commission and lead-reassignment treatment follow Company's written rules in effect at the time (see Section 5 and Exhibit A).
-3.8 **Statements/disputes:** Company provides a commission statement each cycle. Sales Partner must raise any dispute in writing within **[dispute window, e.g., 30 days]**; otherwise the statement is final.
-3.9 Compensation terms are confidential. Sales Partner may not quote, promise, or alter compensation for any other partner.
+1.2 The Parties intend an independent contractor relationship. Partner controls its own schedule, work location, prospecting approach, business methods, and non-competing business activity, subject to the customer-protection, brand, confidentiality, CRM, compliance, and contract rules in this Agreement.
 
-## 4. Duties and Conduct
-4.1 Use only Company-approved scripts, claims, pricing, collateral, caller ID, calendars, and communication channels.
-4.2 **No guarantees or prohibited claims.** Do not promise revenue, savings, staffing reductions, compliance, approval, service levels, or technical outcomes. Use approved positioning only.
-4.3 Log every meaningful activity in the CRM the same business day; keep accurate notes, stages, next steps, and due dates.
-4.4 Honor opt-out, "do not contact," "stop," and unsubscribe requests immediately and record them.
-4.5 Comply with all applicable laws, including telemarketing/outbound-calling rules (e.g., TCPA), do-not-call requirements, and recording-consent laws. Use only approved dialing methods and recording disclosures.
-4.6 Escalate to management any request for custom integrations, regulated-industry use, legal/medical/financial/compliance questions, pricing exceptions, or non-standard terms.
-4.7 Represent Company professionally and accurately on every call, email, text, and demo.
+1.3 Partner is not an employee, officer, agent with authority to bind MCD, joint venturer, franchisee, reseller, or owner of MCD. Nothing in this Agreement grants a franchise, exclusive territory, ownership interest, reseller status, sublicense right, or guaranteed income, customer volume, commission, or future role.
 
-## 5. Leads, Customers, and CRM Data
-5.1 All leads, prospects, customers, contact data, call recordings, notes, and CRM records are the **exclusive property of Company**, whether or not generated by Sales Partner.
-5.2 Sales Partner may work only leads assigned to them in the CRM, and only inside Company-approved systems.
-5.3 Sales Partner will not export, download, screenshot, copy, retain, or use Company leads or customer data outside approved systems, during or after the engagement.
-5.4 Leads with no documented activity for **7 days** may be reassigned. Upon any reassignment, loss, or separation, Sales Partner has no ongoing claim to that record except as Exhibit A provides.
-5.5 **Client ownership after separation:** customers remain Company's; post-termination residual treatment is governed by Section 7 and Exhibit A.
+1.4 Partner is responsible for its own taxes, insurance, equipment, internet, expenses, business operations, and filings. Partner must provide a completed IRS Form W-9 before payout.
 
-## 6. Confidentiality, IP, and Restrictive Covenants
-6.1 Sales Partner must sign and comply with the separate **Confidentiality, Intellectual Property, and Non-Solicitation Agreement**, which is incorporated by reference. A breach of that agreement is a breach of this Agreement.
+1.5 This Agreement is non-exclusive. Partner may market or sell non-competing products/services through its own business, but may not market products/services that compete with MCD or use MCD records/materials for another business.
 
-## 7. Term and Termination
-7.1 This Agreement begins on the Effective Date and continues until terminated.
-7.2 Either Party may terminate **at will, with 14 days' written notice**. Company may terminate immediately for cause (breach, misconduct, compliance violation, or prohibited claims).
-7.3 On termination, Sales Partner must immediately stop all outreach, return or destroy Company materials and data, and cease using Company systems and brand.
-7.4 **Post-termination commissions:** residuals **cease upon termination** of this Agreement. Sales Partner has no right to commissions on amounts collected after the termination effective date. Customers remain Company's.
-7.5 Sections 2.2, 3.6, 5, 6, 8, 9, 10, and 11 survive termination.
+## 2. Onboarding, Access, and Records
 
-## 8. Representations and Warranties
-Sales Partner represents that they are at least 18, legally able to contract and work as an independent contractor, will comply with this Agreement and applicable law, and that all information they provide is accurate.
+2.1 No paperwork, no system access, and no exceptions. MCD will not countersign or enable active MiniCRM/GHL access until Partner completes: (a) complete CRM profile with verified personal email, mobile number, mailing address, and required contact information; (b) W-9; (c) this Agreement; (d) the Confidentiality and Intellectual Property Agreement; and (e) CRM training/check-in.
 
-## 9. Indemnification and Limitation of Liability
-9.1 Sales Partner will indemnify and hold harmless Company and its owners from claims, damages, penalties, and reasonable legal fees arising from Sales Partner's unauthorized statements, misconduct, or violation of this Agreement or law.
-9.2 To the maximum extent permitted by law, Company's total liability to Sales Partner is limited to commissions actually earned and unpaid under Exhibit A, and Company is not liable for indirect, incidental, or consequential damages or lost anticipated commissions.
+2.2 MCD may create a backend GHL user and MiniCRM role to retain Partner profile, agreement, attribution, commission, and client-service records. The system of record may retain signed PDFs, agreement version, timestamps, signer IP/audit trail, countersignature, W-9, profile-completion status, certification, and related records.
 
-## 10. Dispute Resolution; Binding Arbitration
-10.1 The Parties will first attempt to resolve any dispute informally in good faith.
-10.2 Any unresolved dispute arising out of or relating to this Agreement will be resolved by **binding arbitration** on an **individual basis** (no class or representative actions), administered under the commercial rules of a recognized provider (e.g., the American Arbitration Association), seated in **[County], California** or virtually as agreed. The Parties waive a jury trial.
-10.3 **Exceptions:** claims qualifying for small claims court, and claims for injunctive/equitable relief to protect Confidential Information or intellectual property, may be brought in court.
-10.4 This Agreement is governed by the laws of the State of **California**, without regard to conflict-of-laws rules.
+2.3 During the active relationship, MCD may use a Company email for operational/internal communications. Formal legal/civil notices go to Partner's verified personal email. Partner must keep personal contact information current in the CRM.
 
-## 11. Miscellaneous
-11.1 **Entire agreement:** this Agreement, its Exhibits, and the incorporated Confidentiality, IP & Non-Solicitation Agreement are the entire agreement and supersede prior discussions. If anything in the Launch Kit or other guidance conflicts, this signed Agreement controls.
-11.2 **Amendment:** only in a writing signed by Company; Company may update Exhibit A commission terms prospectively on **[notice period]** written notice.
-11.3 **Assignment:** Sales Partner may not assign this Agreement; Company may assign it.
-11.4 **Severability; Waiver:** if any provision is unenforceable, the rest remain; no waiver is implied by non-enforcement.
-11.5 **Notices:** to the email/address each Party designates.
+## 3. Authority Levels and Deal Rules
+
+3.1 **Standard Partner.** After CRM training/certification, Partner may independently prospect, use approved brand assets/collateral, explain published pricing, and book qualified demos. Partner may not change price, discount, waive setup fees, alter scope, sign customer contracts, make nonstandard promises, or bind MCD.
+
+3.2 **Advanced Partner.** MCD may grant Advanced Partner/Manager authority only in a separate written approval. An Advanced Partner may run demos end-to-end, close authorized deals, and customize a customer price above MCD's confidential minimum margin floor. Any discount, setup-fee waiver, custom scope, or exception still requires explicit manager approval before contract generation.
+
+3.3 All customer agreements are between the customer and MCD. MCD retains sole authority over customer contracts, billing, implementation, accounting, customer-service commitments, and Level 2 escalation.
+
+## 4. Compensation
+
+4.1 **Net Commissionable Profit.** Eligible compensation is based on Net Commissionable Profit, defined as collected retail revenue minus the published partner wholesale cost and actual Stripe/payment-processing fee. Sales tax is not commissionable revenue.
+
+4.2 **Commission split.** MCD retains 50% of Net Commissionable Profit and the CRM-credited Partner receives 50%, subject to this Agreement, the customer remaining current, and Partner's good standing and service obligations.
+
+4.3 **Commission trigger.** A commission is earned only when the applicable customer deal closes and MCD receives cleared funds. A booked demo that does not close earns no commission.
+
+4.4 **Payout timing.** (a) New-account first-payment and setup-fee commissions are paid no later than 30 days after cleared funds and completion of the applicable documented launch phase. (b) Established recurring payments and unchanged renewals are paid within 15 days after cleared funds. (c) A changed package, scope, price, or contract structure is treated as a new contract for commission calculation and payout timing.
+
+4.5 **Setup fees.** A setup fee must first cover the customer's first-month MCD wholesale cost and applicable processor fee. Remaining setup profit is split 50/50 between MCD and the credited Partner. Minimum setup-profit targets before the split are: Starter $1,000; Growth $1,500; Pro $3,000; Enterprise $5,000. Setup-fee waivers require explicit manager approval.
+
+4.6 **Adjustments, chargebacks, and offsets.** In the event of a refund, chargeback, payment reversal, fraud, duplicate payout, or Partner negligence, Partner is responsible for its related commission portion. MCD may hold or offset future commissions as reasonably needed. MCD will provide prompt notice and calculation; Partner has 10 days to repay an established balance before offsetting future commission.
+
+4.7 **Commission disputes.** MCD provides commission reporting through approved systems. Partner must submit a dispute in writing within 30 days. CRM attribution and documented CRM notes control; MCD audits disputes in good faith.
+
+4.8 **No standard MCD-administered splits.** MCD pays the CRM-credited Partner of record. Partners may make private arrangements among themselves, but no such arrangement binds MCD unless management documents another allocation in advance.
+
+## 5. Leads, Attribution, and CRM Data
+
+5.1 All leads, prospects, customers, notes, contacts, proposals, recordings, meetings, CRM records, and related information are exclusive MCD records and must remain in approved systems.
+
+5.2 A cold lead is created when entered in CRM but is protected only after Partner documents two-way contact in CRM. A self-sourced referral is protected immediately upon accurate CRM entry and source documentation.
+
+5.3 Partner may work only leads available to Partner through an approved CRM assignment, OpenPool access, Shark Tank assignment, or manager instruction. Partner may not export, download, screenshot, copy, retain, use, or transfer Company records outside approved systems.
+
+5.4 **OpenPool.** A cold lead with no demo booked after 45 days becomes open to all authorized Partners. The original Partner loses the lead.
+
+5.5 **Shark Tank.** A lead that received contract pricing and stalled may be reassigned to top-tier closers/managers. The original Partner loses the lead.
+
+5.6 If another Partner re-engages, rebooks, closes, and receives cleared customer payment from a reassigned lead, the new CRM-credited Partner receives the eligible compensation. A Partner has no commission claim to a deal that never closed.
+
+5.7 MCD may move any account to House for client protection, noncompliance, abandonment, or operational need. Self-sourced referral attribution does not prevent MCD from reassigning servicing or protecting the customer.
+
+## 6. Client Service and Residual Eligibility
+
+6.1 Partner earns residual commissions only while the customer is current, Partner remains in good standing, and Partner documents required client service in the CRM.
+
+6.2 Minimum service cadence is set out in Exhibit B. Documented meeting offers and client-declined/rescheduled meetings count as compliant service activity.
+
+6.3 Client support intake is through support@mercurycalldesk.com. MCD handles Level 1 intake; Partner handles account-facing communication within Partner's role; MCD/Hamilton handles Level 2 escalation. Standard target response time is 24 calendar hours. Pro and Enterprise matters receive priority handling when feasible.
+
+6.4 An unexcused failure to respond to a client and escalate the need for three calendar days may justify immediate termination. Failure to attend to or confirm account health for 60 days is a servicing-compliance violation; the first violation results in a warning, and the second violation in a rolling 12-month period results in loss of the account to House.
+
+## 7. Communications, Compliance, and Conduct
+
+7.1 Partner must use professional, accurate, and approved positioning. Partner must not promise income, revenue, savings, compliance, staffing reduction, service level, implementation timing, customer outcome, or reseller status.
+
+7.2 Partner may use personal social accounts and personal devices for independent prospecting in good faith, but meaningful contact must be logged in CRM. Customer/prospect email must be sent through the MCD CRM/company-email system. MCD has no active Partner phone/SMS program unless MCD approves one in writing.
+
+7.3 Any DNC, opt-out, unsubscribe, or “stop” request received by any channel must be recorded immediately. DNC requires a total sales/marketing blackout across calls, SMS, sales/marketing email, and social DMs. Transactional billing, support, security, and system-outage messages may continue only where permitted.
+
+7.4 Partner must comply with applicable law and MCD's approved compliance processes. B2B status does not eliminate applicable DNC, privacy, recording-consent, disclosure, platform, or state-law obligations.
+
+7.5 Immediate termination may result from fraud, customer theft, misrepresentation, compliance violations, DNC/opt-out failure, data export or misuse, harassment, or brand misuse.
+
+## 8. Term, Departure, and Retirement
+
+8.1 This Agreement begins on the Effective Date and continues until terminated. MCD may terminate without cause, subject to applicable law. Partner is encouraged, but not required, to provide 14 days' notice before voluntary departure.
+
+8.2 On separation, active CRM access and Company email terminate immediately. Accounts remain Company records and transfer to House unless MCD grants a good-standing former Partner a restricted role for selected retained clients.
+
+8.3 A good-standing departing Partner may propose selected clients it will continue to service. If approved by MCD, residuals continue only for those retained clients while they remain current and Partner continues documented service in CRM. Released or unserviced clients become House Accounts and future residuals end.
+
+8.4 A retiring Partner may propose an approved next-of-kin successor. The successor must register, complete onboarding/certification, use CRM, and follow MCD policy before servicing accounts. MCD may end retirement status, residuals, or succession arrangements in good faith for defined business reasons or client-protection needs.
+
+8.5 A former Partner who remains eligible for retained-client residuals may receive a read-only CRM role limited to approved retained clients, commission dashboard, and meeting notes. It ends 30 days after the final commission payout clears.
+
+## 9. Confidentiality and Intellectual Property
+
+9.1 Partner must execute and comply with the Confidentiality and Intellectual Property Agreement, incorporated by reference. A breach of that agreement is a breach of this Agreement.
+
+9.2 No non-compete or non-solicitation covenant is created by this Agreement. MCD instead protects its business through confidentiality, IP, CRM/data restrictions, customer-record controls, and applicable law.
+
+## 10. Indemnification and Limitation of Liability
+
+10.1 Partner will indemnify and hold harmless MCD and its officers, owners, and representatives from claims, damages, penalties, and reasonable legal fees resulting from Partner's unauthorized statements, fraud, misconduct, data misuse, or violation of this Agreement or applicable law.
+
+10.2 To the maximum extent permitted by law, MCD's total liability to Partner is limited to commissions actually earned and unpaid under this Agreement. MCD is not liable for indirect, incidental, consequential, or anticipated-income damages.
+
+## 11. Disputes; JAMS Arbitration
+
+11.1 The Parties will first provide written notice and attempt good-faith informal resolution.
+
+11.2 Any unresolved civil dispute arising out of or relating to this Agreement will be resolved by individual binding arbitration administered by JAMS in Riverside County, California. Virtual participation is permitted. No class, collective, or representative action is permitted to the extent allowed by law.
+
+11.3 MCD and Partner will split JAMS filing, administration, and arbitrator fees equally unless applicable law, JAMS rules, or the arbitrator requires another allocation. Each Party bears its own attorney fees unless applicable law or the final award provides otherwise.
+
+11.4 Claims for injunctive/equitable relief to protect confidential information or intellectual property may be brought in court where permitted. Suspected criminal conduct, fraud, theft, or data misuse may be referred to law enforcement.
+
+11.5 California law governs this Agreement without regard to conflict-of-laws rules.
+
+## 12. Miscellaneous
+
+12.1 This Agreement, its Exhibits, the Confidentiality and Intellectual Property Agreement, and approved customer/company policies form the Parties' agreement. If a conflict exists, the signed Agreement controls.
+
+12.2 MCD may update future new-industry, package, or consultation pricing with at least 30 days' notice. MCD may use 10 days' notice before a new customer's first payment for a new structure. Existing commission economics remain unchanged while the customer's contract pricing and structure remain unchanged; changes to package, price, scope, or contract structure adjust commissions accordingly.
+
+12.3 Partner may not assign this Agreement. MCD may assign this Agreement in connection with a business transfer or operational need.
+
+12.4 If a provision is unenforceable, remaining provisions survive. No waiver is implied by non-enforcement.
+
+12.5 MCD may retain Partner profile, agreement, and related compliance/commission records for seven years.
 
 ## Signatures
-```txt
-Company: [Legal Entity Name]
-By: ______________________  Name: ____________________  Title: ________  Date: ________
 
-Sales Partner:
-Signature: ______________________  Name: ____________________  Date: ________
+```txt
+COMPANY
+Charter Oaks Assets, Inc. d/b/a Mercury Call Desk
+By: Hamilton Pinto Jr.
+Title: Manager and Authorized Signatory
+Signature: ______________________________    Date: __________________
+
+SALES PARTNER
+Legal Name / Business Name: _________________________________________
+Signature: ______________________________    Date: __________________
+Verified Personal Email: ____________________________________________
 ```
 
 ---
 
-## Exhibit A — Commission Schedule (confidential)
-Sales Partner earns a flat **50% of Gross Profit** on all packages (Standard and Enterprise).
+## Exhibit A — Published Partner Wholesale Schedule
 
-**Gross Profit = collected retail revenue − Partner Wholesale Cost (per the schedule below) − payment-processing fees (Stripe 2.9% + $0.30 per charge).**
+| Set | Tier | Published retail/mo | Partner wholesale/mo |
+|---|---|---:|---:|
+| Standard | Starter | $1,595 | $1,000 |
+| Standard | Growth | $1,995 | $1,250 |
+| Standard | Pro | $3,995 | $1,500 |
+| Enterprise | Starter | $5,295 | $2,500 |
+| Enterprise | Growth | $7,595 | $3,500 |
+| Enterprise | Pro | $9,995 | $5,000 |
 
-The "Partner Wholesale Cost" is the Company-published partner cost basis. The Company's actual underlying platform/development cost is internal and confidential and is not the basis for commission.
+## Exhibit B — Client Service Cadence
 
-| Set | Tier | Retail/mo | Partner wholesale/mo | Commission |
-|---|---|---:|---:|---:|
-| Standard (Site) | Starter | $1,595 | $1,000 | 50% of gross profit |
-| Standard (Site) | Growth | $1,995 | $1,250 | 50% of gross profit |
-| Standard (Site) | Pro | $3,995 | $1,500 | 50% of gross profit |
-| Enterprise | Starter | $5,295 | $2,500 | 50% of gross profit |
-| Enterprise | Growth | $7,595 | $3,500 | 50% of gross profit |
-| Enterprise | Pro | $9,995 | $5,000 | 50% of gross profit |
+| Package | Phase 1 | Ongoing |
+|---|---|---|
+| Starter | Biweekly for 2 weeks to 3 months | Monthly |
+| Growth | Weekly | Biweekly or monthly based on client preference |
+| Pro | Weekly | Guaranteed one-hour weekly session |
+| Enterprise | Weekly | Guaranteed one-hour weekly session |
 
-```txt
-Commission trigger:            cleared first customer payment
-Monthly residual payout:       net-15 (within 15 days after the customer's payment clears for that cycle)
-Annual-plan upfront timing:    after the annual funds clear
-Clawback window + treatment:   90 days; reverse/offset on refund, chargeback, or cancellation
-Split-commission rules:        Company (manager) decides case-by-case
-Lead reassignment window:      7 days with no documented activity
-Post-separation residual rule: residuals cease at termination
-Annual plans: Standard ~25% off, Enterprise ~20% off (billed upfront); commission is 50% of annual gross profit.
-```
+## Exhibit C — Approved Claim Standard
 
-## Exhibit B — Approved Claims and Prohibited Statements
-- **Use:** "We can show you a tailored demo and confirm what is practical for your workflow."
-- **Do not say:** "It can do anything," "It is fully compliant," "It will replace staff," "You will never miss a lead again," or any guaranteed revenue/savings/approval/compliance claim.
-- Full conduct rules: see `01-agent-onboarding/08_COMPLIANCE_AND_COMMUNICATIONS.md`.
+- **Use:** “We can show you a tailored demo and confirm what is practical for your workflow.”
+- **Do not say:** “You will become a millionaire,” “You are guaranteed income,” “It is fully compliant,” “It will replace staff,” “You will never miss a lead again,” or any guaranteed revenue, savings, approval, outcome, or compliance statement.
