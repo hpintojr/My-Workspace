@@ -1,60 +1,93 @@
-# Compensation and Lead Ownership Overview
+# Compensation and Lead Rules
 
-**Internal Confidential - Issued after required confidentiality documents are completed.**
+**Internal Confidential — issued only after onboarding documents are completed.**  
+**Controlling source:** `[C] Partner Program Business Terms — Approved 2026-06-30.md`. The signed Sales Partner Agreement controls if there is any conflict.
 
-## Commission framework
+## 1. Commission framework
 
-Sales Partners earn a flat **50% of gross profit** on every package — Standard (Site) and Enterprise alike. One simple split, easy to understand and easy to account for.
+Sales Partners receive **50% of Net Commissionable Profit** on eligible paid accounts credited to them in the CRM.
 
-**Gross profit = collected retail revenue − partner wholesale cost − payment-processing fee** (Stripe 2.9% + $0.30 per charge) for that billing.
+```txt
+Net Commissionable Profit = collected retail revenue
+                          − published partner wholesale cost
+                          − actual Stripe/payment-processing fee
 
-Commission is **not** a percentage of retail price; it is 50% of the gross profit defined above.
+Partner share = 50% of Net Commissionable Profit
+MCD share     = 50% of Net Commissionable Profit
+```
 
-## Partner wholesale schedule (your cost basis)
+- Commission is not a percentage of retail price.
+- Sales tax is not commissionable revenue.
+- All customer payments are processed through MCD.
+- Standard Partners quote published pricing only. Discounts, setup-fee waivers, scope changes, and nonstandard terms require explicit manager approval before a customer contract is generated.
+- Advanced Partners may receive written authority to price above MCD's confidential minimum-margin floor.
 
-| Set | Tier | Retail/mo | Partner wholesale/mo |
+## 2. Published partner wholesale schedule
+
+| Set | Tier | Published retail/mo | Partner wholesale/mo |
 |---|---|---:|---:|
-| Standard (Site) | Starter | $1,595 | $1,000 |
-| Standard (Site) | Growth | $1,995 | $1,250 |
-| Standard (Site) | Pro | $3,995 | $1,500 |
+| Standard | Starter | $1,595 | $1,000 |
+| Standard | Growth | $1,995 | $1,250 |
+| Standard | Pro | $3,995 | $1,500 |
 | Enterprise | Starter | $5,295 | $2,500 |
 | Enterprise | Growth | $7,595 | $3,500 |
 | Enterprise | Pro | $9,995 | $5,000 |
 
-## Example monthly commission (at 50%)
+The Company’s actual underlying cost is confidential and is not the Partner commission basis.
 
-| Package | Retail | Wholesale | Stripe | Gross profit | Your commission |
-|---|---:|---:|---:|---:|---:|
-| Site Starter | $1,595 | $1,000 | ~$47 | ~$548 | **~$274** |
-| Site Growth | $1,995 | $1,250 | ~$58 | ~$687 | **~$343** |
-| Site Pro | $3,995 | $1,500 | ~$116 | ~$2,379 | **~$1,189** |
-| Ent Starter | $5,295 | $2,500 | ~$154 | ~$2,641 | **~$1,321** |
-| Ent Growth | $7,595 | $3,500 | ~$220 | ~$3,874 | **~$1,937** |
-| Ent Pro | $9,995 | $5,000 | ~$290 | ~$4,705 | **~$2,352** |
+## 3. Setup fees
 
-Annual plans are billed upfront (Site ~25% off, Enterprise ~20% off); your commission on an annual deal is 50% of the annual gross profit, paid as an upfront commission. See the company pricing model for exact figures.
+- Setup fees are scope-based and may be waived only with explicit manager approval.
+- The collected setup fee must first cover the customer’s first-month MCD wholesale cost and applicable payment-processing fee.
+- Remaining setup profit is split 50/50 between MCD and the credited Partner.
 
-## Payout rules (finalized — the signed Sales Partner Agreement controls)
+| Package | Minimum setup-profit target before the split |
+|---|---:|
+| Starter | $1,000 |
+| Growth | $1,500 |
+| Pro | $3,000 |
+| Enterprise | $5,000 |
 
-- **Commission trigger:** cleared first customer payment.
-- **Monthly residuals:** paid net-15 (within 15 days after the payment clears for that cycle).
-- **Annual-plan commission:** 50% of annual gross profit, paid after the annual funds clear.
-- **Refunds / chargebacks / cancellations:** reversed or offset against future payouts within 90 days.
-- **Downgrade / pause / upgrade:** commission adjusts to the new collected amount going forward.
-- **Split commission:** the manager decides case-by-case.
-- **Lead reassignment:** leads with no documented activity for 7 days may be reassigned.
-- **Client ownership after separation:** the client remains the company's; residuals cease at termination.
-- **Commission statements:** issued monthly; raise any dispute in writing within 30 days or the statement is final.
+## 4. Payout timing
 
-## Lead ownership rules
+- **New-account first payment and setup fee:** paid no later than 30 days after funds clear and the applicable documented launch phase is complete.
+- **Established recurring payments and unchanged renewals:** paid within 15 days after cleared funds.
+- **Changed package, scope, price, or contract structure:** treated as a new contract for payout timing and commission calculation.
+- **Annual contracts:** renew under the established-account rule only while scope/package remains unchanged.
 
-- Leads are company records and must be worked inside the CRM.
-- A Sales Partner may work a lead only when the record is assigned to them or a manager has specifically instructed them to work it.
-- Every call, meaningful message, meeting, note, and next step must be logged the same business day.
-- A lead with no documented activity for the company-defined follow-up window may be reassigned.
-- Do not export, download, screenshot, transfer, or maintain company leads outside approved systems.
-- Do not contact a lead after it has been marked Do Not Contact, Lost, reassigned, or otherwise restricted.
+## 5. Refunds, chargebacks, disputes, and cancellation
 
-## Important
+- Month-to-month cancellation timing, annual commitments, setup fees, and service-fee treatment are governed by the customer agreement.
+- Setup fees are nonrefundable. Service fees are nonrefundable once the service month begins, except where legally required or expressly approved by MCD.
+- In the event of a refund, chargeback, payment reversal, fraud, duplicate payout, or Partner negligence, MCD may hold or offset future commissions to resolve the Partner’s related balance.
+- MCD will provide prompt notice and a recorded calculation. The Partner has 10 days to repay an established balance before future-commission offsets may be used.
+- Raise any commission dispute in writing within 30 days. CRM attribution and documented CRM notes are the controlling evidence; Hamilton audits disputes in good faith.
 
-Compensation rates, the partner wholesale schedule, product costs, and payout rules are confidential. The signed Sales Partner Agreement controls. No Sales Partner may quote, promise, or independently alter compensation arrangements for another agent.
+## 6. Lead attribution and ownership
+
+- All leads, prospects, customers, and CRM records are Company records and must remain inside approved systems.
+- A cold lead is created when entered in the CRM, but is protected only after documented two-way contact is recorded in the CRM.
+- A self-sourced referral is protected immediately upon accurate CRM entry and source documentation.
+- The Partner who books the qualified demo receives credit only when the deal closes and MCD receives cleared payment.
+- There are no standard MCD-administered split commissions. Partners may make private arrangements, but MCD pays the credited Partner of record unless management documents another allocation before payout.
+- A partner cannot claim commission on a deal that never closed. If a reassigned lead is re-engaged, rebooked, closed, and paid through another Partner, the new credited Partner receives the eligible commission share.
+
+### Lead stages after inactivity/stall
+
+| Status | Rule | Access | Original Partner |
+|---|---|---|---|
+| OpenPool | No demo booked after 45 days | All authorized Partners | Loses lead |
+| Shark Tank | Pitched lead received contract pricing and stalled | Top-tier closers/managers only | Loses lead |
+| House Account | Client protection, abandonment, noncompliance, or operating need | MCD/assigned management | Residual depends on good standing and documented servicing |
+
+## 7. Residual eligibility and separation
+
+Residuals continue only while the client is current and the Partner remains in good standing and documents required client servicing in the CRM.
+
+- A good-standing departing Partner may retain selected clients only with MCD approval and restricted CRM access.
+- Released or unserviced clients become House Accounts and future residuals end.
+- Immediate termination for fraud, theft, misrepresentation, compliance failures, opt-out failures, data misuse, harassment, or brand misuse ends access and may end all commission rights as stated in the signed agreement.
+
+## 8. Confidentiality
+
+Commission schedules, wholesale schedule, margin rules, scripts, internal process, customer data, and Partner economics are confidential. Do not quote, promise, publish, or alter compensation arrangements for another Partner.
