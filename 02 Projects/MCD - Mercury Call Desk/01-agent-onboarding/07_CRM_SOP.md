@@ -1,59 +1,90 @@
-# Sales CRM Standard Operating Procedure
+# Sales Partner CRM Standard Operating Procedure
 
-## Your CRM access
+## 1. Access and system-of-record rules
 
-Sales Partners work only in the Sales HQ workspace. Your account is configured so you see only the contacts, opportunities, conversations, tasks, and appointments assigned to you.
+- A Partner receives active GHL/MiniCRM access only after the mandatory onboarding gate is complete and MCD countersigns the required agreements.
+- Your assigned CRM workspace is the system of record for leads, prospects, opportunities, notes, demos, customer-service activity, attribution, DNC, account-health confirmation, and commission evidence.
+- You may use personal social accounts and personal devices for independent prospecting in good faith, but meaningful contact must be recorded in the CRM.
+- Customer/prospect email must be sent through the MCD CRM/company-email system. MCD has no active Partner phone or SMS program at this time.
+- Never access another Partner’s records, billing, commissions, workflows, settings, directories, OpenPool controls, or administrative data unless MCD has expressly assigned the access.
 
-Do not request or attempt access to another partner’s leads, client accounts, billing, commission records, workflows, integrations, or settings.
+## 2. Lead creation and protection
 
-## Sales Pipeline stages (live GHL pipeline)
+### Before creating a lead
 
-These match the live GoHighLevel pipeline in the Mercury Call Desk sub-account.
+1. Search CRM first to prevent duplicates.
+2. Record whether the lead is self-sourced, MCD-provided, OpenPool, Shark Tank, or manager-assigned.
+3. Add the source, date/time, partner of record, and required discovery/contact details.
 
-| Stage | What it means | Required next action |
+### Protection rules
+
+- A cold lead is created when entered, but remains open until you document **two-way contact** in CRM.
+- A self-sourced referral is protected immediately upon accurate entry and source documentation.
+- Do not claim a referral you cannot source/document.
+- Do not work, contact, or attempt to claim a lead that is restricted, marked DNC, Closed Lost, reassigned, in House, or assigned to another Partner without manager direction.
+
+## 3. Pipeline stages
+
+| Stage | Meaning | Required CRM action |
 |---|---|---|
-| New Lead | Lead has not received a documented outreach attempt | Contact promptly; create next task |
-| Initial Contact Made | Outreach occurred (call/email/text); may not be a full conversation yet | Log it; schedule follow-up or discovery |
-| Demo Scheduled | A qualified demo is booked on the calendar | Confirm attendance; share notes with the demo lead |
-| Demo Completed | The demo occurred | Send recap; set the next step (estimate / proposal / close) |
-| 2nd Demo & Review | A follow-up demo or review session is needed | Schedule it; document open questions/decision-makers |
-| Estimate Sent (Enterprise) | An estimate/proposal has been delivered (enterprise deals) | Follow up by the due date |
-| Closed Won | Payment confirmed / deal won | Stop sales outreach; operations/onboarding handoff begins |
-| Closed Lost | Prospect will not move forward | Select a lost reason; stop the active sequence |
+| New Lead | Record created; no documented outreach | Create next task and begin approved outreach |
+| Initial Contact Made | Outreach or two-way contact occurred | Log exact outcome, note whether protection is active, set next task |
+| Demo Scheduled | Qualified demo booked | Confirm decision-maker, add discovery notes, schedule confirmation |
+| Demo Completed | Demo occurred | Record recap, needs, objections, next decision step |
+| 2nd Demo & Review | Follow-up demo/review needed | Schedule and document decision-makers/open items |
+| Estimate Sent (Enterprise) | Estimate/proposal delivered | Record package/scope, due date, and follow-up task |
+| Closed Won | MCD received qualifying payment | Stop sales sequence; begin launch/service handoff |
+| Closed Lost | Prospect declined or became ineligible | Choose lost reason and stop active sales sequence |
+| OpenPool | No demo booked after 45 days | Available to all authorized Partners; original Partner loses record priority |
+| Shark Tank | Pitched/contract-priced lead stalled | Manager/top-tier closer recovery only; original Partner loses record priority |
+| House Account | Client assigned to MCD/management | Do not contact unless assigned |
 
-> Tip: keep a **Nurture** tag or task for real prospects with deferred timing so they don't get lost between stages.
+## 4. Required note format
 
-## Non-negotiable CRM rules
+```txt
+Date / time:
+Contact method:
+Who participated:
+Lead source / attribution status:
+Business need / pain point:
+What was discussed:
+Package/scope/pricing discussed (if any):
+Objections or risks:
+Agreed next step:
+Task due date:
+DNC / compliance issue (if applicable):
+```
 
-- Add a note after every meaningful conversation, email exchange, text exchange, meeting, or attempt that changes the next action.
-- Every open opportunity must have a next task and a due date.
-- Log the actual outcome. Do not move a stage simply to make a dashboard look better.
-- Use the opportunity record for deal status; do not use tags as a substitute for stages.
-- Use approved tags only. Never create random tags unless a manager approves the naming convention.
-- Search before creating a new contact to prevent duplicates.
-- Do not store credentials, payment card information, sensitive personal information, or confidential client documents in ordinary contact notes.
-- Do not export leads or add them to outside spreadsheets, personal phones, or unapproved tools.
+## 5. Non-negotiable CRM practices
 
-## Required note format
+- Add a note after every meaningful conversation, email exchange, social DM, meeting, client-service interaction, or attempt that changes the next action.
+- Every open opportunity must have a next task and due date.
+- Record the actual outcome. Do not change stages to improve metrics.
+- Use opportunity stages for status; do not create random tags without approval.
+- Do not store payment cards, credentials, government ID, health information, or sensitive personal data in ordinary notes.
+- Do not export, download, screenshot, copy, or maintain lead/customer data in a personal spreadsheet, personal email, messaging app, or unapproved tool.
+- Report actual or suspected data misuse, improper storage, export, screenshot, or disclosure to MCD within 24 hours.
 
-**Date / Time:**  
-**Contact method:** call, email, text, demo, voicemail, etc.  
-**Who participated:**  
-**Business need / pain point:**  
-**What was discussed:**  
-**Objections or risks:**  
-**Agreed next step:**  
-**Task due date:**
+## 6. Client service and residual evidence
 
-## Smart Lists every agent should use
+Once a client is won, document account-service activity, scheduled meetings, offered/declined/rescheduled sessions, support requests, escalation, account-health confirmation, and next action in the CRM.
 
-- My New Leads
-- My Follow-Ups Due Today
-- My Overdue Tasks
-- My Demos Today
-- My Upcoming Demos
-- My Demo No-Shows
-- My Proposals Pending
-- My Payment Pending Deals
-- My Nurture Leads
-- My Won Clients
+| Package | Phase 1 | Ongoing |
+|---|---|---|
+| Starter | Biweekly | Monthly |
+| Growth | Weekly | Biweekly or monthly, based on client preference |
+| Pro | Weekly | Weekly one-hour session |
+| Enterprise | Weekly | Weekly one-hour session |
+
+- A documented client-declined or rescheduled meeting counts as compliant activity.
+- A client support issue must be acknowledged/escalated promptly. Standard response target is 24 calendar hours.
+- An unexcused failure to respond to a client and escalate the issue for three calendar days may result in immediate termination.
+- Failure to attend to or confirm account health for 60 days creates a servicing-compliance violation. Record all warning, account-transfer, and e-signed acknowledgment activity in CRM.
+
+## 7. DNC / opt-out rule
+
+Any opt-out, DNC, unsubscribe, or “stop” request received by any channel must be entered immediately. A DNC status blocks all future calls, SMS, sales email, marketing email, and social DMs. Transactional billing, support, security, and system-outage communications may continue only where permitted.
+
+## 8. Former Partner role
+
+Good-standing former Partners may receive a read-only role for MCD-approved retained clients, commission dashboard, and meeting notes only. Access automatically ends 30 days after the final commission payout clears.
