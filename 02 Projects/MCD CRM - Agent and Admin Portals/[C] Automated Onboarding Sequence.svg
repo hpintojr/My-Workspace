@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1010 790" font-family="Segoe UI, Arial, sans-serif">
+  <rect x="0" y="0" width="1010" height="790" fill="#ffffff"/>
+  <text x="505" y="30" text-anchor="middle" font-size="19" font-weight="600" fill="#0f3b3b">Automated agent onboarding — you tag once, GHL runs the rest</text>
+  <text x="505" y="52" text-anchor="middle" font-size="12" fill="#5b6b6b">Documents live in GHL · MiniCRM keeps references + completion state · no raw SSN/bank in the CRM</text>
+
+  <g font-size="12" font-weight="600">
+    <rect x="55" y="72" width="150" height="42" rx="9" fill="#eef6f5" stroke="#1c8c84" stroke-width="1.8"/>
+    <text x="130" y="92" text-anchor="middle" fill="#0f3b3b">Hamilton</text>
+    <text x="130" y="107" text-anchor="middle" font-size="10" font-weight="400" fill="#5b6b6b">owner</text>
+    <rect x="285" y="72" width="150" height="42" rx="9" fill="#f1eafc" stroke="#6b46c1" stroke-width="1.8"/>
+    <text x="360" y="92" text-anchor="middle" fill="#3b2a6b">Agent</text>
+    <text x="360" y="107" text-anchor="middle" font-size="10" font-weight="400" fill="#5b4a8b">personal email + portal</text>
+    <rect x="535" y="72" width="150" height="42" rx="9" fill="#e6f3f1" stroke="#0f766e" stroke-width="1.8"/>
+    <text x="610" y="92" text-anchor="middle" fill="#0f3b3b">MiniCRM</text>
+    <text x="610" y="107" text-anchor="middle" font-size="10" font-weight="400" fill="#5b6b6b">signup + app</text>
+    <rect x="785" y="72" width="150" height="42" rx="9" fill="#eaf0fb" stroke="#3b5bbf" stroke-width="1.8"/>
+    <text x="860" y="92" text-anchor="middle" fill="#1c2c5b">GHL</text>
+    <text x="860" y="107" text-anchor="middle" font-size="10" font-weight="400" fill="#4a5680">docs · e-sign · workflow</text>
+  </g>
+
+  <g stroke="#c7d2d0" stroke-width="1.4" stroke-dasharray="4 5">
+    <line x1="130" y1="114" x2="130" y2="740"/>
+    <line x1="360" y1="114" x2="360" y2="740"/>
+    <line x1="610" y1="114" x2="610" y2="740"/>
+    <line x1="860" y1="114" x2="860" y2="740"/>
+  </g>
+
+  <defs>
+    <marker id="a" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#33474a"/></marker>
+    <marker id="t" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#b8860b"/></marker>
+    <marker id="w" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#0f766e"/></marker>
+  </defs>
+
+  <g font-size="10.5" fill="#23383a">
+    <text x="132" y="150" font-size="10" fill="#8a5a1c">setup (manual)</text>
+    <line x1="130" y1="162" x2="858" y2="162" stroke="#b8860b" stroke-width="1.6" marker-end="url(#a)"/>
+    <text x="495" y="157" text-anchor="middle" font-size="10">0 · Create GHL user + IONOS mailbox</text>
+
+    <line x1="130" y1="204" x2="358" y2="204" stroke="#33474a" stroke-width="1.6" marker-end="url(#a)"/>
+    <text x="245" y="199" text-anchor="middle">1 · Send signup link</text>
+
+    <line x1="360" y1="246" x2="608" y2="246" stroke="#33474a" stroke-width="1.6" marker-end="url(#a)"/>
+    <text x="485" y="241" text-anchor="middle">2 · Submit personal data (/signup)</text>
+
+    <line x1="610" y1="288" x2="858" y2="288" stroke="#33474a" stroke-width="1.6" marker-end="url(#a)"/>
+    <text x="734" y="283" text-anchor="middle">3 · Port data → GHL contact</text>
+
+    <line x1="610" y1="330" x2="132" y2="330" stroke="#33474a" stroke-width="1.6" marker-end="url(#a)"/>
+    <text x="371" y="325" text-anchor="middle">4 · Notify: applicant pending confirm</text>
+
+    <line x1="130" y1="372" x2="358" y2="372" stroke="#33474a" stroke-width="1.6" marker-end="url(#a)"/>
+    <text x="245" y="367" text-anchor="middle">5 · Confirm call</text>
+
+    <line x1="130" y1="416" x2="858" y2="416" stroke="#b8860b" stroke-width="2.2" marker-end="url(#t)"/>
+    <text x="495" y="410" text-anchor="middle" font-weight="600" fill="#8a6d12">6 · Tag "agent-approved"  →  single trigger</text>
+
+    <line x1="860" y1="458" x2="362" y2="458" stroke="#33474a" stroke-width="1.6" marker-end="url(#a)"/>
+    <text x="611" y="453" text-anchor="middle">7 · Send contract + NDA + W-9 (e-sign)</text>
+
+    <line x1="360" y1="500" x2="858" y2="500" stroke="#33474a" stroke-width="1.6" marker-end="url(#a)"/>
+    <text x="609" y="495" text-anchor="middle">8 · Agent e-signs → Hamilton countersigns</text>
+
+    <line x1="860" y1="544" x2="612" y2="544" stroke="#0f766e" stroke-width="2.2" marker-end="url(#w)"/>
+    <text x="736" y="539" text-anchor="middle" font-weight="600" fill="#0f766e">9 · "Completed" webhook</text>
+
+    <line x1="610" y1="586" x2="362" y2="586" stroke="#33474a" stroke-width="1.6" marker-end="url(#a)"/>
+    <text x="486" y="581" text-anchor="middle">10 · Activation link → personal email</text>
+
+    <line x1="360" y1="628" x2="608" y2="628" stroke="#33474a" stroke-width="1.6" marker-end="url(#a)"/>
+    <text x="484" y="623" text-anchor="middle">11 · Password+MFA · profile · banking · cert</text>
+  </g>
+
+  <rect x="60" y="662" width="890" height="66" rx="10" fill="#f5faf9" stroke="#cfe0dd" stroke-width="1.2"/>
+  <text x="505" y="686" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f3b3b">Result: agent ACTIVE + can_claim_leads after certification.</text>
+  <text x="505" y="706" text-anchor="middle" font-size="10.5" fill="#5b6b6b">Your manual steps: create GHL user + IONOS mailbox · confirm call · one tag. SSN lives only inside the W-9 e-sign doc (never a stored field);</text>
+  <text x="505" y="721" text-anchor="middle" font-size="10.5" fill="#5b6b6b">banking via a secure provider (CRM stores a token, not raw numbers). Signed docs stored in GHL, mirrored to R2 for the 7-year record.</text>
+</svg>

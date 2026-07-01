@@ -1,5 +1,7 @@
 # MCD CRM — Agent Registration, Knowledge Base & Training Integration
 **Companion to:** `[C] Master Product Scope v1.1.md` (§5 security, §6 onboarding, §7 data model, §11 agent experience)
+
+> **v1.2 update (2026-06-30):** Per the approved business terms, agreement e-signing now uses **GHL Documents & Contracts** (multi-recipient, with Hamilton's countersignature and a legal audit certificate) instead of the R2-only upload described in §3 — the signed PDF is mirrored to R2 for the 7-year record. Registration also requires an emergency-contact field and full audit-trail capture (version, signer IP, timestamps, countersignature). See `[C] v1.2 Business-Terms Reconciliation & GHL Flows.md` §4–5.
 **Version:** 1.0 · **Date:** 2026-06-30
 **Purpose:** Wire the existing Mercury Call Desk onboarding library into the Mini CRM so the same files drive (a) agent registration/activation gates and (b) the in-app knowledge base + training. Onboarding and the CRM go hand in hand — this is the connective tissue.
 

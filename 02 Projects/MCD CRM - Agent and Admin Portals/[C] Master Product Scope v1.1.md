@@ -4,6 +4,8 @@
 **Purpose:** Single source of truth for product management, UX/UI, architecture, development, QA, and launch planning.
 
 > **What changed in v1.1 (2026-06-29):** Added the GHL-as-backend operating model — the missing piece from v1.0. Sections 1–30 are unchanged from your original. New material is appended as **Part B (Sections 31–37)**: GHL backend architecture and isolation (§31), the GHL → Mini CRM event catalog and webhook contracts (§32), the **Stripe → GHL → Mini CRM funding relay** (§33), the agent-attribution model that needs **no GHL logins** (§34), the dedicated `mercurycalldesk@` email decision + migration steps (§35), recommended UX/architecture enhancements (§36), and GHL-specific acceptance tests (§37). Your two direct questions are answered in §33 (funding relay) and §34 (GHL staff users — short answer: no). Developer-level payloads live in the companion file `[C] GHL Backend Integration Spec.md`.
+>
+> **v1.2 note (2026-06-30):** Reconciled to the approved Partner Program Business Terms. Apply `[C] v1.2 Business-Terms Reconciliation & GHL Flows.md` over this scope — it changes the commission model to 50/50 of Net Commissionable Profit (§16/§17), makes lead protection concrete (two-way contact, referral, 45-day OpenPool, Shark Tank, close+cleared credit — §8/§10), makes service cadence MANDATORY per package and overrides §12.3, adds a countersignature + GHL Documents & Contracts e-sign onboarding (§6), and defines the two agent-GHL-attribution flows being piloted.
 
 ---
 
