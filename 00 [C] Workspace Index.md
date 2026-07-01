@@ -78,6 +78,7 @@ Production status: `hpintojr/crm.mcd` releases directly from `main` to Vercel. `
 Read first:
 
 ```txt
+02 Projects/MCD CRM - Agent and Admin Portals/README.md
 01 Daily Logs/[C] 2026-07-01 MCD CRM Production Foundation Launch.md
 02 Projects/MCD CRM - Agent and Admin Portals/[C] AI Handoff & Scope Review.md
 02 Projects/MCD CRM - Agent and Admin Portals/[C] Build Specs — Index & Roadmap.md
