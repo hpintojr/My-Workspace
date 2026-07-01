@@ -73,12 +73,15 @@ Standing rules: **no non-compete** in any agreement (confidentiality + IP + non-
 
 Mercury Call Desk Mini CRM is now a live production foundation: a protected Admin portal, public partner sign-up, and a Neon-backed system of record with GoHighLevel reserved as a one-way backend. It remains separate from the MCD sales-partner program project above.
 
-Production status: `hpintojr/crm.mcd` releases directly from `main` to Vercel. `https://crm.mercurycalldesk.com` is active, the dedicated Neon production schema is applied, and the initial OWNER account has completed password + TOTP MFA activation. Slices 00–02 are live: public signup, authentication/activation, and admin applicant review. Stripe Connect, Cloudflare R2, agent portal, and live inbound GHL onboarding webhooks remain later slices.
+Production status: `hpintojr/crm.mcd` releases directly from `main` to Vercel. `https://crm.mercurycalldesk.com` is active, the dedicated Neon production schema is applied, and the initial OWNER account has completed password + TOTP MFA activation. Slices 00–02 are live: public signup, authentication/activation, and admin applicant review. Inbound GHL document webhooks (Slice 03) are also live and now correctly send agent activation emails via SMTP (fixed 2026-07-01 — links were previously generated but never delivered). Stripe Connect, Cloudflare R2, and the agent portal remain later slices.
+
+GHL: Private Integration Token confirmed working against the live "Mercury Call Desk" location (`lEdLVFW0uqKMhmkgFrsX`). The location has no MCD-specific custom fields, tags, or workflows yet — full build-out plan (exact workflows, tag registry, AI-workflow-builder prompts) is in the new runbook.
 
 Read first:
 
 ```txt
 02 Projects/MCD CRM - Agent and Admin Portals/README.md
+02 Projects/MCD CRM - Agent and Admin Portals/[C] GHL Production Build-Out Runbook.md
 01 Daily Logs/[C] 2026-07-01 MCD CRM Production Foundation Launch.md
 02 Projects/MCD CRM - Agent and Admin Portals/[C] AI Handoff & Scope Review.md
 02 Projects/MCD CRM - Agent and Admin Portals/[C] Build Specs — Index & Roadmap.md
@@ -87,7 +90,7 @@ Read first:
 Repo: hpintojr/crm.mcd
 ```
 
-Next action: remove the temporary owner-bootstrap deployment configuration, restore the normal Vercel build command, and redeploy. Then build Slice 03 — secure inbound GHL document webhooks and invited-user provisioning.
+Next action: build the Phase 1 GHL workflow ("MCD - Agent Onboarding Documents") per the runbook, then run its end-to-end test plan (throwaway signup → GHL e-sign → webhook → activation email).
 
 Standing rules: GHL is backend-only; never expose GHL/pricing/other-client data to agents; no per-agent GHL logins; no SSNs or raw bank data in the CRM; Finance approves payouts; every sensitive action is audited.
 
