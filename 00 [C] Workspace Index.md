@@ -1,6 +1,6 @@
 # Workspace Index
 
-Updated: 2026-06-30
+Updated: 2026-07-01
 
 ## First read
 
@@ -71,20 +71,24 @@ Standing rules: **no non-compete** in any agreement (confidentiality + IP + non-
 
 ## MCD CRM - Agent and Admin Portals
 
-Software build for Mercury Call Desk: a secure Mini CRM (Agent portal + Admin portal) with GoHighLevel as a one-way backend. Separate from the MCD sales-partner program project above. Scoped 2026-06-29; the Master Product Scope is now v1.1 with a full GHL backend layer (Part B, sections 31-37), a standalone GHL integration spec, and a data-flow diagram. Confirmed: GHL Agency plan (API v2 + Private Integration Tokens), one sub-account per client, Stripe inside GHL, agents get no GHL logins, funding relays Stripe -> GHL -> Mini CRM.
+Mercury Call Desk Mini CRM is now a live production foundation: a protected Admin portal, public partner sign-up, and a Neon-backed system of record with GoHighLevel reserved as a one-way backend. It remains separate from the MCD sales-partner program project above.
+
+Production status: `hpintojr/crm.mcd` releases directly from `main` to Vercel. `https://crm.mercurycalldesk.com` is active, the dedicated Neon production schema is applied, and the initial OWNER account has completed password + TOTP MFA activation. Slices 00–02 are live: public signup, authentication/activation, and admin applicant review. Stripe Connect, Cloudflare R2, agent portal, and live inbound GHL onboarding webhooks remain later slices.
 
 Read first:
 
 ```txt
-02 Projects/MCD CRM - Agent and Admin Portals/MCD CRM - Agent and Admin Portals Overview.md
-02 Projects/MCD CRM - Agent and Admin Portals/[C] Master Product Scope v1.1.md
-02 Projects/MCD CRM - Agent and Admin Portals/[C] GHL Backend Integration Spec.md
-02 Projects/MCD CRM - Agent and Admin Portals/[C] GHL Mini-CRM Data Flow.svg
+01 Daily Logs/[C] 2026-07-01 MCD CRM Production Foundation Launch.md
+02 Projects/MCD CRM - Agent and Admin Portals/[C] AI Handoff & Scope Review.md
+02 Projects/MCD CRM - Agent and Admin Portals/[C] Build Specs — Index & Roadmap.md
+02 Projects/MCD CRM - Agent and Admin Portals/[C] v1.2 Business-Terms Reconciliation & GHL Flows.md
+02 Projects/MCD CRM - Agent and Admin Portals/[C] Automated Agent Onboarding Flow (GHL-first).md
+Repo: hpintojr/crm.mcd
 ```
 
-Build (2026-06-30): coding started in repo hpintojr/crm.mcd (D:\GitHub\crm.mcd) — Next.js 15 + TypeScript + Tailwind + Prisma + Neon + Vercel; first slice = public partner sign-up → GHL (stub-safe) → SUBMITTED agent + audit. Scope reconciled to the approved business terms (v1.2). Any AI continuing the CRM reads `[C] AI Handoff & Scope Review.md` FIRST (doc map, coding conventions, gap analysis). The full build is specced slice-by-slice in `[C] Build Specs — Index & Roadmap.md` (specs 01–04 full, 05–15 outlined; mirrored in repo docs/).
+Next action: remove the temporary owner-bootstrap deployment configuration, restore the normal Vercel build command, and redeploy. Then build Slice 03 — secure inbound GHL document webhooks and invited-user provisioning.
 
-Standing rules: GHL is backend-only; never expose GHL/pricing/other-client data to agents; no per-agent GHL logins; Stripe untouched in v1 (relayed via GHL); commissions auto-calculated but Finance approves payouts.
+Standing rules: GHL is backend-only; never expose GHL/pricing/other-client data to agents; no per-agent GHL logins; no SSNs or raw bank data in the CRM; Finance approves payouts; every sensitive action is audited.
 
 ## Rules
 
