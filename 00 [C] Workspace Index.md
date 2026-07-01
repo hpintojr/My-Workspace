@@ -1,6 +1,6 @@
 # Workspace Index
 
-Updated: 2026-06-29
+Updated: 2026-06-30
 
 ## First read
 
@@ -81,6 +81,8 @@ Read first:
 02 Projects/MCD CRM - Agent and Admin Portals/[C] GHL Backend Integration Spec.md
 02 Projects/MCD CRM - Agent and Admin Portals/[C] GHL Mini-CRM Data Flow.svg
 ```
+
+Build (2026-06-30): coding started in repo hpintojr/crm.mcd (D:\GitHub\crm.mcd) — Next.js 15 + TypeScript + Tailwind + Prisma + Neon + Vercel; first slice = public partner sign-up → GHL (stub-safe) → SUBMITTED agent + audit. Scope reconciled to the approved business terms (v1.2). Any AI continuing the CRM reads `[C] AI Handoff & Scope Review.md` FIRST (doc map, coding conventions, gap analysis). The full build is specced slice-by-slice in `[C] Build Specs — Index & Roadmap.md` (specs 01–04 full, 05–15 outlined; mirrored in repo docs/).
 
 Standing rules: GHL is backend-only; never expose GHL/pricing/other-client data to agents; no per-agent GHL logins; Stripe untouched in v1 (relayed via GHL); commissions auto-calculated but Finance approves payouts.
 

@@ -220,3 +220,5 @@ Next actions:
 3. Lock the GHL custom-field attribution model (no per-agent GHL logins).
 4. Define the funding-relay webhook contract + idempotency, then build Phase 1 (booking handoff) and Phase 2 (funding/servicing relay).
 ```
+
+Build status (2026-06-30): Coding started in repo hpintojr/crm.mcd (local D:\GitHub\crm.mcd). Scope reconciled to the approved Partner Program Business Terms (v1.2): 50/50 Net Commissionable Profit, concrete lead-protection rules (two-way contact, 45-day OpenPool, Shark Tank), mandatory per-package service cadence, and a countersignature + GHL Documents & Contracts e-sign onboarding. A GHL-first automated onboarding flow is scoped (public signup at crm.mercurycalldesk.com/signup → GHL e-sign → MiniCRM provisioning). Stack: Next.js 15 + TypeScript + Tailwind + Prisma + Neon + Vercel. First slice built: public partner sign-up → GHL (stub-safe) → SUBMITTED agent + audit. For any AI continuing this work, read `02 Projects/MCD CRM - Agent and Admin Portals/[C] AI Handoff & Scope Review.md` first. Compliance: no SSN/bank fields in the CRM; email accessed server-side via token; GHL one-way, agents never log into GHL.

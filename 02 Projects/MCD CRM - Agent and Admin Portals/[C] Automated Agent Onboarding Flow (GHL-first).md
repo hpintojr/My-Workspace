@@ -104,7 +104,7 @@ IF YOU STILL WANT SSN AT SIGNUP: capture it in a single secure step that writes 
 ## 5. Banking & personal data self-service (in the MiniCRM portal)
 ```txt
 - Personal data (name, mobile, mailing, emergency contact): editable by the agent in-portal; audited.
-- Banking/payout: entered/updated via a SECURE payout/tax provider widget (e.g. the W-9/payout provider).
+- Banking/payout: set up via **Stripe Connect (Express)** — the CRM creates a Connect account + a Stripe-hosted onboarding link; the agent completes bank/KYC on Stripe. The portal shows the info/steps to set this up.
     MiniCRM stores a TOKEN/reference + completion state only — never raw account/routing numbers (scope §5.1).
 - SSN: NOT editable in-portal (captured once at registration per §4). Show "on file: yes/no" only.
 - Every change writes an audit_log entry.
@@ -115,10 +115,11 @@ IF YOU STILL WANT SSN AT SIGNUP: capture it in a single secure step that writes 
 ## 6. Email + credential provisioning (and security flags)
 ```txt
 IONOS company mailbox:
-  - Hamilton creates the mailbox; a default initial password is set (you'll provide the standard).
-  - SECURITY FLAG: a single shared standing password across agents is risky. Recommend forcing a
-    password change on first login and enabling MFA where IONOS supports it. The company mailbox is the
-    OPERATIONAL identity; it is NOT the MiniCRM login.
+  - Hamilton creates the mailbox. Agents NEVER log into email directly — the CRM accesses each mailbox
+    server-side via a 34-char token stored in EMAIL_ACCESS_TOKEN (server-only env var; never exposed to
+    the client or the agent). The mailbox is the OPERATIONAL identity the CRM reads/sends from; it is NOT
+    a login the agent uses. No agent email login = no shared-password exposure to agents. Keep the token
+    in the secret manager and rotate if leaked.
 MiniCRM credentials:
   - Provisioned by the app after documents complete; delivered to the agent's PERSONAL email as a
     one-time activation link → agent sets their own password + MFA (scope §6.1).
@@ -145,7 +146,7 @@ MiniCRM credentials:
 ## 8. Open decisions / flags for Hamilton
 ```txt
 [ ] SSN: confirm the recommended pattern (SSN only inside the W-9 e-sign doc, never a stored field) — §4.
-[ ] Banking: confirm a secure payout provider (so the CRM never holds raw account/routing numbers).
+[x] Payout = Stripe Connect (Express); CRM stores connected-account id + payouts_enabled only; Stripe handles 1099. (decided 2026-06-30)
 [ ] IONOS: confirm forced password change on first login + MFA, instead of a permanent shared password.
 [ ] E-sign system of record: GHL Documents & Contracts (recommended here) vs DocuSign — pick one.
 [ ] Confirm-call step: keep as a hard manual gate before the workflow tag (recommended), or auto-tag on signup.
