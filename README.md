@@ -70,6 +70,7 @@ Schedule timezone: source timezone is preserved; the portal renders in the signe
 Meet links: shown only for Scheduled and Confirmed appointments.
 Company / Legal Entity Name: optional field separate from individual signer.
 Lead/Task modules: staged and feature-gated. The production database does not yet contain lead, callback, note, activity, claim, suppression, import, or proposal tables.
+Local lead operations: final scope is approved for a Claude-built local staging, research, preview, and signed MiniCRM-export workflow. It must not connect directly to Neon.
 ```
 
 #### Lead rules and source tracking
@@ -78,7 +79,8 @@ Lead/Task modules: staged and feature-gated. The production database does not ye
 Pools: Cold Pool / Prospects, Nurture / Marketing Email Pool, Hot Leads, Open Pool, Shark Tank, Referral, House.
 Sources: Google Maps, Instagram, Referral, PPC, Email, SMS, LinkedIn, Web Form, Facebook, Other.
 Original source is permanent. Intake method, campaign, pool, lifecycle, owner, quote, and suppression are separate fields.
-Google Maps is a research/source label for independently sourced records. Batch scraping/import is blocked.
+Allowed local inputs: user files, referrals, web forms, PPC leads, approved/licensed provider data, owned-account exports, and permitted business-website research.
+Blocked local automation: directory/social scraping, anti-bot bypasses, direct Neon writes, SMTP mailbox probing, and provider-limit circumvention.
 No website listed requires review before becoming a verified no-website opportunity.
 Website-only quotes are planned in the approved $500–$3,000 range with scope and expiry controls.
 ```
@@ -86,22 +88,23 @@ Website-only quotes are planned in the approved $500–$3,000 range with scope a
 #### Read first
 
 ```txt
+02 Projects/MCD CRM - Agent and Admin Portals/[C] Local Lead Operations and MiniCRM Export Scope.md
+02 Projects/MCD CRM - Agent and Admin Portals/[C] Lead Foundation Design Addendum.md
 02 Projects/MCD CRM - Agent and Admin Portals/[C] Lead Management Scope Review and Build Plan.md
 02 Projects/MCD CRM - Agent and Admin Portals/[C] Lead Pool and Source Taxonomy.md
+01 Daily Logs/[C] 2026-07-02 MCD Local Lead Operations Scope Finalized.md
 01 Daily Logs/[C] 2026-07-02 MCD CRM Portal Schedule and Lead Pool Progress.md
 01 Daily Logs/[C] 2026-07-02 MCD CRM Admin Operations Status.md
 01 Daily Logs/[C] 2026-07-01 MCD CRM Phase 1 End-to-End Onboarding Validated.md
-02 Projects/MCD CRM - Agent and Admin Portals/[C] AI Handoff & Scope Review.md
-02 Projects/MCD CRM - Agent and Admin Portals/[C] GHL Production Build-Out Runbook.md
 ```
 
 #### Next scope
 
-1. Apply and validate the lead-foundation database migration.
-2. Build Admin intake/review, original-source/campaign capture, dedupe, suppression, assignment, notes, activities, and callbacks.
-3. Implement Cold, Nurture, Hot, Open Pool, Shark Tank, Referral, and House rules without weakening ownership protections.
-4. Add proposal/quote records for MCD package, website-only, and MCD-with-included-website offers.
-5. Add campaign events/reply routing, then controlled GHL Demo Booked handoff.
+1. Have Claude scaffold Phase A of `mcd_lead_ops`: local CLI, SQLite staging, permitted input adapters, policy engine, preview reports, manifests, and synthetic tests.
+2. Define and build the MiniCRM lead-import API contract, server-side validation, audit, suppression, Admin review, and reconciliation.
+3. Apply and validate the lead-foundation database migration only after the API contract is ready.
+4. Build proposal/quote records for MCD package, website-only, and MCD-with-included-website offers.
+5. Add campaign event/reply routing and then controlled GHL Demo Booked handoff.
 
 ## Workspace rules
 
