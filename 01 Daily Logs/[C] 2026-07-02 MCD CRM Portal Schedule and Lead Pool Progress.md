@@ -74,14 +74,14 @@ The production data update is applied. Signup validation, signup capture, MiniCR
 
 ### Task workspace
 
-The Task workspace is moving from a staged placeholder into a callback queue. It is designed to show the signed-in agent's scheduled callbacks split into:
+The callback Task workspace is deployed to production. It shows the signed-in agent's scheduled callbacks split into:
 
 ```txt
 Overdue follow-ups
 Upcoming follow-ups
 ```
 
-Each task links back to the related lead so the agent can document the result and establish the next action.
+Each task links back to the related lead so the agent can document the result and establish the next action. The deployment is ready for controlled callback-record validation.
 
 ## Locked lead-pool naming conventions
 
@@ -107,7 +107,7 @@ These are separate from a lead's lifecycle, owner, referral protection, DNC/supp
 
 ## Next engineering scope
 
-1. Finish verification of the callback Task workspace deployment.
+1. Validate the deployed callback Task workspace with controlled callback records.
 2. Build the controlled Lead Management slice: import/review, owner assignment, activity, disposition, notes, callback creation, and DNC/suppression handling.
 3. Add pool-aware handling for Cold Pool / Nurture / Hot Leads / Open Pool / Shark Tank while preserving referral and House protections.
 4. Connect the Demo Booked handoff to GHL only after lead ownership and appointment context are safely established.
