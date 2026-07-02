@@ -1,122 +1,125 @@
 # Workspace Index
 
-Updated: 2026-07-01
+Updated: 2026-07-02
 
 ## First read
 
 1. README.md
 2. 00 [C] Workspace Index.md
 3. CLAUDE.md
-4. 02 Projects/[C] Shared WCAG 2.2 AA Accessibility Design & Engineering Specification.md
+4. The current project files listed below
 
 ## Portfolio
 
 Project: bennyandpenny.com  
 Repository: hpintojr/bennyandpenny  
-Branch: main  
-Latest verified share-preview commit: 04c9d5c19939da9a820c39ca9073c0d8355b3481  
-Vercel status: success
+Branch: main
 
-The portfolio includes the native accessibility launcher, approved universal-access icon, footer trigger, native preferences dialog, and approved Neon Contact storage. Social sharing now sends the approved static BP artwork through the existing `/og-image` URL as raw WebP bytes, with direct static fallback head tags in `app/head.tsx`. Chrome iOS may show a text-only browser share-sheet header even when the final Messages link card renders correctly; a real-device final-card test remains open.
+Read next:
 
-### Portfolio read next
-
-1. 02 Projects/bennyandpenny.com — Portfolio/[C] PROJECT TRUTH — Read First.md
-2. 01 Daily Logs/[C] 2026-06-21 Portfolio Chrome iOS Share Preview Follow-Up.md
-3. 01 Daily Logs/[C] 2026-06-20 Portfolio Mobile Chrome Share Preview Fix.md
-4. 02 Projects/[C] Shared WCAG 2.2 AA Accessibility Design & Engineering Specification.md
-5. 01 Daily Logs/[C] 2026-06-20 Workspace Sync — Portfolio Accessibility Icon and Contact Storage.md
-6. 01 Daily Logs/[C] 2026-06-20 Universal Accessibility Icon Update.md
-7. 01 Daily Logs/[C] 2026-06-20 Portfolio Contact Submission Storage Approved and Applied.md
+```txt
+02 Projects/bennyandpenny.com — Portfolio/[C] PROJECT TRUTH — Read First.md
+01 Daily Logs/[C] 2026-06-21 Portfolio Chrome iOS Share Preview Follow-Up.md
+01 Daily Logs/[C] 2026-06-20 Portfolio Mobile Chrome Share Preview Fix.md
+02 Projects/[C] Shared WCAG 2.2 AA Accessibility Design & Engineering Specification.md
+```
 
 ## Adventures Store
 
 Project: bennyandpennyadventures.com  
 Repository: hpintojr/bennyandpennyadventures
 
-The shared WCAG specification is required before accessibility implementation begins in this separate repository. It includes the approved universal-access person-in-circle icon, native launcher behavior, and the required store, account, library, gift, order, and support testing scope.
+Read next:
 
-### Adventures read next
-
-1. 02 Projects/[C] Shared WCAG 2.2 AA Accessibility Design & Engineering Specification.md
-2. 02 Projects/Benny & Penny's Adventures/[C] Accessibility WCAG 2.2 AA Handoff.md
+```txt
+02 Projects/[C] Shared WCAG 2.2 AA Accessibility Design & Engineering Specification.md
+02 Projects/Benny & Penny's Adventures/[C] Accessibility WCAG 2.2 AA Handoff.md
+02 Projects/Benny & Penny's Adventures/[C] Backlog & Launch Checklist.md
+```
 
 ## Book Series
 
-The shared specification also applies to accessible customer-facing digital books, media, downloads, and support resources.
+The Benny & Penny's Adventures book-production kit is the source of truth for the ten-book print, digital, audio, and multilingual series.
+
+Read next:
+
+```txt
+02 Projects/Benny & Penny's Adventures Book Series/[C] AI Index & Commands.md
+02 Projects/Benny & Penny's Adventures Book Series/README.md
+02 Projects/Benny & Penny's Adventures Book Series/00-series-control/00-OFFICIAL-CATALOG.md
+02 Projects/Benny & Penny's Adventures Book Series/00-series-control/02-MASTER-PRODUCTION-DASHBOARD.md
+```
 
 ## MCD - Mercury Call Desk
 
-AI receptionist / call-desk platform (built on a third-party platform base — vendor confidential, do not disclose) sold by commission-only 1099 sales partners, managed in GoHighLevel, with a reseller-partner pathway. Separate project. The 14-file Sales Partner Launch Kit was migrated in as canonical onboarding on 2026-06-24.
+AI receptionist / call-desk platform using a confidential third-party platform base. The Sales Partner Launch Kit is the canonical onboarding package. Keep public/agent content free of confidential vendor, wholesale pricing, commission math, and non-approved claims.
 
-A dedicated `04-brand-assets/` system is now added: editable SVG masters, light/dark wordmark variants, icon-only SVG, provisional brand colors, and a catalog. The new branded 18-page Sales Partner Launch Kit is company-ready. Its cover has been corrected: the logo is integrated into the navy artwork with no hard-edged image block. The final font and an outlined production release remain open.
-
-Read first:
+Read next:
 
 ```txt
 02 Projects/MCD - Mercury Call Desk/[C] AI Index & Commands.md
 02 Projects/MCD - Mercury Call Desk/[C] Owner Setup & Open Decisions.md
-02 Projects/MCD - Mercury Call Desk/04-brand-assets/00_READ_ME_FIRST.md
-02 Projects/MCD - Mercury Call Desk/04-brand-assets/04-brand-documentation/[C] Logo Asset Catalog.md
 02 Projects/MCD - Mercury Call Desk/01-agent-onboarding/00_READ_ME_FIRST.md
-02 Projects/MCD - Mercury Call Desk/01-agent-onboarding/15_BRANDED_SALES_PARTNER_LAUNCH_KIT.md
-02 Projects/MCD - Mercury Call Desk/01-agent-onboarding/[C] Sales Partner Launch Kit Cover Revision.md
-01 Daily Logs/[C] 2026-06-25 MCD Branded Sales Partner Launch Kit.md
-01 Daily Logs/[C] 2026-06-25 MCD Brand Assets Cataloged.md
-01 Daily Logs/[C] 2026-06-25 MCD Remove Non-Compete and Confidential Vendor.md
-01 Daily Logs/[C] 2026-06-24 MCD Project Setup.md
+02 Projects/MCD - Mercury Call Desk/04-brand-assets/00_READ_ME_FIRST.md
 ```
 
-Standing rules: **no non-compete** in any agreement (confidentiality + IP + non-solicit only); **do not disclose the underlying platform vendor** to agents, prospects, or public/marketing materials.
+Standing rules: no non-compete; confidentiality, IP, and approved non-solicit only. Do not disclose the underlying vendor.
 
 ## MCD CRM - Agent and Admin Portals
 
-Mercury Call Desk Mini CRM is a live production foundation: protected Admin and Partner portals, public partner signup, Neon-backed system of record, and GoHighLevel as a private onboarding/document backend. It remains separate from the MCD sales-partner program project above.
+Mercury Call Desk MiniCRM is the production foundation for controlled agent onboarding, agent operations, lead ownership, compliance, and later finance/service operations. It is separate from the MCD sales-partner program project.
 
 ### Current production status
 
-Phase 1 onboarding has been validated end to end in production with a controlled synthetic applicant:
-
 ```txt
-Signup → agent-signup in GHL → owner confirm call/approve → agent-approved
-→ GHL sends four e-sign documents → four completion relay webhooks
-→ Neon records all onboarding gates → Sales Agreement countersigned
-→ user provisioned → IONOS activation email delivered → partner activates and reaches /portal
+Phase 1 onboarding: validated end to end with a controlled test partner.
+Admin: status grid deployed; duplicate approval/e-sign action prevented.
+Agent Portal: sidebar established with Dashboard, Tasks, Inbox, Leads, Proposals, Schedule, Training, Resources, Settings, theme toggle, and Sign Out.
+Schedule: GHL appointment relay validated for Booked, Confirmed, Cancelled, No-show, Completed, and Rescheduled.
+Timezone: appointment source timezone is preserved; portal displays in the signed-in viewer's browser timezone.
+Company registration: optional Company / Legal Entity Name is supported separately from the individual legal signer.
+Tasks: callback-queue deployment is in progress.
 ```
 
-The five GHL workflows are published and working. The partner portal correctly shows all document gates complete and keeps lead access locked pending manager certification. SMTP delivery is working from `no-reply@mercurycalldesk.com`. Historical SMTP failures were resolved after correcting the mailbox credentials and redeploying production.
+### Lead-pool conventions
 
-Production source: `hpintojr/crm.mcd` → `main` → Vercel. Production application: `https://crm.mercurycalldesk.com`. Neon base schema is applied. Agents still have no GHL logins.
+```txt
+Cold Pool / Prospects = fresh scraped and validated business records.
+Nurture / Marketing Email Pool = branded email campaign records.
+Hot Leads = prospect replies / active-intent records; stop nurture and route for human follow-up.
+Open Pool = booked-demo no-shows and eligible released records.
+Shark Tank = stalled prospects carrying an active 30–90-day proposal/contract-priced quote.
+Referral = protected self-sourced/referral records.
+House = company-controlled/reassigned records.
+```
 
 ### MCD CRM read next
 
 ```txt
+01 Daily Logs/[C] 2026-07-02 MCD CRM Portal Schedule and Lead Pool Progress.md
+01 Daily Logs/[C] 2026-07-02 MCD CRM Admin Operations Status.md
 01 Daily Logs/[C] 2026-07-01 MCD CRM Phase 1 End-to-End Onboarding Validated.md
 02 Projects/MCD CRM - Agent and Admin Portals/[C] AI Handoff & Scope Review.md
 02 Projects/MCD CRM - Agent and Admin Portals/[C] GHL Production Build-Out Runbook.md
 02 Projects/MCD CRM - Agent and Admin Portals/[C] Implementation Status — 2026-07-01.md
-02 Projects/MCD CRM - Agent and Admin Portals/MCD CRM - Agent and Admin Portals Overview.md
-02 Projects/MCD CRM - Agent and Admin Portals/[C] Build Specs — Index & Roadmap.md
 02 Projects/MCD CRM - Agent and Admin Portals/[C] v1.2 Business-Terms Reconciliation & GHL Flows.md
-02 Projects/MCD CRM - Agent and Admin Portals/[C] Automated Agent Onboarding Flow (GHL-first).md
 Repo: hpintojr/crm.mcd
 ```
 
 ### Current next actions
 
-1. Improve the Admin applicant view with clear account activation, email delivery, onboarding, certification, and last-login status.
-2. Prevent duplicate document sends by replacing the post-approval e-sign action with a locked approved state.
-3. Add optional `Company / Legal Entity Name` to signup without replacing the individual legal signer.
-4. Complete California counsel review before using the agreement drafts for real partner contracting.
-5. Set up the MCD demo calendar / Google Meet before Phase 1.5 booking work.
-6. Create GHL attribution custom fields before Phase 2 relays.
-7. Keep lead, servicing, commission, and finance feature flags disabled until their schema migrations and controlled tests are complete.
+1. Verify the callback Task workspace production deployment.
+2. Build controlled Lead Management: import/review, assignment, notes, activities, dispositions, callbacks, and suppression.
+3. Apply the Cold Pool, Nurture, Hot Leads, Open Pool, Shark Tank, Referral, and House conventions without weakening ownership or DNC rules.
+4. Add GHL demo handoff only after lead ownership and appointment context are safely mapped.
+5. Create GHL attribution fields before Phase 2 payment, opportunity, invoice, and servicing relays.
+6. Complete California counsel review before real partner contracting.
 
-Standing rules: GHL is backend-only; never expose GHL/pricing/other-client data to agents; no per-agent GHL logins; no SSNs or raw bank data in the CRM; Finance approves payouts; every sensitive action is audited.
+Standing rules: GHL is backend-only; agents have no GHL logins; never expose GHL, other-client data, true pricing, or confidential terms; never store SSNs or raw bank details; Finance approves payouts; sensitive actions are audited.
 
-## Rules
+## Workspace rules
 
-- Keep portfolio, store, and book production separate.
-- Use the shared WCAG specification before changes.
-- Do not store secrets or customer data in this workspace.
-- Do not claim legal accessibility certification without independent review.
+- Keep portfolio, store, book production, MCD business operations, and MCD CRM code separate.
+- Use `[C]` for AI-authored files unless Hamilton directs otherwise.
+- Do not store secrets, credentials, customer data, tax information, or raw bank data in this workspace.
+- Keep historical logs as reference; keep active handoffs concise and current.
