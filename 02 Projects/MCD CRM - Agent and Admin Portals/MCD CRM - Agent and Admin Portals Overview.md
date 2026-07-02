@@ -58,13 +58,31 @@ src/app/api/admin/leads/route.ts — rewritten as a two-phase preview -> commit 
 
 Known follow-up, not done: `Lead.businessPhone` is still NOT NULL, but the new taxonomy allows email-only rows. The route currently skips email-only rows with an explicit reason rather than writing an empty phone. Making `businessPhone` nullable would unblock that but touches a field read in ~10 files — deferred rather than done opportunistically.
 
-## Next work
+## Pending handoff — 2026-07-02, execution owner: ChatGPT (has direct repo/DB/Vercel access)
 
+The lead-import taxonomy work above is code-complete on disk but not yet applied or shipped. Hamilton is having ChatGPT execute the following, since ChatGPT has direct repo, Neon, and Vercel access and Claude does not:
+
+```txt
+1. npm install && npm run typecheck in crm.mcd -- confirm the new route/schema compile clean.
+2. Apply prisma/migrations/20260702130000_add_lead_import_taxonomy/ to Neon
+   (prisma migrate deploy against the real DATABASE_URL/DIRECT_URL). Additive-only,
+   no drops/renames, but take a Neon branch/snapshot first since it's production.
+3. Commit and push the changed files to GitHub:
+   - prisma/schema.prisma
+   - prisma/migrations/20260702130000_add_lead_import_taxonomy/migration.sql
+   - src/app/api/admin/leads/route.ts
+4. Watch Vercel for build/runtime errors on deploy.
+5. Decide Lead.businessPhone nullability for email-only leads (flagged, not resolved --
+   see note above; touches ~10 files if changed).
+```
+
+Until step 2/3 are done, `/api/admin/leads` on production is still running the old pre-taxonomy code (LEADS_ENABLED also still gates all of this from being user-visible either way).
+
+## Next work (Claude resumes here once the above is applied)
+
+- Wire mcd_lead_ops's export step to the now-live `/api/admin/leads` endpoint (Phase D) -- needs a decision on auth: session-cookie admin auth won't work for a local CLI, so this likely needs a machine-to-machine HMAC-secret path (same pattern as the GHL webhook) added to the route, or a dedicated `/api/leads/import` route.
+- Point `mcd_lead_ops/config/sources/*.yaml` at a real recurring source so the daily job has data to process.
 - Improve Admin operational visibility.
 - Prevent duplicate document dispatch after approval.
 - Add optional company/entity metadata.
 - Complete legal review and later gated operating stages.
-- Point `mcd_lead_ops/config/sources/*.yaml` at a real recurring source so the daily job has data to process.
-- Hamilton: run `npm install && npm run typecheck` and `prisma migrate deploy` (or `prisma migrate dev`) locally before this ships — Claude has no npm registry or Neon access in this sandbox to verify either.
-- Decide on `Lead.businessPhone` nullability for email-only leads.
-- Wire mcd_lead_ops's export step to this endpoint once Hamilton is ready to test it end-to-end.

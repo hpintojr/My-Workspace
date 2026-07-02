@@ -94,8 +94,12 @@ Repo: mcd_lead_ops (local only, D:\GitHub\mcd_lead_ops)
 ### Current next actions
 
 ```txt
-1. Point mcd_lead_ops (Phase A done) at a real recurring source config so the daily job has data to process.
-2. MiniCRM builds the lead-import API, server-side duplicate/suppression checks, audit, Admin review, and reconciliation.
+0. PENDING HANDOFF (ChatGPT executing, has direct repo/Neon/Vercel access): apply the
+   2026-07-02 lead-import taxonomy migration, push code to GitHub, watch Vercel. See
+   MCD CRM - Agent and Admin Portals Overview.md for the full checklist. Claude resumes
+   next-phase work once this lands.
+1. Wire mcd_lead_ops's export step to the live import endpoint (needs machine-to-machine auth).
+2. Point mcd_lead_ops (Phase A done) at a real recurring source config so the daily job has data to process.
 3. Apply lead-foundation migration only after the API contract is ready.
 4. Add proposal/quote records, including MCD package, website-only, and MCD-with-included-website paths.
 5. Add approved provider event/reply routing after campaign safeguards and suppression webhooks are tested.

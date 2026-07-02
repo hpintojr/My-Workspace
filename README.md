@@ -99,10 +99,15 @@ Website-only quotes are planned in the approved $500–$3,000 range with scope a
 01 Daily Logs/[C] 2026-07-02 mcd_lead_ops Phase A Build.md
 ```
 
-#### Next scope
+#### Pending handoff — lead-import taxonomy (execution owner: ChatGPT, has direct repo/Neon/Vercel access)
 
-1. Point `mcd_lead_ops` (D:\GitHub\mcd_lead_ops, Phase A done) at a real recurring source config so the daily job has data to process.
-2. Define and build the MiniCRM lead-import API contract, server-side validation, audit, suppression, Admin review, and reconciliation.
+Migration + rewritten `/api/admin/leads` route are code-complete on disk, not yet applied/shipped. ChatGPT is running: typecheck → apply Neon migration → commit/push to GitHub → watch Vercel. Full checklist in `02 Projects/MCD CRM - Agent and Admin Portals/MCD CRM - Agent and Admin Portals Overview.md`.
+
+#### Next scope (Claude resumes once the handoff above is applied)
+
+1. Wire mcd_lead_ops's export step to the live import endpoint (Phase D) — needs machine-to-machine auth added, not just session-admin auth.
+2. Point `mcd_lead_ops` (D:\GitHub\mcd_lead_ops, Phase A done) at a real recurring source config so the daily job has data to process.
+3. Server-side reconciliation and Admin review refinements.
 3. Apply and validate the lead-foundation database migration only after the API contract is ready.
 4. Build proposal/quote records for MCD package, website-only, and MCD-with-included-website offers.
 5. Add campaign event/reply routing and then controlled GHL Demo Booked handoff.
