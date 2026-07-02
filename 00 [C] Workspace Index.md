@@ -78,24 +78,23 @@ Agent Portal: sidebar established with Dashboard, Tasks, Inbox, Leads, Proposals
 Schedule: GHL appointment relay validated for Booked, Confirmed, Cancelled, No-show, Completed, and Rescheduled.
 Timezone: appointment source timezone is preserved; portal displays in the signed-in viewer's browser timezone.
 Company registration: optional Company / Legal Entity Name is supported separately from the individual legal signer.
-Tasks: callback-queue deployment is in progress.
+Tasks: callback queue is deployed and ready for controlled callback-record validation.
 ```
 
-### Lead-pool conventions
+### Lead pool and source conventions
 
 ```txt
-Cold Pool / Prospects = fresh scraped and validated business records.
-Nurture / Marketing Email Pool = branded email campaign records.
-Hot Leads = prospect replies / active-intent records; stop nurture and route for human follow-up.
-Open Pool = booked-demo no-shows and eligible released records.
-Shark Tank = stalled prospects carrying an active 30–90-day proposal/contract-priced quote.
-Referral = protected self-sourced/referral records.
-House = company-controlled/reassigned records.
+Pools: Cold Pool / Prospects, Nurture / Marketing Email Pool, Hot Leads, Open Pool, Shark Tank, Referral, House.
+Original source: Google Maps, Instagram, Referral, PPC, Email, SMS, LinkedIn, Web Form, Facebook, or Other.
+Original source is immutable after creation. Campaign, intake method, source detail, referral information, and UTM data are tracked separately.
+A Google Maps lead that replies to nurture email keeps Google Maps as original source and moves to Hot Leads.
+A PPC lead completing a form keeps PPC as original source and records Web Form Submission as its intake method.
 ```
 
 ### MCD CRM read next
 
 ```txt
+02 Projects/MCD CRM - Agent and Admin Portals/[C] Lead Pool and Source Taxonomy.md
 01 Daily Logs/[C] 2026-07-02 MCD CRM Portal Schedule and Lead Pool Progress.md
 01 Daily Logs/[C] 2026-07-02 MCD CRM Admin Operations Status.md
 01 Daily Logs/[C] 2026-07-01 MCD CRM Phase 1 End-to-End Onboarding Validated.md
@@ -108,8 +107,8 @@ Repo: hpintojr/crm.mcd
 
 ### Current next actions
 
-1. Verify the callback Task workspace production deployment.
-2. Build controlled Lead Management: import/review, assignment, notes, activities, dispositions, callbacks, and suppression.
+1. Validate the callback Task workspace with controlled callback records.
+2. Build controlled Lead Management: import/review, assignment, original-source/campaign capture, notes, activities, dispositions, callbacks, and suppression.
 3. Apply the Cold Pool, Nurture, Hot Leads, Open Pool, Shark Tank, Referral, and House conventions without weakening ownership or DNC rules.
 4. Add GHL demo handoff only after lead ownership and appointment context are safely mapped.
 5. Create GHL attribution fields before Phase 2 payment, opportunity, invoice, and servicing relays.
