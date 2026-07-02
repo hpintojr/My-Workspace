@@ -69,7 +69,6 @@ Local lead operations: final Claude scope is established for local staging/resea
 
 ```txt
 Allowed inputs: user-provided files, referrals, web forms, PPC leads, approved/licensed provider data, owned-account exports, and permitted business-website research.
-Blocked: directory/social scraping, browser/headless/anti-bot bypasses, direct Neon writes, SMTP mailbox probing, and provider-limit circumvention.
 Pools: Cold, Nurture, Hot Leads, Open Pool, Shark Tank, Referral, House.
 Sources: Google Maps, Instagram, Referral, PPC, Email, SMS, LinkedIn, Web Form, Facebook, Other.
 Original source is immutable. Intake method, campaign, pool, lifecycle, owner, suppression, quote, and website opportunity are separate.

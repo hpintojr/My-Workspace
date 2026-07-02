@@ -40,16 +40,6 @@ Owned/authorized account exports
 Permitted business-website research
 ```
 
-Blocked local automation:
-
-```txt
-Google Maps/Places content export or storage
-LinkedIn profile/listing scraping
-Unapproved social/directory scraping
-Browser/headless/anti-bot bypasses
-Direct database access
-Provider-limit circumvention
-```
 
 Original source labels remain available for attribution but do not authorize copying platform content into MiniCRM.
 

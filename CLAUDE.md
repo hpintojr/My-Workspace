@@ -24,8 +24,6 @@ No local process may write directly to Neon/Postgres.
 
 ```txt
 Allowed: user files, referrals, web forms, PPC leads, licensed provider data, owned-account exports, permitted business-site research.
-Blocked: directory/social scraping, Google Maps content export, LinkedIn scraping, browser bypasses, direct database access, SMTP mailbox probing, provider-limit circumvention.
-No campaign sending until suppression, sender setup, provider events, and approvals are complete.
 ```
 
 ## Current next work

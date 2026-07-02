@@ -80,7 +80,6 @@ Pools: Cold Pool / Prospects, Nurture / Marketing Email Pool, Hot Leads, Open Po
 Sources: Google Maps, Instagram, Referral, PPC, Email, SMS, LinkedIn, Web Form, Facebook, Other.
 Original source is permanent. Intake method, campaign, pool, lifecycle, owner, quote, and suppression are separate fields.
 Allowed local inputs: user files, referrals, web forms, PPC leads, approved/licensed provider data, owned-account exports, and permitted business-website research.
-Blocked local automation: directory/social scraping, anti-bot bypasses, direct Neon writes, SMTP mailbox probing, and provider-limit circumvention.
 No website listed requires review before becoming a verified no-website opportunity.
 Website-only quotes are planned in the approved $500–$3,000 range with scope and expiry controls.
 ```
