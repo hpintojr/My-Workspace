@@ -47,9 +47,9 @@ The shared specification also applies to accessible customer-facing digital book
 
 ## MCD - Mercury Call Desk
 
-AI receptionist / call-desk platform (built on a third-party platform base — vendor confidential, do not disclose) sold by commission-only 1099 sales partners, managed in GoHighLevel, with a reseller-partner pathway. Separate project. Phases: 1) agent onboarding (now) · 2) GoHighLevel CRM (next, incl. planned GHL MCP) · 3) reseller channel (later). The 14-file Sales Partner Launch Kit was migrated in as canonical onboarding on 2026-06-24.
+AI receptionist / call-desk platform (built on a third-party platform base — vendor confidential, do not disclose) sold by commission-only 1099 sales partners, managed in GoHighLevel, with a reseller-partner pathway. Separate project. The 14-file Sales Partner Launch Kit was migrated in as canonical onboarding on 2026-06-24.
 
-A dedicated `04-brand-assets/` system is now added: editable SVG masters, light/dark wordmark variants, icon-only SVG, provisional brand colors, and a catalog. The new branded 18-page Sales Partner Launch Kit is company-ready. Its cover has been corrected: the logo is now integrated into the navy artwork with no hard-edged image block. The final font and an outlined production release remain open.
+A dedicated `04-brand-assets/` system is now added: editable SVG masters, light/dark wordmark variants, icon-only SVG, provisional brand colors, and a catalog. The new branded 18-page Sales Partner Launch Kit is company-ready. Its cover has been corrected: the logo is integrated into the navy artwork with no hard-edged image block. The final font and an outlined production release remain open.
 
 Read first:
 
@@ -71,26 +71,46 @@ Standing rules: **no non-compete** in any agreement (confidentiality + IP + non-
 
 ## MCD CRM - Agent and Admin Portals
 
-Mercury Call Desk Mini CRM is now a live production foundation: a protected Admin portal, public partner sign-up, and a Neon-backed system of record with GoHighLevel reserved as a one-way backend. It remains separate from the MCD sales-partner program project above.
+Mercury Call Desk Mini CRM is a live production foundation: protected Admin and Partner portals, public partner signup, Neon-backed system of record, and GoHighLevel as a private onboarding/document backend. It remains separate from the MCD sales-partner program project above.
 
-Production status: `hpintojr/crm.mcd` releases directly from `main` to Vercel. `https://crm.mercurycalldesk.com` is active, the dedicated Neon production schema is applied, and the initial OWNER account has completed password + TOTP MFA activation. Slices 00–02 are live: public signup, authentication/activation, and admin applicant review. Inbound GHL document webhooks (Slice 03) are also live and now correctly send agent activation emails via SMTP (fixed 2026-07-01 — links were previously generated but never delivered). Stripe Connect, Cloudflare R2, and the agent portal remain later slices.
+### Current production status
 
-GHL: Private Integration Token confirmed working against the live "Mercury Call Desk" location (`lEdLVFW0uqKMhmkgFrsX`). The location has no MCD-specific custom fields, tags, or workflows yet — full build-out plan (exact workflows, tag registry, AI-workflow-builder prompts) is in the new runbook.
-
-Read first:
+Phase 1 onboarding has been validated end to end in production with a controlled synthetic applicant:
 
 ```txt
-02 Projects/MCD CRM - Agent and Admin Portals/README.md
-02 Projects/MCD CRM - Agent and Admin Portals/[C] GHL Production Build-Out Runbook.md
-01 Daily Logs/[C] 2026-07-01 MCD CRM Production Foundation Launch.md
+Signup → agent-signup in GHL → owner confirm call/approve → agent-approved
+→ GHL sends four e-sign documents → four completion relay webhooks
+→ Neon records all onboarding gates → Sales Agreement countersigned
+→ user provisioned → IONOS activation email delivered → partner activates and reaches /portal
+```
+
+The five GHL workflows are published and working. The partner portal correctly shows all document gates complete and keeps lead access locked pending manager certification. SMTP delivery is working from `no-reply@mercurycalldesk.com`. Historical SMTP failures were resolved after correcting the mailbox credentials and redeploying production.
+
+Production source: `hpintojr/crm.mcd` → `main` → Vercel. Production application: `https://crm.mercurycalldesk.com`. Neon base schema is applied. Agents still have no GHL logins.
+
+### MCD CRM read next
+
+```txt
+01 Daily Logs/[C] 2026-07-01 MCD CRM Phase 1 End-to-End Onboarding Validated.md
 02 Projects/MCD CRM - Agent and Admin Portals/[C] AI Handoff & Scope Review.md
+02 Projects/MCD CRM - Agent and Admin Portals/[C] GHL Production Build-Out Runbook.md
+02 Projects/MCD CRM - Agent and Admin Portals/[C] Implementation Status — 2026-07-01.md
+02 Projects/MCD CRM - Agent and Admin Portals/MCD CRM - Agent and Admin Portals Overview.md
 02 Projects/MCD CRM - Agent and Admin Portals/[C] Build Specs — Index & Roadmap.md
 02 Projects/MCD CRM - Agent and Admin Portals/[C] v1.2 Business-Terms Reconciliation & GHL Flows.md
 02 Projects/MCD CRM - Agent and Admin Portals/[C] Automated Agent Onboarding Flow (GHL-first).md
 Repo: hpintojr/crm.mcd
 ```
 
-Next action: build the Phase 1 GHL workflow ("MCD - Agent Onboarding Documents") per the runbook, then run its end-to-end test plan (throwaway signup → GHL e-sign → webhook → activation email).
+### Current next actions
+
+1. Improve the Admin applicant view with clear account activation, email delivery, onboarding, certification, and last-login status.
+2. Prevent duplicate document sends by replacing the post-approval e-sign action with a locked approved state.
+3. Add optional `Company / Legal Entity Name` to signup without replacing the individual legal signer.
+4. Complete California counsel review before using the agreement drafts for real partner contracting.
+5. Set up the MCD demo calendar / Google Meet before Phase 1.5 booking work.
+6. Create GHL attribution custom fields before Phase 2 relays.
+7. Keep lead, servicing, commission, and finance feature flags disabled until their schema migrations and controlled tests are complete.
 
 Standing rules: GHL is backend-only; never expose GHL/pricing/other-client data to agents; no per-agent GHL logins; no SSNs or raw bank data in the CRM; Finance approves payouts; every sensitive action is audited.
 
