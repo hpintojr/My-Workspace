@@ -63,6 +63,7 @@ Partner portal and read-only GHL-backed schedule: deployed.
 Appointment lifecycle relay: booked, confirmed, cancelled, no-show, completed, and rescheduled validated.
 Lead and Task modules: staged/feature-gated until the lead-foundation migration and controlled tests are complete.
 Local lead operations: final Claude scope is established for local staging/research/preview and signed MiniCRM export. No direct Neon access.
+Local lead operations Phase A: built at D:\GitHub\mcd_lead_ops (separate local repo, not crm.mcd). Daily 7:00 AM scheduled task; export always refuses until MiniCRM's import API exists.
 ```
 
 ### Local lead operation rules
@@ -85,13 +86,15 @@ Original source is immutable. Intake method, campaign, pool, lifecycle, owner, s
 01 Daily Logs/[C] 2026-07-02 MCD CRM Portal Schedule and Lead Pool Progress.md
 01 Daily Logs/[C] 2026-07-02 MCD CRM Admin Operations Status.md
 01 Daily Logs/[C] 2026-07-01 MCD CRM Phase 1 End-to-End Onboarding Validated.md
+01 Daily Logs/[C] 2026-07-02 mcd_lead_ops Phase A Build.md
 Repo: hpintojr/crm.mcd
+Repo: mcd_lead_ops (local only, D:\GitHub\mcd_lead_ops)
 ```
 
 ### Current next actions
 
 ```txt
-1. Claude builds local Phase A: CLI, SQLite staging, permitted import adapters, policy engine, preview reports, manifests, and synthetic tests.
+1. Point mcd_lead_ops (Phase A done) at a real recurring source config so the daily job has data to process.
 2. MiniCRM builds the lead-import API, server-side duplicate/suppression checks, audit, Admin review, and reconciliation.
 3. Apply lead-foundation migration only after the API contract is ready.
 4. Add proposal/quote records, including MCD package, website-only, and MCD-with-included-website paths.

@@ -71,6 +71,7 @@ Meet links: shown only for Scheduled and Confirmed appointments.
 Company / Legal Entity Name: optional field separate from individual signer.
 Lead/Task modules: staged and feature-gated. The production database does not yet contain lead, callback, note, activity, claim, suppression, import, or proposal tables.
 Local lead operations: final scope is approved for a Claude-built local staging, research, preview, and signed MiniCRM-export workflow. It must not connect directly to Neon.
+Local lead operations Phase A: built and tested at D:\GitHub\mcd_lead_ops (separate repo). CLI, SQLite staging, permitted adapters, policy engine, preview reports, tests. Daily 7:00 AM scheduled task runs intake+preview+website-review only; export always refuses until MiniCRM's import API exists.
 ```
 
 #### Lead rules and source tracking
@@ -95,11 +96,12 @@ Website-only quotes are planned in the approved $500–$3,000 range with scope a
 01 Daily Logs/[C] 2026-07-02 MCD CRM Portal Schedule and Lead Pool Progress.md
 01 Daily Logs/[C] 2026-07-02 MCD CRM Admin Operations Status.md
 01 Daily Logs/[C] 2026-07-01 MCD CRM Phase 1 End-to-End Onboarding Validated.md
+01 Daily Logs/[C] 2026-07-02 mcd_lead_ops Phase A Build.md
 ```
 
 #### Next scope
 
-1. Have Claude scaffold Phase A of `mcd_lead_ops`: local CLI, SQLite staging, permitted input adapters, policy engine, preview reports, manifests, and synthetic tests.
+1. Point `mcd_lead_ops` (D:\GitHub\mcd_lead_ops, Phase A done) at a real recurring source config so the daily job has data to process.
 2. Define and build the MiniCRM lead-import API contract, server-side validation, audit, suppression, Admin review, and reconciliation.
 3. Apply and validate the lead-foundation database migration only after the API contract is ready.
 4. Build proposal/quote records for MCD package, website-only, and MCD-with-included-website offers.
