@@ -38,26 +38,39 @@ protection-wall issue (deployment protection was already ruled out earlier the s
 preview loads the app's real login page fine, no SSO wall in the way). Do not merge PR #30 until
 this is root-caused and fixed, regardless of how ready Tier A/B otherwise look.
 
+Also checked and ruled out: this is not a repeat of the separate 2026-07-03 Auth.js login-hang
+incident (PR #27/#28/#29, see `01 Daily Logs/[C] 2026-07-03 MCD CRM Login Hang Incident Resolved.md`)
+resurfacing because PR #30's branch is stale. Verified via GitHub API that
+`feature/lead-import-batch-api`'s merge-base with `main` is PR #27's own merge commit (3e9dfea0),
+and that `src/app/(auth)/login/complete/page.tsx` is byte-identical on both branches. The branch
+already has PR #27's fix. See "Investigation steps" below for what to check instead.
+
 ### Investigation steps
+
+```txt
+ALREADY CHECKED, RULED OUT -- do not re-check: whether PR #30's branch is stale/missing PR #27's
+  Auth.js stall-recovery fix (the recoverCompletedSession() poll that fixed Incident 2, see
+  01 Daily Logs/[C] 2026-07-03 MCD CRM Login Hang Incident Resolved.md). Verified via GitHub API:
+  feature/lead-import-batch-api's merge-base with main is commit 3e9dfea0 -- PR #27's own merge
+  commit -- so the branch was created AFTER PR #27 landed and includes it. Also confirmed
+  src/app/(auth)/login/complete/page.tsx is byte-identical (same blob sha) on both branches. This
+  is not a repeat of Incident 2 for the obvious reason; something else is going on.
+```
 
 ```txt
 1. Reproduce independently, ideally with real browser devtools open (not just automation) --
    confirm the hang happens for a plain login attempt on this preview URL, past the MFA-code
    step, with Network + Console tabs open to see exactly what request (if any) is in flight when
-   it locks up.
-2. Important diagnostic: PR #30's diff only adds new files under src/app/api/lead-imports/ and
-   the Prisma schema/migration -- it does not touch auth, middleware, or any /login /admin
-   /portal route. So before assuming this is caused by PR #30's own code, check whether ANY
-   preview deployment hangs the same way -- e.g. redeploy/preview the current main branch (or
-   find an existing preview build of main) and test MFA login there too. If a preview of main
-   also hangs but production (custom domain) doesn't, the bug is environment-specific to preview
-   URLs in general (e.g. something about how Vercel's deployment-protection/toolbar script
-   interacts with the MFA step's client code on *.vercel.app hosts) and not actually caused by
-   PR #30's changes. If a preview of main works fine and only this branch's preview hangs, then
-   it is caused by something in PR #30 despite the diff looking auth-unrelated -- treat that the
-   same way the [id] vs [leadId] route-collision outage was treated: an unrelated-looking change
-   broke something shared, so look for build-level side effects (e.g. Prisma client
-   regeneration, a shared layout re-render, a new dependency), not just the obvious diff.
+   it locks up. Do this with no browser-automation tool attached to the same tab this time --
+   Claude's own automation was running against the same tab during the original reproduction, so
+   rule out tool interference as a confound before treating this as purely an app bug.
+2. If it still reproduces cleanly: diff PR #30's full commit range against its merge-base (3e9dfea0)
+   to see the complete file list -- confirm it's really only src/app/api/lead-imports/* and the
+   Prisma schema/migration, nothing else. If that holds, the likely remaining suspects are build-
+   level, not literal-diff-level (matching how the earlier [id]/[leadId] route collision broke
+   things nothing in the diff obviously touched): Prisma client regeneration from the new schema
+   affecting a shared import path, or a Next.js route-manifest side effect from adding 5 new
+   dynamic API routes under app/api/lead-imports/[batchId]/.
 3. Check Vercel runtime logs again once you can reproduce in real time -- pull them during/right
    after the hang, not minutes later, in case of log lag.
 4. Report back in the daily log (see logging protocol below) with the root cause before touching

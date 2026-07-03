@@ -1,6 +1,8 @@
 # My Workspace
 
-A GitHub-based workspace for active project handoffs, daily logs, and operating context.
+A GitHub-based workspace for active project handoffs, daily logs, and operating context. This
+GitHub repo (hpintojr/My-Workspace) is the single source of truth — not just a local checkout of
+it. Both Claude and ChatGPT read and write here directly.
 
 ## Start Here
 
@@ -59,7 +61,7 @@ The sales-partner program and brand/onboarding work. This project is separate fr
 
 Secure MiniCRM for agent workflow and Admin oversight. GoHighLevel remains a private backend; agents do not receive GHL access.
 
-#### Current build state — 2026-07-02
+#### Current build state — 2026-07-03
 
 ```txt
 Phase 1 onboarding: production-validated end to end with a controlled partner.
@@ -70,10 +72,13 @@ Schedule timezone: source timezone is preserved; the portal renders in the signe
 Meet links: shown only for Scheduled and Confirmed appointments.
 Company / Legal Entity Name: optional field separate from individual signer.
 Lead/Task modules: staged and feature-gated. The production database does not yet contain lead, callback, note, activity, claim, suppression, import, or proposal tables.
+Two production incidents this window (2026-07-02/07-03), both resolved and verified by Hamilton: a
+  route-collision 504 outage, and an Auth.js v5 login-hang bug (fixed by PR #27, confirmed live on
+  production). Full narrative in 01 Daily Logs/[C] 2026-07-03 MCD CRM Login Hang Incident Resolved.md.
 Local lead operations: final scope is approved for a Claude-built local staging, research, preview, and signed MiniCRM-export workflow. It must not connect directly to Neon.
 Local lead operations Phase A: built and tested at D:\GitHub\mcd_lead_ops (separate repo). CLI, SQLite staging, permitted adapters, policy engine, preview reports, tests. Daily 7:00 AM scheduled task runs intake+preview+website-review only.
-Lead-import batch API (Phase D): code-complete (schema, production Neon migration, service layer, 5 routes) and open as PR #30 in hpintojr/crm.mcd, not yet merged. mcd_lead_ops's export step makes real signed HTTP calls now but has never run against a live server.
-Execution owner as of 2026-07-03: ChatGPT (direct repo/Neon/Vercel access) is handling secrets, PR #30, and the first live test while Claude is paused to conserve usage. Hamilton is overseeing.
+Lead-import batch API (Phase D): code-complete (schema, production Neon migration, service layer, 5 routes under /api/lead-imports/) and open as PR #30 in hpintojr/crm.mcd -- supersedes the earlier plan to retrofit HMAC auth onto the existing /api/admin/leads/import route. NOT MERGED: its preview deployment hangs at the MFA step of login (root cause open -- ruled out a stale branch missing PR #27's fix, since the branch's merge-base with main is PR #27's own merge commit). mcd_lead_ops's export step makes real signed HTTP calls now but has never run against a live server.
+Execution owner as of 2026-07-03: ChatGPT (direct repo/Neon/Vercel access) is root-causing the PR #30 blocker and handling secrets/first live test while Claude is paused to conserve usage. Hamilton is overseeing.
 ```
 
 #### Lead rules and source tracking
@@ -94,6 +99,8 @@ Website-only quotes are planned in the approved $500–$3,000 range with scope a
 02 Projects/MCD CRM - Agent and Admin Portals/[C] Lead Foundation Design Addendum.md
 02 Projects/MCD CRM - Agent and Admin Portals/[C] Lead Management Scope Review and Build Plan.md
 02 Projects/MCD CRM - Agent and Admin Portals/[C] Lead Pool and Source Taxonomy.md
+01 Daily Logs/[C] 2026-07-03 MCD CRM Login Hang Incident Resolved.md
+01 Daily Logs/[C] 2026-07-03b PR 30 Preview Login MFA Hang Found.md
 01 Daily Logs/[C] 2026-07-02 MCD Local Lead Operations Scope Finalized.md
 01 Daily Logs/[C] 2026-07-02 MCD CRM Portal Schedule and Lead Pool Progress.md
 01 Daily Logs/[C] 2026-07-02 MCD CRM Admin Operations Status.md
@@ -101,9 +108,9 @@ Website-only quotes are planned in the approved $500–$3,000 range with scope a
 01 Daily Logs/[C] 2026-07-02 mcd_lead_ops Phase A Build.md
 ```
 
-#### Pending handoff — Phase D secrets, PR #30, backlog (execution owner: ChatGPT, has direct repo/Neon/Vercel access)
+#### Pending handoff — PR #30 login/MFA hang, secrets, backlog (execution owner: ChatGPT, has direct repo/Neon/Vercel access)
 
-Phase D (lead-import batch API) is code-complete and open as PR #30, Vercel preview verified READY, not yet merged — Hamilton is reviewing/merging it himself. ChatGPT is provisioning the two Vercel secrets (Hamilton-only step), mirroring them into mcd_lead_ops's `.env`, and running one supervised live export test. Full task list, guardrails, and required logging format:
+Phase D (lead-import batch API) is code-complete and open as PR #30. It is blocked from merging: its preview deployment hangs right after the MFA code field appears during login. Confirmed production login (both /admin and /portal, custom domain) works fine with the same credentials, so this is specific to the preview/branch. Also confirmed the branch already contains PR #27's Auth.js stall-recovery fix (identical merge-base commit), ruling out the "stale branch" explanation. Root cause still open. Full task list, guardrails, and required logging format:
 
 ```txt
 02 Projects/MCD CRM - Agent and Admin Portals/[C] ChatGPT Handoff — Phase D Secrets, PR 30, and Backlog.md
@@ -123,6 +130,7 @@ Phase D (lead-import batch API) is code-complete and open as PR #30, Vercel prev
 
 - Keep every business and codebase separate.
 - Never commit secrets, credentials, customer data, SSNs, tax IDs, or raw bank data.
-- Use `[C]` in AI-authored file names unless Hamilton directs otherwise.
+- Use `[C]` in AI-authored file names unless Hamilton directs otherwise; ChatGPT-authored daily logs use `[G]` so provenance is visible at a glance.
 - GHL is backend-only for MCD; never surface its pricing, other-client data, or links to agents.
 - Keep active handoffs concise; use daily logs for dated detail and history.
+- This repo (hpintojr/My-Workspace on GitHub) is the single source of truth. If a local checkout ever shows unresolved git conflict markers, GitHub is the tiebreaker — reconcile the local copy from it, never commit the raw markers.

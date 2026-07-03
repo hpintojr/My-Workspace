@@ -49,11 +49,22 @@ slug collision that broke everything, not just the page that changed), so the in
 
 PR #30 is blocked from merging until this is root-caused and fixed, regardless of Tier A/B
 readiness otherwise. Documented as an "ACTIVE BLOCKER" section at the top of
-`[C] ChatGPT Handoff — Phase D Secrets, PR 30, and Backlog.md`, with investigation steps:
-reproduce independently with real devtools open, and critically, test whether a preview of
-`main` (not just this branch) also hangs on MFA -- if it does, the bug is preview-environment-
-wide and not caused by PR #30; if only this branch's preview hangs, treat it like the earlier
-route-collision incident and look for build-level side effects, not just the obvious diff.
+`[C] ChatGPT Handoff — Phase D Secrets, PR 30, and Backlog.md`.
+
+## Update, same day: checked against the separate Incident 2 (PR #27/#28/#29)
+
+After this was logged, discovered via the GitHub connector that a separate, already-resolved
+production incident (`01 Daily Logs/[C] 2026-07-03 MCD CRM Login Hang Incident Resolved.md`) had
+the exact same symptom -- sign-in stuck at "Signing in...". That incident's root cause was PR #27
+adding a `recoverCompletedSession()` poll to work around a known Auth.js v5 stall bug; PR #28
+(which reverted that fix) was confirmed to hang. Checked whether PR #30's branch was simply
+missing PR #27's fix (branched before it merged): **ruled out** -- verified via
+`GITHUB_COMPARE_TWO_COMMITS` that `feature/lead-import-batch-api`'s merge-base with `main` is
+exactly PR #27's own merge commit (3e9dfea0), and that `src/app/(auth)/login/complete/page.tsx`
+is byte-identical (same blob sha) on both branches. So PR #30's branch already has PR #27's fix --
+this is not a simple repeat of Incident 2. Root cause is still open; revised investigation steps
+are in the handoff file (reproduce without automation attached to the same tab, diff the branch's
+full commit range against build-level side effects, not just the obvious file list).
 
 ## Handback to Claude
 
