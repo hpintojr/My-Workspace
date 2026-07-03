@@ -1,6 +1,6 @@
 # Workspace Index
 
-Updated: 2026-07-02
+Updated: 2026-07-03
 
 ## First read
 
@@ -8,7 +8,7 @@ Updated: 2026-07-02
 1. README.md
 2. 00 [C] Workspace Index.md
 3. CLAUDE.md
-4. Current project files listed below
+4. Current project-control and handoff files
 ```
 
 ## Portfolio
@@ -52,58 +52,57 @@ The agent program and brand/onboarding work. Do not disclose the underlying vend
 
 ## MCD CRM - Agent and Admin Portals
 
-MiniCRM is the system of record for agent onboarding, lead ownership, compliance, source lineage, and later service/finance. GHL is backend-only; agents never receive GHL access.
+### Authority and boundaries
 
-### Current status
+```txt
+Project-control/full scope: hpintojr/My-Workspace
+Implementation/live app: hpintojr/crm.mcd
+Hosting: Vercel crm-mcd
+Database: Neon mcd-crm-production
+Local lead workspace: D:\GitHub\mcd_lead_ops
+
+MiniCRM = system of record.
+GHL = private backend only.
+Local lead workspace = staging/research/approval/signed export only.
+Local lead workspace must never connect directly to Neon/Postgres.
+```
+
+### Current technical status
 
 ```txt
 Phase 1 onboarding: production-validated.
-Admin operations: deployed.
-Partner portal and read-only GHL-backed schedule: deployed.
 Appointment lifecycle relay: booked, confirmed, cancelled, no-show, completed, and rescheduled validated.
-Lead and Task modules: staged/feature-gated until the lead-foundation migration and controlled tests are complete.
-Local lead operations: final Claude scope is established for local staging/research/preview and signed MiniCRM export. No direct Neon access.
-Local lead operations Phase A: built at D:\GitHub\mcd_lead_ops (separate local repo, not crm.mcd). Daily 7:00 AM scheduled task; export always refuses until MiniCRM's import API exists.
-```
 
-### Local lead operation rules
+Recovery: crm.mcd/main has an [id] / [leadId] route collision.
+Recovery candidate: recovery/e59-route-fix.
 
-```txt
-Allowed inputs: user-provided files, referrals, web forms, PPC leads, approved/licensed provider data, owned-account exports, and permitted business-website research.
-Pools: Cold, Nurture, Hot Leads, Open Pool, Shark Tank, Referral, House.
-Sources: Google Maps, Instagram, Referral, PPC, Email, SMS, LinkedIn, Web Form, Facebook, Other.
-Original source is immutable. Intake method, campaign, pool, lifecycle, owner, suppression, quote, and website opportunity are separate.
+Neon: core Lead tables and lead taxonomy fields are present.
+Remaining scope foundation: LeadContact, ImportBatch/ImportRecord, proposal/quote records,
+channel-specific contactability/suppression, campaign-event/reply history, and signed import API.
+
+Lead, campaigns, proposals, servicing, commissions, finance, and production external actions remain gated until their individual acceptance criteria pass.
 ```
 
 ### Read next
 
 ```txt
+02 Projects/MCD CRM - Agent and Admin Portals/[C] Project Control, Scope Reconciliation & Rebuild Plan.md
 02 Projects/MCD CRM - Agent and Admin Portals/[C] Local Lead Operations and MiniCRM Export Scope.md
 02 Projects/MCD CRM - Agent and Admin Portals/[C] Lead Foundation Design Addendum.md
 02 Projects/MCD CRM - Agent and Admin Portals/[C] Lead Management Scope Review and Build Plan.md
 02 Projects/MCD CRM - Agent and Admin Portals/[C] Lead Pool and Source Taxonomy.md
-01 Daily Logs/[C] 2026-07-02 MCD Local Lead Operations Scope Finalized.md
-01 Daily Logs/[C] 2026-07-02 MCD CRM Portal Schedule and Lead Pool Progress.md
-01 Daily Logs/[C] 2026-07-02 MCD CRM Admin Operations Status.md
-01 Daily Logs/[C] 2026-07-01 MCD CRM Phase 1 End-to-End Onboarding Validated.md
-01 Daily Logs/[C] 2026-07-02 mcd_lead_ops Phase A Build.md
-Repo: hpintojr/crm.mcd
-Repo: mcd_lead_ops (local only, D:\GitHub\mcd_lead_ops)
+02 Projects/MCD CRM - Agent and Admin Portals/MCD CRM - Agent and Admin Portals Overview.md
+01 Daily Logs/[C] 2026-07-03 MCD CRM Scope Reconciliation and Rebuild Control.md
 ```
 
 ### Current next actions
 
 ```txt
-0. PENDING HANDOFF (ChatGPT executing, has direct repo/Neon/Vercel access): apply the
-   2026-07-02 lead-import taxonomy migration, push code to GitHub, watch Vercel. See
-   MCD CRM - Agent and Admin Portals Overview.md for the full checklist. Claude resumes
-   next-phase work once this lands.
-1. Wire mcd_lead_ops's export step to the live import endpoint (needs machine-to-machine auth).
-2. Point mcd_lead_ops (Phase A done) at a real recurring source config so the daily job has data to process.
-3. Apply lead-foundation migration only after the API contract is ready.
-4. Add proposal/quote records, including MCD package, website-only, and MCD-with-included-website paths.
-5. Add approved provider event/reply routing after campaign safeguards and suppression webhooks are tested.
-6. Add GHL Demo Booked handoff after ownership and appointment context are safely mapped.
+1. Use recovery/e59-route-fix as the recovery candidate; complete the required Preview verification.
+2. Reconcile the live Lead implementation to the locked workspace scope in a no-migration design branch.
+3. Define and test the HMAC-authenticated lead-import batch API before connecting mcd_lead_ops.
+4. Connect one synthetic signed export only after the import API and Admin review workflow pass acceptance.
+5. Build agent workflow, reply triage, proposals, and controlled GHL handoff in isolated milestones.
 ```
 
 ## Workspace rules
