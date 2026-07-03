@@ -4,6 +4,33 @@ date: 2026-07-01
 project: MCD CRM - Agent and Admin Portals
 ---
 
+## ACTIVE OUTAGE — production is on an emergency rollback, 2026-07-02
+
+`/admin` and `/portal` both started returning Vercel 504 `FUNCTION_INVOCATION_TIMEOUT` after a long stretch of same-day feature work (lead operations, warm reply triage, GHL opportunity/reply relays, agent onboarding docs, closed-won safeguards, paid CSV import, plus a login-redirect fix and debug tracing). Auth itself was confirmed working — credentials/MFA succeeded, session was created — the timeout happened rendering the protected route after that, in code shared by both `requireUser()`/`requireRole()`.
+
+```txt
+Status: Vercel was instant-rolled-back to commit a80b815 ("feat(servicing): work and resolve
+  cases from queue"). Confirmed /admin and /portal both load again on that commit.
+Not fixed: root cause not yet identified. This is a temporary floor, not a fix.
+Not live right now: every commit after a80b815 -- all of today's lead-ops/GHL-relay/onboarding-doc/
+  closed-won/paid-CSV-import work, the login full-page-redirect fix (3769df7), and the
+  debug-trace commits. None of it is in production until the regression is found and cleared.
+Ruled out: Neon connection pooling. DATABASE_URL already uses the -pooler endpoint; missing
+  pgbouncer=true/connection_limit=1 params were flagged and can still be worth adding, but
+  since env vars aren't tied to a specific deployment, if pooling were the cause the rollback
+  itself wouldn't have restored access. It did, so the bug is a real code regression sitting
+  somewhere in the ~40 commits between a80b815 and the failing deployment (c58c779).
+Owner: ChatGPT (direct repo/Neon/Vercel access) is binary-searching preview deployments between
+  a80b815 and c58c779 to isolate the exact breaking commit. Do not reapply any of the reverted
+  work, and do not touch production, until that commit is identified.
+Known non-issues (do not re-investigate): root middleware.ts is present/correct, not a
+  regression -- an earlier check looked at the wrong path (src/middleware.ts, which never
+  existed). src/app/admin/layout.tsx and /post-login never actually landed in the repo, despite
+  being referenced in earlier debugging notes -- don't rely on either existing.
+```
+
+Full incident writeup: `Mercury_Call_Desk_Handoff_After_Appointment_Relay.md` (uploaded 2026-07-02, ChatGPT's handoff after the outage began).
+
 ## Goal
 
 Build Mercury Call Desk's secure Mini CRM with an Agent portal, an Admin portal, and GoHighLevel operating as a private backend.
