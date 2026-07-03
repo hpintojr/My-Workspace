@@ -29,15 +29,35 @@ Allowed: user files, referrals, web forms, PPC leads, licensed provider data, ow
 ## Current next work
 
 ```txt
-1. Wire HMAC verification into the live lead-import commit route (src/lib/lead-import-auth.ts already
-   built for this) and point mcd_lead_ops's export step at it -- pending Hamilton's go-ahead on a new
-   production secret.
-2. Point mcd_lead_ops at a real recurring source config.
-3. Apply lead foundation migration after the API contract is ready.
+1. Claude built local mcd_lead_ops Phase A -- done.
+2. Claude built the full lead-import batch API (Phase D: schema, production Neon migration,
+   service layer, 5 route handlers) -- code-complete, open as PR #30 in hpintojr/crm.mcd, not
+   yet merged. This supersedes the earlier "wire HMAC into the existing commit route" plan below.
+3. PR #30 is currently BLOCKED from merging -- its preview deployment hangs at the MFA step of
+   login. See "Execution ownership" below and the ChatGPT handoff file for full detail.
+4. Apply lead foundation migration after the API contract is ready -- still pending.
 ```
 
-## Access note (2026-07-03)
+## Execution ownership — 2026-07-03
 
-Claude now has direct GitHub, Vercel, and Neon access via connector, in addition to ChatGPT. This repo
-(hpintojr/My-Workspace on GitHub) is the single source of truth for status and daily logs going forward --
-read it first regardless of which agent is picking up the work.
+Claude is paused (usage conservation) after Phase D. ChatGPT is temporary execution owner for
+the Phase D secrets/PR #30/first live test and the paused backlog, and holds direct repo/Neon/
+Vercel access. Claude also has direct GitHub, Vercel, and Neon access via connector as of today
+(verified, not assumed) — used for oversight/verification, not to replace ChatGPT as execution
+owner while conserving usage. Full task list, guardrails, and required logging format:
+
+```txt
+02 Projects/MCD CRM - Agent and Admin Portals/[C] ChatGPT Handoff — Phase D Secrets, PR 30, and Backlog.md
+```
+
+Any AI session picking up this workspace should check that file's "Handback to Claude" sections
+in `01 Daily Logs/[G] *.md` entries before assuming Claude's or ChatGPT's prior state is current.
+
+**This repo (hpintojr/My-Workspace on GitHub) is the single source of truth, not the local
+D:\GitHub\My Workspace folder alone.** Both Claude and ChatGPT edit it directly. If a local
+working copy shows unresolved git conflict markers, treat GitHub as the tiebreaker and reconcile
+into the local copy, don't commit the markers.
+
+Use [C] in AI-authored files unless Hamilton says otherwise; ChatGPT-authored daily logs use [G]
+instead so provenance is visible at a glance. Never commit secrets, credentials, customer data,
+SSNs, tax IDs, or raw bank data.
