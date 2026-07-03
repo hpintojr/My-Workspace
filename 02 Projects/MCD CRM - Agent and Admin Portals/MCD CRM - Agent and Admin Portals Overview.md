@@ -91,11 +91,14 @@ already merged to main, built a larger and different lead-import surface:
 src/app/api/admin/leads/import/preview/route.ts -- session-admin-gated (requireFeature("leads") +
   requireRole(ADMIN_ROLES)), calls previewLeadImport. Correct as built.
 src/app/api/admin/leads/import/route.ts -- the live COMMIT endpoint, POST { rows: [...] } -> commitLeadImport().
-  OPEN FINDING: no auth check at all on this route today -- no session role check, no feature flag,
-  no signature verification. Live on production with zero access control.
+  CORRECTED 2026-07-03 (earlier note in this log was wrong -- commitLeadImport() itself calls
+  requireFeature("leads") and requireRole(ADMIN_ROLES) internally, so this route IS gated by
+  session-cookie admin auth, just enforced one layer down in the shared function rather than in
+  route.ts). Real gap: session-cookie auth is unusable by a local CLI like mcd_lead_ops, which has
+  no browser session -- that is Phase D's actual blocker, not an open endpoint.
 src/lib/lead-import-auth.ts -- HMAC sign/verify primitives already built (verifyLeadImportRequest,
-  signLeadImportRequest), commented "for a future paid-data import route," but not wired into the
-  commit route above.
+  signLeadImportRequest), commented "for a future paid-data import route," not yet wired into the
+  commit route as an alternative machine-to-machine auth path.
 ```
 
 Next concrete step, needs Hamilton's go-ahead before shipping (provisions a new shared secret, which is
