@@ -62,17 +62,13 @@ Admin operations: deployed.
 Partner portal and read-only GHL-backed schedule: deployed.
 Appointment lifecycle relay: booked, confirmed, cancelled, no-show, completed, and rescheduled validated.
 Lead and Task modules: staged/feature-gated until the lead-foundation migration and controlled tests are complete.
+2026-07-03: two production incidents this window, both resolved and verified by Hamilton -- a route-collision
+  504 outage, and a separate login-hang bug. Full detail in Overview.md and the 2026-07-03 daily log.
+Open finding (2026-07-03): src/app/api/admin/leads/import/route.ts (the live lead-import commit endpoint) has
+  no auth check at all today. HMAC primitives to fix this already exist in src/lib/lead-import-auth.ts but
+  aren't wired in yet -- pending Hamilton's go-ahead since it needs a new production secret.
 Local lead operations: final Claude scope is established for local staging/research/preview and signed MiniCRM export. No direct Neon access.
 Local lead operations Phase A: built at D:\GitHub\mcd_lead_ops (separate local repo, not crm.mcd). Daily 7:00 AM scheduled task; export always refuses until MiniCRM's import API exists.
-```
-
-### Local lead operation rules
-
-```txt
-Allowed inputs: user-provided files, referrals, web forms, PPC leads, approved/licensed provider data, owned-account exports, and permitted business-website research.
-Pools: Cold, Nurture, Hot Leads, Open Pool, Shark Tank, Referral, House.
-Sources: Google Maps, Instagram, Referral, PPC, Email, SMS, LinkedIn, Web Form, Facebook, Other.
-Original source is immutable. Intake method, campaign, pool, lifecycle, owner, suppression, quote, and website opportunity are separate.
 ```
 
 ### Read next
@@ -94,23 +90,12 @@ Repo: mcd_lead_ops (local only, D:\GitHub\mcd_lead_ops)
 ### Current next actions
 
 ```txt
-0. PENDING HANDOFF (ChatGPT executing, has direct repo/Neon/Vercel access): apply the
-   2026-07-02 lead-import taxonomy migration, push code to GitHub, watch Vercel. See
-   MCD CRM - Agent and Admin Portals Overview.md for the full checklist. Claude resumes
-   next-phase work once this lands.
-1. Wire mcd_lead_ops's export step to the live import endpoint (needs machine-to-machine auth).
-2. Point mcd_lead_ops (Phase A done) at a real recurring source config so the daily job has data to process.
-3. Apply lead-foundation migration only after the API contract is ready.
-4. Add proposal/quote records, including MCD package, website-only, and MCD-with-included-website paths.
-5. Add approved provider event/reply routing after campaign safeguards and suppression webhooks are tested.
-6. Add GHL Demo Booked handoff after ownership and appointment context are safely mapped.
-```
-
-## Workspace rules
-
-```txt
-Keep each business/codebase separate.
-Use [C] for AI-authored files unless Hamilton says otherwise.
-Never commit secrets, credentials, customer data, SSNs, tax data, or raw bank data.
-Keep current handoffs concise; use daily logs for dated detail.
+0. Wire HMAC verification into src/app/api/admin/leads/import/route.ts using the existing
+   src/lib/lead-import-auth.ts primitives, then point mcd_lead_ops's export step at it with a shared
+   secret. Pending Hamilton's go-ahead on provisioning the new Vercel env var (persistent prod config).
+1. Point mcd_lead_ops (Phase A done) at a real recurring source config so the daily job has data to process.
+2. Apply lead-foundation migration only after the API contract is ready.
+3. Add proposal/quote records, including MCD package, website-only, and MCD-with-included-website paths.
+4. Add approved provider event/reply routing after campaign safeguards and suppression webhooks are tested.
+5. Add GHL Demo Booked handoff after ownership and appointment context are safely mapped.
 ```
