@@ -29,9 +29,15 @@ Allowed: user files, referrals, web forms, PPC leads, licensed provider data, ow
 ## Current next work
 
 ```txt
-1. Claude builds local mcd_lead_ops Phase A.
-2. MiniCRM builds lead-import API and review controls.
-3. Apply lead foundation migration after API contract is ready.
+1. Wire HMAC verification into the live lead-import commit route (src/lib/lead-import-auth.ts already
+   built for this) and point mcd_lead_ops's export step at it -- pending Hamilton's go-ahead on a new
+   production secret.
+2. Point mcd_lead_ops at a real recurring source config.
+3. Apply lead foundation migration after the API contract is ready.
 ```
 
-Use [C] in AI-authored files unless Hamilton says otherwise. Never commit secrets, credentials, customer data, SSNs, tax IDs, or raw bank data.
+## Access note (2026-07-03)
+
+Claude now has direct GitHub, Vercel, and Neon access via connector, in addition to ChatGPT. This repo
+(hpintojr/My-Workspace on GitHub) is the single source of truth for status and daily logs going forward --
+read it first regardless of which agent is picking up the work.
