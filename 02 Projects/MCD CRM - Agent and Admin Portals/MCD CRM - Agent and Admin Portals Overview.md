@@ -4,68 +4,28 @@ date: 2026-07-01
 project: MCD CRM - Agent and Admin Portals
 ---
 
-## ACTIVE OUTAGE — production is on an emergency rollback, 2026-07-02
+## Incident history — RESOLVED 2026-07-03
 
-`/admin` and `/portal` both started returning Vercel 504 `FUNCTION_INVOCATION_TIMEOUT` after a long stretch of same-day feature work (lead operations, warm reply triage, GHL opportunity/reply relays, agent onboarding docs, closed-won safeguards, paid CSV import, plus a login-redirect fix and debug tracing). Auth itself was confirmed working — credentials/MFA succeeded, session was created — the timeout happened rendering the protected route after that, in code shared by both `requireUser()`/`requireRole()`.
-
-```txt
-Status: Vercel was instant-rolled-back to commit a80b815 ("feat(servicing): work and resolve
-  cases from queue"). Confirmed /admin and /portal both load again on that commit.
-Not fixed: root cause not yet identified. This is a temporary floor, not a fix.
-Not live right now: every commit after a80b815 -- all of today's lead-ops/GHL-relay/onboarding-doc/
-  closed-won/paid-CSV-import work, the login full-page-redirect fix (3769df7), and the
-  debug-trace commits. None of it is in production until the regression is found and cleared.
-Ruled out: Neon connection pooling. DATABASE_URL already uses the -pooler endpoint; missing
-  pgbouncer=true/connection_limit=1 params were flagged and can still be worth adding, but
-  since env vars aren't tied to a specific deployment, if pooling were the cause the rollback
-  itself wouldn't have restored access. It did, so the bug is a real code regression sitting
-  somewhere in the ~40 commits between a80b815 and the failing deployment (c58c779).
-Owner: ChatGPT (direct repo/Neon/Vercel access) is binary-searching preview deployments between
-  a80b815 and c58c779 to isolate the exact breaking commit. Do not reapply any of the reverted
-  work, and do not touch production, until that commit is identified.
-Known non-issues (do not re-investigate): root middleware.ts is present/correct, not a
-  regression -- an earlier check looked at the wrong path (src/middleware.ts, which never
-  existed). src/app/admin/layout.tsx and /post-login never actually landed in the repo, despite
-  being referenced in earlier debugging notes -- don't rely on either existing. Neon connection
-  pooling was checked and ruled out (pooler endpoint + params already correct).
-```
-
-### ROOT CAUSE FOUND — 2026-07-03
-
-Confirmed via isolated preview build of `e59df2c`: Next.js dynamic-route slug collision, not auth, not cache, not connection pooling.
+Two separate incidents hit production this window. Both are closed. Full narrative in
+`01 Daily Logs/[C] 2026-07-03 MCD CRM Login Hang Incident Resolved.md`.
 
 ```txt
-Baseline (a80b815) has: src/app/admin/leads/[leadId]/page.tsx
-e59df2c added a competing:  src/app/admin/leads/[id]/page.tsx
-Next.js error: "You cannot use different slug names for the same dynamic path ('id' !== 'leadId')."
+Incident 1 (2026-07-02): /admin and /portal 504'd after a same-day feature push. Root cause proven --
+  a Next.js dynamic-route slug collision (src/app/admin/leads/[id]/page.tsx competing with the existing
+  [leadId]/page.tsx). Fixed by porting the verified-close-won control into [leadId] and deleting [id].
+  Production has since moved forward through PRs #24-27 and no longer contains the collision.
+Incident 2 (2026-07-03): separate issue, sign-in stuck at "Signing in...", inconsistent /admin//portal
+  access reported across builds and previews. Root cause proven by diff, not guesswork: PR #27
+  (merged, live) added a recoverCompletedSession() poll to recover from a known Auth.js v5 beta gotcha
+  where the signIn(redirect:false) promise can stall even after the session cookie is already written.
+  PR #28 (open, unmerged) reverts that exact fix. Hamilton tested PR #28's preview directly with real
+  credentials and it hung, confirming the diff-based diagnosis. PR #29 (open, unmerged) is an independent
+  rewrite of the same flow, unstable commit history today (one failed build), solving a problem
+  production no longer has.
+Current state: production (main @ 3e9dfea) CONFIRMED WORKING END TO END by Hamilton -- signs in, reaches
+  both /admin and /portal. PR #28 closed 2026-07-03 as a proven regression. PR #29 recommended for closure,
+  pending Hamilton's call.
 ```
-
-This explains everything that didn't fit before: neutralizing e59df2c's page content in 1e484570 didn't
-fix it because the collision lives in the folder name ([id] vs [leadId]), not the file's logic -- gutting
-the file left the conflicting directory in place. Both /admin and /portal failed together because this
-breaks route resolution broadly, not one page's query. Present in every commit since e59df2c through
-current main, so fixing it should restore the entire day's work, not just a minimal subset.
-
-Fix CONFIRMED WORKING — 2026-07-03: branch recovery/e59-route-fix (base e59df2c, verified-close-won
-merged into [leadId] at 6dd00c2, [id] route deleted) tested clean on preview: /login, /admin, /portal
-all pass. This is the proven fix.
-
-Remaining steps before this outage is fully closed:
-```txt
-1. Apply the same fix to main (merge verified-close-won into main's [leadId]/page.tsx, delete
-   main's [id]/page.tsx -- main still has the live collision today, just not deployed since
-   production is pinned to the a80b815 rollback). Prefer a PR into main over a direct push.
-2. Test that PR's preview: /login, /admin, /portal, plus spot-check Warm Reply Triage, GHL
-   relay setup pages, and agent onboarding docs -- nothing post-e59df2c has been live-tested
-   since before the outage.
-3. Merge to main, deploy to production, replacing the a80b815 rollback pin.
-4. Final check on real production (not preview): /login, /admin, /portal, and the appointment
-   lifecycle states (Booked/Confirmed/Cancelled/No-show/Completed) still processing.
-```
-
-Claude resumes the lead-import work (see "Next work" below) only after step 4 is confirmed by Hamilton.
-
-Full incident writeup: `Mercury_Call_Desk_Handoff_After_Appointment_Relay.md` (uploaded 2026-07-02, ChatGPT's handoff after the outage began).
 
 ## Goal
 
@@ -121,7 +81,29 @@ src/app/api/admin/leads/route.ts — rewritten as a two-phase preview -> commit 
 
 Known follow-up, not done: `Lead.businessPhone` is still NOT NULL, but the new taxonomy allows email-only rows. The route currently skips email-only rows with an explicit reason rather than writing an empty phone. Making `businessPhone` nullable would unblock that but touches a field read in ~10 files — deferred rather than done opportunistically.
 
-## Pending handoff — 2026-07-02, execution owner: ChatGPT (has direct repo/DB/Vercel access)
+## Lead-import surface — reconciled 2026-07-03
+
+The 2026-07-02 handoff below (kept for history) assumed Claude's local `/api/admin/leads/route.ts`
+rewrite would be applied as-is. Instead, PR #24 ("import verifier") and PR #25 ("response contract"),
+already merged to main, built a larger and different lead-import surface:
+
+```txt
+src/app/api/admin/leads/import/preview/route.ts -- session-admin-gated (requireFeature("leads") +
+  requireRole(ADMIN_ROLES)), calls previewLeadImport. Correct as built.
+src/app/api/admin/leads/import/route.ts -- the live COMMIT endpoint, POST { rows: [...] } -> commitLeadImport().
+  OPEN FINDING: no auth check at all on this route today -- no session role check, no feature flag,
+  no signature verification. Live on production with zero access control.
+src/lib/lead-import-auth.ts -- HMAC sign/verify primitives already built (verifyLeadImportRequest,
+  signLeadImportRequest), commented "for a future paid-data import route," but not wired into the
+  commit route above.
+```
+
+Next concrete step, needs Hamilton's go-ahead before shipping (provisions a new shared secret, which is
+persistent production config): wire `verifyLeadImportRequest` into the commit route so it requires a
+valid HMAC signature, then point mcd_lead_ops's export step at it with `signLeadImportRequest` using a
+new Vercel env var for the shared secret. This closes the open endpoint and unblocks Phase D together.
+
+### Original 2026-07-02 handoff (superseded, kept for history)
 
 The lead-import taxonomy work above is code-complete on disk but not yet applied or shipped. Hamilton is having ChatGPT execute the following, since ChatGPT has direct repo, Neon, and Vercel access and Claude does not:
 
@@ -141,11 +123,16 @@ The lead-import taxonomy work above is code-complete on disk but not yet applied
 
 Until step 2/3 are done, `/api/admin/leads` on production is still running the old pre-taxonomy code (LEADS_ENABLED also still gates all of this from being user-visible either way).
 
-## Next work (Claude resumes here once the above is applied)
+## Next work (updated 2026-07-03)
 
-- Wire mcd_lead_ops's export step to the now-live `/api/admin/leads` endpoint (Phase D) -- needs a decision on auth: session-cookie admin auth won't work for a local CLI, so this likely needs a machine-to-machine HMAC-secret path (same pattern as the GHL webhook) added to the route, or a dedicated `/api/leads/import` route.
-- Point `mcd_lead_ops/config/sources/*.yaml` at a real recurring source so the daily job has data to process.
-- Improve Admin operational visibility.
-- Prevent duplicate document dispatch after approval.
-- Add optional company/entity metadata.
-- Complete legal review and later gated operating stages.
+```txt
+0. Wire HMAC verification (src/lib/lead-import-auth.ts) into src/app/api/admin/leads/import/route.ts,
+   then point mcd_lead_ops's export step at it with a shared secret (new Vercel env var) -- pending
+   Hamilton's go-ahead on the secret since it's new persistent production config. Closes the open
+   commit-endpoint finding above and completes Phase D in one pass.
+1. Point mcd_lead_ops/config/sources/*.yaml at a real recurring source so the daily job has data.
+2. Improve Admin operational visibility.
+3. Prevent duplicate document dispatch after approval.
+4. Add optional company/entity metadata.
+5. Complete legal review and later gated operating stages.
+```
