@@ -46,11 +46,24 @@ the file left the conflicting directory in place. Both /admin and /portal failed
 breaks route resolution broadly, not one page's query. Present in every commit since e59df2c through
 current main, so fixing it should restore the entire day's work, not just a minimal subset.
 
-Fix in progress (ChatGPT): before deleting src/app/admin/leads/[id]/, diff its pre-neutralization content
-(git show e59df2c:src/app/admin/leads/[id]/page.tsx) against src/app/admin/leads/[leadId]/page.tsx --
-e59df2c added real functionality (admin detail + verified close-won control) that may need porting into
-[leadId] (using params.leadId) rather than being dropped. Test on preview first; only promote to
-production after /login, /admin, /portal all pass clean.
+Fix CONFIRMED WORKING — 2026-07-03: branch recovery/e59-route-fix (base e59df2c, verified-close-won
+merged into [leadId] at 6dd00c2, [id] route deleted) tested clean on preview: /login, /admin, /portal
+all pass. This is the proven fix.
+
+Remaining steps before this outage is fully closed:
+```txt
+1. Apply the same fix to main (merge verified-close-won into main's [leadId]/page.tsx, delete
+   main's [id]/page.tsx -- main still has the live collision today, just not deployed since
+   production is pinned to the a80b815 rollback). Prefer a PR into main over a direct push.
+2. Test that PR's preview: /login, /admin, /portal, plus spot-check Warm Reply Triage, GHL
+   relay setup pages, and agent onboarding docs -- nothing post-e59df2c has been live-tested
+   since before the outage.
+3. Merge to main, deploy to production, replacing the a80b815 rollback pin.
+4. Final check on real production (not preview): /login, /admin, /portal, and the appointment
+   lifecycle states (Booked/Confirmed/Cancelled/No-show/Completed) still processing.
+```
+
+Claude resumes the lead-import work (see "Next work" below) only after step 4 is confirmed by Hamilton.
 
 Full incident writeup: `Mercury_Call_Desk_Handoff_After_Appointment_Relay.md` (uploaded 2026-07-02, ChatGPT's handoff after the outage began).
 
