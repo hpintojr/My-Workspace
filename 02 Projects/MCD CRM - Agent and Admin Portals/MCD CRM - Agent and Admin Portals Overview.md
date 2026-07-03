@@ -4,6 +4,32 @@ date: 2026-07-01
 project: MCD CRM - Agent and Admin Portals
 ---
 
+## Pending handoff — 2026-07-03, execution owner: ChatGPT (direct repo/Neon/Vercel access)
+
+Claude built the full lead-import batch API (Phase D: schema, production Neon migration, service
+layer, 5 route handlers under `src/app/api/lead-imports/`) and opened it as PR #30 in
+`hpintojr/crm.mcd` (Vercel preview build verified READY). This supersedes the "decide whether to
+build the full batch API" open question from the 2026-07-03 reconciliation below — it's built.
+
+**PR #30 is blocked from merging.** Its preview deployment hangs the entire page right after the
+MFA code field appears during login (confirmed by Hamilton live-testing it with real credentials,
+and independently by Claude's browser automation timing out against the same tab). Live production
+login (both /admin and /portal, custom domain) works fine with the same credentials immediately
+after, so this is specific to the preview/branch. **Checked and ruled out:** the branch is not
+missing PR #27's Auth.js stall-recovery fix — `feature/lead-import-batch-api`'s merge-base with
+`main` is exactly PR #27's own merge commit (3e9dfea0), and `src/app/(auth)/login/complete/page.tsx`
+is byte-identical on both branches. So the hang is not explained by a stale branch; root cause is
+still open. Full investigation steps, hard rules, and required logging format:
+
+```txt
+02 Projects/MCD CRM - Agent and Admin Portals/[C] ChatGPT Handoff — Phase D Secrets, PR 30, and Backlog.md
+```
+
+Do not merge PR #30 until this is root-caused and fixed, regardless of how ready secrets/backlog
+otherwise look. `LEAD_IMPORT_KEY_ID`/`LEAD_IMPORT_HMAC_SECRET` are already provisioned on Vercel
+for both preview and production, so the hang is the only thing standing between here and the first
+live export test. Claude resumes once PR #30 is merged and one live export has been run and logged.
+
 ## Incident history — RESOLVED 2026-07-03
 
 Two separate incidents hit production this window. Both are closed. Full narrative in
@@ -27,6 +53,13 @@ Current state: production (main @ 3e9dfea) CONFIRMED WORKING END TO END by Hamil
   pending Hamilton's call.
 ```
 
+Note (2026-07-03, Phase D handoff): this same "signIn stuck at MFA / whole page hangs" symptom has
+now reappeared on PR #30's preview, a separate branch built after this incident closed. It is not
+yet known whether it's the same underlying Auth.js class of bug resurfacing in a new form, or
+something unrelated to auth entirely (e.g. Phase D's Prisma schema/migration changes, or an
+artifact of the automated browser test session used to reproduce it). Treat it as a new
+investigation, not an assumed repeat of Incident 2 -- see the pending handoff above.
+
 ## Goal
 
 Build Mercury Call Desk's secure Mini CRM with an Agent portal, an Admin portal, and GoHighLevel operating as a private backend.
@@ -48,13 +81,15 @@ The detailed record is in:
 
 ## Related repo — mcd_lead_ops (local, separate from crm.mcd)
 
-Phase A is built and tested at `D:\GitHub\mcd_lead_ops` (not part of the crm.mcd Next.js app — standalone local Python CLI). It stages permitted lead sources (CSV/XLSX, referrals, web forms, owned-account exports, approved-provider APIs) into local SQLite for operator preview and approval; export to MiniCRM always refuses today because MiniCRM's import API doesn't exist yet. Google Maps/LinkedIn/directory scraping and browser-automation adapters were requested and declined as ToS and policy violations — the disabled adapters are stubbed in code (raise on construction) so they can't be quietly wired in later. A daily scheduled task (`mcd-lead-ops-daily`, 7:00 AM) runs intake + preview + website-review only; it can never approve or export. Full detail in `01 Daily Logs/[C] 2026-07-02 mcd_lead_ops Phase A Build.md`.
+Phase A is built and tested at `D:\GitHub\mcd_lead_ops` (not part of the crm.mcd Next.js app — standalone local Python CLI). It stages permitted lead sources (CSV/XLSX, referrals, web forms, owned-account exports, approved-provider APIs) into local SQLite for operator preview and approval. As of 2026-07-03, export runs a real signed HTTP call against crm.mcd's lead-import batch API (Phase D) instead of always refusing — but it has never been exercised against a live server yet, since PR #30 (which ships that API) is blocked from merging. Google Maps/LinkedIn/directory scraping and browser-automation adapters were requested and declined as ToS and policy violations — the disabled adapters are stubbed in code (raise on construction) so they can't be quietly wired in later. A daily scheduled task (`mcd-lead-ops-daily`, 7:00 AM) runs intake + preview + website-review only; it can never approve or export on its own. Full detail in `01 Daily Logs/[C] 2026-07-02 mcd_lead_ops Phase A Build.md`.
 
 ```txt
 Phase A (this build): CLI, SQLite staging, permitted adapters, policy engine, preview/reports, tests — done.
 Phase B: website research enrichment — blocked on nothing, not yet started.
-Phase C: MiniCRM lead-import API + migration — in progress (see below).
-Phase D: live signed export — code (HMAC signing) ready, no endpoint to call yet.
+Phase C: MiniCRM lead-import API + migration — done, folded into Phase D below.
+Phase D: live signed export — code-complete (batch API + real MiniCrmClient HTTP calls), open as
+  PR #30, BLOCKED from merging on a login/MFA hang in preview, never yet exercised against a live
+  server. See the 2026-07-03 pending handoff above.
 Phase E: campaign sending — gated behind full deliverability/suppression checklist.
 ```
 
@@ -91,24 +126,28 @@ already merged to main, built a larger and different lead-import surface:
 src/app/api/admin/leads/import/preview/route.ts -- session-admin-gated (requireFeature("leads") +
   requireRole(ADMIN_ROLES)), calls previewLeadImport. Correct as built.
 src/app/api/admin/leads/import/route.ts -- the live COMMIT endpoint, POST { rows: [...] } -> commitLeadImport().
-  CORRECTED 2026-07-03 (earlier note in this log was wrong -- commitLeadImport() itself calls
-  requireFeature("leads") and requireRole(ADMIN_ROLES) internally, so this route IS gated by
-  session-cookie admin auth, just enforced one layer down in the shared function rather than in
-  route.ts). Real gap: session-cookie auth is unusable by a local CLI like mcd_lead_ops, which has
-  no browser session -- that is Phase D's actual blocker, not an open endpoint.
+  commitLeadImport() itself calls requireFeature("leads") and requireRole(ADMIN_ROLES) internally, so
+  this route IS gated by session-cookie admin auth, just enforced one layer down in the shared
+  function rather than in route.ts. Real gap: session-cookie auth is unusable by a local CLI like
+  mcd_lead_ops, which has no browser session.
 src/lib/lead-import-auth.ts -- HMAC sign/verify primitives already built (verifyLeadImportRequest,
-  signLeadImportRequest), commented "for a future paid-data import route," not yet wired into the
-  commit route as an alternative machine-to-machine auth path.
+  signLeadImportRequest), commented "for a future paid-data import route."
 ```
 
-Next concrete step, needs Hamilton's go-ahead before shipping (provisions a new shared secret, which is
-persistent production config): wire `verifyLeadImportRequest` into the commit route so it requires a
-valid HMAC signature, then point mcd_lead_ops's export step at it with `signLeadImportRequest` using a
-new Vercel env var for the shared secret. This closes the open endpoint and unblocks Phase D together.
+**Resolved 2026-07-03 (Phase D):** rather than retrofitting HMAC onto the existing session-gated
+commit route above, Claude built a separate, purpose-built batch-lifecycle API matching the
+pre-existing contract in `src/lib/lead-import-contract.ts` (`leadImportApiPaths`): `POST
+/api/lead-imports` (create batch), `POST .../rows` (upload), `POST .../preview`, `POST .../submit`,
+`GET .../{batchId}` (status) — each HMAC-guarded via `lead-import-route-guard.ts`, matching
+`MCD_LEAD_IMPORT_KEY_ID`/`MCD_LEAD_IMPORT_HMAC_SECRET` on the mcd_lead_ops side and
+`LEAD_IMPORT_KEY_ID`/`LEAD_IMPORT_HMAC_SECRET` on Vercel. This is machine-to-machine by design, so
+it coexists with (does not replace) the session-gated `/api/admin/leads/import` route used by the
+Admin UI. Open as PR #30 — see the pending handoff at the top of this file for its current blocker.
 
 ### Original 2026-07-02 handoff (superseded, kept for history)
 
-The lead-import taxonomy work above is code-complete on disk but not yet applied or shipped. Hamilton is having ChatGPT execute the following, since ChatGPT has direct repo, Neon, and Vercel access and Claude does not:
+The steps below were executed and the underlying work has since been superseded by Phase D. Left
+here for history only — do not re-run these steps.
 
 ```txt
 1. npm install && npm run typecheck in crm.mcd -- confirm the new route/schema compile clean.
@@ -124,17 +163,16 @@ The lead-import taxonomy work above is code-complete on disk but not yet applied
    see note above; touches ~10 files if changed).
 ```
 
-Until step 2/3 are done, `/api/admin/leads` on production is still running the old pre-taxonomy code (LEADS_ENABLED also still gates all of this from being user-visible either way).
+## Next work (Claude resumes here once the 2026-07-03 handoff is closed)
 
-## Next work (updated 2026-07-03)
+See `[C] ChatGPT Handoff — Phase D Secrets, PR 30, and Backlog.md` for the live, authoritative
+task list (Tier A/B/C). Summary: PR #30's login/MFA hang gets root-caused and fixed, PR #30 merges,
+one live export test runs and gets logged, then backlog items #38-41 -- none of which are scoped
+with Hamilton yet -- plus legal review and later gated operating stages.
 
 ```txt
-0. Wire HMAC verification (src/lib/lead-import-auth.ts) into src/app/api/admin/leads/import/route.ts,
-   then point mcd_lead_ops's export step at it with a shared secret (new Vercel env var) -- pending
-   Hamilton's go-ahead on the secret since it's new persistent production config. Closes the open
-   commit-endpoint finding above and completes Phase D in one pass.
 1. Point mcd_lead_ops/config/sources/*.yaml at a real recurring source so the daily job has data.
-2. Improve Admin operational visibility.
+2. Improve Admin operational visibility for lead-import batches.
 3. Prevent duplicate document dispatch after approval.
 4. Add optional company/entity metadata.
 5. Complete legal review and later gated operating stages.
