@@ -26,8 +26,31 @@ Owner: ChatGPT (direct repo/Neon/Vercel access) is binary-searching preview depl
 Known non-issues (do not re-investigate): root middleware.ts is present/correct, not a
   regression -- an earlier check looked at the wrong path (src/middleware.ts, which never
   existed). src/app/admin/layout.tsx and /post-login never actually landed in the repo, despite
-  being referenced in earlier debugging notes -- don't rely on either existing.
+  being referenced in earlier debugging notes -- don't rely on either existing. Neon connection
+  pooling was checked and ruled out (pooler endpoint + params already correct).
 ```
+
+### ROOT CAUSE FOUND — 2026-07-03
+
+Confirmed via isolated preview build of `e59df2c`: Next.js dynamic-route slug collision, not auth, not cache, not connection pooling.
+
+```txt
+Baseline (a80b815) has: src/app/admin/leads/[leadId]/page.tsx
+e59df2c added a competing:  src/app/admin/leads/[id]/page.tsx
+Next.js error: "You cannot use different slug names for the same dynamic path ('id' !== 'leadId')."
+```
+
+This explains everything that didn't fit before: neutralizing e59df2c's page content in 1e484570 didn't
+fix it because the collision lives in the folder name ([id] vs [leadId]), not the file's logic -- gutting
+the file left the conflicting directory in place. Both /admin and /portal failed together because this
+breaks route resolution broadly, not one page's query. Present in every commit since e59df2c through
+current main, so fixing it should restore the entire day's work, not just a minimal subset.
+
+Fix in progress (ChatGPT): before deleting src/app/admin/leads/[id]/, diff its pre-neutralization content
+(git show e59df2c:src/app/admin/leads/[id]/page.tsx) against src/app/admin/leads/[leadId]/page.tsx --
+e59df2c added real functionality (admin detail + verified close-won control) that may need porting into
+[leadId] (using params.leadId) rather than being dropped. Test on preview first; only promote to
+production after /login, /admin, /portal all pass clean.
 
 Full incident writeup: `Mercury_Call_Desk_Handoff_After_Appointment_Relay.md` (uploaded 2026-07-02, ChatGPT's handoff after the outage began).
 
