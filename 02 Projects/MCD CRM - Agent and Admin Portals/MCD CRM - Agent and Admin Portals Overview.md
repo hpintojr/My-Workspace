@@ -4,6 +4,31 @@ date: 2026-07-01
 project: MCD CRM - Agent and Admin Portals
 ---
 
+## Pending handoff — 2026-07-03, execution owner: ChatGPT (direct repo/Neon/Vercel access)
+
+Claude is paused (usage conservation) after finishing Phase D of the lead-import batch API
+(schema, production Neon migration, service layer, 5 route handlers -- open as PR #30, Vercel
+preview verified READY, not yet merged). ChatGPT is now executing; Hamilton is overseeing. Full
+task list, hard rules, and required logging format:
+
+```txt
+02 Projects/MCD CRM - Agent and Admin Portals/[C] ChatGPT Handoff — Phase D Secrets, PR 30, and Backlog.md
+```
+
+Do not merge PR #30 without Hamilton's explicit go-ahead in-thread -- he asked to review it
+himself. Claude resumes once the secrets are provisioned, PR #30 is merged, and one live export
+has been run and logged per the handoff file's protocol.
+
+**Update, same day:** PR #30's preview deployment hangs the entire page right after the MFA
+code field appears during login (confirmed by Hamilton live-testing it, and independently by
+Claude's browser automation timing out against the same tab). Live production login (both
+/admin and /portal, custom domain) works fine with the same credentials, so this is specific to
+the preview/branch, not a pre-existing issue. **PR #30 is now blocked from merging until this is
+root-caused and fixed** -- secrets are already provisioned (LEAD_IMPORT_KEY_ID/
+LEAD_IMPORT_HMAC_SECRET exist on Vercel for preview+production), so this hang is the only thing
+standing between here and Tier B. Full investigation steps are in the "ACTIVE BLOCKER" section
+at the top of the handoff file.
+
 ## ACTIVE OUTAGE — production is on an emergency rollback, 2026-07-02
 
 `/admin` and `/portal` both started returning Vercel 504 `FUNCTION_INVOCATION_TIMEOUT` after a long stretch of same-day feature work (lead operations, warm reply triage, GHL opportunity/reply relays, agent onboarding docs, closed-won safeguards, paid CSV import, plus a login-redirect fix and debug tracing). Auth itself was confirmed working — credentials/MFA succeeded, session was created — the timeout happened rendering the protected route after that, in code shared by both `requireUser()`/`requireRole()`.
@@ -88,13 +113,15 @@ The detailed record is in:
 
 ## Related repo — mcd_lead_ops (local, separate from crm.mcd)
 
-Phase A is built and tested at `D:\GitHub\mcd_lead_ops` (not part of the crm.mcd Next.js app — standalone local Python CLI). It stages permitted lead sources (CSV/XLSX, referrals, web forms, owned-account exports, approved-provider APIs) into local SQLite for operator preview and approval; export to MiniCRM always refuses today because MiniCRM's import API doesn't exist yet. Google Maps/LinkedIn/directory scraping and browser-automation adapters were requested and declined as ToS and policy violations — the disabled adapters are stubbed in code (raise on construction) so they can't be quietly wired in later. A daily scheduled task (`mcd-lead-ops-daily`, 7:00 AM) runs intake + preview + website-review only; it can never approve or export. Full detail in `01 Daily Logs/[C] 2026-07-02 mcd_lead_ops Phase A Build.md`.
+Phase A is built and tested at `D:\GitHub\mcd_lead_ops` (not part of the crm.mcd Next.js app — standalone local Python CLI). It stages permitted lead sources (CSV/XLSX, referrals, web forms, owned-account exports, approved-provider APIs) into local SQLite for operator preview and approval. As of 2026-07-03, export runs a real signed HTTP call against crm.mcd's lead-import batch API (Phase D) instead of always refusing — but it has never been exercised against a live server yet; see the 2026-07-03 pending handoff at the top of this file. Google Maps/LinkedIn/directory scraping and browser-automation adapters were requested and declined as ToS and policy violations — the disabled adapters are stubbed in code (raise on construction) so they can't be quietly wired in later. A daily scheduled task (`mcd-lead-ops-daily`, 7:00 AM) runs intake + preview + website-review only; it can never approve or export on its own. Full detail in `01 Daily Logs/[C] 2026-07-02 mcd_lead_ops Phase A Build.md`.
 
 ```txt
 Phase A (this build): CLI, SQLite staging, permitted adapters, policy engine, preview/reports, tests — done.
 Phase B: website research enrichment — blocked on nothing, not yet started.
-Phase C: MiniCRM lead-import API + migration — in progress (see below).
-Phase D: live signed export — code (HMAC signing) ready, no endpoint to call yet.
+Phase C: MiniCRM lead-import API + migration — done, see Phase D entry (the two merged in practice).
+Phase D: live signed export — code-complete (batch API + real MiniCrmClient HTTP calls), open as
+  PR #30, not yet merged, never yet exercised against a live server. See the 2026-07-03 pending
+  handoff above.
 Phase E: campaign sending — gated behind full deliverability/suppression checklist.
 ```
 
@@ -121,9 +148,12 @@ src/app/api/admin/leads/route.ts — rewritten as a two-phase preview -> commit 
 
 Known follow-up, not done: `Lead.businessPhone` is still NOT NULL, but the new taxonomy allows email-only rows. The route currently skips email-only rows with an explicit reason rather than writing an empty phone. Making `businessPhone` nullable would unblock that but touches a field read in ~10 files — deferred rather than done opportunistically.
 
-## Pending handoff — 2026-07-02, execution owner: ChatGPT (has direct repo/DB/Vercel access)
+## Superseded — 2026-07-02 taxonomy handoff
 
-The lead-import taxonomy work above is code-complete on disk but not yet applied or shipped. Hamilton is having ChatGPT execute the following, since ChatGPT has direct repo, Neon, and Vercel access and Claude does not:
+The steps below were executed and the underlying work has since been superseded by Phase D
+(see the 2026-07-03 pending handoff at the top of this file, and
+`[C] ChatGPT Handoff — Phase D Secrets, PR 30, and Backlog.md`). Left here for history only --
+do not re-run these steps.
 
 ```txt
 1. npm install && npm run typecheck in crm.mcd -- confirm the new route/schema compile clean.
@@ -139,13 +169,9 @@ The lead-import taxonomy work above is code-complete on disk but not yet applied
    see note above; touches ~10 files if changed).
 ```
 
-Until step 2/3 are done, `/api/admin/leads` on production is still running the old pre-taxonomy code (LEADS_ENABLED also still gates all of this from being user-visible either way).
+## Next work (Claude resumes here once the 2026-07-03 handoff is closed)
 
-## Next work (Claude resumes here once the above is applied)
-
-- Wire mcd_lead_ops's export step to the now-live `/api/admin/leads` endpoint (Phase D) -- needs a decision on auth: session-cookie admin auth won't work for a local CLI, so this likely needs a machine-to-machine HMAC-secret path (same pattern as the GHL webhook) added to the route, or a dedicated `/api/leads/import` route.
-- Point `mcd_lead_ops/config/sources/*.yaml` at a real recurring source so the daily job has data to process.
-- Improve Admin operational visibility.
-- Prevent duplicate document dispatch after approval.
-- Add optional company/entity metadata.
-- Complete legal review and later gated operating stages.
+See `[C] ChatGPT Handoff — Phase D Secrets, PR 30, and Backlog.md` for the live, authoritative
+task list (Tier A/B/C). Summary: Phase D lands (secrets + PR #30 merge + one live export test),
+then backlog items #38-41 -- none of which are scoped with Hamilton yet -- plus legal review and
+later gated operating stages.

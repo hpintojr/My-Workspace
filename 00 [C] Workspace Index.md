@@ -63,7 +63,9 @@ Partner portal and read-only GHL-backed schedule: deployed.
 Appointment lifecycle relay: booked, confirmed, cancelled, no-show, completed, and rescheduled validated.
 Lead and Task modules: staged/feature-gated until the lead-foundation migration and controlled tests are complete.
 Local lead operations: final Claude scope is established for local staging/research/preview and signed MiniCRM export. No direct Neon access.
-Local lead operations Phase A: built at D:\GitHub\mcd_lead_ops (separate local repo, not crm.mcd). Daily 7:00 AM scheduled task; export always refuses until MiniCRM's import API exists.
+Local lead operations Phase A: built at D:\GitHub\mcd_lead_ops (separate local repo, not crm.mcd). Daily 7:00 AM scheduled task; intake/preview/website-review only.
+Lead-import batch API (Phase D): code-complete, open as PR #30 in hpintojr/crm.mcd, not yet merged. mcd_lead_ops's export step now makes real signed HTTP calls but has never run live.
+Execution owner as of 2026-07-03: ChatGPT (direct repo/Neon/Vercel access) is handling secrets + PR #30 + first live test while Claude is paused. See pending handoff below.
 ```
 
 ### Local lead operation rules
@@ -94,16 +96,20 @@ Repo: mcd_lead_ops (local only, D:\GitHub\mcd_lead_ops)
 ### Current next actions
 
 ```txt
-0. PENDING HANDOFF (ChatGPT executing, has direct repo/Neon/Vercel access): apply the
-   2026-07-02 lead-import taxonomy migration, push code to GitHub, watch Vercel. See
-   MCD CRM - Agent and Admin Portals Overview.md for the full checklist. Claude resumes
-   next-phase work once this lands.
-1. Wire mcd_lead_ops's export step to the live import endpoint (needs machine-to-machine auth).
-2. Point mcd_lead_ops (Phase A done) at a real recurring source config so the daily job has data to process.
-3. Apply lead-foundation migration only after the API contract is ready.
-4. Add proposal/quote records, including MCD package, website-only, and MCD-with-included-website paths.
-5. Add approved provider event/reply routing after campaign safeguards and suppression webhooks are tested.
-6. Add GHL Demo Booked handoff after ownership and appointment context are safely mapped.
+0. PENDING HANDOFF (ChatGPT executing, has direct repo/Neon/Vercel access), as of 2026-07-03:
+   provision LEAD_IMPORT_KEY_ID/LEAD_IMPORT_HMAC_SECRET in Vercel, merge PR #30 (Hamilton-only
+   step), mirror secrets into mcd_lead_ops's .env, run one supervised live export test. Full
+   task list, guardrails, and required logging format:
+   02 Projects/MCD CRM - Agent and Admin Portals/[C] ChatGPT Handoff — Phase D Secrets, PR 30, and Backlog.md
+   Claude resumes once that file's Tier A/B are closed and logged.
+1. Point mcd_lead_ops (Phase A done) at a real recurring source config -- not yet scoped with Hamilton.
+2. Improve Admin operational visibility for lead-import batches -- not yet scoped with Hamilton.
+3. Prevent duplicate document dispatch after approval -- not yet scoped with Hamilton.
+4. Add optional company/entity metadata -- not yet scoped with Hamilton.
+5. Apply lead-foundation migration only after the API contract is ready.
+6. Add proposal/quote records, including MCD package, website-only, and MCD-with-included-website paths.
+7. Add approved provider event/reply routing after campaign safeguards and suppression webhooks are tested.
+8. Add GHL Demo Booked handoff after ownership and appointment context are safely mapped.
 ```
 
 ## Workspace rules

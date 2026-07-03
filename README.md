@@ -71,7 +71,9 @@ Meet links: shown only for Scheduled and Confirmed appointments.
 Company / Legal Entity Name: optional field separate from individual signer.
 Lead/Task modules: staged and feature-gated. The production database does not yet contain lead, callback, note, activity, claim, suppression, import, or proposal tables.
 Local lead operations: final scope is approved for a Claude-built local staging, research, preview, and signed MiniCRM-export workflow. It must not connect directly to Neon.
-Local lead operations Phase A: built and tested at D:\GitHub\mcd_lead_ops (separate repo). CLI, SQLite staging, permitted adapters, policy engine, preview reports, tests. Daily 7:00 AM scheduled task runs intake+preview+website-review only; export always refuses until MiniCRM's import API exists.
+Local lead operations Phase A: built and tested at D:\GitHub\mcd_lead_ops (separate repo). CLI, SQLite staging, permitted adapters, policy engine, preview reports, tests. Daily 7:00 AM scheduled task runs intake+preview+website-review only.
+Lead-import batch API (Phase D): code-complete (schema, production Neon migration, service layer, 5 routes) and open as PR #30 in hpintojr/crm.mcd, not yet merged. mcd_lead_ops's export step makes real signed HTTP calls now but has never run against a live server.
+Execution owner as of 2026-07-03: ChatGPT (direct repo/Neon/Vercel access) is handling secrets, PR #30, and the first live test while Claude is paused to conserve usage. Hamilton is overseeing.
 ```
 
 #### Lead rules and source tracking
@@ -99,18 +101,23 @@ Website-only quotes are planned in the approved $500–$3,000 range with scope a
 01 Daily Logs/[C] 2026-07-02 mcd_lead_ops Phase A Build.md
 ```
 
-#### Pending handoff — lead-import taxonomy (execution owner: ChatGPT, has direct repo/Neon/Vercel access)
+#### Pending handoff — Phase D secrets, PR #30, backlog (execution owner: ChatGPT, has direct repo/Neon/Vercel access)
 
-Migration + rewritten `/api/admin/leads` route are code-complete on disk, not yet applied/shipped. ChatGPT is running: typecheck → apply Neon migration → commit/push to GitHub → watch Vercel. Full checklist in `02 Projects/MCD CRM - Agent and Admin Portals/MCD CRM - Agent and Admin Portals Overview.md`.
+Phase D (lead-import batch API) is code-complete and open as PR #30, Vercel preview verified READY, not yet merged — Hamilton is reviewing/merging it himself. ChatGPT is provisioning the two Vercel secrets (Hamilton-only step), mirroring them into mcd_lead_ops's `.env`, and running one supervised live export test. Full task list, guardrails, and required logging format:
 
-#### Next scope (Claude resumes once the handoff above is applied)
+```txt
+02 Projects/MCD CRM - Agent and Admin Portals/[C] ChatGPT Handoff — Phase D Secrets, PR 30, and Backlog.md
+```
 
-1. Wire mcd_lead_ops's export step to the live import endpoint (Phase D) — needs machine-to-machine auth added, not just session-admin auth.
-2. Point `mcd_lead_ops` (D:\GitHub\mcd_lead_ops, Phase A done) at a real recurring source config so the daily job has data to process.
-3. Server-side reconciliation and Admin review refinements.
-3. Apply and validate the lead-foundation database migration only after the API contract is ready.
-4. Build proposal/quote records for MCD package, website-only, and MCD-with-included-website offers.
-5. Add campaign event/reply routing and then controlled GHL Demo Booked handoff.
+#### Next scope (Claude resumes once the handoff above is closed and logged)
+
+1. Point `mcd_lead_ops` (D:\GitHub\mcd_lead_ops, Phase A done) at a real recurring source config — not yet scoped with Hamilton.
+2. Improve Admin operational visibility for lead-import batches — not yet scoped with Hamilton.
+3. Prevent duplicate document dispatch after approval — not yet scoped with Hamilton.
+4. Add optional company/entity metadata — not yet scoped with Hamilton; confirm it isn't already covered by the existing onboarding "Company / Legal Entity Name" field.
+5. Apply and validate the lead-foundation database migration only after the API contract is ready.
+6. Build proposal/quote records for MCD package, website-only, and MCD-with-included-website offers.
+7. Add campaign event/reply routing and then controlled GHL Demo Booked handoff.
 
 ## Workspace rules
 

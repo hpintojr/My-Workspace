@@ -29,9 +29,24 @@ Allowed: user files, referrals, web forms, PPC leads, licensed provider data, ow
 ## Current next work
 
 ```txt
-1. Claude builds local mcd_lead_ops Phase A.
-2. MiniCRM builds lead-import API and review controls.
-3. Apply lead foundation migration after API contract is ready.
+1. Claude builds local mcd_lead_ops Phase A -- done.
+2. MiniCRM builds lead-import API and review controls -- Phase D code-complete, open as PR #30,
+   not yet merged.
+3. Apply lead foundation migration after API contract is ready -- still pending.
 ```
 
-Use [C] in AI-authored files unless Hamilton says otherwise. Never commit secrets, credentials, customer data, SSNs, tax IDs, or raw bank data.
+## Execution ownership — 2026-07-03
+
+Claude is paused (usage conservation) after Phase D. ChatGPT is temporary execution owner for
+Phase D secrets/PR #30/first live test and holds direct repo/Neon/Vercel access Claude does not
+have. Full task list, guardrails, and required logging format:
+
+```txt
+02 Projects/MCD CRM - Agent and Admin Portals/[C] ChatGPT Handoff — Phase D Secrets, PR 30, and Backlog.md
+```
+
+Any AI session picking up this workspace should check that file's "Handback to Claude" sections
+in `01 Daily Logs/[G] *.md` entries before assuming Claude's prior state is still current.
+
+Use [C] in AI-authored files unless Hamilton says otherwise; ChatGPT-authored daily logs use [G]
+instead so provenance is visible at a glance. Never commit secrets, credentials, customer data, SSNs, tax IDs, or raw bank data.
