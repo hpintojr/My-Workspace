@@ -1,6 +1,6 @@
 # Workspace Index
 
-Updated: 2026-07-02
+Updated: 2026-07-03
 
 ## First read
 
@@ -62,19 +62,19 @@ Admin operations: deployed.
 Partner portal and read-only GHL-backed schedule: deployed.
 Appointment lifecycle relay: booked, confirmed, cancelled, no-show, completed, and rescheduled validated.
 Lead and Task modules: staged/feature-gated until the lead-foundation migration and controlled tests are complete.
-Local lead operations: final Claude scope is established for local staging/research/preview and signed MiniCRM export. No direct Neon access.
-Local lead operations Phase A: built at D:\GitHub\mcd_lead_ops (separate local repo, not crm.mcd). Daily 7:00 AM scheduled task; intake/preview/website-review only.
-Lead-import batch API (Phase D): code-complete, open as PR #30 in hpintojr/crm.mcd, not yet merged. mcd_lead_ops's export step now makes real signed HTTP calls but has never run live.
-Execution owner as of 2026-07-03: ChatGPT (direct repo/Neon/Vercel access) is handling secrets + PR #30 + first live test while Claude is paused. See pending handoff below.
-```
-
-### Local lead operation rules
-
-```txt
-Allowed inputs: user-provided files, referrals, web forms, PPC leads, approved/licensed provider data, owned-account exports, and permitted business-website research.
-Pools: Cold, Nurture, Hot Leads, Open Pool, Shark Tank, Referral, House.
-Sources: Google Maps, Instagram, Referral, PPC, Email, SMS, LinkedIn, Web Form, Facebook, Other.
-Original source is immutable. Intake method, campaign, pool, lifecycle, owner, suppression, quote, and website opportunity are separate.
+2026-07-02/07-03: two production incidents this window, both resolved and verified by Hamilton -- a
+  route-collision 504 outage, and a separate Auth.js v5 login-hang bug (PR #27's fix confirmed live).
+  Full detail in Overview.md and 01 Daily Logs/[C] 2026-07-03 MCD CRM Login Hang Incident Resolved.md.
+Lead-import batch API (Phase D): code-complete (schema, production Neon migration, service layer,
+  5 routes under /api/lead-imports/) and open as PR #30 in hpintojr/crm.mcd -- supersedes the earlier
+  "wire HMAC into the existing commit route" plan. NOT MERGED: its preview deployment hangs at the
+  MFA step of login. Verified the branch already contains PR #27's fix (identical merge-base), so
+  the hang is not explained by a stale branch -- root cause still open. See the ChatGPT handoff file.
+Local lead operations Phase A: built at D:\GitHub\mcd_lead_ops (separate local repo, not crm.mcd).
+  Daily 7:00 AM scheduled task; intake/preview/website-review only. mcd_lead_ops's export step now
+  makes real signed HTTP calls against Phase D's API but has never run live (blocked on PR #30).
+Execution owner as of 2026-07-03: ChatGPT (direct repo/Neon/Vercel access) is handling the PR #30
+  blocker, secrets, and first live test while Claude is paused to conserve usage.
 ```
 
 ### Read next
@@ -84,6 +84,8 @@ Original source is immutable. Intake method, campaign, pool, lifecycle, owner, s
 02 Projects/MCD CRM - Agent and Admin Portals/[C] Lead Foundation Design Addendum.md
 02 Projects/MCD CRM - Agent and Admin Portals/[C] Lead Management Scope Review and Build Plan.md
 02 Projects/MCD CRM - Agent and Admin Portals/[C] Lead Pool and Source Taxonomy.md
+01 Daily Logs/[C] 2026-07-03 MCD CRM Login Hang Incident Resolved.md
+01 Daily Logs/[C] 2026-07-03b PR 30 Preview Login MFA Hang Found.md
 01 Daily Logs/[C] 2026-07-02 MCD Local Lead Operations Scope Finalized.md
 01 Daily Logs/[C] 2026-07-02 MCD CRM Portal Schedule and Lead Pool Progress.md
 01 Daily Logs/[C] 2026-07-02 MCD CRM Admin Operations Status.md
@@ -97,9 +99,11 @@ Repo: mcd_lead_ops (local only, D:\GitHub\mcd_lead_ops)
 
 ```txt
 0. PENDING HANDOFF (ChatGPT executing, has direct repo/Neon/Vercel access), as of 2026-07-03:
-   provision LEAD_IMPORT_KEY_ID/LEAD_IMPORT_HMAC_SECRET in Vercel, merge PR #30 (Hamilton-only
-   step), mirror secrets into mcd_lead_ops's .env, run one supervised live export test. Full
-   task list, guardrails, and required logging format:
+   root-cause the PR #30 preview login/MFA hang (ruled out: stale branch missing PR #27's fix --
+   the branch already contains it), then provision/confirm LEAD_IMPORT_KEY_ID/LEAD_IMPORT_HMAC_SECRET
+   in Vercel (already done), merge PR #30 (Hamilton-only step), mirror secrets into mcd_lead_ops's
+   .env, run one supervised live export test. Full task list, guardrails, and required logging
+   format:
    02 Projects/MCD CRM - Agent and Admin Portals/[C] ChatGPT Handoff — Phase D Secrets, PR 30, and Backlog.md
    Claude resumes once that file's Tier A/B are closed and logged.
 1. Point mcd_lead_ops (Phase A done) at a real recurring source config -- not yet scoped with Hamilton.
@@ -116,7 +120,9 @@ Repo: mcd_lead_ops (local only, D:\GitHub\mcd_lead_ops)
 
 ```txt
 Keep each business/codebase separate.
-Use [C] for AI-authored files unless Hamilton says otherwise.
+Use [C] for AI-authored files unless Hamilton says otherwise; ChatGPT-authored daily logs use [G].
 Never commit secrets, credentials, customer data, SSNs, tax data, or raw bank data.
-Keep current handoffs concise; use daily logs for dated detail.
+This repo (hpintojr/My-Workspace on GitHub) is the single source of truth -- not just the local
+  D:\GitHub\My Workspace folder. If local shows unresolved conflict markers, GitHub wins; reconcile
+  the local copy from it rather than committing markers.
 ```
