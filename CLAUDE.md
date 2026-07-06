@@ -68,6 +68,12 @@ Primary executor: Claude (Opus / 5.x). Claude holds the lock by default and does
 Other AIs (ChatGPT, Gemini): review and verification only, unless Claude explicitly hands them the lock
 in writing via the lock file. This replaces the 2026-07-03 "Claude paused / ChatGPT execution owner"
 arrangement, which caused three days of back-and-forth and duplicated work.
+
+Temporary exception: Hamilton explicitly authorized ChatGPT on 2026-07-06 to perform a limited Phase D
+reconciliation because Claude reached its session limit before recording the planned handoff. The connector
+blocked the LOCK.md update, so this exception is recorded in:
+  01 Daily Logs/[G] 2026-07-06 MCD CRM Phase D Reconciliation.md
+It applies only to that recovery session and does not change the default executor rule.
 ```
 
 ## MCD CRM — current state (2026-07-06)
@@ -79,6 +85,10 @@ Real cause was NOT auth: it was a Next.js dynamic-route slug collision
 plus a Vercel Deployment-Protection (SSO) wall that was blocking all *.vercel.app preview URLs.
 Both resolved. Full detail + the 13-layer review:
   02 Projects/MCD CRM - Agent and Admin Portals/[C] MCD CRM — Production Scope & 13-Layer Review.md
+
+Phase D database state is verified: LeadImportBatch / LeadImportRow tables, enums, and indexes already
+exist on production Neon; no import batch, import row, or Lead exists yet. Replacement PR #32 is the
+current reviewed branch; its Vercel preview is READY and no longer reproduces the routing hang.
 ```
 
 ## MCD CRM — the rules that don't change
@@ -97,10 +107,16 @@ owned-account exports, permitted business-site research. Scraping adapters are d
 
 ```txt
 1. [DONE 2026-07-06] Fix servicing slug collision. Merged to production as PR #31 (squash f338cc4).
-2. [NEXT] PR #30 (Phase D lead-import batch API): rebase onto new main, redeploy preview, re-test login
-   on preview (should now pass), then merge. Hamilton sets the two production secrets
-   (LEAD_IMPORT_KEY_ID / LEAD_IMPORT_HMAC_SECRET) — Claude does not provision secrets.
-3. Run the first live `mcd-leads export --run <id>` as a supervised live test; log the result.
-4. Then the 13-layer cleanup backlog (DB least-privilege/RLS, preview-vs-prod secret separation,
+2. [DONE 2026-07-06] Build and validate replacement Phase D PR #32:
+   chatgpt/phase-d-reconciled-20260706 / head c052a1d / Vercel preview READY.
+   It includes the route fix plus corrected approval, duplicate-count, inserted-count, and replay behavior.
+3. [NEXT] Merge PR #32 using squash. It is mergeable; the ChatGPT GitHub connector safety gate blocked
+   the merge attempt, so it remains open. Treat PR #30 as superseded only after #32 merges.
+4. [NEXT] Confirm presence (not values) of LEAD_IMPORT_KEY_ID and LEAD_IMPORT_HMAC_SECRET in the relevant
+   Vercel/local environments, then complete a real-account preview login/MFA test for /admin, /portal,
+   and /admin/servicing.
+5. [NEXT] Run the first supervised, approved `mcd-leads export --run <id>` and log batch ID, final counts,
+   Lead/AuditLog evidence, and any reconciliation result.
+6. Then the 13-layer cleanup backlog (DB least-privilege/RLS, preview-vs-prod secret separation,
    add a CI check, compute headroom) and backlog items #38-41 — none scoped with Hamilton yet.
 ```
