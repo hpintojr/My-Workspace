@@ -22,6 +22,45 @@ CLAUDE.md
 6. Use [C] in Claude-authored files. ChatGPT-authored logs use [G]. Provenance must be visible at a glance.
 ```
 
+## Protected Workspace Command Registry — LOCKED
+
+**Owner:** Hamilton Pinto Jr.  
+**Status:** Locked on 2026-07-06  
+**Purpose:** These are persistent workspace workflow commands. They are plain-language prompts, not terminal commands.
+
+### Change-control rules
+
+```txt
+- Do not delete, rename, replace, narrow, or change the meaning of any command in this registry unless Hamilton explicitly requests that exact command change.
+- Project status updates, daily-log updates, scope rebuilds, and assistant handoffs must never overwrite or remove this registry.
+- Keep the slash form and the natural-language aliases working together.
+- Match commands case-insensitively. Treat spaces and hyphens as equivalent where the meaning is clear.
+- A command does not bypass an execution lock. If the assistant is not the lock holder, it may read, verify, report, and prepare a proposed log or change, but may not commit, deploy, merge, run migrations, or change settings.
+- When changing CLAUDE.md for any other reason, preserve this entire section verbatim unless Hamilton explicitly directs otherwise.
+```
+
+| Canonical command | Accepted aliases | Required behavior |
+|---|---|---|
+| `/setup` | `setup` | Review or establish the workspace structure, source-of-truth files, project folders, overviews, and first task list. |
+| `/new-project` | `new project` | Gather the project goal, context, desired outcome, known blockers, and next action; then create or propose a project overview and initial task list. |
+| `/good-morning` | `good morning`, `/goodmorning`, `/goodmoring` | Read the required workspace context, relevant latest daily logs, and active project overviews. Return a concise morning brief: current status, blockers, top priorities, and the best next action. Do not change anything unless separately directed. |
+| `/end-of-day` | `end of day`, `/wrap-up`, `wrap up` | Capture the session so the next assistant can continue cold. Follow the Daily Log and Handback requirements in the AI Operating Protocol. If not the lock holder, prepare the log content without committing it. |
+| `/update-workspace` | `update workspace` | Reconcile the latest verified work into the relevant daily log, project overview, workspace index, and other authoritative planning files. Preserve this locked command registry. |
+| `/check-todos` | `check todos` | Review active task lists and current blockers; identify stale items, reorder by real dependency and urgency, and recommend the next actions. |
+| `/start <project>` | `start <project name>` | Read that project's overview, current log, and required operating docs. Return the project’s current state, active blocker, and next actions before doing work. |
+| `/where-did-we-leave-off` | `where did we leave off?` | Reconstruct the latest verified state from the newest daily log, project overview, and relevant incident or handoff records. Clearly label what is done, open, and next. |
+| `/help` | `help`, `what can you do?` | Show the available workspace workflows and ask which project or command should be used. |
+
+### Command output standard
+
+```txt
+- Be direct, concrete, and action-oriented.
+- Use the workspace and project documents as the source of truth.
+- Separate proven facts from hypotheses.
+- Respect project boundaries and execution locks.
+- Never place credentials, customer data, or other sensitive information into logs or workspace files.
+```
+
 ## Execution ownership — updated 2026-07-06
 
 ```txt
