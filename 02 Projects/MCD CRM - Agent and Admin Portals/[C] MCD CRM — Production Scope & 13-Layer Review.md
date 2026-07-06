@@ -73,13 +73,16 @@ This doc + `[C] AI Operating Protocol` + the daily-log changelog structure are t
 3. Run the first supervised live `mcd-leads export --run <id>`; log the result as evidence.
 4. 13-layer cleanup, in impact order: add a CI route-collision + typecheck gate (L9);
    separate preview/production secrets (L3); decide RLS + least-privilege role (L11);
-   add error tracking (L8) and a login smoke test (L12); give Neon compute autoscaling heal›ÛÛH
-ÓL
-K‚Kˆ˜XÚÛÙÈÌÎMH
-™Xİ\œš[™ÈÛİ\˜ÙHÛÛ™šYËYZ[ˆš\ÚXš[]K\XØ]KY\Ü]Ú™]™[[Û‹ˆÛÛ\[KÙ[]HY]Y]JH8 %ØÛÜHXXÚÚ][Z[Ûˆ™Y›Ü™HZ[[™Ë‚‹ˆØ[Y›Ü›šXH]Ü›™^H™]šY]ÈÙˆH\™\ˆYÜ™Y[Y[È
-PÑ›Ú™Xİ
-Hİ^\ÈH][˜ÚØ]K‚˜‚ˆÈÈÜ[ˆ]Y\İ[ÛœÈ›Üˆ[Z[Û‚˜‹H™]šY]È[š\›Û›Y[ˆÚ]™H]]ÈİÛˆ™[Ûˆœ˜[˜Ú
-È]ÈİÛˆÙXÜ™]ËÜˆÙY\]Ú[Y]›ÙXİ[Û‚ˆ
-İ\œ™[
-HÚ]H[™\œİ[™[™È]™]šY]È\İÈİXÚ]™H]OÂ‹H“Îˆ[˜X›H]›İÈ
-[Ü™HÛÜšËØY™\ˆ]ØØ[JHÜˆY™\ˆ[[\İ™Y›Ü™Hœ›ØY\™\ˆXØÙ\ÜÏÂ‹H[İØÛÜNˆİÈX[H\™\œÈÈİÈ]XÚXY›Û[YH›ÜˆHš\œİ]™H[\Ü\İÂ˜
+   add error tracking (L8) and a login smoke test (L12); give Neon compute autoscaling headroom (L4/L10).
+5. Backlog #38-41 (recurring source config, admin visibility, duplicate-dispatch prevention,
+   company/entity metadata) â€” scope each with Hamilton before building.
+6. California attorney review of the partner agreements (MCD project) stays a launch gate.
+```
+
+## Open questions for Hamilton
+```txt
+- Preview environment: give it its own Neon branch + its own secrets, or keep it pointed at production
+  (current) with the understanding that preview tests touch live data?
+- RLS: enable it now (more work, safer at scale) or defer until just before broad partner access?
+- Pilot scope: how many partners / how much lead volume for the first live import test?
+```
