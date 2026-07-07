@@ -18,8 +18,8 @@ The official lock remains unchanged. Hamilton authorized a temporary ChatGPT exc
 ```txt
 PR: #32 — Phase D: reconcile lead-import API with current production fixes
 Branch: chatgpt/phase-d-reconciled-20260706
-Latest verified head: 4199d20940ef3a74d80efc45da202d0b9ec976fe
-Latest preview: Vercel success; build completed in 43 seconds
+Latest verified head: aa7595e3c2f4dbdf0696a57ebb84deaa4da96c67
+Latest preview: Vercel success; build completed in 47 seconds
 Production code: not merged
 Production import data: no live import run
 ```
@@ -36,8 +36,17 @@ Production import data: no live import run
 - Import routes keep validation/state detail but return stable generic messages for unexpected internal errors.
 - Payload-free audit wrappers record preview exceptions, imported rows, submit-time duplicates, and import errors. An audit-storage failure is represented through `IntegrationError` when possible without misreporting the durable import outcome as failed.
 - Read-only `/admin/lead-imports` is limited to OWNER, SUPER_ADMIN, and COMPLIANCE_MANAGER. It shows batch totals and exception evidence without payload/contact data or write controls.
-- Build guards cover dynamic route collisions, import contract/workflow/HMAC/replay/response safety, concurrency recovery, and admin/portal route policy.
+- Build guards cover dynamic route collisions, import contract/workflow/HMAC/replay/response safety, concurrency recovery, the database-harness safety boundary, and admin/portal route policy.
+- `npm run test:lead-import-db` is an opt-in real persistence harness. It refuses the normal target and requires a separately supplied test database. It has not been executed because no authorized test database target has been supplied.
 - A Verify CRM GitHub Actions workflow is committed; Claude should confirm repository Actions are enabled because no workflow run has appeared through the connector.
+
+## Preview observations
+
+```txt
+- Hamilton manually reached /portal and /admin on preview.
+- Hamilton provided preview evidence that /admin/servicing loads its intentional Client Servicing Health feature-gate screen.
+- These are preview observations only, not production validation or authorization to enable the servicing workspace.
+```
 
 ## Boundaries while review is pending
 
@@ -53,8 +62,9 @@ perform destructive actions, or transfer the official execution lock.
 ```txt
 [ ] Review PR #32 and latest Vercel preview.
 [ ] Decide whether PR #32 supersedes PR #30.
-[ ] Review concurrency recovery, immutable batch replay, audited route wrappers, and read-only reconciliation page.
+[ ] Review concurrency recovery, immutable batch replay, audited route wrappers, read-only reconciliation page, and database test harness.
 [ ] Confirm Actions are enabled.
+[ ] Provision or identify an isolated test database outside source control before approving the opt-in lifecycle test.
 [ ] Update LOCK.md intent after reviewing.
 [ ] Merge PR #32 using the approved method.
 [ ] Confirm production deployment.
@@ -70,8 +80,10 @@ perform destructive actions, or transfer the official execution lock.
 - 01 Daily Logs/[G] 2026-07-06 MCD CRM Phase D Reconciliation Addendum.md
 - 01 Daily Logs/[G] 2026-07-07 MCD CRM Phase D Branch Hardening.md
 - 01 Daily Logs/[G] 2026-07-07 MCD CRM Phase D Concurrency Hardening.md
+- 01 Daily Logs/[G] 2026-07-07 MCD CRM Database Lifecycle Harness.md
 - [C] MCD CRM — Production Scope & 13-Layer Review.md
 - docs/lead-import-first-supervised-run.md in PR #32
+- docs/lead-import-database-lifecycle-test.md in PR #32
 ```
 
 ## Synchronization rule
