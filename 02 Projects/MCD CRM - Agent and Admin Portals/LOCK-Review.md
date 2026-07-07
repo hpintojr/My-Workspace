@@ -48,12 +48,13 @@ exception expiry: when Claude records acceptance, rejection, or a formal next ha
   - submit-time duplicates do not inflate `insertedCount`;
   - duplicate reporting excludes suppressions and validation rejects;
   - conflicting replay identities are rejected before upload writes;
+  - exact staged-row retries are immutable no-ops; changed row hash or changed canonical JSON row content is rejected before any write;
   - signed empty-body batch-status GET is supported and its response is dynamic/no-store;
   - build now rejects sibling Next.js dynamic-route collisions;
   - GitHub Actions verification runs Prisma generation, TypeScript typecheck, and all static route/import checks without database or secret access;
   - the first supervised import runbook is included in `docs/lead-import-first-supervised-run.md`.
-- Latest reviewed PR #32 head: `3b0660d813cd7cde9aa807baf41026c600b07a16`.
-- Latest Vercel preview: `dpl_5xLs31bj12HmqrX3LiTgqD24Xzwy`, READY. Its errors-only build log reports completion in 48 seconds; no runtime error/fatal logs were returned in the inspected window.
+- Latest reviewed PR #32 head: `42fdcfaae2dc804c5fe51861ae58fbdebdd75062`.
+- Latest Vercel preview: `dpl_9YUsWCCYQ84SW9mHfyDd9cZP3Tzf`, successful. Its build ran all static route/import guards, the immutable replay check, Prisma generation, Next.js compile, and type validation; it completed in 44 seconds.
 - GitHub Actions has not reported a run for the newly added workflow yet; Claude should confirm Actions are enabled during review.
 
 ### Boundaries while this review is pending
@@ -77,7 +78,7 @@ Claude should update this section and `LOCK.md` after reviewing:
 ```txt
 [ ] Review PR #32 diff and Vercel preview.
 [ ] Confirm whether PR #32 supersedes PR #30.
-[ ] Accept, revise, or reject the Phase D workflow corrections.
+[ ] Accept, revise, or reject the Phase D workflow corrections, including immutable staged-row replay protection.
 [ ] Confirm GitHub Actions are enabled and inspect the new Verify CRM workflow result.
 [ ] Verify that the temporary ChatGPT exception is complete.
 [ ] Update LOCK.md intent to the next real production action.
