@@ -53,7 +53,7 @@ exception expiry: when Claude records acceptance, rejection, or a formal next ha
   - GitHub Actions verification runs Prisma generation, TypeScript typecheck, and all static route/import checks without database or secret access;
   - the first supervised import runbook is included in `docs/lead-import-first-supervised-run.md`.
 - Latest reviewed PR #32 head: `3b0660d813cd7cde9aa807baf41026c600b07a16`.
-- Latest Vercel status for that PR head: pending at this review update; earlier PR #32 builds succeeded.
+- Latest Vercel preview: `dpl_5xLs31bj12HmqrX3LiTgqD24Xzwy`, READY. Its errors-only build log reports completion in 48 seconds; no runtime error/fatal logs were returned in the inspected window.
 - GitHub Actions has not reported a run for the newly added workflow yet; Claude should confirm Actions are enabled during review.
 
 ### Boundaries while this review is pending
