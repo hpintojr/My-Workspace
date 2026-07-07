@@ -1,8 +1,6 @@
 # My Workspace
 
-A GitHub-based workspace for active project handoffs, daily logs, and operating context. This
-GitHub repo (hpintojr/My-Workspace) is the single source of truth — not just a local checkout of
-it. Both Claude and ChatGPT read and write here directly.
+A GitHub-based workspace for active project handoffs, daily logs, and operating context. This GitHub repo (hpintojr/My-Workspace) is the single source of truth — not just a local checkout of it. Both Claude and ChatGPT read and write here directly.
 
 ## Start Here
 
@@ -61,70 +59,62 @@ The sales-partner program and brand/onboarding work. This project is separate fr
 
 Secure MiniCRM for agent workflow and Admin oversight. GoHighLevel remains a private backend; agents do not receive GHL access.
 
-#### Current build state — 2026-07-03
+#### Current build state — 2026-07-07
 
 ```txt
 Phase 1 onboarding: production-validated end to end with a controlled partner.
-Admin: account, onboarding, activation, last-login, certification, and lead-access status are visible; repeat approval/e-sign action is prevented.
-Partner portal: sidebar has Dashboard, Tasks, Inbox, Leads, Proposals, Schedule, Training, Resources, Settings, theme toggle, and Sign Out.
-Schedule: GHL lifecycle relays are validated for Booked, Confirmed, Cancelled, No-show, Completed, and Rescheduled.
-Schedule timezone: source timezone is preserved; the portal renders in the signed-in viewer's browser/device timezone.
-Meet links: shown only for Scheduled and Confirmed appointments.
-Company / Legal Entity Name: optional field separate from individual signer.
-Lead/Task modules: staged and feature-gated. The production database does not yet contain lead, callback, note, activity, claim, suppression, import, or proposal tables.
-Two production incidents this window (2026-07-02/07-03), both resolved and verified by Hamilton: a
-  route-collision 504 outage, and an Auth.js v5 login-hang bug (fixed by PR #27, confirmed live on
-  production). Full narrative in 01 Daily Logs/[C] 2026-07-03 MCD CRM Login Hang Incident Resolved.md.
-Local lead operations: final scope is approved for a Claude-built local staging, research, preview, and signed MiniCRM-export workflow. It must not connect directly to Neon.
-Local lead operations Phase A: built and tested at D:\GitHub\mcd_lead_ops (separate repo). CLI, SQLite staging, permitted adapters, policy engine, preview reports, tests. Daily 7:00 AM scheduled task runs intake+preview+website-review only.
-Lead-import batch API (Phase D): code-complete (schema, production Neon migration, service layer, 5 routes under /api/lead-imports/) and open as PR #30 in hpintojr/crm.mcd -- supersedes the earlier plan to retrofit HMAC auth onto the existing /api/admin/leads/import route. NOT MERGED: its preview deployment hangs at the MFA step of login (root cause open -- ruled out a stale branch missing PR #27's fix, since the branch's merge-base with main is PR #27's own merge commit). mcd_lead_ops's export step makes real signed HTTP calls now but has never run against a live server.
-Execution owner as of 2026-07-03: ChatGPT (direct repo/Neon/Vercel access) is root-causing the PR #30 blocker and handling secrets/first live test while Claude is paused to conserve usage. Hamilton is overseeing.
+Admin operations, partner portal, and read-only GHL-backed schedule: deployed.
+The prior route-collision servicing incident and Auth.js login-hang incident are resolved.
+
+Phase D lead import: PR #32 was reviewed and accepted by Claude, then merged to production as squash d25ac9f.
+The signed batch import API, immutable replay/concurrency protections, and read-only Admin review screens
+(/admin/lead-imports and /admin/lead-imports/[batchId]) are deployed.
+
+Production Vercel is green. Hamilton-provided evidence confirms LEAD_IMPORT_KEY_ID and
+LEAD_IMPORT_HMAC_SECRET are present for Preview and Production; values were never inspected or recorded.
+Production Neon currently has zero import batches, import rows, Leads, LeadActivities, and import-related audit records.
+No live import has run.
+
+Local lead operations Phase A lives at D:\GitHub\mcd_lead_ops. Its export makes real signed requests,
+but must remain local, explicit, and operator-approved. The next gate is mirroring the import variables
+locally, selecting a small permitted approved run, and completing one supervised export.
+
+Current execution holder: ChatGPT for post-merge verification and first supervised-export readiness.
 ```
 
 #### Lead rules and source tracking
 
 ```txt
 Pools: Cold Pool / Prospects, Nurture / Marketing Email Pool, Hot Leads, Open Pool, Shark Tank, Referral, House.
-Sources: Google Maps, Instagram, Referral, PPC, Email, SMS, LinkedIn, Web Form, Facebook, Other.
 Original source is permanent. Intake method, campaign, pool, lifecycle, owner, quote, and suppression are separate fields.
 Allowed local inputs: user files, referrals, web forms, PPC leads, approved/licensed provider data, owned-account exports, and permitted business-website research.
 No website listed requires review before becoming a verified no-website opportunity.
-Website-only quotes are planned in the approved $500–$3,000 range with scope and expiry controls.
+No imported lead is automatically assigned to an agent or enrolled in outreach.
 ```
 
 #### Read first
 
 ```txt
+02 Projects/MCD CRM - Agent and Admin Portals/MCD CRM - Agent and Admin Portals Overview.md
+02 Projects/MCD CRM - Agent and Admin Portals/LOCK.md
 02 Projects/MCD CRM - Agent and Admin Portals/[C] Local Lead Operations and MiniCRM Export Scope.md
-02 Projects/MCD CRM - Agent and Admin Portals/[C] Lead Foundation Design Addendum.md
-02 Projects/MCD CRM - Agent and Admin Portals/[C] Lead Management Scope Review and Build Plan.md
-02 Projects/MCD CRM - Agent and Admin Portals/[C] Lead Pool and Source Taxonomy.md
-01 Daily Logs/[C] 2026-07-03 MCD CRM Login Hang Incident Resolved.md
-01 Daily Logs/[C] 2026-07-03b PR 30 Preview Login MFA Hang Found.md
-01 Daily Logs/[C] 2026-07-02 MCD Local Lead Operations Scope Finalized.md
-01 Daily Logs/[C] 2026-07-02 MCD CRM Portal Schedule and Lead Pool Progress.md
-01 Daily Logs/[C] 2026-07-02 MCD CRM Admin Operations Status.md
-01 Daily Logs/[C] 2026-07-01 MCD CRM Phase 1 End-to-End Onboarding Validated.md
-01 Daily Logs/[C] 2026-07-02 mcd_lead_ops Phase A Build.md
+02 Projects/MCD CRM - Agent and Admin Portals/[C] MCD CRM — Production Scope & 13-Layer Review.md
+01 Daily Logs/[C] 2026-07-07 Reviewed and Merged PR 32 to Production Lock Released.md
+01 Daily Logs/[G] 2026-07-07 MCD CRM Post-Merge Export Readiness.md
 ```
 
-#### Pending handoff — PR #30 login/MFA hang, secrets, backlog (execution owner: ChatGPT, has direct repo/Neon/Vercel access)
-
-Phase D (lead-import batch API) is code-complete and open as PR #30. It is blocked from merging: its preview deployment hangs right after the MFA code field appears during login. Confirmed production login (both /admin and /portal, custom domain) works fine with the same credentials, so this is specific to the preview/branch. Also confirmed the branch already contains PR #27's Auth.js stall-recovery fix (identical merge-base commit), ruling out the "stale branch" explanation. Root cause still open. Full task list, guardrails, and required logging format:
+#### Current next actions
 
 ```txt
-02 Projects/MCD CRM - Agent and Admin Portals/[C] ChatGPT Handoff — Phase D Secrets, PR 30, and Backlog.md
+1. Locally confirm MCD_LEAD_IMPORT_KEY_ID, MCD_LEAD_IMPORT_HMAC_SECRET, and
+   MINICRM_API_BASE_URL=https://crm.mercurycalldesk.com. Do not disclose values.
+2. Choose a small permitted run that has completed preview and explicit operator approval.
+3. Run: mcd-leads export --run <approved-run-id>
+4. Log only batch ID, aggregate counts, final status, and non-sensitive reconciliation outcomes.
+5. Verify the resulting production batch, Lead, LeadActivity, and AuditLog evidence read-only.
+6. Continue the remaining 13-layer items: environment separation, RLS/runtime role, error tracking,
+   authorized login smoke test, and Neon autoscaling headroom.
 ```
-
-#### Next scope (Claude resumes once the handoff above is closed and logged)
-
-1. Point `mcd_lead_ops` (D:\GitHub\mcd_lead_ops, Phase A done) at a real recurring source config — not yet scoped with Hamilton.
-2. Improve Admin operational visibility for lead-import batches — not yet scoped with Hamilton.
-3. Prevent duplicate document dispatch after approval — not yet scoped with Hamilton.
-4. Add optional company/entity metadata — not yet scoped with Hamilton; confirm it isn't already covered by the existing onboarding "Company / Legal Entity Name" field.
-5. Apply and validate the lead-foundation database migration only after the API contract is ready.
-6. Build proposal/quote records for MCD package, website-only, and MCD-with-included-website offers.
-7. Add campaign event/reply routing and then controlled GHL Demo Booked handoff.
 
 ## Workspace rules
 
