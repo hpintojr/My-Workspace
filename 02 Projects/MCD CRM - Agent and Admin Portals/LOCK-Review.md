@@ -1,19 +1,8 @@
 # Execution Lock Review — MCD CRM
 
-> **Purpose:** This is a review companion to `LOCK.md`. It preserves the official lock snapshot, records temporary owner-authorized exceptions, and gives Claude one place to accept, reject, or formalize handoffs.
->
-> **Authority:** `LOCK.md` remains the only execution lock. This file cannot grant, revoke, or override that lock, and it does not bypass GitHub, Vercel, Neon, or other platform safeguards.
+> Review companion only. `LOCK.md` remains the sole execution lock and Claude remains the primary architect.
 
 ## Official lock snapshot
-
-**Source:** `LOCK.md` at Git blob `113b197a46c5b646133678648616170fb0767146`  
-**Snapshot captured:** 2026-07-07
-
-```md
-# Execution Lock — MCD CRM
-
-Only the holder may commit, merge, deploy, run migrations, or change settings on `hpintojr/crm.mcd`.
-Others read/verify only. See `[C] AI Operating Protocol — Handoff, Changelog, Indexing.md`.
 
 ```txt
 holder: claude
@@ -22,92 +11,65 @@ since: 2026-07-06T22:45Z
 intent: production is fixed and stable; next is PR #30 rebase + merge + first live lead import
 ```
 
-To take the lock you must be handed it in writing by the current holder. Default holder is Claude.
-```
+The official lock remains unchanged. Hamilton authorized a temporary ChatGPT exception on July 6, 2026 for Phase D reconciliation and isolated branch work after Claude reached a session limit before recording the intended handoff.
 
-## Review overlay — pending Claude confirmation
-
-```txt
-official holder / primary architect: Claude
-official lock state: unchanged
-review state: pending Claude review
-owner-authorized temporary exception: Hamilton authorized ChatGPT on 2026-07-06 after Claude reached a session limit before recording the intended handoff.
-exception scope: Phase D reconciliation and branch-only PR preparation for crm.mcd.
-exception expiry: when Claude records acceptance, rejection, or a formal next handoff in LOCK.md and the daily log.
-```
-
-### What ChatGPT completed under the temporary exception
-
-- Read-only reconciliation of current production, PR #30, Vercel, and production Neon.
-- Verified the prior admin/portal hang was the sibling dynamic-route collision already fixed in production by PR #31 / `f338cc4`.
-- Verified production Neon already contains the Phase D batch-import schema. No import batch, import row, or Lead existed at inspection.
-- Added the missing internal Neon schema-ledger record for the pre-existing Phase D schema. No Phase D table, index, enum, or application data was changed.
-- Opened replacement **PR #32** from branch `chatgpt/phase-d-reconciled-20260706`.
-- Prepared PR #32 with the Phase D changes plus reviewed corrections:
-  - batch approval promotes `VALID` rows to `APPROVED` before import;
-  - submit-time duplicates do not inflate `insertedCount`;
-  - duplicate reporting excludes suppressions and validation rejects;
-  - conflicting replay identities are rejected before upload writes;
-  - exact staged-row retries are immutable no-ops; changed row hash or changed canonical JSON row content is rejected before any write;
-  - signed empty-body batch-status GET is supported and its response is dynamic/no-store;
-  - build now rejects sibling Next.js dynamic-route collisions;
-  - GitHub Actions verification runs Prisma generation, TypeScript typecheck, and all static route/import checks without database or secret access;
-  - the first supervised import runbook is included in `docs/lead-import-first-supervised-run.md`.
-- Latest reviewed PR #32 head: `42fdcfaae2dc804c5fe51861ae58fbdebdd75062`.
-- Latest Vercel preview: `dpl_9YUsWCCYQ84SW9mHfyDd9cZP3Tzf`, successful. Its build ran all static route/import guards, the immutable replay check, Prisma generation, Next.js compile, and type validation; it completed in 44 seconds.
-- GitHub Actions has not reported a run for the newly added workflow yet; Claude should confirm Actions are enabled during review.
-
-### Boundaries while this review is pending
-
-ChatGPT may continue only when Hamilton directly requests it, and only through an isolated branch or pull request for Claude to review.
+## Current review checkpoint
 
 ```txt
-Allowed: code review, test additions, documentation, branch-only implementation, preview validation,
-read-only Neon/Vercel verification, and PR comments.
-
-Not allowed: merge to main, production deployment, production setting changes, secret provisioning or exposure,
-live lead imports, destructive data actions, or a permanent transfer of the execution lock.
+PR: #32 — Phase D: reconcile lead-import API with current production fixes
+Branch: chatgpt/phase-d-reconciled-20260706
+Latest reviewed head: 22d4727c7c6e2d9061869d3d35e2bf97ae43f78c
+Latest preview: successful build completed in 43 seconds
+Production code: not merged
+Production import data: no live import run
 ```
 
-These boundaries preserve Claude as the primary architect and final production decision-maker.
+## Branch-only hardening now in PR #32
 
-## Claude review checklist
+- Immutable staged-row retries: exact retries are no-ops; changed row hash or canonical row content is rejected before writes.
+- Batch status GET supports signed empty-body requests and uses no-store cache behavior.
+- Oversized import bodies are rejected with controlled `413 LEAD_IMPORT_PAYLOAD_TOO_LARGE` before parsing.
+- Missing import HMAC configuration returns controlled `503 LEAD_IMPORT_UNAVAILABLE`.
+- Import routes keep validation/state detail but return stable generic messages for unexpected internal errors.
+- Payload-free audit wrappers record preview exceptions, imported rows, submit-time duplicates, and import errors. An audit-storage failure is represented through `IntegrationError` when possible without misreporting the durable import outcome as failed.
+- Read-only `/admin/lead-imports` is limited to OWNER, SUPER_ADMIN, and COMPLIANCE_MANAGER. It shows batch totals and exception evidence without payload/contact data or write controls.
+- Build guards cover dynamic route collisions, import contract/workflow/HMAC/replay/response safety, and admin/portal route policy.
+- A Verify CRM GitHub Actions workflow is committed; Claude should confirm repository Actions are enabled because no workflow run has appeared through the connector.
 
-Claude should update this section and `LOCK.md` after reviewing:
+## Boundaries while review is pending
 
 ```txt
-[ ] Review PR #32 diff and Vercel preview.
-[ ] Confirm whether PR #32 supersedes PR #30.
-[ ] Accept, revise, or reject the Phase D workflow corrections, including immutable staged-row replay protection.
-[ ] Confirm GitHub Actions are enabled and inspect the new Verify CRM workflow result.
-[ ] Verify that the temporary ChatGPT exception is complete.
-[ ] Update LOCK.md intent to the next real production action.
-[ ] Merge PR #32 using the approved merge method.
-[ ] Confirm the resulting production deployment.
-[ ] Verify presence—not values—of LEAD_IMPORT_KEY_ID and LEAD_IMPORT_HMAC_SECRET.
-[ ] Complete an authorized MFA test through /admin, /portal, and /admin/servicing.
+ChatGPT may perform only Hamilton-requested isolated-branch code, tests, docs, preview checks, and read-only verification.
+
+ChatGPT may not merge, deploy production, change settings, provision or expose secrets, run live imports,
+perform destructive actions, or transfer the official execution lock.
+```
+
+## Claude checklist
+
+```txt
+[ ] Review PR #32 and preview.
+[ ] Decide whether PR #32 supersedes PR #30.
+[ ] Review immutable replay, audited route wrappers, and read-only reconciliation page.
+[ ] Confirm Actions are enabled.
+[ ] Update LOCK.md intent after reviewing.
+[ ] Merge PR #32 using the approved method.
+[ ] Confirm production deployment.
+[ ] Verify environment-variable presence without exposing values.
+[ ] Complete authorized MFA validation through /admin, /portal, and /admin/servicing.
 [ ] Run and log the first supervised approved mcd-leads export.
 ```
 
-## Current handback record
+## Read next
 
 ```txt
-Primary architect: Claude
-Current code review target: PR #32
-Original PR: #30 remains open until PR #32 is formally accepted and merged
-Production code status: PR #32 is not merged
-Production data status: no live Phase D import has run
-
-Read next:
 - 01 Daily Logs/[G] 2026-07-06 MCD CRM Phase D Reconciliation.md
 - 01 Daily Logs/[G] 2026-07-06 MCD CRM Phase D Reconciliation Addendum.md
+- 01 Daily Logs/[G] 2026-07-07 MCD CRM Phase D Branch Hardening.md
 - [C] MCD CRM — Production Scope & 13-Layer Review.md
 - docs/lead-import-first-supervised-run.md in PR #32
 ```
 
 ## Synchronization rule
 
-- Update `LOCK.md` only for an actual execution-holder change or a new official lock intent.
-- Update this file for review findings, temporary owner-authorized exceptions, PR checkpoints, and Claude’s acceptance/rejection record.
-- Every accepted review outcome must be reflected in both this file and the relevant daily log.
-- When the review is complete, retain this file as the audit trail; do not delete or overwrite the official lock history.
+Update `LOCK.md` only for a real holder or official-intent change. Update this review file and the daily log for branch checkpoints and Claude’s acceptance or rejection record.
