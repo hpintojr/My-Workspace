@@ -15,6 +15,7 @@ scope: branch-only hardening for Claude review
 PR: #32 — Phase D: reconcile lead-import API with current production fixes
 Branch: chatgpt/phase-d-reconciled-20260706
 Latest committed head: f9714e8d27c6de0f43dd8066437727747db7cbb4
+Latest Vercel status: success
 ```
 
 ## Additions after the prior hardening log
@@ -28,8 +29,8 @@ Latest committed head: f9714e8d27c6de0f43dd8066437727747db7cbb4
 
 ```txt
 - Prior combined preview build at 22d472 completed successfully in 43 seconds.
-- The preview for f9714e8 began from the expected branch head and emitted no build error output at the last check.
-- Its final Vercel status check remained pending when this addendum was written; do not record it as successful until the Vercel/GitHub status becomes success.
+- The latest preview for f9714e8 completed successfully according to the Vercel GitHub status check.
+- No build errors were returned during validation checks.
 ```
 
 ## Boundaries unchanged
