@@ -11,81 +11,65 @@ since: 2026-07-06T22:45Z
 intent: production is fixed and stable; next is PR #30 rebase + merge + first live lead import
 ```
 
-The official lock remains unchanged. Hamilton authorized a temporary ChatGPT exception on July 6, 2026 for Phase D reconciliation and isolated branch work after Claude reached a session limit before recording the intended handoff.
+The official lock remains unchanged. Hamilton authorized temporary branch-only ChatGPT work for Phase D reconciliation and review preparation.
 
 ## Current review checkpoint
 
 ```txt
-PR: #32 — Phase D: reconcile lead-import API with current production fixes
+PR: #32
 Branch: chatgpt/phase-d-reconciled-20260706
-Latest verified head: aa7595e3c2f4dbdf0696a57ebb84deaa4da96c67
-Latest preview: Vercel success; build completed in 47 seconds
+Latest verified head: ca2f6abfebf9eccb4de593e6dfea6d7a3c86acda
+Latest preview: Vercel success
 Production code: not merged
 Production import data: no live import run
 ```
 
-## Branch-only hardening now in PR #32
+## Review scope now in PR #32
 
-- Immutable staged-row retries: exact retries are no-ops; changed row hash or canonical row content is rejected before writes.
-- Batch creation and row staging recover bounded unique-key races instead of exposing raw database uniqueness errors.
-- A `localRunId` replay with changed immutable batch metadata returns controlled `409 LEAD_IMPORT_REPLAY_CONFLICT`.
-- Concurrent Lead creation is reconciled correctly: durable same-batch rows restore to `IMPORTED`; a durable Lead from another batch becomes `POSSIBLE_EXISTING_DUPLICATE`; unresolved errors remain reconciliation events.
-- Batch status GET supports signed empty-body requests and uses no-store cache behavior.
-- Oversized import bodies are rejected with controlled `413 LEAD_IMPORT_PAYLOAD_TOO_LARGE` before parsing.
-- Missing import HMAC configuration returns controlled `503 LEAD_IMPORT_UNAVAILABLE`.
-- Import routes keep validation/state detail but return stable generic messages for unexpected internal errors.
-- Payload-free audit wrappers record preview exceptions, imported rows, submit-time duplicates, and import errors. An audit-storage failure is represented through `IntegrationError` when possible without misreporting the durable import outcome as failed.
-- Read-only `/admin/lead-imports` is limited to OWNER, SUPER_ADMIN, and COMPLIANCE_MANAGER. It shows batch totals and exception evidence without payload/contact data or write controls.
-- Build guards cover dynamic route collisions, import contract/workflow/HMAC/replay/response safety, concurrency recovery, the database-harness safety boundary, and admin/portal route policy.
-- `npm run test:lead-import-db` is an opt-in real persistence harness. It refuses the normal target and requires a separately supplied test database. It has not been executed because no authorized test database target has been supplied.
-- A Verify CRM GitHub Actions workflow is committed; Claude should confirm repository Actions are enabled because no workflow run has appeared through the connector.
+- Phase D import replay, error, request-size, HMAC, workflow, and concurrency hardening.
+- Payload-free audit wrappers and read-only `/admin/lead-imports` reconciliation.
+- Read-only `/admin/lead-imports/[batchId]` batch detail: metadata, outcome rows, linked internal IDs, and limited audit timeline only.
+- Opt-in `npm run test:lead-import-db` lifecycle harness. It refuses the normal database target and has not been run because no separate authorized test database was supplied.
+- Dynamic-route, response, concurrency, database-harness, access-policy, and read-only-screen guards.
 
 ## Preview observations
 
 ```txt
 - Hamilton manually reached /portal and /admin on preview.
-- Hamilton provided preview evidence that /admin/servicing loads its intentional Client Servicing Health feature-gate screen.
-- These are preview observations only, not production validation or authorization to enable the servicing workspace.
+- /admin/servicing shows the intentional Client Servicing Health feature gate.
+- These observations are preview evidence only, not production enablement.
 ```
 
-## Boundaries while review is pending
+## Boundaries
 
 ```txt
-ChatGPT may perform only Hamilton-requested isolated-branch code, tests, docs, preview checks, and read-only verification.
+Allowed when Hamilton requests: isolated-branch code, tests, docs, preview checks, and read-only verification.
 
-ChatGPT may not merge, deploy production, change settings, provision or expose secrets, run live imports,
-perform destructive actions, or transfer the official execution lock.
+Not allowed: merge, production deployment or settings changes, secret changes, live imports,
+destructive actions, or execution-lock transfer.
 ```
 
 ## Claude checklist
 
 ```txt
-[ ] Review PR #32 and latest Vercel preview.
+[ ] Review PR #32 and latest preview.
 [ ] Decide whether PR #32 supersedes PR #30.
-[ ] Review concurrency recovery, immutable batch replay, audited route wrappers, read-only reconciliation page, and database test harness.
+[ ] Review the import hardening, read-only screens, and database test harness.
 [ ] Confirm Actions are enabled.
-[ ] Provision or identify an isolated test database outside source control before approving the opt-in lifecycle test.
-[ ] Update LOCK.md intent after reviewing.
-[ ] Merge PR #32 using the approved method.
-[ ] Confirm production deployment.
-[ ] Verify environment-variable presence without exposing values.
+[ ] Identify a separate test database before approving the opt-in lifecycle run.
+[ ] Update LOCK.md intent after review.
+[ ] Merge PR #32 by the approved method.
+[ ] Confirm production deployment and environment-variable presence.
 [ ] Complete authorized MFA validation through /admin, /portal, and /admin/servicing.
 [ ] Run and log the first supervised approved mcd-leads export.
 ```
 
-## Read next
+## Related records
 
 ```txt
-- 01 Daily Logs/[G] 2026-07-06 MCD CRM Phase D Reconciliation.md
-- 01 Daily Logs/[G] 2026-07-06 MCD CRM Phase D Reconciliation Addendum.md
-- 01 Daily Logs/[G] 2026-07-07 MCD CRM Phase D Branch Hardening.md
 - 01 Daily Logs/[G] 2026-07-07 MCD CRM Phase D Concurrency Hardening.md
 - 01 Daily Logs/[G] 2026-07-07 MCD CRM Database Lifecycle Harness.md
-- [C] MCD CRM — Production Scope & 13-Layer Review.md
-- docs/lead-import-first-supervised-run.md in PR #32
 - docs/lead-import-database-lifecycle-test.md in PR #32
 ```
 
-## Synchronization rule
-
-Update `LOCK.md` only for a real holder or official-intent change. Update this review file and the daily log for branch checkpoints and Claude’s acceptance or rejection record.
+Update `LOCK.md` only for a real holder or official-intent change. Update this review file and the daily log for review checkpoints and Claude’s acceptance or rejection record.
