@@ -48,10 +48,13 @@ exception expiry: when Claude records acceptance, rejection, or a formal next ha
   - submit-time duplicates do not inflate `insertedCount`;
   - duplicate reporting excludes suppressions and validation rejects;
   - conflicting replay identities are rejected before upload writes;
-  - signed empty-body batch-status GET is supported;
-  - build now rejects sibling Next.js dynamic-route collisions.
-- Latest reviewed PR #32 head: `aff208f4eb50414ea3842f30ddd9e80108404529`.
-- Latest Vercel status for that PR head: success.
+  - signed empty-body batch-status GET is supported and its response is dynamic/no-store;
+  - build now rejects sibling Next.js dynamic-route collisions;
+  - GitHub Actions verification runs Prisma generation, TypeScript typecheck, and all static route/import checks without database or secret access;
+  - the first supervised import runbook is included in `docs/lead-import-first-supervised-run.md`.
+- Latest reviewed PR #32 head: `3b0660d813cd7cde9aa807baf41026c600b07a16`.
+- Latest Vercel status for that PR head: pending at this review update; earlier PR #32 builds succeeded.
+- GitHub Actions has not reported a run for the newly added workflow yet; Claude should confirm Actions are enabled during review.
 
 ### Boundaries while this review is pending
 
@@ -75,6 +78,7 @@ Claude should update this section and `LOCK.md` after reviewing:
 [ ] Review PR #32 diff and Vercel preview.
 [ ] Confirm whether PR #32 supersedes PR #30.
 [ ] Accept, revise, or reject the Phase D workflow corrections.
+[ ] Confirm GitHub Actions are enabled and inspect the new Verify CRM workflow result.
 [ ] Verify that the temporary ChatGPT exception is complete.
 [ ] Update LOCK.md intent to the next real production action.
 [ ] Merge PR #32 using the approved merge method.
@@ -97,6 +101,7 @@ Read next:
 - 01 Daily Logs/[G] 2026-07-06 MCD CRM Phase D Reconciliation.md
 - 01 Daily Logs/[G] 2026-07-06 MCD CRM Phase D Reconciliation Addendum.md
 - [C] MCD CRM — Production Scope & 13-Layer Review.md
+- docs/lead-import-first-supervised-run.md in PR #32
 ```
 
 ## Synchronization rule
