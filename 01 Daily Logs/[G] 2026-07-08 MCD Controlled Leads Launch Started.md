@@ -17,21 +17,27 @@
 - `has_written_permitted_use_basis` is still `false`, so real intake/export must not proceed until the owner privately confirms permitted use.
 - Dry-run result: adapter would stage 50 rows, with no DB write performed.
 
+## Private environment readiness checkpoint
+
+Presence check only; no private values were disclosed.
+
+- Signed MiniCRM transport settings are present.
+- Opaque owner-acquisition settings are not yet present.
+
 ## Current posture
 
 The CRM production release is live, but lead operations are still in controlled-launch mode. No live intake, approval, submit, export, or `Raw_Leads.csv` import has been performed.
 
 ## Next action
 
-Move to private environment readiness:
+Move to owner-acquisition environment readiness:
 
-1. Confirm written permitted-use basis with the owner before real intake.
-2. Confirm signed MiniCRM transport settings are present only in ignored local environment storage.
-3. Confirm opaque owner-acquisition identifiers are present only in ignored local environment storage.
-4. Run a no-secret environment presence check.
-5. Stop before CRM preview until the owner explicitly approves the selected source and run.
+1. Privately confirm written permitted-use basis before real intake.
+2. Add opaque owner-acquisition identifiers only to ignored local environment storage.
+3. Re-run a no-secret environment presence check.
+4. Stop before CRM preview until the owner explicitly approves the selected source and run.
 
 ## Boundaries
 
-- Do not store provider identity, purchase terms, commercial records, secrets, or raw lead rows in MiniCRM, GitHub, or My-Workspace.
+- Do not store provider identity, purchase terms, commercial records, private values, or raw lead rows in MiniCRM, GitHub, or My-Workspace.
 - Do not submit any CRM batch or enable `LEADS_ENABLED` without a run-specific owner approval reference.
