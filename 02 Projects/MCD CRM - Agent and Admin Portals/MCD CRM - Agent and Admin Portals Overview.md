@@ -13,7 +13,7 @@ repository: hpintojr/crm.mcd
 1. [C] AI Operating Protocol — Handoff, Changelog, Indexing.md
 2. 01 Daily Logs/[G] 2026-07-08 MCD CRM Lead Flow Alignment and CRON Secret Configured.md
 3. [G] Current Execution Scope — 2026-07-08.md
-4. [C] MCD CRM — Production Scope & 13-Layer Review.md
+4. [G] 2026-07-08 Lead Flow Alignment Scope Addendum.md
 5. This overview
 ```
 
@@ -130,6 +130,7 @@ If imported Leads appear immediately claimable as OPEN / AVAILABLE, check whethe
 ```txt
 01 Daily Logs/[G] 2026-07-08 MCD CRM Lead Flow Alignment and CRON Secret Configured.md
 [G] Current Execution Scope — 2026-07-08.md
+[G] 2026-07-08 Lead Flow Alignment Scope Addendum.md
 [C] MCD CRM — Production Scope & 13-Layer Review.md
 [C] Local Lead Operations and MiniCRM Export Scope.md
 01 Daily Logs/[C] 2026-07-07 Reviewed and Merged PR 32 to Production Lock Released.md
