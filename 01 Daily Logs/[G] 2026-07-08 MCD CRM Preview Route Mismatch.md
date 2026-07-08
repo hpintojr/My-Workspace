@@ -11,6 +11,8 @@ The controlled preview-only attempt stopped safely at the first CRM API call.
 - Initial configured host `crm.mercurycalldesk.com` returned HTTP 404 with an HTML page-not-found response for `/api/lead-imports`.
 - The Vercel production alias exposed the signed import route correctly: GET returned method-not-allowed, proving the route exists.
 - Retrying preview-only against the Vercel production alias reached the route but returned HTTP 401 `LEAD_IMPORT_UNAUTHORIZED`.
+- Vercel production was redeployed after env reconciliation, deployment `dpl_FDaHSNQ9fwLRvKnuWCc7LcpDVq8S`, state READY.
+- Post-redeploy preview-only retry again returned HTTP 401 `LEAD_IMPORT_UNAUTHORIZED`.
 - Local no-secret key-label check: key id is present, length is 20, and prefix is `mcd-`.
 - No CRM batch ID was created.
 - No owner acquisition record was posted.
@@ -25,9 +27,11 @@ The local importer and route path are prepared, but signed HMAC authentication d
 
 The server reads `LEAD_IMPORT_KEY_ID` and `LEAD_IMPORT_HMAC_SECRET`. The local importer reads its private local transport settings from ignored local environment storage. These values must represent the same credential pair without exposing the actual values in GitHub or chat.
 
+Because the route exists and the redeploy is READY, the remaining likely causes are a mismatched value, copied whitespace/quote characters, wrong environment scope, or the wrong local variable values being loaded.
+
 ## Next action
 
-Perform a no-secret credential-label/presence check and reconcile the local/Vercel signed import credential pair privately. After the pair matches, retry the preview-only script using the existing local run rather than restaging new rows.
+Regenerate or re-copy the credential pair privately, set the same pair in both local ignored `.env` and Vercel Production variables, redeploy, and then retry the preview-only script using the existing local run rather than restaging new rows.
 
 ## Stop point
 
