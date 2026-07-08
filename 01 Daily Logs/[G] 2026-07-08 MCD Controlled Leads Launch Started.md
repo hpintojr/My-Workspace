@@ -22,7 +22,7 @@
 Presence check only; no private values were disclosed.
 
 - Signed MiniCRM transport settings are present.
-- Opaque owner-acquisition settings are not yet present.
+- Opaque owner-acquisition settings are present.
 
 ## Current posture
 
@@ -30,11 +30,11 @@ The CRM production release is live, but lead operations are still in controlled-
 
 ## Next action
 
-Move to owner-acquisition environment readiness:
+Move to permitted-use confirmation:
 
-1. Privately confirm written permitted-use basis before real intake.
-2. Add opaque owner-acquisition identifiers only to ignored local environment storage.
-3. Re-run a no-secret environment presence check.
+1. Owner must privately confirm written permitted-use basis before real intake.
+2. After confirmation, update the local source config to mark permitted use as true.
+3. Run one final no-write dry-run.
 4. Stop before CRM preview until the owner explicitly approves the selected source and run.
 
 ## Boundaries
