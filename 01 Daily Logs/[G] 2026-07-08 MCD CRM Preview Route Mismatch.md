@@ -35,6 +35,24 @@ Current UI showed the records under **Open Pool**, but owner confirmed that Open
 
 This means the current portal layout and bucket naming are not aligned with the intended sales workflow.
 
+## Backtracked prior decisions that must be preserved
+
+After reviewing prior project context and handoff notes, the following earlier decisions remain binding:
+
+- My-Workspace is the project-control source of truth; `crm.mcd` is the live app.
+- Mini CRM is the source of truth for pre-demo prospecting, lead source tracking, pool, ownership, activity, compliance, and attribution.
+- GHL starts its primary workflow only when a demo is booked.
+- Agents should not get GHL access.
+- New imports should not go straight into true Open Pool without the correct review/routing semantics.
+- Prior lead scope separated **lead lifecycle**, **lead pool**, **ownership state**, and **activity state**.
+- Approved imported leads should route to **Cold Pool** or **Nurture**, not automatically to Open Pool.
+- Open Pool must remain a controlled/claimable concept, not a synonym for every imported lead.
+- Claiming must be atomic, auditable, and capacity-aware.
+- Agents should only see/work leads permitted by role, certification, territory/vertical rules, and operational policy.
+- Native phone calling through `tel:` actions is the intended calling model for launch; no browser dialer is required in v1.
+- Call measurement should be based on logged call initiation, disposition, notes, and follow-up action, not browser focus or fake talk time.
+- Source/original-source lineage must remain permanent and independent of later pool movement.
+
 ## Current UI feedback
 
 Owner reviewed `/portal/leads` and confirmed:
@@ -125,6 +143,18 @@ We are still on task.
 The import pipeline works, the 50 records are in production, and the feature flag is enabled. However, before moving forward with code changes, the next deliverable must be a revised lead workspace scope and UI/workflow plan.
 
 Do not continue building from the current Open Pool layout as-is. Re-scope the page first so Cold Leads, Peak Interest, Open Pool, Proposal, and My Active Leads have correct business meaning.
+
+## Immediate data correction to consider after scope approval
+
+The current imported batch was temporarily released as `AVAILABLE` / `OPEN` to validate agent visibility. Based on the owner correction, that classification should be corrected before broader agent use.
+
+Recommended correction after scope approval:
+
+- Move the 50 imported records from `AVAILABLE` / `OPEN` into the proper Cold Lead classification.
+- Preserve imported status and source lineage.
+- Keep records unassigned unless an agent meaningfully engages or a manager assigns them.
+- Keep DNC/suppression protections unchanged.
+- Add audit evidence for any bulk correction.
 
 ## Next action
 
