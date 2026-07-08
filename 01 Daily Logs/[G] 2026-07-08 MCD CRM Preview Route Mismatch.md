@@ -11,6 +11,7 @@ The controlled preview-only attempt stopped safely at the first CRM API call.
 - Initial configured host `crm.mercurycalldesk.com` returned HTTP 404 with an HTML page-not-found response for `/api/lead-imports`.
 - The Vercel production alias exposed the signed import route correctly: GET returned method-not-allowed, proving the route exists.
 - Retrying preview-only against the Vercel production alias reached the route but returned HTTP 401 `LEAD_IMPORT_UNAUTHORIZED`.
+- Local no-secret key-label check: key id is present, length is 20, and prefix is `mcd-`.
 - No CRM batch ID was created.
 - No owner acquisition record was posted.
 - No rows were uploaded to CRM.
