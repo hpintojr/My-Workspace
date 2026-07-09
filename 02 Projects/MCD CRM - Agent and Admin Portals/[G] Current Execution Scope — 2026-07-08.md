@@ -6,7 +6,7 @@
 
 ## Current release state
 
-The lead-research and opaque owner-acquisition release is live in production. The first supervised production import occurred, was corrected with owner approval, PR #34 has been merged, PR #35 has added the deployment-status smoke helper, the custom domain resolves to the latest production commit, the custom-domain unauthenticated smoke pass is complete, and PR #36 is merged/deployed as the production acceptance board section. PR #37 is open to wire Readiness/Audit to the PR #36 production acceptance lane.
+The lead-research and opaque owner-acquisition release is live in production. The first supervised production import occurred, was corrected with owner approval, PR #34 has been merged, PR #35 has added the deployment-status smoke helper, the custom domain resolves to the latest production commit, the custom-domain unauthenticated smoke pass is complete, and PR #36 is merged/deployed as the production acceptance board section. PR #37 is open to wire Readiness, Audit, and Operating Status to the PR #36 production acceptance lane.
 
 - No secret values were inspected or recorded.
 - No local process wrote directly to Neon/Postgres.
@@ -197,15 +197,15 @@ Production /api/cron/leads/aging -> 401 Unauthorized without Authorization.
 Runtime error/fatal logs for dpl_D7FKurVxw7FURpoe9g8SdNFJLrWV -> no logs found for checked window.
 ```
 
-## PR #37 Production Acceptance Readiness/Audit Wiring — open
+## PR #37 Production Acceptance Readiness/Audit/Operating Status Wiring — open
 
 ```txt
 PR: #37 — feat(admin): wire readiness to production lead acceptance
 Status: open, mergeable, not merged
 Branch: production-acceptance-readiness-20260709
-Head: 2e2767c8d94f4efb98d334bbf8f011c34bbbb32b
+Head: fd7774ce857d2e7ce20be04ff15722a99afc26d8
 Base: main at 23fef7ba6da8bc55fc6789d0f7c342f87488f818
-Changed files: 3
+Changed files: 4
 ```
 
 PR #37 updates this scope section:
@@ -213,6 +213,7 @@ PR #37 updates this scope section:
 ```txt
 src/app/admin/readiness/page.tsx
 src/app/admin/audit/page.tsx
+src/app/admin/operating-status/page.tsx
 scripts/check-lead-flow-alignment.ts
 ```
 
@@ -225,7 +226,8 @@ Built:
    - entityType = LeadProductionAcceptanceStep
    - totalSteps = 18
 3. Updates /admin/audit rollout evidence to include LEAD_PRODUCTION_ACCEPTANCE_RECORDED.
-4. Updates the lead-flow build guard so readiness/audit cannot silently regress back to the old Lead acceptance lane.
+4. Updates /admin/operating-status Lead phase copy from old Lead MVP language to production Lead Flow acceptance language.
+5. Updates the lead-flow build guard so readiness/audit/operating-status cannot silently regress back to the old Lead acceptance lane.
 ```
 
 Safety:
@@ -242,10 +244,11 @@ Verification state:
 
 ```txt
 GitHub reports PR #37 is mergeable.
-Vercel preview dpl_3D9a92EvF1ZGpzU49nceNkyimURu reached READY.
-Preview /api/status -> 200, preview environment, branch production-acceptance-readiness-20260709, commit 2e2767c8d94f4efb98d334bbf8f011c34bbbb32b.
+Vercel preview dpl_3zLMzUoCoZrWa6QswbiBgyx42BLS reached READY.
+Preview /api/status -> 200, preview environment, branch production-acceptance-readiness-20260709, commit fd7774ce857d2e7ce20be04ff15722a99afc26d8.
 Preview /admin/readiness -> 200 sign-in boundary, not 404/500.
 Preview /admin/audit -> 200 sign-in boundary, not 404/500.
+Preview /admin/operating-status -> 200 sign-in boundary, not 404/500.
 GitHub Actions for the updated head are queued.
 Do not merge PR #37 until GitHub Actions finish or owner explicitly accepts the remaining check risk.
 ```
@@ -266,7 +269,7 @@ Confirmed:
 9. Production Neon remains 50 COLD / AVAILABLE, 0 OPEN / AVAILABLE claimable from the corrected batch.
 10. Hamilton confirmed agent login worked in preview before PR #34 merge.
 11. Hamilton reported seeing the production task list/acceptance board after custom-domain promotion.
-12. PR #37 is open and mergeable as the next readiness/audit wiring section; Vercel preview is READY, GitHub Actions are queued.
+12. PR #37 is open and mergeable as the next readiness/audit/operating-status wiring section; Vercel preview is READY, GitHub Actions are queued.
 ```
 
 Still recommended for authenticated production acceptance:
