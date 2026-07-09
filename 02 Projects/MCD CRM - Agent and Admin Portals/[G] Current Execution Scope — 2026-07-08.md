@@ -6,13 +6,12 @@
 
 ## Current release state
 
-The lead-research and opaque owner-acquisition release is live in production. The first supervised production import occurred, was corrected with owner approval, and PR #34 has now been merged. The new Vercel production deployment is READY, but the custom domain still needs a domain/alias promotion check.
+The lead-research and opaque owner-acquisition release is live in production. The first supervised production import occurred, was corrected with owner approval, PR #34 has been merged, and PR #35 has now added the deployment-status smoke helper.
 
-- Lead records support business address, Google rating, rating-observed timestamp, and an outbound Google Maps link.
-- The batch acquisition record stores only opaque `sourceCode` and `acquisitionReference` values.
-- Provider identity, commercial terms, purchase records, vendor documents, secrets, and raw source files remain outside MiniCRM.
 - No secret values were inspected or recorded.
 - No local process wrote directly to Neon/Postgres.
+- No new production data mutation was performed after the approved lead batch correction.
+- GHL workflow activation, Servicing, Commissions, and Finance remain gated.
 
 ## First production batch and correction
 
@@ -28,247 +27,153 @@ Correction audit: 1 LEAD_BATCH_POOL_CORRECTED + 50 LEAD_POOL_CORRECTED records
 
 The correction was owner-approved, rehearsed first on a Neon safety branch, then applied to production.
 
-Compatibility note:
-
-```txt
-The current deployed LeadLifecycle enum does not include VALIDATED.
-Use COLD / AVAILABLE for corrected imported Cold Leads until a future schema change introduces a different validated state.
-```
-
 ## PR #34 Lead Flow Alignment — merged
 
-Branch:
-
 ```txt
-lead-flow-alignment-20260708
-```
-
-Pull request:
-
-```txt
-#34 — feat(leads): align cold lead workspace with two-way-contact claim rules
+PR: #34 — feat(leads): align cold lead workspace with two-way-contact claim rules
 Status: merged to main
 Head before merge: 43b99e0daacaace2767f93d6a95641fa8d1d8a9a
 Merge commit: 487ff615170f2c9530da61e477935d969d814e69
-```
-
-Vercel deployment evidence:
-
-```txt
-New main deployment: dpl_Hwq4jTsjmpdjJ8AmMffe8hYDAL9o
-Commit: 487ff615170f2c9530da61e477935d969d814e69
-Target: production
+Production deployment: dpl_Hwq4jTsjmpdjJ8AmMffe8hYDAL9o
 State: READY
-Runtime error/fatal logs: none found for the checked window
-Vercel production alias checked: crm-mcd-hamiltons-projects-f65eeb81.vercel.app -> dpl_Hwq4jTsjmpdjJ8AmMffe8hYDAL9o
 ```
 
-Custom-domain caveat:
+PR #34 delivered:
+
+- Cold Lead workspace in `/portal/leads`.
+- Strict click-to-call logging before dialer open.
+- No claim, soft-lock, reservation, or ownership on call start.
+- Claim gate requiring two-way contact.
+- 45-day responsibility timer on claim/assignment.
+- DNC blackout handling.
+- Secured aging cron route.
+- My Workspace dashboard.
+- Warm Reply timer alignment.
+- GHL appointment/opportunity relay hardening.
+- Acceptance board and lead-flow build guards.
+
+## PR #35 Deployment Status + Smoke Helper — merged
 
 ```txt
-crm.mercurycalldesk.com still resolved to older deployment dpl_8Qj5PcUQrBGfnYWHxvzPcGNGqG5C at the last check.
+PR: #35 — feat(ops): add deployment status endpoint and smoke checklist
+Status: merged to main
+Head before merge: 4cf0ebbc524938a09c91e26a9078f054ec8dd538
+Merge commit: 85241b306e9799983226450a6876e71e52665995
+Production deployment: dpl_DysALSqTjpxL9HjVV696tXFrwNaa
+State: READY
+```
+
+PR #35 delivered:
+
+```txt
+/api/status
+docs/PRODUCTION_SMOKE_20260708.md
+```
+
+`/api/status` returns non-secret deployment metadata only:
+
+```txt
+ok
+service
+environment
+git.branch
+git.commitSha
+git.commitMessage
+deployment.url
+deployment.region
+timestamp
+```
+
+Verified on the new deployment URLs:
+
+```txt
+https://crm-dv36hh7jp-hamiltons-projects-f65eeb81.vercel.app/api/status -> 200, commit 85241b306e9799983226450a6876e71e52665995
+https://crm-mcd-hamiltons-projects-f65eeb81.vercel.app/api/status -> 200, commit 85241b306e9799983226450a6876e71e52665995
+```
+
+## Custom-domain caveat — still unresolved
+
+```txt
+crm.mercurycalldesk.com still resolves to older deployment dpl_8Qj5PcUQrBGfnYWHxvzPcGNGqG5C.
 That older deployment is commit a80b8159df8331af0c84d3a098f54e880edecca5.
-Treat custom-domain promotion as unresolved until Vercel domain/alias assignment is corrected or verified by owner in Vercel.
+https://crm.mercurycalldesk.com/api/status returned 404 because the older deployment does not include PR #35.
 ```
 
-Owner-reported browser acceptance before merge:
+Treat custom-domain promotion as unresolved until the custom domain reports:
 
 ```txt
-Hamilton logged in as an agent and confirmed it worked on 2026-07-08.
+git.commitSha = 85241b306e9799983226450a6876e71e52665995
 ```
 
-## PR #35 Deployment Status + Smoke Helper — open
+## What Hamilton can do in Vercel to point the domain correctly
 
-Branch:
+Use the Vercel dashboard because the available connector tools do not expose alias/domain mutation.
+
+1. Open Vercel.
+2. Select team/project:
 
 ```txt
-deploy-status-smoke-20260708
+Team: Hamilton's projects
+Project: crm-mcd
 ```
 
-Pull request:
+3. Open the production deployment for commit:
 
 ```txt
-#35 — feat(ops): add deployment status endpoint and smoke checklist
-Status: open, mergeable, not merged
-Head: 4cf0ebbc524938a09c91e26a9078f054ec8dd538
+85241b306e9799983226450a6876e71e52665995
+Deployment: dpl_DysALSqTjpxL9HjVV696tXFrwNaa
 ```
 
-Purpose:
+4. In the deployment page, use the production-domain or alias controls to promote/assign the deployment to:
 
 ```txt
-Add /api/status and docs/PRODUCTION_SMOKE_20260708.md so any hostname can be checked against the expected Vercel/Git commit without touching production data.
+crm.mercurycalldesk.com
 ```
 
-Safety:
+5. If the dashboard shows `crm.mercurycalldesk.com` pinned/aliased to older deployment `dpl_8Qj5PcUQrBGfnYWHxvzPcGNGqG5C`, remove that alias/pin or reassign it to the latest production deployment.
+
+6. If the Domains tab shows a Git branch or production-branch setting, make sure the domain is assigned to the project production branch `main`, not a stale deployment.
+
+7. After saving, verify by opening:
 
 ```txt
-/api/status returns non-secret Vercel/Git metadata only.
-No database access.
-No feature flag changes.
-No production data mutation.
+https://crm.mercurycalldesk.com/api/status
 ```
 
-Current verification state:
+Expected response:
 
 ```txt
-GitHub reports PR #35 is mergeable.
-No Vercel preview deployment was found for branch deploy-status-smoke-20260708.
-Branch alias crm-mcd-git-deploy-status-smoke-20260708-hamiltons-projects-f65eeb81.vercel.app returned deployment not found.
-Do not merge PR #35 until owner approves or a preview/build path is verified.
-```
-
-### 1. Cold Lead activity-first workspace
-
-Production must preserve these rules:
-
-- Cold Leads display in `/portal/leads` as unowned `COLD / AVAILABLE` records.
-- Click-to-call logs `CALL_INITIATED` before opening the device dialer.
-- If call activity cannot be logged, the dialer is not opened.
-- Call-start logging must not claim, soft-lock, reserve, or assign ownership.
-- No-answer and voicemail keep the Lead unowned.
-- Callback-requested, qualified, and follow-up/interested record two-way contact and unlock claim eligibility.
-- Claim is not automatic.
-- DNC can suppress unowned Cold Leads and cancel scheduled callbacks.
-
-### 2. Claim gate
-
-Claiming requires:
-
-```txt
-ownerAgentId = null
-pool in HOT, NURTURE
-lifecycle in CONTACTED, NURTURING, DEMO_BOOKED
-twoWayContactAt is present
-dnc = false
-suppressed = false
-```
-
-Successful claim:
-
-```txt
-sets ownerAgentId
-sets lifecycle = CLAIMED
-sets claimedAt
-sets openPoolReleaseAt = claim time + 45 days
-writes LeadClaimEvent, LeadActivity, and AuditLog
-```
-
-### 3. My Workspace dashboard
-
-`/portal/workspace` works without a selected `leadId` and is expected to show:
-
-```txt
-assigned records
-scheduled callbacks
-claim access status
-DNC rule reminder
-recent activity
-claim-timer responsibility
-selected owned-lead detail view when leadId is present
-```
-
-### 4. Aging sweep
-
-Secured endpoint:
-
-```txt
-/api/cron/leads/aging
-```
-
-Schedule:
-
-```txt
-0 12 * * *
-```
-
-Behavior:
-
-```txt
-Expired claimed/contacted/nurturing non-referral Leads return to OPEN / AVAILABLE after their 45-day claim timer.
-Unowned OPEN / AVAILABLE Leads released for 21 days move to SHARK_TANK.
-Both paths write audit/activity evidence.
-```
-
-Security/configuration:
-
-```txt
-Endpoint requires Authorization: Bearer $CRON_SECRET.
-Hamilton confirmed CRON_SECRET is configured in Vercel.
-Do not inspect or record the secret value.
-```
-
-### 5. GHL relay hardening added after agent login confirmation
-
-Warm Reply Triage:
-
-```txt
-Unowned inbound replies now require recorded two-way contact before assignment.
-Assignment creates immediate owner callback.
-Assignment starts the same 45-day openPoolReleaseAt responsibility timer as normal claim.
-Suppressed, DNC, closed, already-owned, and no-contact Leads remain excluded.
-```
-
-GHL appointment relay:
-
-```txt
-Suppressed/DNC Leads are ignored and audited.
-Booked/confirmed/rescheduled appointments record two-way contact if missing.
-Cancelled/no-show events create one immediate owner callback or expedite an existing callback.
-Closed Won Leads are not rolled back by later recovery events.
-Webhook responses and audit metadata now expose leadIgnored/callbackCreated/callbackExpedited/preservedClosedWon outcomes.
-```
-
-GHL opportunity relay:
-
-```txt
-Suppressed/DNC Leads are ignored and audited.
-Opportunity Won moves the Lead to CLOSED_WON and cancels scheduled callbacks.
-Opportunity Lost moves an open Lead to CLOSED_LOST and cancels scheduled callbacks.
-Late Opportunity Lost cannot roll back an already CLOSED_WON Lead.
-Webhook responses and audit metadata now expose leadIgnored/preservedClosedWon/callbacksCancelled outcomes.
-```
-
-### 6. Acceptance board alignment
-
-`/admin/leads/testing` has explicit acceptance steps for:
-
-```txt
-strict click-to-call logs activity first
-strict click-to-call creates no ownership/reservation
-strict click-to-call blocks the dialer if logging fails
-no-answer/voicemail unowned boundary
-two-way-contact claim gate
-45-day claim timer
-DNC blackout
-My Workspace dashboard
-Warm Reply timer
-GHL appointment hardening
-GHL opportunity hardening
-aging sweep
-owner merge decision
+ok = true
+environment = production
+git.branch = main
+git.commitSha = 85241b306e9799983226450a6876e71e52665995
 ```
 
 ## Current controlled test plan
 
-PR #34 is merged and the new main deployment is READY. Custom-domain promotion is still unresolved. PR #35 is open to add an explicit status endpoint and smoke checklist for future domain verification.
+Confirmed:
 
 ```txt
-Confirmed:
-1. PR #34 merged to main at 487ff615170f2c9530da61e477935d969d814e69.
-2. New Vercel production deployment dpl_Hwq4jTsjmpdjJ8AmMffe8hYDAL9o reached READY.
-3. Runtime error/fatal log check returned no errors for the checked window.
-4. /portal/workspace, /portal/leads, and /admin/leads/testing resolve to sign-in instead of 404/500 on the new deployment URL.
-5. /api/cron/leads/aging returns 401 without Authorization on the new deployment URL.
+1. PR #34 merged to main and deployed READY.
+2. PR #35 merged to main and deployed READY.
+3. /api/status works on the latest Vercel production deployment aliases.
+4. /portal/workspace, /portal/leads, and /admin/leads/testing resolved to sign-in instead of 404/500 on the new deployment URL before PR #35.
+5. /api/cron/leads/aging returned 401 without Authorization on the new deployment URL before PR #35.
 6. Production Neon remains 50 COLD / AVAILABLE, 0 OPEN / AVAILABLE claimable from the corrected batch.
-7. Hamilton confirmed agent login worked in preview before merge.
-8. PR #35 is open and mergeable but has no Vercel preview deployment observed yet.
+7. Hamilton confirmed agent login worked in preview before PR #34 merge.
+```
 
 Unresolved:
-1. crm.mercurycalldesk.com still resolved to older deployment dpl_8Qj5PcUQrBGfnYWHxvzPcGNGqG5C at the last check.
-2. Need Vercel domain/alias correction or owner-side verification that the custom domain promotes to commit 487ff615170f2c9530da61e477935d969d814e69.
-3. Need PR #35 preview/build verification or explicit owner decision before merge.
+
+```txt
+1. crm.mercurycalldesk.com still resolves to older deployment dpl_8Qj5PcUQrBGfnYWHxvzPcGNGqG5C.
+2. Need owner-side Vercel alias/domain reassignment or verification.
+3. Need controlled production acceptance on the custom domain after promotion.
+```
 
 Still recommended after custom-domain promotion:
+
+```txt
 1. Record production smoke acceptance in /admin/leads/testing.
 2. Confirm click-to-call logs activity before opening dialer.
 3. Confirm click-to-call blocks the dialer if activity logging fails.
@@ -284,15 +189,6 @@ Still recommended after custom-domain promotion:
 13. Confirm aging sweep behavior using controlled test data only.
 ```
 
-## Next product slices after Lead Flow Alignment stabilizes
-
-1. **Custom domain promotion** — ensure `crm.mercurycalldesk.com` resolves to the PR #34 merge commit deployment.
-2. **Deployment status helper** — verify/merge PR #35 after preview/build confirmation or explicit owner approval.
-3. **GHL appointment/opportunity/reply acceptance** — validate live appointment, opportunity result, and inbound reply contracts while preserving originating-agent attribution and DNC/suppression protections.
-4. **Lead ingestion and nurture** — finish the local importer operating runbook, define Sequenzy nurture/suppression sync, and add operator reports.
-5. **Client servicing and commissions** — test the staged client/service/ledger migration on a safety branch before enabling service or finance flags.
-6. **Finance payouts** — only after Stripe Connect live credentials, funding reconciliation, approval UI, and non-production payout tests are complete.
-
 ## Explicitly out of scope without separate approval
 
 - Storing provider identity or commercial records in MiniCRM.
@@ -304,4 +200,4 @@ Still recommended after custom-domain promotion:
 
 ## Acceptance gates
 
-PR #34 is merged and the new main deployment is READY. Custom-domain alias promotion remains unresolved. PR #35 is open as a safe ops helper but not merged. Broader live lead operations, external GHL workflow activation, Servicing, Commissions, and Finance remain gated until separately approved and tested.
+PR #34 and PR #35 are merged and the latest Vercel production deployment is READY. Custom-domain alias promotion remains unresolved. Broader live lead operations, external GHL workflow activation, Servicing, Commissions, and Finance remain gated until separately approved and tested.
