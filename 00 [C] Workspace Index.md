@@ -72,16 +72,20 @@ Phase D lead import is no longer just readiness. One approved production import 
 PR #34 was merged to main after Hamilton's merge approval:
 feat(leads): align cold lead workspace with two-way-contact claim rules
 Merge commit: 487ff615170f2c9530da61e477935d969d814e69
-Production deployment: dpl_Hwq4jTsjmpdjJ8AmMffe8hYDAL9o
-Production state: READY
-Runtime error/fatal log check for that production deployment found no errors.
+New main deployment: dpl_Hwq4jTsjmpdjJ8AmMffe8hYDAL9o
+New main deployment state: READY
+Runtime error/fatal log check for that deployment found no errors.
+
+Custom-domain caveat:
+crm.mercurycalldesk.com still resolved to older deployment dpl_8Qj5PcUQrBGfnYWHxvzPcGNGqG5C at the last check.
+Owner or Vercel settings need to promote/alias the custom domain to commit 487ff615170f2c9530da61e477935d969d814e69.
 
 PR #34 delivered Cold Lead workspace, strict click-to-call logging, no-claim-before-two-way-contact guard, DNC on unowned Cold Leads, 45-day claim timer, secured aging cron, Shark Tank promotion, My Workspace dashboard, Warm Reply timer alignment, GHL appointment/opportunity relay hardening, acceptance board, and docs/build guards.
 
 Hamilton confirmed CRON_SECRET is configured in Vercel. Value was not inspected or recorded.
 Hamilton confirmed agent login worked in the PR preview before merge.
 
-Current execution holder: ChatGPT, post-merge production verification and project documentation reconciliation.
+Current execution holder: ChatGPT, post-merge production verification, custom-domain promotion tracking, and project documentation reconciliation.
 ```
 
 ### Read next
@@ -103,14 +107,15 @@ Repo: mcd_lead_ops (local only, D:\GitHub\mcd_lead_ops)
 ### Current next actions
 
 ```txt
-1. Run controlled production smoke checks for PR #34 pages and routes.
-2. Verify /portal/leads Cold Lead behavior: strict click-to-call logs before dialer, blocks dialer if logging fails, no claim/no reservation, no-answer remains unowned, callback/qualified/follow-up unlocks claim.
-3. Verify claim creates owner, claimedAt, and 45-day openPoolReleaseAt only after two-way contact.
-4. Verify DNC suppresses and cancels callbacks.
-5. Verify /portal/workspace works without leadId and shows assigned records, callbacks, recent activity, and claim timer.
-6. Verify Warm Reply Triage assignment starts the 45-day timer.
-7. Keep GHL workflow activation, Servicing, Commissions, and Finance gated unless separately approved.
-8. Continue 13-layer hardening: preview/prod separation, RLS/runtime DB role, error tracking, login smoke test, Neon autoscaling/backup review.
+1. Resolve custom-domain promotion: confirm crm.mercurycalldesk.com points to merge commit 487ff615170f2c9530da61e477935d969d814e69.
+2. Run controlled production smoke checks after custom-domain promotion.
+3. Verify /portal/leads Cold Lead behavior: strict click-to-call logs before dialer, blocks dialer if logging fails, no claim/no reservation, no-answer remains unowned, callback/qualified/follow-up unlocks claim.
+4. Verify claim creates owner, claimedAt, and 45-day openPoolReleaseAt only after two-way contact.
+5. Verify DNC suppresses and cancels callbacks.
+6. Verify /portal/workspace works without leadId and shows assigned records, callbacks, recent activity, and claim timer.
+7. Verify Warm Reply Triage assignment starts the 45-day timer.
+8. Keep GHL workflow activation, Servicing, Commissions, and Finance gated unless separately approved.
+9. Continue 13-layer hardening: preview/prod separation, RLS/runtime DB role, error tracking, login smoke test, Neon autoscaling/backup review.
 ```
 
 ## Workspace rules
