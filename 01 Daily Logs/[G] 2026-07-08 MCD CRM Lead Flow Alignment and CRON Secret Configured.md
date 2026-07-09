@@ -8,7 +8,7 @@ author: ChatGPT
 
 # [G] 2026-07-08 MCD CRM Lead Flow Alignment and CRON Secret Configured
 
-## What I changed
+## What changed
 
 ### Production data correction — Neon
 
@@ -43,7 +43,7 @@ The current deployed LeadLifecycle enum does not include VALIDATED.
 The compatible corrected state is pool=COLD and lifecycle=AVAILABLE.
 ```
 
-### crm.mcd code/documentation branch
+### PR #34 — merged to production
 
 Branch:
 
@@ -51,65 +51,48 @@ Branch:
 lead-flow-alignment-20260708
 ```
 
-Draft PR:
+Pull request:
 
 ```txt
 #34 — feat(leads): align cold lead workspace with two-way-contact claim rules
+Status: merged to main after Hamilton approval
+Head before merge: 43b99e0daacaace2767f93d6a95641fa8d1d8a9a
+Merge commit: 487ff615170f2c9530da61e477935d969d814e69
 ```
 
-Files touched in `hpintojr/crm.mcd` during this session included:
+Production deployment:
 
 ```txt
-src/lib/claims.ts
-src/lib/lead-workspace.ts
-src/lib/lead-aging-jobs.ts
-src/app/portal/leads/page.tsx
-src/app/portal/workspace/page.tsx
-src/app/api/cron/leads/aging/route.ts
-scripts/check-lead-flow-alignment.ts
-package.json
-vercel.json
-docs/LEAD_FLOW_ALIGNMENT_20260708.md
-docs/WORKSPACE.md
-docs/DAILY_LOG.md
-docs/daily-logs/2026-07-08.md
+Deployment: dpl_Hwq4jTsjmpdjJ8AmMffe8hYDAL9o
+Commit: 487ff615170f2c9530da61e477935d969d814e69
+Target: production
+State: READY
+Runtime error/fatal logs: none found for the checked window
 ```
 
-### Cold Lead workflow built in PR #34
+### Lead Flow Alignment delivered
 
-- `/portal/leads` now lists unowned `COLD / AVAILABLE` records.
+- `/portal/leads` lists unowned `COLD / AVAILABLE` records.
 - Cold Lead work is activity-first.
-- Call-start logging writes activity only; it does not claim, soft-lock, reserve, or assign ownership.
+- Strict click-to-call logs `CALL_INITIATED` before opening the device dialer.
+- If call activity logging fails, the dialer is not opened.
+- Call-start logging does not claim, soft-lock, reserve, or assign ownership.
 - No-answer and voicemail keep the Lead unowned.
 - Callback-requested, qualified, and follow-up/interested record two-way contact and unlock claim eligibility without auto-claiming.
 - DNC can suppress unowned Cold Leads.
+- Claim requires two-way contact and starts the 45-day responsibility timer.
+- `/portal/workspace` is now a true agent dashboard instead of requiring `leadId` and 404ing without one.
+- `/admin/leads/testing` now includes explicit acceptance steps for strict click-to-call, GHL relay hardening, aging sweep, and owner decision evidence.
 
-### Claim rule built in PR #34
+### GHL / relay hardening delivered
 
-`claimAvailableLead` now requires:
+- Warm Reply Triage requires recorded two-way contact before assignment and starts the 45-day responsibility timer.
+- Appointment relay ignores suppressed/DNC Leads, records two-way contact from booked/confirmed/rescheduled events, dedupes/expedites recovery callbacks, and preserves Closed Won.
+- Opportunity relay ignores suppressed/DNC Leads, cancels scheduled callbacks on Won/Lost terminal outcomes, and prevents late Lost from rolling back Closed Won.
 
-```txt
-ownerAgentId = null
-pool in HOT, NURTURE
-lifecycle in CONTACTED, NURTURING, DEMO_BOOKED
-twoWayContactAt is present
-dnc = false
-suppressed = false
-```
+### Aging sweep delivered
 
-Successful claim:
-
-```txt
-sets ownerAgentId
-sets lifecycle = CLAIMED
-sets claimedAt
-sets openPoolReleaseAt = claim time + 45 days
-writes LeadClaimEvent, LeadActivity, and AuditLog
-```
-
-### Aging sweep built in PR #34
-
-Added secured cron endpoint:
+Secured cron endpoint:
 
 ```txt
 /api/cron/leads/aging
@@ -136,33 +119,19 @@ Endpoint requires Authorization: Bearer $CRON_SECRET.
 Hamilton confirmed CRON_SECRET was configured in Vercel. No secret value was inspected or recorded.
 ```
 
-### My Workspace built in PR #34
-
-`/portal/workspace` is now a true agent dashboard instead of requiring `leadId` and 404ing without one.
-
-It now shows:
-
-```txt
-assigned records
-scheduled callbacks
-claim access status
-DNC rule reminder
-recent activity
-claim-timer responsibility
-selected owned-lead detail view
-```
-
 ### My-Workspace scope repo updates
 
-The My-Workspace repo was updated so it no longer says the live import never ran / Neon counts are zero.
+The My-Workspace repo was updated so it no longer says the live import never ran / Neon counts are zero / PR #34 is draft.
 
-Files updated or added in `hpintojr/My-Workspace`:
+Files updated or added in `hpintojr/My-Workspace` during this continuation:
 
 ```txt
 00 [C] Workspace Index.md
 02 Projects/MCD CRM - Agent and Admin Portals/MCD CRM - Agent and Admin Portals Overview.md
 02 Projects/MCD CRM - Agent and Admin Portals/[C] MCD CRM — Production Scope & 13-Layer Review.md
 02 Projects/MCD CRM - Agent and Admin Portals/[G] Current Execution Scope — 2026-07-08.md
+02 Projects/MCD CRM - Agent and Admin Portals/[G] 2026-07-08 Lead Flow Alignment Scope Addendum.md
+02 Projects/MCD CRM - Agent and Admin Portals/LOCK.md
 01 Daily Logs/[G] 2026-07-08 MCD CRM Lead Flow Alignment and CRON Secret Configured.md
 ```
 
@@ -175,32 +144,17 @@ Files updated or added in `hpintojr/My-Workspace`:
   - 1 batch-level correction audit.
   - 50 lead-level correction audits.
 - The correction was first rehearsed on Neon branch `test-lead-data-correction-20260708` before production mutation.
-- Vercel preview build for PR #34 initially passed after the first Cold Lead workspace pass.
-- Later PR #34 preview briefly failed because the build guard expected a brittle exact string in `vercel.json`.
-- That guard was fixed; the latest observed Vercel preview deployment for commit `aa84dcfd4b5770e54f3733af9fb60766d7d31b6e` reached `READY`.
-- The latest Vercel build output showed:
-  - route-collision guard passed;
-  - login completion guard passed;
-  - lead import guards passed;
-  - lead flow alignment guard passed;
-  - Prisma generated;
-  - Next.js compiled successfully;
-  - `/api/cron/leads/aging` included in the built route list.
-- My-Workspace core files were read before reconciliation:
-  - `[C] AI Operating Protocol — Handoff, Changelog, Indexing.md`
-  - `00 [C] Workspace Index.md`
-  - `02 Projects/MCD CRM - Agent and Admin Portals/LOCK.md`
-  - `02 Projects/MCD CRM - Agent and Admin Portals/[G] Current Execution Scope — 2026-07-08.md`
-  - `02 Projects/MCD CRM - Agent and Admin Portals/MCD CRM - Agent and Admin Portals Overview.md`
-  - `02 Projects/MCD CRM - Agent and Admin Portals/[C] MCD CRM — Production Scope & 13-Layer Review.md`
-  - `02 Projects/MCD CRM - Agent and Admin Portals/[C] Local Lead Operations and MiniCRM Export Scope.md`
+- PR #34 preview reached READY at `43b99e0daacaace2767f93d6a95641fa8d1d8a9a` with no runtime error/fatal logs found.
+- PR #34 was merged by owner approval into `main` as `487ff615170f2c9530da61e477935d969d814e69`.
+- Vercel production deployment `dpl_Hwq4jTsjmpdjJ8AmMffe8hYDAL9o` reached READY for merge commit `487ff615170f2c9530da61e477935d969d814e69`.
+- Runtime error/fatal log check for that production deployment found no errors in the checked window.
+- Hamilton confirmed agent login worked in the PR preview before merge.
 
-## Still open
+## Still open / gated
 
 ```txt
-PR #34 remains draft and is not merged to main.
-Full client-side tel interception is not complete; current branch uses dial link plus explicit call-start logging.
-GHL Opportunity and Inbound Reply workflows still require controlled external configuration and acceptance testing.
+Controlled production smoke checks should still be recorded in /admin/leads/testing.
+GHL external workflow activation still requires controlled acceptance testing.
 Automatic GHL Opportunity Won -> Client Account creation remains intentionally disabled.
 Commissions and Finance remain gated and untouched.
 No secrets, contact payloads, signed headers, customer data, tax IDs, or payment data were committed.
@@ -218,22 +172,25 @@ Neon autoscaling headroom / backup retention review
 
 ## Start here next
 
-Start with PR #34 in `hpintojr/crm.mcd`.
+Start with production smoke checks in `hpintojr/crm.mcd`.
 
 Next action:
 
 ```txt
-Run controlled preview acceptance for PR #34:
+Run controlled production acceptance:
 1. Cold Lead appears in /portal/leads.
-2. Log call started does not claim or reserve the Lead.
-3. No-answer/voicemail leaves the Lead unowned.
-4. Callback/qualified/follow-up records two-way contact and unlocks claim.
-5. Claim sets owner, claimedAt, and 45-day openPoolReleaseAt.
-6. DNC suppresses and cancels callbacks.
-7. /portal/workspace shows assigned records and callbacks without requiring leadId.
-8. Aging sweep returns expired owned Leads to Open Pool.
-9. Aging sweep moves 21-day stale Open Pool records to Shark Tank.
-10. GHL appointment/opportunity/reply relays remain behind controlled acceptance testing.
+2. Click-to-call logs activity before opening the dialer.
+3. Click-to-call does not claim, soft-lock, reserve, or assign ownership.
+4. Click-to-call blocks the dialer if activity logging fails.
+5. No-answer/voicemail leaves the Lead unowned.
+6. Callback/qualified/follow-up records two-way contact and unlocks claim.
+7. Claim sets owner, claimedAt, and 45-day openPoolReleaseAt.
+8. DNC suppresses and cancels callbacks.
+9. /portal/workspace shows assigned records and callbacks without requiring leadId.
+10. Warm Reply Triage assignment starts the 45-day timer.
+11. GHL appointment/opportunity/reply relays remain behind controlled acceptance testing.
+12. Aging sweep returns expired owned Leads to Open Pool.
+13. Aging sweep moves 21-day stale Open Pool records to Shark Tank.
 ```
 
 Read first:
@@ -247,6 +204,6 @@ Read first:
 ```txt
 holder: chatgpt
 scope: crm.mcd + My-Workspace scope documentation
-next: controlled preview acceptance for PR #34, then owner decision on whether/when to mark PR ready and merge
+next: controlled production smoke checks for PR #34, then separate owner decisions for GHL workflows, Servicing, Commissions, and Finance
 read_first: 02 Projects/MCD CRM - Agent and Admin Portals/MCD CRM - Agent and Admin Portals Overview.md
 ```
