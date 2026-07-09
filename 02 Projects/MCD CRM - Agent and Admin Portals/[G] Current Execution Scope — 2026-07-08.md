@@ -28,6 +28,46 @@ No imports, payouts, servicing, commissions, or finance actions were enabled.
 GHL workflow activation, Servicing, Commissions, and Finance remain gated.
 ```
 
+## Approved open-source CRM reuse direction
+
+Hamilton approved the open-source reuse direction on 2026-07-09.
+
+```txt
+Approve Mercury CRM as the base.
+Approve NextCRM as primary code-reference/source-mining repo.
+Approve OpenCRM as lightweight UI/agent-mode reference.
+Approve Twenty as architecture reference only, no code copy without license review.
+Pause new feature expansion until we add controlled test data + GHL test harness.
+Continue handoff updates in hpintojr/My-Workspace after each repo-mining PR.
+```
+
+Approved source roles:
+
+```txt
+hpintojr/crm.mcd -> production base and source of truth.
+pdovhomilja/nextcrm-app -> primary MIT code-reference/source-mining repo.
+clawnify/open-crm -> MIT lightweight UI and agent-mode reference.
+twentyhq/twenty -> architecture reference only; no code copy without license review.
+```
+
+New execution boundary:
+
+```txt
+Do not expand broad features until controlled test data and GHL controlled event test harness are built.
+Next coding sequence:
+1. Controlled Test Data Foundation.
+2. Controlled GHL Event Harness.
+3. Acceptance Evidence Integration.
+4. OpenCRM-inspired agent-friendly UI mode.
+5. NextCRM-inspired activity/audit UX improvements.
+```
+
+Full approval and reuse assessment:
+
+```txt
+02 Projects/MCD CRM - Agent and Admin Portals/[G] Open Source CRM Reuse Assessment — 2026-07-09.md
+```
+
 ## First production batch and correction
 
 ```txt
@@ -327,6 +367,15 @@ Still recommended for authenticated production acceptance:
 14. Record owner production decision before expanding normal Lead Flow use.
 ```
 
+## Next approved blockers before feature expansion
+
+```txt
+1. Controlled Test Data Foundation.
+2. Controlled GHL Event Harness.
+```
+
+These are now the approved next blockers before broader feature expansion, live GHL workflow activation, Servicing, Commissions, or Finance work.
+
 ## Explicitly out of scope without separate approval
 
 ```txt
@@ -336,15 +385,17 @@ Auto-enabling GHL workflows, servicing, commission, or finance feature flags.
 Additional live import/submit/export without a run-specific owner approval reference.
 Additional production data changes.
 Recording secrets, contact payloads, signed headers, raw source files, customer PII, tax IDs, or payment data in GitHub/My-Workspace.
+Copying Twenty code or vendoring Twenty files without explicit license review.
 ```
 
 ## Acceptance gates
 
-PR #34 through PR #44 are merged and deployed. The latest production deployment is READY, the custom domain is on the latest production commit, unauthenticated custom-domain smoke checks passed, and aging dry-run preview support is deployed. Broader live lead operations, authenticated business-rule acceptance, external GHL workflow activation, Servicing, Commissions, and Finance remain gated until separately approved and tested.
+PR #34 through PR #44 are merged and deployed. The latest production deployment is READY, the custom domain is on the latest production commit, unauthenticated custom-domain smoke checks passed, aging dry-run preview support is deployed, and the open-source CRM reuse direction is approved. Broader live lead operations, authenticated business-rule acceptance, external GHL workflow activation, Servicing, Commissions, and Finance remain gated until separately approved and tested.
 
-## Supporting daily logs
+## Supporting daily logs and planning docs
 
 ```txt
+02 Projects/MCD CRM - Agent and Admin Portals/[G] Open Source CRM Reuse Assessment — 2026-07-09.md
 01 Daily Logs/[G] 2026-07-09 MCD CRM PR40 Acceptance Report Exports.md
 01 Daily Logs/[G] 2026-07-09 MCD CRM PR41 Acceptance Report Page.md
 01 Daily Logs/[G] 2026-07-09 MCD CRM PR42 Lead Acceptance Navigation.md
