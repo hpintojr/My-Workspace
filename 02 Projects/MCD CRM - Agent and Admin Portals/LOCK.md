@@ -9,10 +9,11 @@ scope: crm.mcd + My-Workspace scope documentation
 since: 2026-07-07T06:04Z
 previous_holder: claude (inspected + merged PR #32 to production)
 intent: post-merge verification and documentation reconciliation after PR #34 was merged to main with owner approval.
-next: 1) run controlled production smoke checks for PR #34;
-      2) verify Cold Lead strict click-to-call, claim gate, DNC, My Workspace, GHL relays, and aging sweep;
-      3) PR #34 is merged and production deployment is READY;
-      4) do not enable broader GHL workflows, Servicing, Commissions, Finance, or mutate production data without separate owner approval.
+next: 1) resolve/verify custom domain promotion for crm.mercurycalldesk.com;
+      2) run controlled production smoke checks for PR #34 after custom-domain promotion;
+      3) verify Cold Lead strict click-to-call, claim gate, DNC, My Workspace, GHL relays, and aging sweep;
+      4) PR #34 is merged and new main deployment is READY, but custom domain still resolved to older deployment at last check;
+      5) do not enable broader GHL workflows, Servicing, Commissions, Finance, or mutate production data without separate owner approval.
 ```
 
 Current plan: `[G] Current Execution Scope — 2026-07-08.md`.
