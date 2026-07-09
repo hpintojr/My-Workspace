@@ -6,7 +6,7 @@
 
 ## Current release state
 
-The lead-research and opaque owner-acquisition release is live in production. The first supervised production import occurred, was corrected with owner approval, PR #34 has been merged, and PR #35 has now added the deployment-status smoke helper.
+The lead-research and opaque owner-acquisition release is live in production. The first supervised production import occurred, was corrected with owner approval, PR #34 has been merged, PR #35 has added the deployment-status smoke helper, and the custom domain now resolves to the latest production commit.
 
 - No secret values were inspected or recorded.
 - No local process wrote directly to Neon/Postgres.
@@ -84,69 +84,33 @@ deployment.region
 timestamp
 ```
 
-Verified on the new deployment URLs:
+Verified on the latest production URLs:
 
 ```txt
 https://crm-dv36hh7jp-hamiltons-projects-f65eeb81.vercel.app/api/status -> 200, commit 85241b306e9799983226450a6876e71e52665995
 https://crm-mcd-hamiltons-projects-f65eeb81.vercel.app/api/status -> 200, commit 85241b306e9799983226450a6876e71e52665995
+https://crm.mercurycalldesk.com/api/status -> 200, commit 85241b306e9799983226450a6876e71e52665995
 ```
 
-## Custom-domain caveat — still unresolved
+## Custom-domain promotion — resolved
 
-```txt
-crm.mercurycalldesk.com still resolves to older deployment dpl_8Qj5PcUQrBGfnYWHxvzPcGNGqG5C.
-That older deployment is commit a80b8159df8331af0c84d3a098f54e880edecca5.
-https://crm.mercurycalldesk.com/api/status returned 404 because the older deployment does not include PR #35.
-```
-
-Treat custom-domain promotion as unresolved until the custom domain reports:
-
-```txt
-git.commitSha = 85241b306e9799983226450a6876e71e52665995
-```
-
-## What Hamilton can do in Vercel to point the domain correctly
-
-Use the Vercel dashboard because the available connector tools do not expose alias/domain mutation.
-
-1. Open Vercel.
-2. Select team/project:
-
-```txt
-Team: Hamilton's projects
-Project: crm-mcd
-```
-
-3. Open the production deployment for commit:
-
-```txt
-85241b306e9799983226450a6876e71e52665995
-Deployment: dpl_DysALSqTjpxL9HjVV696tXFrwNaa
-```
-
-4. In the deployment page, use the production-domain or alias controls to promote/assign the deployment to:
-
-```txt
-crm.mercurycalldesk.com
-```
-
-5. If the dashboard shows `crm.mercurycalldesk.com` pinned/aliased to older deployment `dpl_8Qj5PcUQrBGfnYWHxvzPcGNGqG5C`, remove that alias/pin or reassign it to the latest production deployment.
-
-6. If the Domains tab shows a Git branch or production-branch setting, make sure the domain is assigned to the project production branch `main`, not a stale deployment.
-
-7. After saving, verify by opening:
-
-```txt
-https://crm.mercurycalldesk.com/api/status
-```
-
-Expected response:
+Custom domain now reports:
 
 ```txt
 ok = true
+service = crm-mcd
 environment = production
 git.branch = main
 git.commitSha = 85241b306e9799983226450a6876e71e52665995
+deployment.url = crm-dv36hh7jp-hamiltons-projects-f65eeb81.vercel.app
+region = iad1
+```
+
+Status:
+
+```txt
+crm.mercurycalldesk.com is now on the latest production deployment.
+The previous older deployment dpl_8Qj5PcUQrBGfnYWHxvzPcGNGqG5C is no longer the active custom-domain target based on /api/status verification.
 ```
 
 ## Current controlled test plan
@@ -157,18 +121,11 @@ Confirmed:
 1. PR #34 merged to main and deployed READY.
 2. PR #35 merged to main and deployed READY.
 3. /api/status works on the latest Vercel production deployment aliases.
-4. /portal/workspace, /portal/leads, and /admin/leads/testing resolved to sign-in instead of 404/500 on the new deployment URL before PR #35.
-5. /api/cron/leads/aging returned 401 without Authorization on the new deployment URL before PR #35.
-6. Production Neon remains 50 COLD / AVAILABLE, 0 OPEN / AVAILABLE claimable from the corrected batch.
-7. Hamilton confirmed agent login worked in preview before PR #34 merge.
-```
-
-Unresolved:
-
-```txt
-1. crm.mercurycalldesk.com still resolves to older deployment dpl_8Qj5PcUQrBGfnYWHxvzPcGNGqG5C.
-2. Need owner-side Vercel alias/domain reassignment or verification.
-3. Need controlled production acceptance on the custom domain after promotion.
+4. /api/status works on crm.mercurycalldesk.com and reports commit 85241b306e9799983226450a6876e71e52665995.
+5. /portal/workspace, /portal/leads, and /admin/leads/testing resolved to sign-in instead of 404/500 on the new deployment URL before PR #35.
+6. /api/cron/leads/aging returned 401 without Authorization on the new deployment URL before PR #35.
+7. Production Neon remains 50 COLD / AVAILABLE, 0 OPEN / AVAILABLE claimable from the corrected batch.
+8. Hamilton confirmed agent login worked in preview before PR #34 merge.
 ```
 
 Still recommended after custom-domain promotion:
@@ -200,4 +157,4 @@ Still recommended after custom-domain promotion:
 
 ## Acceptance gates
 
-PR #34 and PR #35 are merged and the latest Vercel production deployment is READY. Custom-domain alias promotion remains unresolved. Broader live lead operations, external GHL workflow activation, Servicing, Commissions, and Finance remain gated until separately approved and tested.
+PR #34 and PR #35 are merged, the latest Vercel production deployment is READY, and the custom domain is on the latest commit. Broader live lead operations, external GHL workflow activation, Servicing, Commissions, and Finance remain gated until separately approved and tested.
