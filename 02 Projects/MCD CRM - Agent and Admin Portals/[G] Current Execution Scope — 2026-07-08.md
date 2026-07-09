@@ -43,17 +43,24 @@ Branch:
 lead-flow-alignment-20260708
 ```
 
-Draft PR:
+Pull request:
 
 ```txt
 #34 — feat(leads): align cold lead workspace with two-way-contact claim rules
+Status: ready for review, not merged
 ```
 
 Latest observed Vercel preview:
 
 ```txt
-commit: aa84dcfd4b5770e54f3733af9fb60766d7d31b6e
+commit: f525d89a16ff344d999e3a07f2fba46264f65a8d
 state: READY
+```
+
+Owner-reported browser acceptance:
+
+```txt
+Hamilton logged in as an agent and confirmed it worked on 2026-07-08.
 ```
 
 ### 1. Cold Lead activity-first workspace
@@ -137,19 +144,24 @@ Do not inspect or record the secret value.
 
 ## Current controlled test plan
 
-Run preview acceptance for PR #34 before merge:
+PR #34 passed build/route/DB confirmation and owner-reported agent login. Merge still requires owner decision.
 
 ```txt
-1. Cold Lead appears in /portal/leads.
-2. Log call started does not claim or reserve the Lead.
-3. No-answer/voicemail leaves the Lead unowned.
-4. Callback/qualified/follow-up records two-way contact and unlocks claim.
-5. Claim sets ownerAgentId, claimedAt, and 45-day openPoolReleaseAt.
-6. DNC suppresses and cancels callbacks.
-7. /portal/workspace works without leadId.
-8. /portal/workspace shows assigned records, callbacks, recent activity, and claim timer.
-9. Aging sweep returns expired owned Leads to Open Pool.
-10. Aging sweep moves 21-day stale Open Pool records to Shark Tank.
+Confirmed:
+1. Vercel preview READY at f525d89a16ff344d999e3a07f2fba46264f65a8d.
+2. Preview runtime error/fatal log check returned no errors.
+3. /api/cron/leads/aging returns 401 without Authorization.
+4. Production Neon remains 50 COLD / AVAILABLE, 0 OPEN / AVAILABLE claimable.
+5. Hamilton confirmed agent login worked.
+
+Still recommended before/at merge:
+1. Record PR #34 acceptance in /admin/leads/testing.
+2. Confirm Cold Lead call-start writes activity only.
+3. Confirm no-answer/voicemail leaves the Lead unowned.
+4. Confirm callback/qualified/follow-up records two-way contact and unlocks claim.
+5. Confirm claim sets ownerAgentId, claimedAt, and 45-day openPoolReleaseAt.
+6. Confirm DNC suppresses and cancels callbacks.
+7. Confirm aging sweep behavior using controlled test data only.
 ```
 
 ## Next product slices after Lead Flow Alignment stabilizes
@@ -165,17 +177,9 @@ Run preview acceptance for PR #34 before merge:
 - Scraping, fetching, embedding, or ingesting Google Maps/review content.
 - Auto-enabling lead, servicing, commission, or finance feature flags.
 - Additional live import/submit/export without a run-specific owner approval reference.
-- Merging PR #34 before preview acceptance is recorded.
+- Merging PR #34 without owner merge decision.
 - Recording secrets, contact payloads, signed headers, raw source files, customer PII, tax IDs, or payment data in GitHub/My-Workspace.
 
 ## Acceptance gates
 
-PR #34 can move out of draft only when:
-
-- Preview acceptance proves Cold Lead activity-first behavior.
-- Claim-before-two-way-contact is blocked.
-- Claim-after-two-way-contact works and starts the 45-day timer.
-- DNC suppresses and cancels callbacks.
-- My Workspace dashboard works without `leadId`.
-- Aging sweep contract is verified without exposing `CRON_SECRET`.
-- Remaining GHL/Servicing/Commissions/Finance gates are explicitly preserved.
+PR #34 is now ready for review. Merge/production activation still requires an explicit owner merge decision and preservation of remaining GHL/Servicing/Commissions/Finance gates.
