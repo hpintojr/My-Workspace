@@ -54,8 +54,8 @@ Latest observed Vercel preview:
 
 ```txt
 commit: e44cac2ad0b36b32a9928de650c13c8350211f68
-state: building at last check; no error/stderr/exit events emitted yet
-last known READY preview: 7cf2101c7e4146684685a709f1506296f4484e7e
+state: READY
+runtime error/fatal logs: none found at last check
 ```
 
 Owner-reported browser acceptance:
@@ -170,7 +170,7 @@ PR #34 passed build/route/DB confirmation and owner-reported agent login. Merge 
 
 ```txt
 Confirmed:
-1. Vercel preview READY at f525d89a16ff344d999e3a07f2fba46264f65a8d and later READY at 7cf2101c7e4146684685a709f1506296f4484e7e.
+1. Latest Vercel preview is READY at e44cac2ad0b36b32a9928de650c13c8350211f68.
 2. Preview runtime error/fatal log check returned no errors for the latest READY preview.
 3. /api/cron/leads/aging returns 401 without Authorization.
 4. Production Neon remains 50 COLD / AVAILABLE, 0 OPEN / AVAILABLE claimable.
