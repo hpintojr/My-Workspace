@@ -8,10 +8,10 @@ holder: chatgpt
 scope: crm.mcd + My-Workspace scope documentation
 since: 2026-07-07T06:04Z
 previous_holder: claude (inspected + merged PR #32 to production)
-intent: controlled Lead Flow Alignment after first production import and approved data correction.
+intent: controlled Lead Flow Alignment after first production import, approved data correction, strict click-to-call, GHL relay hardening, and production-readiness work.
 next: 1) run controlled preview acceptance for PR #34;
-      2) verify Cold Lead activity-first flow, claim gate, DNC, My Workspace, and aging sweep;
-      3) keep PR #34 draft until acceptance is recorded;
+      2) verify Cold Lead strict click-to-call, claim gate, DNC, My Workspace, GHL relays, and aging sweep;
+      3) PR #34 is ready for review and not merged;
       4) do not merge PR #34, enable broader live rollout, or change production data without owner approval.
 ```
 
