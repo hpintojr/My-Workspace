@@ -6,13 +6,13 @@
 
 ## Current release state
 
-The Lead Flow production-readiness scope is live in production through PR #46. PR #34 through PR #46 are merged to `main`, deployed to Vercel production, and smoke-tested on the custom domain.
+The Lead Flow production-readiness scope is live in production through PR #47. PR #34 through PR #47 are merged to `main`, deployed to Vercel production, and smoke-tested on the custom domain.
 
 ```txt
-Latest production commit: a0aadedd6111340cfde92760e23efa55fc61a8a9
-Latest production deployment: dpl_5dUWRus7x4rextXn3cYUBrF1Ggd4
+Latest production commit: efe406c0545e73173215ab1ea41a5cf417f9acca
+Latest production deployment: dpl_FET94cR9TGb3qruoMN3X3mMUZNK2
 Custom domain: crm.mercurycalldesk.com
-/api/status: production, main, commit a0aadedd6111340cfde92760e23efa55fc61a8a9
+/api/status: production, main, commit efe406c0545e73173215ab1ea41a5cf417f9acca
 ```
 
 Current safety boundary:
@@ -20,8 +20,8 @@ Current safety boundary:
 ```txt
 No secret values were inspected or recorded.
 No local process wrote directly to Neon/Postgres.
-No schema changes were introduced in PR #36 through PR #46.
-No feature flags were changed in PR #36 through PR #46.
+No schema changes were introduced in PR #36 through PR #47.
+No feature flags were changed in PR #36 through PR #47.
 No GHL workflow activation occurred.
 No live GHL API calls were introduced by the controlled harness.
 No imports, payouts, servicing, commissions, finance actions, or client onboarding were enabled.
@@ -35,7 +35,7 @@ Hamilton approved the open-source reuse direction on 2026-07-09.
 ```txt
 Approve Mercury CRM as the base.
 Approve NextCRM as primary code-reference/source-mining repo.
-Approve OpenCRM as lightweight UI/agent-mode reference.
+Approve OpenCRM as lightweight UI and agent-mode reference.
 Approve Twenty as architecture reference only, no code copy without license review.
 Pause new feature expansion until we add controlled test data + GHL test harness.
 Continue handoff updates in hpintojr/My-Workspace after each repo-mining PR.
@@ -52,14 +52,14 @@ twentyhq/twenty -> architecture reference only; no code copy without license rev
 
 ## Execution boundary
 
-Controlled test data and the controlled GHL event harness are now deployed. Broad live feature expansion remains paused until acceptance evidence integration is completed and authenticated acceptance is recorded.
+Controlled test data, the controlled GHL event harness, and acceptance evidence integration are now deployed. Broad live feature expansion remains paused until authenticated production acceptance is recorded and owner decision is captured.
 
 ```txt
 Current coding sequence:
 1. Controlled Test Data Foundation. DONE in PR #45.
 2. Controlled GHL Event Harness. DONE in PR #46.
-3. Acceptance Evidence Integration. NEXT.
-4. OpenCRM-inspired agent-friendly UI mode.
+3. Acceptance Evidence Integration. DONE in PR #47.
+4. OpenCRM-inspired agent-friendly UI mode. NEXT.
 5. NextCRM-inspired activity/audit UX improvements.
 ```
 
@@ -154,13 +154,20 @@ Merge commit: a0aadedd6111340cfde92760e23efa55fc61a8a9
 Preview deployment: dpl_AAKn2oHLSJBcRw5W3ddcHXjzyMWB
 Production deployment: dpl_5dUWRus7x4rextXn3cYUBrF1Ggd4
 State: READY
+
+PR #47 — feat(leads): integrate controlled acceptance evidence
+Head before merge: 6003a32b0386981aa5f8e231085e49913475daec
+Merge commit: efe406c0545e73173215ab1ea41a5cf417f9acca
+Preview deployment: dpl_7qH6wDzM97C32cEDD6tkcwBzgCJg
+Production deployment: dpl_FET94cR9TGb3qruoMN3X3mMUZNK2
+State: READY
 ```
 
 ## Latest production verification
 
 ```txt
 Custom domain: crm.mercurycalldesk.com
-Latest /api/status -> 200, production, main, commit a0aadedd6111340cfde92760e23efa55fc61a8a9
+Latest /api/status -> 200, production, main, commit efe406c0545e73173215ab1ea41a5cf417f9acca
 /admin/leads/testing -> sign-in boundary, not 404/500
 /admin/leads/acceptance-report -> sign-in boundary, not 404/500
 /api/admin/leads/acceptance-report -> sign-in boundary, not 404/500
@@ -177,15 +184,16 @@ Latest /api/status -> 200, production, main, commit a0aadedd6111340cfde92760e23e
 Confirmed:
 
 ```txt
-1. PR #34 through PR #46 are merged to main and deployed READY.
-2. /api/status works on crm.mercurycalldesk.com and reports commit a0aadedd6111340cfde92760e23efa55fc61a8a9.
+1. PR #34 through PR #47 are merged to main and deployed READY.
+2. /api/status works on crm.mercurycalldesk.com and reports commit efe406c0545e73173215ab1ea41a5cf417f9acca.
 3. Protected admin/portal routes resolve to sign-in instead of 404/500 when unauthenticated.
 4. Controlled test data foundation exists at /admin/leads/controlled-test-data.
 5. Controlled GHL event harness exists at /admin/integrations/test-events.
-6. Controlled GHL harness only accepts PR #45 controlled test Leads.
-7. Production Neon first batch remains expected COLD / AVAILABLE state unless separately changed by authenticated acceptance testing.
-8. Hamilton confirmed agent login worked in preview before PR #34 merge.
-9. Hamilton reported seeing the production task list/acceptance board after custom-domain promotion.
+6. Controlled acceptance evidence is integrated into /admin/leads/acceptance-report, JSON report, and CSV export.
+7. Controlled GHL harness only accepts PR #45 controlled test Leads.
+8. Production Neon first batch remains expected COLD / AVAILABLE state unless separately changed by authenticated acceptance testing.
+9. Hamilton confirmed agent login worked in preview before PR #34 merge.
+10. Hamilton reported seeing the production task list/acceptance board after custom-domain promotion.
 ```
 
 Still recommended for authenticated production acceptance:
@@ -207,13 +215,14 @@ Still recommended for authenticated production acceptance:
 14. Record owner production decision before expanding normal Lead Flow use.
 ```
 
-## Next approved blocker before feature expansion
+## Next approved scope
 
 ```txt
-1. Acceptance Evidence Integration.
+1. OpenCRM-inspired agent-friendly UI mode.
+2. NextCRM-inspired activity/audit UX improvements.
 ```
 
-Acceptance evidence integration is now the approved next blocker before broader feature expansion, live GHL workflow activation, Servicing, Commissions, or Finance work.
+Agent-friendly UI mode is now the next approved coding scope. Live GHL workflow activation, Servicing, Commissions, and Finance work remain gated.
 
 ## Explicitly out of scope without separate approval
 
@@ -229,7 +238,7 @@ Copying Twenty code or vendoring Twenty files without explicit license review.
 
 ## Acceptance gates
 
-PR #34 through PR #46 are merged and deployed. The latest production deployment is READY, the custom domain is on the latest production commit, unauthenticated custom-domain smoke checks passed, controlled test data and the controlled GHL event harness are deployed, and the open-source CRM reuse direction is approved. Broader live lead operations, authenticated business-rule acceptance, external GHL workflow activation, Servicing, Commissions, and Finance remain gated until separately approved and tested.
+PR #34 through PR #47 are merged and deployed. The latest production deployment is READY, the custom domain is on the latest production commit, unauthenticated custom-domain smoke checks passed, controlled test data, the controlled GHL event harness, and acceptance evidence integration are deployed, and the open-source CRM reuse direction is approved. Broader live lead operations, authenticated business-rule acceptance, external GHL workflow activation, Servicing, Commissions, and Finance remain gated until separately approved and tested.
 
 ## Supporting daily logs and planning docs
 
@@ -242,4 +251,5 @@ PR #34 through PR #46 are merged and deployed. The latest production deployment 
 01 Daily Logs/[G] 2026-07-09 MCD CRM PR44 Aging Dry Run Preview.md
 01 Daily Logs/[G] 2026-07-09 MCD CRM PR45 Controlled Test Data Foundation.md
 01 Daily Logs/[G] 2026-07-09 MCD CRM PR46 Controlled GHL Event Harness.md
+01 Daily Logs/[G] 2026-07-09 MCD CRM PR47 Acceptance Evidence Integration.md
 ```
