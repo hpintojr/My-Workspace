@@ -48,14 +48,14 @@ Pull request:
 ```txt
 #34 — feat(leads): align cold lead workspace with two-way-contact claim rules
 Status: ready for review, not merged
-Latest head: 59571ae343cd15e4c296fa260dace3cc8ce38d42
+Latest head: 3dd9df8b892035ec29904f4197e5d5b7fe2f842f
 ```
 
 Latest observed Vercel preview:
 
 ```txt
-latest known READY functional preview: 4e7031d62a2f88ee823b2266e48f40048f80c1d8
-latest docs/guard head 59571ae343cd15e4c296fa260dace3cc8ce38d42 was building at last check with no error/stderr/exit events emitted
+latest known READY functional preview before strict click-to-call guard: 1371550933e43017b121d8071a1d957572b8e111
+latest head 3dd9df8b892035ec29904f4197e5d5b7fe2f842f was building at last check with no error/stderr/exit events emitted
 ```
 
 Owner-reported browser acceptance:
@@ -69,7 +69,8 @@ Hamilton logged in as an agent and confirmed it worked on 2026-07-08.
 PR #34 must preserve these rules:
 
 - Cold Leads display in `/portal/leads` as unowned `COLD / AVAILABLE` records.
-- Call-start logging creates activity only.
+- Click-to-call logs `CALL_INITIATED` before opening the device dialer.
+- If call activity cannot be logged, the dialer is not opened.
 - Call-start logging must not claim, soft-lock, reserve, or assign ownership.
 - No-answer and voicemail keep the Lead unowned.
 - Callback-requested, qualified, and follow-up/interested record two-way contact and unlock claim eligibility.
@@ -180,7 +181,7 @@ PR #34 passed build/route/DB confirmation and owner-reported agent login. Merge 
 
 ```txt
 Confirmed:
-1. Vercel preview READY at multiple PR #34 heads through the GHL appointment hardening pass.
+1. Vercel preview READY at multiple PR #34 heads through the strict click-to-call documentation pass.
 2. Preview runtime error/fatal log check returned no errors for the latest READY preview checked.
 3. /api/cron/leads/aging returns 401 without Authorization.
 4. Production Neon remains 50 COLD / AVAILABLE, 0 OPEN / AVAILABLE claimable.
@@ -188,17 +189,18 @@ Confirmed:
 
 Still recommended before/at merge:
 1. Record PR #34 acceptance in /admin/leads/testing.
-2. Confirm Cold Lead call-start writes activity only.
-3. Confirm no-answer/voicemail leaves the Lead unowned.
-4. Confirm callback/qualified/follow-up records two-way contact and unlocks claim.
-5. Confirm claim sets ownerAgentId, claimedAt, and 45-day openPoolReleaseAt.
-6. Confirm Warm Reply Triage assignment starts the 45-day timer.
-7. Confirm GHL appointment events do not mutate suppressed/DNC Leads.
-8. Confirm GHL appointment cancellation/no-show creates or expedites one owner callback.
-9. Confirm GHL Opportunity Won/Lost cancels scheduled callbacks on terminal outcomes.
-10. Confirm GHL Opportunity Lost does not roll back Closed Won.
-11. Confirm DNC suppresses and cancels callbacks.
-12. Confirm aging sweep behavior using controlled test data only.
+2. Confirm click-to-call logs activity before opening dialer.
+3. Confirm click-to-call blocks the dialer if activity logging fails.
+4. Confirm no-answer/voicemail leaves the Lead unowned.
+5. Confirm callback/qualified/follow-up records two-way contact and unlocks claim.
+6. Confirm claim sets ownerAgentId, claimedAt, and 45-day openPoolReleaseAt.
+7. Confirm Warm Reply Triage assignment starts the 45-day timer.
+8. Confirm GHL appointment events do not mutate suppressed/DNC Leads.
+9. Confirm GHL appointment cancellation/no-show creates or expedites one owner callback.
+10. Confirm GHL Opportunity Won/Lost cancels scheduled callbacks on terminal outcomes.
+11. Confirm GHL Opportunity Lost does not roll back Closed Won.
+12. Confirm DNC suppresses and cancels callbacks.
+13. Confirm aging sweep behavior using controlled test data only.
 ```
 
 ## Next product slices after Lead Flow Alignment stabilizes
