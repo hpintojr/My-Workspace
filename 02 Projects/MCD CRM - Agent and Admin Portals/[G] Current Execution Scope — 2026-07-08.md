@@ -77,6 +77,46 @@ Owner-reported browser acceptance before merge:
 Hamilton logged in as an agent and confirmed it worked on 2026-07-08.
 ```
 
+## PR #35 Deployment Status + Smoke Helper — open
+
+Branch:
+
+```txt
+deploy-status-smoke-20260708
+```
+
+Pull request:
+
+```txt
+#35 — feat(ops): add deployment status endpoint and smoke checklist
+Status: open, mergeable, not merged
+Head: 4cf0ebbc524938a09c91e26a9078f054ec8dd538
+```
+
+Purpose:
+
+```txt
+Add /api/status and docs/PRODUCTION_SMOKE_20260708.md so any hostname can be checked against the expected Vercel/Git commit without touching production data.
+```
+
+Safety:
+
+```txt
+/api/status returns non-secret Vercel/Git metadata only.
+No database access.
+No feature flag changes.
+No production data mutation.
+```
+
+Current verification state:
+
+```txt
+GitHub reports PR #35 is mergeable.
+No Vercel preview deployment was found for branch deploy-status-smoke-20260708.
+Branch alias crm-mcd-git-deploy-status-smoke-20260708-hamiltons-projects-f65eeb81.vercel.app returned deployment not found.
+Do not merge PR #35 until owner approves or a preview/build path is verified.
+```
+
 ### 1. Cold Lead activity-first workspace
 
 Production must preserve these rules:
@@ -210,7 +250,7 @@ owner merge decision
 
 ## Current controlled test plan
 
-PR #34 is merged and the new main deployment is READY. Custom-domain promotion is still unresolved. Controlled production smoke checks are still recommended before expanding normal lead operations.
+PR #34 is merged and the new main deployment is READY. Custom-domain promotion is still unresolved. PR #35 is open to add an explicit status endpoint and smoke checklist for future domain verification.
 
 ```txt
 Confirmed:
@@ -221,10 +261,12 @@ Confirmed:
 5. /api/cron/leads/aging returns 401 without Authorization on the new deployment URL.
 6. Production Neon remains 50 COLD / AVAILABLE, 0 OPEN / AVAILABLE claimable from the corrected batch.
 7. Hamilton confirmed agent login worked in preview before merge.
+8. PR #35 is open and mergeable but has no Vercel preview deployment observed yet.
 
 Unresolved:
 1. crm.mercurycalldesk.com still resolved to older deployment dpl_8Qj5PcUQrBGfnYWHxvzPcGNGqG5C at the last check.
 2. Need Vercel domain/alias correction or owner-side verification that the custom domain promotes to commit 487ff615170f2c9530da61e477935d969d814e69.
+3. Need PR #35 preview/build verification or explicit owner decision before merge.
 
 Still recommended after custom-domain promotion:
 1. Record production smoke acceptance in /admin/leads/testing.
@@ -245,10 +287,11 @@ Still recommended after custom-domain promotion:
 ## Next product slices after Lead Flow Alignment stabilizes
 
 1. **Custom domain promotion** — ensure `crm.mercurycalldesk.com` resolves to the PR #34 merge commit deployment.
-2. **GHL appointment/opportunity/reply acceptance** — validate live appointment, opportunity result, and inbound reply contracts while preserving originating-agent attribution and DNC/suppression protections.
-3. **Lead ingestion and nurture** — finish the local importer operating runbook, define Sequenzy nurture/suppression sync, and add operator reports.
-4. **Client servicing and commissions** — test the staged client/service/ledger migration on a safety branch before enabling service or finance flags.
-5. **Finance payouts** — only after Stripe Connect live credentials, funding reconciliation, approval UI, and non-production payout tests are complete.
+2. **Deployment status helper** — verify/merge PR #35 after preview/build confirmation or explicit owner approval.
+3. **GHL appointment/opportunity/reply acceptance** — validate live appointment, opportunity result, and inbound reply contracts while preserving originating-agent attribution and DNC/suppression protections.
+4. **Lead ingestion and nurture** — finish the local importer operating runbook, define Sequenzy nurture/suppression sync, and add operator reports.
+5. **Client servicing and commissions** — test the staged client/service/ledger migration on a safety branch before enabling service or finance flags.
+6. **Finance payouts** — only after Stripe Connect live credentials, funding reconciliation, approval UI, and non-production payout tests are complete.
 
 ## Explicitly out of scope without separate approval
 
@@ -261,4 +304,4 @@ Still recommended after custom-domain promotion:
 
 ## Acceptance gates
 
-PR #34 is merged and the new main deployment is READY. Custom-domain alias promotion remains unresolved. Broader live lead operations, external GHL workflow activation, Servicing, Commissions, and Finance remain gated until separately approved and tested.
+PR #34 is merged and the new main deployment is READY. Custom-domain alias promotion remains unresolved. PR #35 is open as a safe ops helper but not merged. Broader live lead operations, external GHL workflow activation, Servicing, Commissions, and Finance remain gated until separately approved and tested.
