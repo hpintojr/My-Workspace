@@ -6,7 +6,7 @@
 
 ## Current release state
 
-The lead-research and opaque owner-acquisition release is live in production. The first supervised production import occurred, was corrected with owner approval, and PR #34 has now been merged to production.
+The lead-research and opaque owner-acquisition release is live in production. The first supervised production import occurred, was corrected with owner approval, and PR #34 has now been merged. The new Vercel production deployment is READY, but the custom domain still needs a domain/alias promotion check.
 
 - Lead records support business address, Google rating, rating-observed timestamp, and an outbound Google Maps link.
 - The batch acquisition record stores only opaque `sourceCode` and `acquisitionReference` values.
@@ -52,14 +52,23 @@ Head before merge: 43b99e0daacaace2767f93d6a95641fa8d1d8a9a
 Merge commit: 487ff615170f2c9530da61e477935d969d814e69
 ```
 
-Production deployment:
+Vercel deployment evidence:
 
 ```txt
-Deployment: dpl_Hwq4jTsjmpdjJ8AmMffe8hYDAL9o
+New main deployment: dpl_Hwq4jTsjmpdjJ8AmMffe8hYDAL9o
 Commit: 487ff615170f2c9530da61e477935d969d814e69
 Target: production
 State: READY
 Runtime error/fatal logs: none found for the checked window
+Vercel production alias checked: crm-mcd-hamiltons-projects-f65eeb81.vercel.app -> dpl_Hwq4jTsjmpdjJ8AmMffe8hYDAL9o
+```
+
+Custom-domain caveat:
+
+```txt
+crm.mercurycalldesk.com still resolved to older deployment dpl_8Qj5PcUQrBGfnYWHxvzPcGNGqG5C at the last check.
+That older deployment is commit a80b8159df8331af0c84d3a098f54e880edecca5.
+Treat custom-domain promotion as unresolved until Vercel domain/alias assignment is corrected or verified by owner in Vercel.
 ```
 
 Owner-reported browser acceptance before merge:
@@ -201,18 +210,23 @@ owner merge decision
 
 ## Current controlled test plan
 
-PR #34 is merged and production deployment is READY. Controlled production smoke checks are still recommended before expanding normal lead operations.
+PR #34 is merged and the new main deployment is READY. Custom-domain promotion is still unresolved. Controlled production smoke checks are still recommended before expanding normal lead operations.
 
 ```txt
 Confirmed:
 1. PR #34 merged to main at 487ff615170f2c9530da61e477935d969d814e69.
-2. Production Vercel deployment dpl_Hwq4jTsjmpdjJ8AmMffe8hYDAL9o reached READY.
-3. Production runtime error/fatal log check returned no errors for the checked window.
-4. /api/cron/leads/aging returns 401 without Authorization.
-5. Production Neon remains 50 COLD / AVAILABLE, 0 OPEN / AVAILABLE claimable from the corrected batch.
-6. Hamilton confirmed agent login worked in preview before merge.
+2. New Vercel production deployment dpl_Hwq4jTsjmpdjJ8AmMffe8hYDAL9o reached READY.
+3. Runtime error/fatal log check returned no errors for the checked window.
+4. /portal/workspace, /portal/leads, and /admin/leads/testing resolve to sign-in instead of 404/500 on the new deployment URL.
+5. /api/cron/leads/aging returns 401 without Authorization on the new deployment URL.
+6. Production Neon remains 50 COLD / AVAILABLE, 0 OPEN / AVAILABLE claimable from the corrected batch.
+7. Hamilton confirmed agent login worked in preview before merge.
 
-Still recommended after merge:
+Unresolved:
+1. crm.mercurycalldesk.com still resolved to older deployment dpl_8Qj5PcUQrBGfnYWHxvzPcGNGqG5C at the last check.
+2. Need Vercel domain/alias correction or owner-side verification that the custom domain promotes to commit 487ff615170f2c9530da61e477935d969d814e69.
+
+Still recommended after custom-domain promotion:
 1. Record production smoke acceptance in /admin/leads/testing.
 2. Confirm click-to-call logs activity before opening dialer.
 3. Confirm click-to-call blocks the dialer if activity logging fails.
@@ -230,10 +244,11 @@ Still recommended after merge:
 
 ## Next product slices after Lead Flow Alignment stabilizes
 
-1. **GHL appointment/opportunity/reply acceptance** — validate live appointment, opportunity result, and inbound reply contracts while preserving originating-agent attribution and DNC/suppression protections.
-2. **Lead ingestion and nurture** — finish the local importer operating runbook, define Sequenzy nurture/suppression sync, and add operator reports.
-3. **Client servicing and commissions** — test the staged client/service/ledger migration on a safety branch before enabling service or finance flags.
-4. **Finance payouts** — only after Stripe Connect live credentials, funding reconciliation, approval UI, and non-production payout tests are complete.
+1. **Custom domain promotion** — ensure `crm.mercurycalldesk.com` resolves to the PR #34 merge commit deployment.
+2. **GHL appointment/opportunity/reply acceptance** — validate live appointment, opportunity result, and inbound reply contracts while preserving originating-agent attribution and DNC/suppression protections.
+3. **Lead ingestion and nurture** — finish the local importer operating runbook, define Sequenzy nurture/suppression sync, and add operator reports.
+4. **Client servicing and commissions** — test the staged client/service/ledger migration on a safety branch before enabling service or finance flags.
+5. **Finance payouts** — only after Stripe Connect live credentials, funding reconciliation, approval UI, and non-production payout tests are complete.
 
 ## Explicitly out of scope without separate approval
 
@@ -246,4 +261,4 @@ Still recommended after merge:
 
 ## Acceptance gates
 
-PR #34 is merged and deployed. Broader live lead operations, external GHL workflow activation, Servicing, Commissions, and Finance remain gated until separately approved and tested.
+PR #34 is merged and the new main deployment is READY. Custom-domain alias promotion remains unresolved. Broader live lead operations, external GHL workflow activation, Servicing, Commissions, and Finance remain gated until separately approved and tested.
