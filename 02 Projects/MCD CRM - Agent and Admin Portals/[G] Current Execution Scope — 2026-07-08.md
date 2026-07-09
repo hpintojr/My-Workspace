@@ -6,7 +6,7 @@
 
 ## Current release state
 
-The lead-research and opaque owner-acquisition release is live in production. The first supervised production import occurred, was corrected with owner approval, PR #34 has been merged, PR #35 has added the deployment-status smoke helper, the custom domain resolves to the latest production commit, the custom-domain unauthenticated smoke pass is complete, and PR #36 is merged/deployed as the production acceptance board section. PR #37 is open to wire Readiness, Audit, and Operating Status to the PR #36 production acceptance lane.
+The lead-research and opaque owner-acquisition release is live in production. The first supervised production import occurred, was corrected with owner approval, PR #34 has been merged, PR #35 has added the deployment-status smoke helper, the custom domain resolves to the latest production commit, the custom-domain unauthenticated smoke pass is complete, PR #36 is merged/deployed as the production acceptance board section, and PR #37 is merged/deployed as the Readiness/Audit/Operating Status wiring section.
 
 - No secret values were inspected or recorded.
 - No local process wrote directly to Neon/Postgres.
@@ -101,8 +101,8 @@ ok = true
 service = crm-mcd
 environment = production
 git.branch = main
-git.commitSha = 23fef7ba6da8bc55fc6789d0f7c342f87488f818
-deployment.url = crm-i3o2r8ims-hamiltons-projects-f65eeb81.vercel.app
+git.commitSha = e42ec797ac3db2fb70aea76a41e899080105e69d
+deployment.url = crm-i658a16d1-hamiltons-projects-f65eeb81.vercel.app
 region = iad1
 ```
 
@@ -115,15 +115,18 @@ The previous older deployment dpl_8Qj5PcUQrBGfnYWHxvzPcGNGqG5C is no longer the 
 
 ## Custom-domain unauthenticated smoke pass — complete
 
-Checked on `crm.mercurycalldesk.com` after domain promotion and again after PR #36:
+Checked on `crm.mercurycalldesk.com` after domain promotion and again after PR #36 and PR #37:
 
 ```txt
-/api/status -> 200, production, commit 23fef7ba6da8bc55fc6789d0f7c342f87488f818
+/api/status -> 200, production, commit e42ec797ac3db2fb70aea76a41e899080105e69d
 /portal/workspace -> 200 sign-in boundary, not 404/500
 /portal/leads -> 200 sign-in boundary, not 404/500
 /admin/leads/testing -> 200 sign-in boundary, not 404/500
+/admin/readiness -> 200 sign-in boundary, not 404/500
+/admin/audit -> 200 sign-in boundary, not 404/500
+/admin/operating-status -> 200 sign-in boundary, not 404/500
 /api/cron/leads/aging -> 401 Unauthorized without Authorization
-Vercel runtime error/fatal logs for dpl_D7FKurVxw7FURpoe9g8SdNFJLrWV, checked window 2026-07-09T06:45Z to 2026-07-09T07:05Z -> no logs found
+Vercel runtime error/fatal logs for dpl_7hGG8cpY2PCb6TEZyzwcKDuwctw1, checked window 2026-07-09T07:12Z to 2026-07-09T07:27Z -> no logs found
 ```
 
 Owner-reported browser confirmation:
@@ -197,18 +200,18 @@ Production /api/cron/leads/aging -> 401 Unauthorized without Authorization.
 Runtime error/fatal logs for dpl_D7FKurVxw7FURpoe9g8SdNFJLrWV -> no logs found for checked window.
 ```
 
-## PR #37 Production Acceptance Readiness/Audit/Operating Status Wiring — open
+## PR #37 Production Acceptance Readiness/Audit/Operating Status Wiring — merged
 
 ```txt
 PR: #37 — feat(admin): wire readiness to production lead acceptance
-Status: open, mergeable, not merged
-Branch: production-acceptance-readiness-20260709
-Head: fd7774ce857d2e7ce20be04ff15722a99afc26d8
-Base: main at 23fef7ba6da8bc55fc6789d0f7c342f87488f818
-Changed files: 4
+Status: merged to main
+Head before merge: fd7774ce857d2e7ce20be04ff15722a99afc26d8
+Merge commit: e42ec797ac3db2fb70aea76a41e899080105e69d
+Production deployment: dpl_7hGG8cpY2PCb6TEZyzwcKDuwctw1
+State: READY
 ```
 
-PR #37 updates this scope section:
+PR #37 updated this scope section:
 
 ```txt
 src/app/admin/readiness/page.tsx
@@ -243,14 +246,22 @@ No imports, payouts, servicing, commissions, or finance changes.
 Verification state:
 
 ```txt
-GitHub reports PR #37 is mergeable.
+GitHub checks for PR #37 head fd7774ce857d2e7ce20be04ff15722a99afc26d8 all passed:
+- Commission Policy -> success
+- Verify CRM -> success
+- Application Build -> success
 Vercel preview dpl_3zLMzUoCoZrWa6QswbiBgyx42BLS reached READY.
 Preview /api/status -> 200, preview environment, branch production-acceptance-readiness-20260709, commit fd7774ce857d2e7ce20be04ff15722a99afc26d8.
 Preview /admin/readiness -> 200 sign-in boundary, not 404/500.
 Preview /admin/audit -> 200 sign-in boundary, not 404/500.
 Preview /admin/operating-status -> 200 sign-in boundary, not 404/500.
-GitHub Actions for the updated head are queued.
-Do not merge PR #37 until GitHub Actions finish or owner explicitly accepts the remaining check risk.
+Production deployment dpl_7hGG8cpY2PCb6TEZyzwcKDuwctw1 reached READY.
+Production /api/status -> 200, production, main, commit e42ec797ac3db2fb70aea76a41e899080105e69d.
+Production /admin/readiness -> 200 sign-in boundary, not 404/500.
+Production /admin/audit -> 200 sign-in boundary, not 404/500.
+Production /admin/operating-status -> 200 sign-in boundary, not 404/500.
+Production /api/cron/leads/aging -> 401 Unauthorized without Authorization.
+Runtime error/fatal logs for dpl_7hGG8cpY2PCb6TEZyzwcKDuwctw1 -> no logs found for checked window.
 ```
 
 ## Current controlled test plan
@@ -261,34 +272,33 @@ Confirmed:
 1. PR #34 merged to main and deployed READY.
 2. PR #35 merged to main and deployed READY.
 3. PR #36 merged to main and deployed READY.
-4. /api/status works on the latest Vercel production deployment aliases.
-5. /api/status works on crm.mercurycalldesk.com and reports commit 23fef7ba6da8bc55fc6789d0f7c342f87488f818.
-6. /portal/workspace, /portal/leads, and /admin/leads/testing resolve to sign-in instead of 404/500 on the custom domain.
-7. /api/cron/leads/aging returns 401 without Authorization on the custom domain.
-8. Runtime error/fatal logs for the latest production deployment show no entries for the checked window.
-9. Production Neon remains 50 COLD / AVAILABLE, 0 OPEN / AVAILABLE claimable from the corrected batch.
-10. Hamilton confirmed agent login worked in preview before PR #34 merge.
-11. Hamilton reported seeing the production task list/acceptance board after custom-domain promotion.
-12. PR #37 is open and mergeable as the next readiness/audit/operating-status wiring section; Vercel preview is READY, GitHub Actions are queued.
+4. PR #37 merged to main and deployed READY.
+5. /api/status works on the latest Vercel production deployment aliases.
+6. /api/status works on crm.mercurycalldesk.com and reports commit e42ec797ac3db2fb70aea76a41e899080105e69d.
+7. /portal/workspace, /portal/leads, /admin/leads/testing, /admin/readiness, /admin/audit, and /admin/operating-status resolve to sign-in instead of 404/500 on the custom domain.
+8. /api/cron/leads/aging returns 401 without Authorization on the custom domain.
+9. Runtime error/fatal logs for the latest production deployment show no entries for the checked window.
+10. Production Neon remains 50 COLD / AVAILABLE, 0 OPEN / AVAILABLE claimable from the corrected batch.
+11. Hamilton confirmed agent login worked in preview before PR #34 merge.
+12. Hamilton reported seeing the production task list/acceptance board after custom-domain promotion.
 ```
 
 Still recommended for authenticated production acceptance:
 
 ```txt
-1. Merge PR #37 after GitHub Actions pass or owner explicitly approves.
-2. Record production smoke acceptance in /admin/leads/testing.
-3. Confirm click-to-call logs activity before opening dialer.
-4. Confirm click-to-call blocks the dialer if activity logging fails.
-5. Confirm no-answer/voicemail leaves the Lead unowned.
-6. Confirm callback/qualified/follow-up records two-way contact and unlocks claim.
-7. Confirm claim sets ownerAgentId, claimedAt, and 45-day openPoolReleaseAt.
-8. Confirm Warm Reply Triage assignment starts the 45-day timer.
-9. Confirm GHL appointment events do not mutate suppressed/DNC Leads.
-10. Confirm GHL appointment cancellation/no-show creates or expedites one owner callback.
-11. Confirm GHL Opportunity Won/Lost cancels scheduled callbacks on terminal outcomes.
-12. Confirm GHL Opportunity Lost does not roll back Closed Won.
-13. Confirm DNC suppresses and cancels callbacks.
-14. Confirm aging sweep behavior using controlled test data only.
+1. Record production smoke acceptance in /admin/leads/testing.
+2. Confirm click-to-call logs activity before opening dialer.
+3. Confirm click-to-call blocks the dialer if activity logging fails.
+4. Confirm no-answer/voicemail leaves the Lead unowned.
+5. Confirm callback/qualified/follow-up records two-way contact and unlocks claim.
+6. Confirm claim sets ownerAgentId, claimedAt, and 45-day openPoolReleaseAt.
+7. Confirm Warm Reply Triage assignment starts the 45-day timer.
+8. Confirm GHL appointment events do not mutate suppressed/DNC Leads.
+9. Confirm GHL appointment cancellation/no-show creates or expedites one owner callback.
+10. Confirm GHL Opportunity Won/Lost cancels scheduled callbacks on terminal outcomes.
+11. Confirm GHL Opportunity Lost does not roll back Closed Won.
+12. Confirm DNC suppresses and cancels callbacks.
+13. Confirm aging sweep behavior using controlled test data only.
 ```
 
 ## Explicitly out of scope without separate approval
@@ -302,4 +312,4 @@ Still recommended for authenticated production acceptance:
 
 ## Acceptance gates
 
-PR #34, PR #35, and PR #36 are merged. PR #37 is open and mergeable with Vercel preview READY, pending GitHub Actions. The latest production deployment is READY, the custom domain is on the latest production commit, and unauthenticated custom-domain smoke checks passed. Broader live lead operations, authenticated business-rule acceptance, external GHL workflow activation, Servicing, Commissions, and Finance remain gated until separately approved and tested.
+PR #34, PR #35, PR #36, and PR #37 are merged and deployed. The latest production deployment is READY, the custom domain is on the latest production commit, and unauthenticated custom-domain smoke checks passed. Broader live lead operations, authenticated business-rule acceptance, external GHL workflow activation, Servicing, Commissions, and Finance remain gated until separately approved and tested.
