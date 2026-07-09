@@ -53,8 +53,9 @@ Status: ready for review, not merged
 Latest observed Vercel preview:
 
 ```txt
-commit: f525d89a16ff344d999e3a07f2fba46264f65a8d
-state: READY
+commit: e44cac2ad0b36b32a9928de650c13c8350211f68
+state: building at last check; no error/stderr/exit events emitted yet
+last known READY preview: 7cf2101c7e4146684685a709f1506296f4484e7e
 ```
 
 Owner-reported browser acceptance:
@@ -142,14 +143,35 @@ Hamilton confirmed CRON_SECRET is configured in Vercel.
 Do not inspect or record the secret value.
 ```
 
+### 5. GHL relay hardening added after agent login confirmation
+
+Warm Reply Triage:
+
+```txt
+Unowned inbound replies now require recorded two-way contact before assignment.
+Assignment creates immediate owner callback.
+Assignment starts the same 45-day openPoolReleaseAt responsibility timer as normal claim.
+Suppressed, DNC, closed, already-owned, and no-contact Leads remain excluded.
+```
+
+GHL appointment relay:
+
+```txt
+Suppressed/DNC Leads are ignored and audited.
+Booked/confirmed/rescheduled appointments record two-way contact if missing.
+Cancelled/no-show events create one immediate owner callback or expedite an existing callback.
+Closed Won Leads are not rolled back by later recovery events.
+Webhook responses and audit metadata now expose leadIgnored/callbackCreated/callbackExpedited/preservedClosedWon outcomes.
+```
+
 ## Current controlled test plan
 
 PR #34 passed build/route/DB confirmation and owner-reported agent login. Merge still requires owner decision.
 
 ```txt
 Confirmed:
-1. Vercel preview READY at f525d89a16ff344d999e3a07f2fba46264f65a8d.
-2. Preview runtime error/fatal log check returned no errors.
+1. Vercel preview READY at f525d89a16ff344d999e3a07f2fba46264f65a8d and later READY at 7cf2101c7e4146684685a709f1506296f4484e7e.
+2. Preview runtime error/fatal log check returned no errors for the latest READY preview.
 3. /api/cron/leads/aging returns 401 without Authorization.
 4. Production Neon remains 50 COLD / AVAILABLE, 0 OPEN / AVAILABLE claimable.
 5. Hamilton confirmed agent login worked.
@@ -160,8 +182,11 @@ Still recommended before/at merge:
 3. Confirm no-answer/voicemail leaves the Lead unowned.
 4. Confirm callback/qualified/follow-up records two-way contact and unlocks claim.
 5. Confirm claim sets ownerAgentId, claimedAt, and 45-day openPoolReleaseAt.
-6. Confirm DNC suppresses and cancels callbacks.
-7. Confirm aging sweep behavior using controlled test data only.
+6. Confirm Warm Reply Triage assignment starts the 45-day timer.
+7. Confirm GHL appointment events do not mutate suppressed/DNC Leads.
+8. Confirm GHL appointment cancellation/no-show creates or expedites one owner callback.
+9. Confirm DNC suppresses and cancels callbacks.
+10. Confirm aging sweep behavior using controlled test data only.
 ```
 
 ## Next product slices after Lead Flow Alignment stabilizes
