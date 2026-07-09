@@ -6,7 +6,7 @@
 
 ## Current release state
 
-The lead-research and opaque owner-acquisition release is live in production. The first supervised production import occurred, was corrected with owner approval, PR #34 has been merged, PR #35 has added the deployment-status smoke helper, and the custom domain now resolves to the latest production commit.
+The lead-research and opaque owner-acquisition release is live in production. The first supervised production import occurred, was corrected with owner approval, PR #34 has been merged, PR #35 has added the deployment-status smoke helper, the custom domain resolves to the latest production commit, and the custom-domain unauthenticated smoke pass is complete.
 
 - No secret values were inspected or recorded.
 - No local process wrote directly to Neon/Postgres.
@@ -113,6 +113,25 @@ crm.mercurycalldesk.com is now on the latest production deployment.
 The previous older deployment dpl_8Qj5PcUQrBGfnYWHxvzPcGNGqG5C is no longer the active custom-domain target based on /api/status verification.
 ```
 
+## Custom-domain unauthenticated smoke pass — complete
+
+Checked on `crm.mercurycalldesk.com` after domain promotion:
+
+```txt
+/api/status -> 200, production, commit 85241b306e9799983226450a6876e71e52665995
+/portal/workspace -> 200 sign-in boundary, not 404/500
+/portal/leads -> 200 sign-in boundary, not 404/500
+/admin/leads/testing -> 200 sign-in boundary, not 404/500
+/api/cron/leads/aging -> 401 Unauthorized without Authorization
+Vercel runtime error/fatal logs for dpl_DysALSqTjpxL9HjVV696tXFrwNaa, checked window 2026-07-09T06:15Z to 2026-07-09T06:45Z -> no logs found
+```
+
+Owner-reported browser confirmation:
+
+```txt
+Hamilton reported seeing the task list/acceptance board on the production custom domain on 2026-07-09.
+```
+
 ## Current controlled test plan
 
 Confirmed:
@@ -122,13 +141,15 @@ Confirmed:
 2. PR #35 merged to main and deployed READY.
 3. /api/status works on the latest Vercel production deployment aliases.
 4. /api/status works on crm.mercurycalldesk.com and reports commit 85241b306e9799983226450a6876e71e52665995.
-5. /portal/workspace, /portal/leads, and /admin/leads/testing resolved to sign-in instead of 404/500 on the new deployment URL before PR #35.
-6. /api/cron/leads/aging returned 401 without Authorization on the new deployment URL before PR #35.
-7. Production Neon remains 50 COLD / AVAILABLE, 0 OPEN / AVAILABLE claimable from the corrected batch.
-8. Hamilton confirmed agent login worked in preview before PR #34 merge.
+5. /portal/workspace, /portal/leads, and /admin/leads/testing resolve to sign-in instead of 404/500 on the custom domain.
+6. /api/cron/leads/aging returns 401 without Authorization on the custom domain.
+7. Runtime error/fatal logs for the latest production deployment show no entries for the checked window.
+8. Production Neon remains 50 COLD / AVAILABLE, 0 OPEN / AVAILABLE claimable from the corrected batch.
+9. Hamilton confirmed agent login worked in preview before PR #34 merge.
+10. Hamilton reported seeing the production task list/acceptance board after custom-domain promotion.
 ```
 
-Still recommended after custom-domain promotion:
+Still recommended for authenticated production acceptance:
 
 ```txt
 1. Record production smoke acceptance in /admin/leads/testing.
@@ -157,4 +178,4 @@ Still recommended after custom-domain promotion:
 
 ## Acceptance gates
 
-PR #34 and PR #35 are merged, the latest Vercel production deployment is READY, and the custom domain is on the latest commit. Broader live lead operations, external GHL workflow activation, Servicing, Commissions, and Finance remain gated until separately approved and tested.
+PR #34 and PR #35 are merged, the latest Vercel production deployment is READY, the custom domain is on the latest commit, and unauthenticated custom-domain smoke checks passed. Broader live lead operations, authenticated business-rule acceptance, external GHL workflow activation, Servicing, Commissions, and Finance remain gated until separately approved and tested.
