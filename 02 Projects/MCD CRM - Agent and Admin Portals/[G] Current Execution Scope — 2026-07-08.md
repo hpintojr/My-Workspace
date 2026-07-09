@@ -183,9 +183,12 @@ Verification state:
 GitHub reports PR #36 is mergeable.
 Initial Vercel preview failed because the build guard still required the old PR #34 pre-merge board strings.
 Guard was patched in commit 8b6568b53df9282eed5fd15689a74b7e33882442.
-Replacement Vercel preview dpl_7dRwPe3jynLUPopcofFkVgPd11Cg is building; error-only build logs are clean so far.
+Replacement Vercel preview dpl_7dRwPe3jynLUPopcofFkVgPd11Cg reached READY.
+Preview /api/status -> 200, preview environment, branch production-acceptance-board-20260709, commit 8b6568b53df9282eed5fd15689a74b7e33882442.
+Preview /admin/leads/testing -> 200 sign-in boundary, not 404/500.
+Preview /api/cron/leads/aging -> 401 Unauthorized without Authorization.
 GitHub Actions for the updated head are queued.
-Do not merge PR #36 until the preview/checks are READY or owner explicitly accepts the remaining build-check risk.
+Do not merge PR #36 until GitHub Actions finish or owner explicitly accepts the remaining check risk.
 ```
 
 ## Current controlled test plan
@@ -203,13 +206,13 @@ Confirmed:
 8. Production Neon remains 50 COLD / AVAILABLE, 0 OPEN / AVAILABLE claimable from the corrected batch.
 9. Hamilton confirmed agent login worked in preview before PR #34 merge.
 10. Hamilton reported seeing the production task list/acceptance board after custom-domain promotion.
-11. PR #36 is open and mergeable as the next merge section, pending preview/check completion.
+11. PR #36 is open and mergeable as the next merge section; Vercel preview is READY, GitHub Actions are queued.
 ```
 
 Still recommended for authenticated production acceptance:
 
 ```txt
-1. Merge PR #36 after preview/checks pass or owner explicitly approves.
+1. Merge PR #36 after GitHub Actions pass or owner explicitly approves.
 2. Record production smoke acceptance in /admin/leads/testing.
 3. Confirm click-to-call logs activity before opening dialer.
 4. Confirm click-to-call blocks the dialer if activity logging fails.
@@ -236,4 +239,4 @@ Still recommended for authenticated production acceptance:
 
 ## Acceptance gates
 
-PR #34 and PR #35 are merged, the latest Vercel production deployment is READY, the custom domain is on the latest commit, and unauthenticated custom-domain smoke checks passed. PR #36 is open as the next merge section for authenticated production acceptance. Broader live lead operations, external GHL workflow activation, Servicing, Commissions, and Finance remain gated until separately approved and tested.
+PR #34 and PR #35 are merged, the latest Vercel production deployment is READY, the custom domain is on the latest commit, and unauthenticated custom-domain smoke checks passed. PR #36 is open as the next merge section for authenticated production acceptance with Vercel preview READY and GitHub Actions queued. Broader live lead operations, external GHL workflow activation, Servicing, Commissions, and Finance remain gated until separately approved and tested.
