@@ -6,7 +6,7 @@
 
 ## Current release state
 
-The lead-research and opaque owner-acquisition release is live in production. The first supervised production import occurred, was corrected with owner approval, PR #34 has been merged, PR #35 has added the deployment-status smoke helper, the custom domain resolves to the latest production commit, the custom-domain unauthenticated smoke pass is complete, PR #36 is merged/deployed as the production acceptance board section, PR #37 is merged/deployed as the Readiness/Audit/Operating Status wiring section, and PR #38 is merged/deployed as the production status baseline wording fix.
+The lead-research and opaque owner-acquisition release is live in production. The first supervised production import occurred, was corrected with owner approval, PR #34 has been merged, PR #35 has added the deployment-status smoke helper, the custom domain resolves to the latest production commit, the custom-domain unauthenticated smoke pass is complete, PR #36 is merged/deployed as the production acceptance board section, PR #37 is merged/deployed as the Readiness/Audit/Operating Status wiring section, PR #38 is merged/deployed as the production status baseline wording fix, and PR #39 is merged/deployed as the Audit acceptance outcome display section.
 
 - No secret values were inspected or recorded.
 - No local process wrote directly to Neon/Postgres.
@@ -101,8 +101,8 @@ ok = true
 service = crm-mcd
 environment = production
 git.branch = main
-git.commitSha = fd00ac36f46ff68da0833cd12bc8cf56743c3353
-deployment.url = crm-hdl72qp22-hamiltons-projects-f65eeb81.vercel.app
+git.commitSha = ce8f41565d8cbad60f3a6158b5b5c26bd5691d8e
+deployment.url = crm-5eijwrzts-hamiltons-projects-f65eeb81.vercel.app
 region = iad1
 ```
 
@@ -115,10 +115,10 @@ The previous older deployment dpl_8Qj5PcUQrBGfnYWHxvzPcGNGqG5C is no longer the 
 
 ## Custom-domain unauthenticated smoke pass — complete
 
-Checked on `crm.mercurycalldesk.com` after domain promotion and again after PR #36, PR #37, and PR #38:
+Checked on `crm.mercurycalldesk.com` after domain promotion and again after PR #36, PR #37, PR #38, and PR #39:
 
 ```txt
-/api/status -> 200, production, commit fd00ac36f46ff68da0833cd12bc8cf56743c3353
+/api/status -> 200, production, commit ce8f41565d8cbad60f3a6158b5b5c26bd5691d8e
 /portal/workspace -> 200 sign-in boundary, not 404/500
 /portal/leads -> 200 sign-in boundary, not 404/500
 /admin/leads/testing -> 200 sign-in boundary, not 404/500
@@ -126,7 +126,7 @@ Checked on `crm.mercurycalldesk.com` after domain promotion and again after PR #
 /admin/audit -> 200 sign-in boundary, not 404/500
 /admin/operating-status -> 200 sign-in boundary, not 404/500
 /api/cron/leads/aging -> 401 Unauthorized without Authorization
-Vercel runtime error/fatal logs for dpl_4SeTvkSLtvzPSBZ8msa4oXCjxGCm, checked window 2026-07-09T07:22Z to 2026-07-09T07:37Z -> no logs found
+Vercel runtime error/fatal logs for dpl_5hatvT92UEQWqoE2m8HXjooqGMCL, checked window 2026-07-09T15:43Z to 2026-07-09T16:03Z -> no logs found
 ```
 
 Owner-reported browser confirmation:
@@ -320,6 +320,62 @@ Production /api/cron/leads/aging -> 401 Unauthorized without Authorization.
 Runtime error/fatal logs for dpl_4SeTvkSLtvzPSBZ8msa4oXCjxGCm -> no logs found for checked window.
 ```
 
+## PR #39 Audit Acceptance Outcome Display — merged
+
+```txt
+PR: #39 — feat(admin): show acceptance outcomes in audit evidence
+Status: merged to main
+Head before merge: 38c94e41d9f4e45bb4e485d1c94fb74494b7dab6
+Merge commit: ce8f41565d8cbad60f3a6158b5b5c26bd5691d8e
+Production deployment: dpl_5hatvT92UEQWqoE2m8HXjooqGMCL
+State: READY
+```
+
+PR #39 updated this scope section:
+
+```txt
+src/app/admin/audit/page.tsx
+scripts/check-lead-flow-alignment.ts
+```
+
+Built:
+
+```txt
+1. Adds structured parsing for acceptance audit metadata.
+2. Shows Pass / Fail / Deferred outcome badges in the rollout evidence list.
+3. Shows module, phase, step title, step id/entity id, reviewer role, note, and commit/baseline evidence when available.
+4. Keeps the regular audit list unchanged below rollout acceptance evidence.
+5. Updates the lead-flow guard so the acceptance outcome display cannot silently disappear.
+```
+
+Safety:
+
+```txt
+No schema changes.
+No feature flag changes.
+No production data mutation.
+No GHL workflow activation.
+No imports, payouts, servicing, commissions, or finance changes.
+```
+
+Verification state:
+
+```txt
+GitHub checks for PR #39 head 38c94e41d9f4e45bb4e485d1c94fb74494b7dab6 all passed:
+- Commission Policy -> success
+- Verify CRM -> success
+- Application Build -> success
+Vercel preview dpl_2VQLJBGtw6WeB3Asmr4PUh9BqzLW reached READY.
+Preview /api/status -> 200, preview environment, branch acceptance-audit-outcomes-20260709, commit 38c94e41d9f4e45bb4e485d1c94fb74494b7dab6.
+Preview /admin/audit -> 200 sign-in boundary, not 404/500.
+Preview /api/cron/leads/aging -> 401 Unauthorized without Authorization.
+Production deployment dpl_5hatvT92UEQWqoE2m8HXjooqGMCL reached READY.
+Production /api/status -> 200, production, main, commit ce8f41565d8cbad60f3a6158b5b5c26bd5691d8e.
+Production /admin/audit -> 200 sign-in boundary, not 404/500.
+Production /api/cron/leads/aging -> 401 Unauthorized without Authorization.
+Runtime error/fatal logs for dpl_5hatvT92UEQWqoE2m8HXjooqGMCL -> no logs found for checked window.
+```
+
 ## Current controlled test plan
 
 Confirmed:
@@ -330,14 +386,15 @@ Confirmed:
 3. PR #36 merged to main and deployed READY.
 4. PR #37 merged to main and deployed READY.
 5. PR #38 merged to main and deployed READY.
-6. /api/status works on the latest Vercel production deployment aliases.
-7. /api/status works on crm.mercurycalldesk.com and reports commit fd00ac36f46ff68da0833cd12bc8cf56743c3353.
-8. /portal/workspace, /portal/leads, /admin/leads/testing, /admin/readiness, /admin/audit, and /admin/operating-status resolve to sign-in instead of 404/500 on the custom domain.
-9. /api/cron/leads/aging returns 401 without Authorization on the custom domain.
-10. Runtime error/fatal logs for the latest production deployment show no entries for the checked window.
-11. Production Neon remains 50 COLD / AVAILABLE, 0 OPEN / AVAILABLE claimable from the corrected batch.
-12. Hamilton confirmed agent login worked in preview before PR #34 merge.
-13. Hamilton reported seeing the production task list/acceptance board after custom-domain promotion.
+6. PR #39 merged to main and deployed READY.
+7. /api/status works on the latest Vercel production deployment aliases.
+8. /api/status works on crm.mercurycalldesk.com and reports commit ce8f41565d8cbad60f3a6158b5b5c26bd5691d8e.
+9. /portal/workspace, /portal/leads, /admin/leads/testing, /admin/readiness, /admin/audit, and /admin/operating-status resolve to sign-in instead of 404/500 on the custom domain.
+10. /api/cron/leads/aging returns 401 without Authorization on the custom domain.
+11. Runtime error/fatal logs for the latest production deployment show no entries for the checked window.
+12. Production Neon remains 50 COLD / AVAILABLE, 0 OPEN / AVAILABLE claimable from the corrected batch.
+13. Hamilton confirmed agent login worked in preview before PR #34 merge.
+14. Hamilton reported seeing the production task list/acceptance board after custom-domain promotion.
 ```
 
 Still recommended for authenticated production acceptance:
@@ -369,4 +426,4 @@ Still recommended for authenticated production acceptance:
 
 ## Acceptance gates
 
-PR #34, PR #35, PR #36, PR #37, and PR #38 are merged and deployed. The latest production deployment is READY, the custom domain is on the latest production commit, and unauthenticated custom-domain smoke checks passed. Broader live lead operations, authenticated business-rule acceptance, external GHL workflow activation, Servicing, Commissions, and Finance remain gated until separately approved and tested.
+PR #34, PR #35, PR #36, PR #37, PR #38, and PR #39 are merged and deployed. The latest production deployment is READY, the custom domain is on the latest production commit, and unauthenticated custom-domain smoke checks passed. Broader live lead operations, authenticated business-rule acceptance, external GHL workflow activation, Servicing, Commissions, and Finance remain gated until separately approved and tested.
