@@ -6,7 +6,7 @@
 
 ## Current release state
 
-The lead-research and opaque owner-acquisition release is live in production. The first supervised production import occurred, was corrected with owner approval, PR #34 has been merged, PR #35 has added the deployment-status smoke helper, the custom domain resolves to the latest production commit, the custom-domain unauthenticated smoke pass is complete, and PR #36 is merged/deployed as the production acceptance board section.
+The lead-research and opaque owner-acquisition release is live in production. The first supervised production import occurred, was corrected with owner approval, PR #34 has been merged, PR #35 has added the deployment-status smoke helper, the custom domain resolves to the latest production commit, the custom-domain unauthenticated smoke pass is complete, and PR #36 is merged/deployed as the production acceptance board section. PR #37 is open to wire Readiness/Audit to the PR #36 production acceptance lane.
 
 - No secret values were inspected or recorded.
 - No local process wrote directly to Neon/Postgres.
@@ -197,6 +197,59 @@ Production /api/cron/leads/aging -> 401 Unauthorized without Authorization.
 Runtime error/fatal logs for dpl_D7FKurVxw7FURpoe9g8SdNFJLrWV -> no logs found for checked window.
 ```
 
+## PR #37 Production Acceptance Readiness/Audit Wiring — open
+
+```txt
+PR: #37 — feat(admin): wire readiness to production lead acceptance
+Status: open, mergeable, not merged
+Branch: production-acceptance-readiness-20260709
+Head: 2e2767c8d94f4efb98d334bbf8f011c34bbbb32b
+Base: main at 23fef7ba6da8bc55fc6789d0f7c342f87488f818
+Changed files: 3
+```
+
+PR #37 updates this scope section:
+
+```txt
+src/app/admin/readiness/page.tsx
+src/app/admin/audit/page.tsx
+scripts/check-lead-flow-alignment.ts
+```
+
+Built:
+
+```txt
+1. Updates /admin/readiness Lead card from the old PR #34 acceptance lane to the production Lead Flow acceptance lane.
+2. Readiness now tracks:
+   - actionType = LEAD_PRODUCTION_ACCEPTANCE_RECORDED
+   - entityType = LeadProductionAcceptanceStep
+   - totalSteps = 18
+3. Updates /admin/audit rollout evidence to include LEAD_PRODUCTION_ACCEPTANCE_RECORDED.
+4. Updates the lead-flow build guard so readiness/audit cannot silently regress back to the old Lead acceptance lane.
+```
+
+Safety:
+
+```txt
+No schema changes.
+No feature flag changes.
+No production data mutation.
+No GHL workflow activation.
+No imports, payouts, servicing, commissions, or finance changes.
+```
+
+Verification state:
+
+```txt
+GitHub reports PR #37 is mergeable.
+Vercel preview dpl_3D9a92EvF1ZGpzU49nceNkyimURu reached READY.
+Preview /api/status -> 200, preview environment, branch production-acceptance-readiness-20260709, commit 2e2767c8d94f4efb98d334bbf8f011c34bbbb32b.
+Preview /admin/readiness -> 200 sign-in boundary, not 404/500.
+Preview /admin/audit -> 200 sign-in boundary, not 404/500.
+GitHub Actions for the updated head are queued.
+Do not merge PR #37 until GitHub Actions finish or owner explicitly accepts the remaining check risk.
+```
+
 ## Current controlled test plan
 
 Confirmed:
@@ -213,24 +266,26 @@ Confirmed:
 9. Production Neon remains 50 COLD / AVAILABLE, 0 OPEN / AVAILABLE claimable from the corrected batch.
 10. Hamilton confirmed agent login worked in preview before PR #34 merge.
 11. Hamilton reported seeing the production task list/acceptance board after custom-domain promotion.
+12. PR #37 is open and mergeable as the next readiness/audit wiring section; Vercel preview is READY, GitHub Actions are queued.
 ```
 
 Still recommended for authenticated production acceptance:
 
 ```txt
-1. Record production smoke acceptance in /admin/leads/testing.
-2. Confirm click-to-call logs activity before opening dialer.
-3. Confirm click-to-call blocks the dialer if activity logging fails.
-4. Confirm no-answer/voicemail leaves the Lead unowned.
-5. Confirm callback/qualified/follow-up records two-way contact and unlocks claim.
-6. Confirm claim sets ownerAgentId, claimedAt, and 45-day openPoolReleaseAt.
-7. Confirm Warm Reply Triage assignment starts the 45-day timer.
-8. Confirm GHL appointment events do not mutate suppressed/DNC Leads.
-9. Confirm GHL appointment cancellation/no-show creates or expedites one owner callback.
-10. Confirm GHL Opportunity Won/Lost cancels scheduled callbacks on terminal outcomes.
-11. Confirm GHL Opportunity Lost does not roll back Closed Won.
-12. Confirm DNC suppresses and cancels callbacks.
-13. Confirm aging sweep behavior using controlled test data only.
+1. Merge PR #37 after GitHub Actions pass or owner explicitly approves.
+2. Record production smoke acceptance in /admin/leads/testing.
+3. Confirm click-to-call logs activity before opening dialer.
+4. Confirm click-to-call blocks the dialer if activity logging fails.
+5. Confirm no-answer/voicemail leaves the Lead unowned.
+6. Confirm callback/qualified/follow-up records two-way contact and unlocks claim.
+7. Confirm claim sets ownerAgentId, claimedAt, and 45-day openPoolReleaseAt.
+8. Confirm Warm Reply Triage assignment starts the 45-day timer.
+9. Confirm GHL appointment events do not mutate suppressed/DNC Leads.
+10. Confirm GHL appointment cancellation/no-show creates or expedites one owner callback.
+11. Confirm GHL Opportunity Won/Lost cancels scheduled callbacks on terminal outcomes.
+12. Confirm GHL Opportunity Lost does not roll back Closed Won.
+13. Confirm DNC suppresses and cancels callbacks.
+14. Confirm aging sweep behavior using controlled test data only.
 ```
 
 ## Explicitly out of scope without separate approval
@@ -244,4 +299,4 @@ Still recommended for authenticated production acceptance:
 
 ## Acceptance gates
 
-PR #34, PR #35, and PR #36 are merged. The latest Vercel production deployment is READY, the custom domain is on the latest commit, and unauthenticated custom-domain smoke checks passed. Broader live lead operations, authenticated business-rule acceptance, external GHL workflow activation, Servicing, Commissions, and Finance remain gated until separately approved and tested.
+PR #34, PR #35, and PR #36 are merged. PR #37 is open and mergeable with Vercel preview READY, pending GitHub Actions. The latest production deployment is READY, the custom domain is on the latest production commit, and unauthenticated custom-domain smoke checks passed. Broader live lead operations, authenticated business-rule acceptance, external GHL workflow activation, Servicing, Commissions, and Finance remain gated until separately approved and tested.
