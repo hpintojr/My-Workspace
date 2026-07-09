@@ -1,17 +1,32 @@
 # MCD CRM — Current Execution Scope
 
-**Updated:** 2026-07-08  
+**Updated:** 2026-07-09  
 **Owner:** ChatGPT  
 **Applies to:** `hpintojr/crm.mcd`, `hpintojr/My-Workspace`, and local `mcd_lead_ops`
 
 ## Current release state
 
-The lead-research and opaque owner-acquisition release is live in production. The first supervised production import occurred, was corrected with owner approval, PR #34 has been merged, PR #35 has added the deployment-status smoke helper, the custom domain resolves to the latest production commit, the custom-domain unauthenticated smoke pass is complete, PR #36 is merged/deployed as the production acceptance board section, PR #37 is merged/deployed as the Readiness/Audit/Operating Status wiring section, PR #38 is merged/deployed as the production status baseline wording fix, and PR #39 is merged/deployed as the Audit acceptance outcome display section.
+The Lead Flow production-readiness scope is live in production through PR #44. PR #34 through PR #44 are merged to `main`, deployed to Vercel production, and smoke-tested on the custom domain.
 
-- No secret values were inspected or recorded.
-- No local process wrote directly to Neon/Postgres.
-- No new production data mutation was performed after the approved lead batch correction.
-- GHL workflow activation, Servicing, Commissions, and Finance remain gated.
+```txt
+Latest production commit: 5965cc58cd009cb0c518e3e855355e15099d29a1
+Latest production deployment: dpl_6FzQ3zXJyNTtMaSEn49pEYXFFnJ4
+Custom domain: crm.mercurycalldesk.com
+/api/status: production, main, commit 5965cc58cd009cb0c518e3e855355e15099d29a1
+```
+
+Current safety boundary:
+
+```txt
+No secret values were inspected or recorded.
+No local process wrote directly to Neon/Postgres.
+No new production data mutation was performed after the approved lead batch correction.
+No schema changes were introduced in PR #36 through PR #44.
+No feature flags were changed in PR #36 through PR #44.
+No GHL workflow activation occurred.
+No imports, payouts, servicing, commissions, or finance actions were enabled.
+GHL workflow activation, Servicing, Commissions, and Finance remain gated.
+```
 
 ## First production batch and correction
 
@@ -27,353 +42,253 @@ Correction audit: 1 LEAD_BATCH_POOL_CORRECTED + 50 LEAD_POOL_CORRECTED records
 
 The correction was owner-approved, rehearsed first on a Neon safety branch, then applied to production.
 
-## PR #34 Lead Flow Alignment — merged
+## Merged and deployed PRs
+
+### PR #34 — Lead Flow Alignment
 
 ```txt
 PR: #34 — feat(leads): align cold lead workspace with two-way-contact claim rules
 Status: merged to main
-Head before merge: 43b99e0daacaace2767f93d6a95641fa8d1d8a9a
 Merge commit: 487ff615170f2c9530da61e477935d969d814e69
 Production deployment: dpl_Hwq4jTsjmpdjJ8AmMffe8hYDAL9o
 State: READY
 ```
 
-PR #34 delivered:
+Delivered:
 
-- Cold Lead workspace in `/portal/leads`.
-- Strict click-to-call logging before dialer open.
-- No claim, soft-lock, reservation, or ownership on call start.
-- Claim gate requiring two-way contact.
-- 45-day responsibility timer on claim/assignment.
-- DNC blackout handling.
-- Secured aging cron route.
-- My Workspace dashboard.
-- Warm Reply timer alignment.
-- GHL appointment/opportunity relay hardening.
-- Acceptance board and lead-flow build guards.
+```txt
+Cold Lead workspace in /portal/leads.
+Strict click-to-call logging before dialer open.
+No claim, soft-lock, reservation, or ownership on call start.
+Claim gate requiring two-way contact.
+45-day responsibility timer on claim/assignment.
+DNC blackout handling.
+Secured aging cron route.
+My Workspace dashboard.
+Warm Reply timer alignment.
+GHL appointment/opportunity relay hardening.
+Acceptance board and lead-flow build guards.
+```
 
-## PR #35 Deployment Status + Smoke Helper — merged
+### PR #35 — Deployment Status + Smoke Helper
 
 ```txt
 PR: #35 — feat(ops): add deployment status endpoint and smoke checklist
 Status: merged to main
-Head before merge: 4cf0ebbc524938a09c91e26a9078f054ec8dd538
 Merge commit: 85241b306e9799983226450a6876e71e52665995
 Production deployment: dpl_DysALSqTjpxL9HjVV696tXFrwNaa
 State: READY
 ```
 
-PR #35 delivered:
+Delivered:
 
 ```txt
 /api/status
 docs/PRODUCTION_SMOKE_20260708.md
 ```
 
-`/api/status` returns non-secret deployment metadata only:
+`/api/status` returns non-secret deployment metadata only.
 
-```txt
-ok
-service
-environment
-git.branch
-git.commitSha
-git.commitMessage
-deployment.url
-deployment.region
-timestamp
-```
-
-Verified on the latest production URLs:
-
-```txt
-https://crm-dv36hh7jp-hamiltons-projects-f65eeb81.vercel.app/api/status -> 200, commit 85241b306e9799983226450a6876e71e52665995
-https://crm-mcd-hamiltons-projects-f65eeb81.vercel.app/api/status -> 200, commit 85241b306e9799983226450a6876e71e52665995
-https://crm.mercurycalldesk.com/api/status -> 200, commit 85241b306e9799983226450a6876e71e52665995
-```
-
-## Custom-domain promotion — resolved
-
-Custom domain now reports:
-
-```txt
-ok = true
-service = crm-mcd
-environment = production
-git.branch = main
-git.commitSha = ce8f41565d8cbad60f3a6158b5b5c26bd5691d8e
-deployment.url = crm-5eijwrzts-hamiltons-projects-f65eeb81.vercel.app
-region = iad1
-```
-
-Status:
-
-```txt
-crm.mercurycalldesk.com is now on the latest production deployment.
-The previous older deployment dpl_8Qj5PcUQrBGfnYWHxvzPcGNGqG5C is no longer the active custom-domain target based on /api/status verification.
-```
-
-## Custom-domain unauthenticated smoke pass — complete
-
-Checked on `crm.mercurycalldesk.com` after domain promotion and again after PR #36, PR #37, PR #38, and PR #39:
-
-```txt
-/api/status -> 200, production, commit ce8f41565d8cbad60f3a6158b5b5c26bd5691d8e
-/portal/workspace -> 200 sign-in boundary, not 404/500
-/portal/leads -> 200 sign-in boundary, not 404/500
-/admin/leads/testing -> 200 sign-in boundary, not 404/500
-/admin/readiness -> 200 sign-in boundary, not 404/500
-/admin/audit -> 200 sign-in boundary, not 404/500
-/admin/operating-status -> 200 sign-in boundary, not 404/500
-/api/cron/leads/aging -> 401 Unauthorized without Authorization
-Vercel runtime error/fatal logs for dpl_5hatvT92UEQWqoE2m8HXjooqGMCL, checked window 2026-07-09T15:43Z to 2026-07-09T16:03Z -> no logs found
-```
-
-Owner-reported browser confirmation:
-
-```txt
-Hamilton reported seeing the task list/acceptance board on the production custom domain on 2026-07-09.
-```
-
-## PR #36 Production Acceptance Board — merged
+### PR #36 — Production Acceptance Board
 
 ```txt
 PR: #36 — feat(leads): add production acceptance board
 Status: merged to main
-Head before merge: 8b6568b53df9282eed5fd15689a74b7e33882442
 Merge commit: 23fef7ba6da8bc55fc6789d0f7c342f87488f818
 Production deployment: dpl_D7FKurVxw7FURpoe9g8SdNFJLrWV
 State: READY
 ```
 
-PR #36 updated this scope section:
+Delivered:
 
 ```txt
-src/app/admin/leads/testing/page.tsx
-scripts/check-lead-flow-alignment.ts
+/admin/leads/testing production Lead Flow acceptance board.
+Grouped 18-step acceptance sections.
+Isolated audit evidence:
+- actionType = LEAD_PRODUCTION_ACCEPTANCE_RECORDED
+- entityType = LeadProductionAcceptanceStep
+- phase = PRODUCTION_ACCEPTANCE_20260709
+Lead-flow guard updated for production acceptance board.
 ```
 
-Built:
-
-```txt
-1. Converts /admin/leads/testing from the old PR #34 pre-merge board into a production Lead Flow acceptance board.
-2. Adds grouped production acceptance sections:
-   - Release and domain readiness
-   - Authenticated Lead Flow acceptance
-   - Relay, timer, and owner decision gates
-3. Uses the PR #35 deployment-status commit as the first production status baseline.
-4. Writes new isolated audit evidence under:
-   - actionType = LEAD_PRODUCTION_ACCEPTANCE_RECORDED
-   - entityType = LeadProductionAcceptanceStep
-   - phase = PRODUCTION_ACCEPTANCE_20260709
-5. Keeps old PR #34 acceptance audit rows from counting as production acceptance.
-6. Updates the lead-flow build guard to require the production acceptance board strings instead of the old PR #34 pre-merge strings.
-```
-
-Safety:
-
-```txt
-No schema changes.
-No feature flag changes.
-No GHL workflow activation.
-No imports, payouts, servicing, commissions, or finance changes.
-No production data mutation except intentional immutable audit rows if an admin records Pass/Fail/Deferred on the board.
-```
-
-Verification state:
-
-```txt
-GitHub checks for PR #36 head 8b6568b53df9282eed5fd15689a74b7e33882442 all passed:
-- Commission Policy -> success
-- Verify CRM -> success
-- Application Build -> success
-Initial Vercel preview failed because the build guard still required the old PR #34 pre-merge board strings.
-Guard was patched in commit 8b6568b53df9282eed5fd15689a74b7e33882442.
-Replacement Vercel preview dpl_7dRwPe3jynLUPopcofFkVgPd11Cg reached READY.
-Preview /api/status -> 200, preview environment, branch production-acceptance-board-20260709, commit 8b6568b53df9282eed5fd15689a74b7e33882442.
-Preview /admin/leads/testing -> 200 sign-in boundary, not 404/500.
-Preview /api/cron/leads/aging -> 401 Unauthorized without Authorization.
-Production deployment dpl_D7FKurVxw7FURpoe9g8SdNFJLrWV reached READY.
-Production /api/status -> 200, production, main, commit 23fef7ba6da8bc55fc6789d0f7c342f87488f818.
-Production /admin/leads/testing -> 200 sign-in boundary, not 404/500.
-Production /api/cron/leads/aging -> 401 Unauthorized without Authorization.
-Runtime error/fatal logs for dpl_D7FKurVxw7FURpoe9g8SdNFJLrWV -> no logs found for checked window.
-```
-
-## PR #37 Production Acceptance Readiness/Audit/Operating Status Wiring — merged
+### PR #37 — Readiness/Audit/Operating Status Wiring
 
 ```txt
 PR: #37 — feat(admin): wire readiness to production lead acceptance
 Status: merged to main
-Head before merge: fd7774ce857d2e7ce20be04ff15722a99afc26d8
 Merge commit: e42ec797ac3db2fb70aea76a41e899080105e69d
 Production deployment: dpl_7hGG8cpY2PCb6TEZyzwcKDuwctw1
 State: READY
 ```
 
-PR #37 updated this scope section:
+Delivered:
 
 ```txt
-src/app/admin/readiness/page.tsx
-src/app/admin/audit/page.tsx
-src/app/admin/operating-status/page.tsx
-scripts/check-lead-flow-alignment.ts
+/admin/readiness Lead card tracks production Lead Flow acceptance.
+/admin/audit rollout evidence includes LEAD_PRODUCTION_ACCEPTANCE_RECORDED.
+/admin/operating-status Lead phase copy updated to production Lead Flow acceptance.
+Lead-flow guard protects readiness/audit/operating-status wiring.
 ```
 
-Built:
-
-```txt
-1. Updates /admin/readiness Lead card from the old PR #34 acceptance lane to the production Lead Flow acceptance lane.
-2. Readiness now tracks:
-   - actionType = LEAD_PRODUCTION_ACCEPTANCE_RECORDED
-   - entityType = LeadProductionAcceptanceStep
-   - totalSteps = 18
-3. Updates /admin/audit rollout evidence to include LEAD_PRODUCTION_ACCEPTANCE_RECORDED.
-4. Updates /admin/operating-status Lead phase copy from old Lead MVP language to production Lead Flow acceptance language.
-5. Updates the lead-flow build guard so readiness/audit/operating-status cannot silently regress back to the old Lead acceptance lane.
-```
-
-Safety:
-
-```txt
-No schema changes.
-No feature flag changes.
-No production data mutation.
-No GHL workflow activation.
-No imports, payouts, servicing, commissions, or finance changes.
-```
-
-Verification state:
-
-```txt
-GitHub checks for PR #37 head fd7774ce857d2e7ce20be04ff15722a99afc26d8 all passed:
-- Commission Policy -> success
-- Verify CRM -> success
-- Application Build -> success
-Vercel preview dpl_3zLMzUoCoZrWa6QswbiBgyx42BLS reached READY.
-Preview /api/status -> 200, preview environment, branch production-acceptance-readiness-20260709, commit fd7774ce857d2e7ce20be04ff15722a99afc26d8.
-Preview /admin/readiness -> 200 sign-in boundary, not 404/500.
-Preview /admin/audit -> 200 sign-in boundary, not 404/500.
-Preview /admin/operating-status -> 200 sign-in boundary, not 404/500.
-Production deployment dpl_7hGG8cpY2PCb6TEZyzwcKDuwctw1 reached READY.
-Production /api/status -> 200, production, main, commit e42ec797ac3db2fb70aea76a41e899080105e69d.
-Production /admin/readiness -> 200 sign-in boundary, not 404/500.
-Production /admin/audit -> 200 sign-in boundary, not 404/500.
-Production /admin/operating-status -> 200 sign-in boundary, not 404/500.
-Production /api/cron/leads/aging -> 401 Unauthorized without Authorization.
-Runtime error/fatal logs for dpl_7hGG8cpY2PCb6TEZyzwcKDuwctw1 -> no logs found for checked window.
-```
-
-## PR #38 Production Status Baseline Wording — merged
+### PR #38 — Production Status Baseline Wording
 
 ```txt
 PR: #38 — fix(leads): treat status commit as acceptance baseline
 Status: merged to main
-Head before merge: 1cdcf91ebb84b2c38105ce62931c59175a04709a
 Merge commit: fd00ac36f46ff68da0833cd12bc8cf56743c3353
 Production deployment: dpl_4SeTvkSLtvzPSBZ8msa4oXCjxGCm
 State: READY
 ```
 
-PR #38 updated this scope section:
+Delivered:
 
 ```txt
-src/app/admin/leads/testing/page.tsx
-scripts/check-lead-flow-alignment.ts
+Renamed exact expected commit concept to deployment-status baseline.
+Kept PR #35 commit 85241b306e9799983226450a6876e71e52665995 as baseline.
+Acceptance step requires production/main and current commit at or newer than baseline.
+Stores statusBaselineCommit metadata instead of expectedCommit.
 ```
 
-Built:
-
-```txt
-1. Renames the exact expected commit concept to a deployment-status baseline.
-2. Keeps PR #35 commit 85241b306e9799983226450a6876e71e52665995 as the baseline that introduced /api/status.
-3. Updates the acceptance step to require production/main and a current commit at or newer than the baseline, rather than the old exact PR #35 commit.
-4. Stores statusBaselineCommit in new acceptance audit metadata instead of expectedCommit.
-5. Updates the lead-flow guard to protect the baseline wording.
-```
-
-Safety:
-
-```txt
-No schema changes.
-No feature flag changes.
-No production data mutation unless an admin later records an acceptance result.
-No GHL workflow activation.
-No imports, payouts, servicing, commissions, or finance changes.
-```
-
-Verification state:
-
-```txt
-GitHub checks for PR #38 head 1cdcf91ebb84b2c38105ce62931c59175a04709a all passed:
-- Commission Policy -> success
-- Verify CRM -> success
-- Application Build -> success
-Vercel preview dpl_E3yQBKvf1rVd97PpvHLUGUW1zmqJ reached READY.
-Preview /api/status -> 200, preview environment, branch production-acceptance-baseline-20260709, commit 1cdcf91ebb84b2c38105ce62931c59175a04709a.
-Preview /admin/leads/testing -> 200 sign-in boundary, not 404/500.
-Preview /api/cron/leads/aging -> 401 Unauthorized without Authorization.
-Production deployment dpl_4SeTvkSLtvzPSBZ8msa4oXCjxGCm reached READY.
-Production /api/status -> 200, production, main, commit fd00ac36f46ff68da0833cd12bc8cf56743c3353.
-Production /admin/leads/testing -> 200 sign-in boundary, not 404/500.
-Production /api/cron/leads/aging -> 401 Unauthorized without Authorization.
-Runtime error/fatal logs for dpl_4SeTvkSLtvzPSBZ8msa4oXCjxGCm -> no logs found for checked window.
-```
-
-## PR #39 Audit Acceptance Outcome Display — merged
+### PR #39 — Audit Acceptance Outcome Display
 
 ```txt
 PR: #39 — feat(admin): show acceptance outcomes in audit evidence
 Status: merged to main
-Head before merge: 38c94e41d9f4e45bb4e485d1c94fb74494b7dab6
 Merge commit: ce8f41565d8cbad60f3a6158b5b5c26bd5691d8e
 Production deployment: dpl_5hatvT92UEQWqoE2m8HXjooqGMCL
 State: READY
 ```
 
-PR #39 updated this scope section:
+Delivered:
 
 ```txt
-src/app/admin/audit/page.tsx
-scripts/check-lead-flow-alignment.ts
+Structured acceptance metadata parsing.
+Pass / Fail / Deferred outcome badges in rollout evidence.
+Module, phase, step title, step id/entity id, reviewer role, note, and commit/baseline evidence display.
+Regular audit list remains below rollout acceptance evidence.
 ```
 
-Built:
+### PR #40 — Acceptance Report Exports
 
 ```txt
-1. Adds structured parsing for acceptance audit metadata.
-2. Shows Pass / Fail / Deferred outcome badges in the rollout evidence list.
-3. Shows module, phase, step title, step id/entity id, reviewer role, note, and commit/baseline evidence when available.
-4. Keeps the regular audit list unchanged below rollout acceptance evidence.
-5. Updates the lead-flow guard so the acceptance outcome display cannot silently disappear.
+PR: #40 — feat(leads): add production acceptance report exports
+Status: merged to main
+Merge commit: ed41e5ccc3b103ca91387f9556c31fd7e9056036
+Production deployment: dpl_7d6XEke2AM35Yxz4PXk6ZPKLnDPi
+State: READY
 ```
 
-Safety:
+Delivered:
 
 ```txt
-No schema changes.
-No feature flag changes.
-No production data mutation.
-No GHL workflow activation.
-No imports, payouts, servicing, commissions, or finance changes.
+Shared Lead Production Acceptance reporting model.
+/api/admin/leads/acceptance-report JSON report.
+/api/admin/leads/acceptance-report.csv CSV export.
+Pass/fail/deferred/not-recorded counts.
+Group-level counts.
+Step-level evidence/outcomes/notes.
+Owner-decision readiness fields.
+CSV export creates only immutable export audit record when used.
 ```
 
-Verification state:
+### PR #41 — Acceptance Report Page
 
 ```txt
-GitHub checks for PR #39 head 38c94e41d9f4e45bb4e485d1c94fb74494b7dab6 all passed:
-- Commission Policy -> success
-- Verify CRM -> success
-- Application Build -> success
-Vercel preview dpl_2VQLJBGtw6WeB3Asmr4PUh9BqzLW reached READY.
-Preview /api/status -> 200, preview environment, branch acceptance-audit-outcomes-20260709, commit 38c94e41d9f4e45bb4e485d1c94fb74494b7dab6.
-Preview /admin/audit -> 200 sign-in boundary, not 404/500.
-Preview /api/cron/leads/aging -> 401 Unauthorized without Authorization.
-Production deployment dpl_5hatvT92UEQWqoE2m8HXjooqGMCL reached READY.
-Production /api/status -> 200, production, main, commit ce8f41565d8cbad60f3a6158b5b5c26bd5691d8e.
-Production /admin/audit -> 200 sign-in boundary, not 404/500.
-Production /api/cron/leads/aging -> 401 Unauthorized without Authorization.
-Runtime error/fatal logs for dpl_5hatvT92UEQWqoE2m8HXjooqGMCL -> no logs found for checked window.
+PR: #41 — feat(leads): add production acceptance report page
+Status: merged to main
+Merge commit: 6d1e43efe418548004f079afac42b0d949fc7ba8
+Production deployment: dpl_7cpza67E9eSdxZ2VRqLqTH3xQ4EH
+State: READY
+```
+
+Delivered:
+
+```txt
+/admin/leads/acceptance-report read-only admin report page.
+Pass, fail, deferred, and not-recorded counts.
+Owner-decision readiness.
+Group-level acceptance summaries.
+Step-level evidence, notes, recorded timestamps, reviewer roles, and commit evidence.
+Links to JSON report, CSV export, and acceptance board.
+```
+
+### PR #42 — Lead Acceptance Report Navigation
+
+```txt
+PR: #42 — feat(admin): wire Lead acceptance report navigation
+Status: merged to main
+Merge commit: 895e8d23e8f4664db490833562da6542c3b88c5c
+Production deployment: dpl_6PE3NdiYMpU3Mbfg8No8TgZijVkd
+State: READY
+```
+
+Delivered:
+
+```txt
+/admin/leads/testing links to Acceptance Report and CSV export.
+/admin/readiness Lead card links to report/export.
+/admin/operating-status Lead phase links to report/export.
+/admin/audit rollout evidence links to Lead report/CSV.
+Acceptance saves revalidate /admin/leads/acceptance-report.
+```
+
+### PR #43 — Shared Acceptance Model on Board
+
+```txt
+PR: #43 — refactor(leads): share production acceptance model on board
+Status: merged to main
+Merge commit: edffe63920def161740be2fab2408c23c34d6e87
+Production deployment: dpl_8zMYPcmSjtoiK3cp3Lg47xPbXhNJ
+State: READY
+```
+
+Delivered:
+
+```txt
+/admin/leads/testing now uses the shared Lead Production Acceptance model.
+Removed duplicate local 18-step acceptance contract from the board.
+Board imports shared groups, steps, constants, and outcome parser.
+Guard protects board/report/export alignment from one source of truth.
+```
+
+### PR #44 — Aging Sweep Dry-Run Preview
+
+```txt
+PR: #44 — feat(leads): add aging sweep dry-run preview
+Status: merged to main
+Head before merge: 1ba90e17d769be6fd1ab4bc048bf0646dc0e4964
+Merge commit: 5965cc58cd009cb0c518e3e855355e15099d29a1
+Production deployment: dpl_6FzQ3zXJyNTtMaSEn49pEYXFFnJ4
+State: READY
+```
+
+Delivered:
+
+```txt
+runLeadAgingSweep({ dryRun: true }) support.
+Dry-run returns wouldProcess, wouldReturnToOpenPool, wouldPromoteToSharkTank, cutoff, and preview rows.
+Dry-run skips mutation transaction entirely.
+/api/cron/leads/aging?dryRun=true authorized cron query support.
+Cron dry-run still requires CRON_SECRET.
+/api/admin/leads/aging-preview admin-only preview endpoint.
+Admin preview always dry-runs and returns mutationPerformed:false.
+Production acceptance step 17 points to aging preview.
+Lead-flow guard protects dry-run contract.
+```
+
+## Latest production verification
+
+```txt
+Custom domain: crm.mercurycalldesk.com
+Latest /api/status -> 200, production, main, commit 5965cc58cd009cb0c518e3e855355e15099d29a1
+/admin/leads/testing -> sign-in boundary, not 404/500
+/admin/leads/acceptance-report -> sign-in boundary, not 404/500
+/api/admin/leads/acceptance-report -> sign-in boundary, not 404/500
+/api/admin/leads/acceptance-report.csv -> sign-in boundary, not 404/500
+/api/admin/leads/aging-preview -> sign-in boundary, not 404/500
+/api/cron/leads/aging -> 401 Unauthorized without Authorization
+/api/cron/leads/aging?dryRun=true -> 401 Unauthorized without Authorization
+Latest runtime 5xx logs for dpl_6FzQ3zXJyNTtMaSEn49pEYXFFnJ4 -> no logs found for checked window 2026-07-09T18:59Z to 2026-07-09T19:09Z
 ```
 
 ## Current controlled test plan
@@ -381,20 +296,16 @@ Runtime error/fatal logs for dpl_5hatvT92UEQWqoE2m8HXjooqGMCL -> no logs found f
 Confirmed:
 
 ```txt
-1. PR #34 merged to main and deployed READY.
-2. PR #35 merged to main and deployed READY.
-3. PR #36 merged to main and deployed READY.
-4. PR #37 merged to main and deployed READY.
-5. PR #38 merged to main and deployed READY.
-6. PR #39 merged to main and deployed READY.
-7. /api/status works on the latest Vercel production deployment aliases.
-8. /api/status works on crm.mercurycalldesk.com and reports commit ce8f41565d8cbad60f3a6158b5b5c26bd5691d8e.
-9. /portal/workspace, /portal/leads, /admin/leads/testing, /admin/readiness, /admin/audit, and /admin/operating-status resolve to sign-in instead of 404/500 on the custom domain.
-10. /api/cron/leads/aging returns 401 without Authorization on the custom domain.
-11. Runtime error/fatal logs for the latest production deployment show no entries for the checked window.
-12. Production Neon remains 50 COLD / AVAILABLE, 0 OPEN / AVAILABLE claimable from the corrected batch.
-13. Hamilton confirmed agent login worked in preview before PR #34 merge.
-14. Hamilton reported seeing the production task list/acceptance board after custom-domain promotion.
+1. PR #34 through PR #44 are merged to main and deployed READY.
+2. /api/status works on crm.mercurycalldesk.com and reports commit 5965cc58cd009cb0c518e3e855355e15099d29a1.
+3. Protected admin/portal routes resolve to sign-in instead of 404/500 when unauthenticated.
+4. /api/cron/leads/aging returns 401 without Authorization.
+5. /api/cron/leads/aging?dryRun=true returns 401 without Authorization.
+6. /api/admin/leads/aging-preview resolves to sign-in when unauthenticated.
+7. Runtime 5xx logs for the latest production deployment show no entries for the checked window.
+8. Production Neon remains 50 COLD / AVAILABLE, 0 OPEN / AVAILABLE claimable from the corrected batch.
+9. Hamilton confirmed agent login worked in preview before PR #34 merge.
+10. Hamilton reported seeing the production task list/acceptance board after custom-domain promotion.
 ```
 
 Still recommended for authenticated production acceptance:
@@ -412,18 +323,31 @@ Still recommended for authenticated production acceptance:
 10. Confirm GHL Opportunity Won/Lost cancels scheduled callbacks on terminal outcomes.
 11. Confirm GHL Opportunity Lost does not roll back Closed Won.
 12. Confirm DNC suppresses and cancels callbacks.
-13. Confirm aging sweep behavior using controlled test data only.
+13. Review aging sweep dry-run output and controlled data behavior.
+14. Record owner production decision before expanding normal Lead Flow use.
 ```
 
 ## Explicitly out of scope without separate approval
 
-- Storing provider identity or commercial records in MiniCRM.
-- Scraping, fetching, embedding, or ingesting Google Maps/review content.
-- Auto-enabling GHL workflows, servicing, commission, or finance feature flags.
-- Additional live import/submit/export without a run-specific owner approval reference.
-- Additional production data changes.
-- Recording secrets, contact payloads, signed headers, raw source files, customer PII, tax IDs, or payment data in GitHub/My-Workspace.
+```txt
+Storing provider identity or commercial records in MiniCRM.
+Scraping, fetching, embedding, or ingesting Google Maps/review content.
+Auto-enabling GHL workflows, servicing, commission, or finance feature flags.
+Additional live import/submit/export without a run-specific owner approval reference.
+Additional production data changes.
+Recording secrets, contact payloads, signed headers, raw source files, customer PII, tax IDs, or payment data in GitHub/My-Workspace.
+```
 
 ## Acceptance gates
 
-PR #34, PR #35, PR #36, PR #37, PR #38, and PR #39 are merged and deployed. The latest production deployment is READY, the custom domain is on the latest production commit, and unauthenticated custom-domain smoke checks passed. Broader live lead operations, authenticated business-rule acceptance, external GHL workflow activation, Servicing, Commissions, and Finance remain gated until separately approved and tested.
+PR #34 through PR #44 are merged and deployed. The latest production deployment is READY, the custom domain is on the latest production commit, unauthenticated custom-domain smoke checks passed, and aging dry-run preview support is deployed. Broader live lead operations, authenticated business-rule acceptance, external GHL workflow activation, Servicing, Commissions, and Finance remain gated until separately approved and tested.
+
+## Supporting daily logs
+
+```txt
+01 Daily Logs/[G] 2026-07-09 MCD CRM PR40 Acceptance Report Exports.md
+01 Daily Logs/[G] 2026-07-09 MCD CRM PR41 Acceptance Report Page.md
+01 Daily Logs/[G] 2026-07-09 MCD CRM PR42 Lead Acceptance Navigation.md
+01 Daily Logs/[G] 2026-07-09 MCD CRM PR43 Shared Acceptance Model.md
+01 Daily Logs/[G] 2026-07-09 MCD CRM PR44 Aging Dry Run Preview.md
+```
