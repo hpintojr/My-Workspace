@@ -6,7 +6,7 @@
 
 ## Current release state
 
-The lead-research and opaque owner-acquisition release is live in production. The first supervised production import has also occurred and then required an approved data correction.
+The lead-research and opaque owner-acquisition release is live in production. The first supervised production import occurred, was corrected with owner approval, and PR #34 has now been merged to production.
 
 - Lead records support business address, Google rating, rating-observed timestamp, and an outbound Google Maps link.
 - The batch acquisition record stores only opaque `sourceCode` and `acquisitionReference` values.
@@ -35,7 +35,7 @@ The current deployed LeadLifecycle enum does not include VALIDATED.
 Use COLD / AVAILABLE for corrected imported Cold Leads until a future schema change introduces a different validated state.
 ```
 
-## Immediate scope — PR #34 Lead Flow Alignment
+## PR #34 Lead Flow Alignment — merged
 
 Branch:
 
@@ -47,18 +47,22 @@ Pull request:
 
 ```txt
 #34 — feat(leads): align cold lead workspace with two-way-contact claim rules
-Status: ready for review, not merged
-Latest confirmed READY head: 43b99e0daacaace2767f93d6a95641fa8d1d8a9a
+Status: merged to main
+Head before merge: 43b99e0daacaace2767f93d6a95641fa8d1d8a9a
+Merge commit: 487ff615170f2c9530da61e477935d969d814e69
 ```
 
-Latest observed Vercel preview:
+Production deployment:
 
 ```txt
-READY preview confirmed for acceptance-board guard head: 43b99e0daacaace2767f93d6a95641fa8d1d8a9a
-Runtime error/fatal log check for that preview found no errors.
+Deployment: dpl_Hwq4jTsjmpdjJ8AmMffe8hYDAL9o
+Commit: 487ff615170f2c9530da61e477935d969d814e69
+Target: production
+State: READY
+Runtime error/fatal logs: none found for the checked window
 ```
 
-Owner-reported browser acceptance:
+Owner-reported browser acceptance before merge:
 
 ```txt
 Hamilton logged in as an agent and confirmed it worked on 2026-07-08.
@@ -66,7 +70,7 @@ Hamilton logged in as an agent and confirmed it worked on 2026-07-08.
 
 ### 1. Cold Lead activity-first workspace
 
-PR #34 must preserve these rules:
+Production must preserve these rules:
 
 - Cold Leads display in `/portal/leads` as unowned `COLD / AVAILABLE` records.
 - Click-to-call logs `CALL_INITIATED` before opening the device dialer.
@@ -102,7 +106,7 @@ writes LeadClaimEvent, LeadActivity, and AuditLog
 
 ### 3. My Workspace dashboard
 
-`/portal/workspace` must work without a selected `leadId` and show:
+`/portal/workspace` works without a selected `leadId` and is expected to show:
 
 ```txt
 assigned records
@@ -177,7 +181,7 @@ Webhook responses and audit metadata now expose leadIgnored/preservedClosedWon/c
 
 ### 6. Acceptance board alignment
 
-`/admin/leads/testing` now has explicit acceptance steps for:
+`/admin/leads/testing` has explicit acceptance steps for:
 
 ```txt
 strict click-to-call logs activity first
@@ -197,18 +201,19 @@ owner merge decision
 
 ## Current controlled test plan
 
-PR #34 passed build/route/DB confirmation and owner-reported agent login. Merge still requires owner decision.
+PR #34 is merged and production deployment is READY. Controlled production smoke checks are still recommended before expanding normal lead operations.
 
 ```txt
 Confirmed:
-1. Vercel preview READY through acceptance-board guard head 43b99e0daacaace2767f93d6a95641fa8d1d8a9a.
-2. Preview runtime error/fatal log check returned no errors for that READY preview.
-3. /api/cron/leads/aging returns 401 without Authorization.
-4. Production Neon remains 50 COLD / AVAILABLE, 0 OPEN / AVAILABLE claimable.
-5. Hamilton confirmed agent login worked.
+1. PR #34 merged to main at 487ff615170f2c9530da61e477935d969d814e69.
+2. Production Vercel deployment dpl_Hwq4jTsjmpdjJ8AmMffe8hYDAL9o reached READY.
+3. Production runtime error/fatal log check returned no errors for the checked window.
+4. /api/cron/leads/aging returns 401 without Authorization.
+5. Production Neon remains 50 COLD / AVAILABLE, 0 OPEN / AVAILABLE claimable from the corrected batch.
+6. Hamilton confirmed agent login worked in preview before merge.
 
-Still recommended before/at merge:
-1. Record PR #34 acceptance in /admin/leads/testing.
+Still recommended after merge:
+1. Record production smoke acceptance in /admin/leads/testing.
 2. Confirm click-to-call logs activity before opening dialer.
 3. Confirm click-to-call blocks the dialer if activity logging fails.
 4. Confirm no-answer/voicemail leaves the Lead unowned.
@@ -230,15 +235,15 @@ Still recommended before/at merge:
 3. **Client servicing and commissions** — test the staged client/service/ledger migration on a safety branch before enabling service or finance flags.
 4. **Finance payouts** — only after Stripe Connect live credentials, funding reconciliation, approval UI, and non-production payout tests are complete.
 
-## Explicitly out of scope for this phase
+## Explicitly out of scope without separate approval
 
 - Storing provider identity or commercial records in MiniCRM.
 - Scraping, fetching, embedding, or ingesting Google Maps/review content.
-- Auto-enabling lead, servicing, commission, or finance feature flags.
+- Auto-enabling GHL workflows, servicing, commission, or finance feature flags.
 - Additional live import/submit/export without a run-specific owner approval reference.
-- Merging PR #34 without owner merge decision.
+- Additional production data changes.
 - Recording secrets, contact payloads, signed headers, raw source files, customer PII, tax IDs, or payment data in GitHub/My-Workspace.
 
 ## Acceptance gates
 
-PR #34 is ready for review. Merge/production activation still requires an explicit owner merge decision, current acceptance evidence, and preservation of remaining GHL/Servicing/Commissions/Finance gates.
+PR #34 is merged and deployed. Broader live lead operations, external GHL workflow activation, Servicing, Commissions, and Finance remain gated until separately approved and tested.
