@@ -48,14 +48,14 @@ Pull request:
 ```txt
 #34 — feat(leads): align cold lead workspace with two-way-contact claim rules
 Status: ready for review, not merged
-Latest head: 3dd9df8b892035ec29904f4197e5d5b7fe2f842f
+Latest head: 95366ef51e9897159deaac3374460c4bbfbf4353
 ```
 
 Latest observed Vercel preview:
 
 ```txt
-latest known READY functional preview before strict click-to-call guard: 1371550933e43017b121d8071a1d957572b8e111
-latest head 3dd9df8b892035ec29904f4197e5d5b7fe2f842f was building at last check with no error/stderr/exit events emitted
+latest known READY functional preview: 3dd9df8b892035ec29904f4197e5d5b7fe2f842f
+latest docs head 95366ef51e9897159deaac3374460c4bbfbf4353 was building at last check with no error/stderr/exit events emitted
 ```
 
 Owner-reported browser acceptance:
@@ -181,8 +181,8 @@ PR #34 passed build/route/DB confirmation and owner-reported agent login. Merge 
 
 ```txt
 Confirmed:
-1. Vercel preview READY at multiple PR #34 heads through the strict click-to-call documentation pass.
-2. Preview runtime error/fatal log check returned no errors for the latest READY preview checked.
+1. Vercel preview READY through the strict click-to-call guard head 3dd9df8b892035ec29904f4197e5d5b7fe2f842f.
+2. Preview runtime error/fatal log checks returned no errors for READY previews where the runtime-log tool completed.
 3. /api/cron/leads/aging returns 401 without Authorization.
 4. Production Neon remains 50 COLD / AVAILABLE, 0 OPEN / AVAILABLE claimable.
 5. Hamilton confirmed agent login worked.
