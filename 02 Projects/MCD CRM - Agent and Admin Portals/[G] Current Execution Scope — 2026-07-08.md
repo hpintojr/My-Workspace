@@ -48,14 +48,14 @@ Pull request:
 ```txt
 #34 — feat(leads): align cold lead workspace with two-way-contact claim rules
 Status: ready for review, not merged
-Latest head: 95366ef51e9897159deaac3374460c4bbfbf4353
+Latest recorded head: 43b99e0daacaace2767f93d6a95641fa8d1d8a9a
 ```
 
 Latest observed Vercel preview:
 
 ```txt
-latest known READY functional preview: 3dd9df8b892035ec29904f4197e5d5b7fe2f842f
-latest docs head 95366ef51e9897159deaac3374460c4bbfbf4353 was building at last check with no error/stderr/exit events emitted
+READY preview confirmed for strict click-to-call code/docs head: 95366ef51e9897159deaac3374460c4bbfbf4353
+Latest acceptance-board guard head 43b99e0daacaace2767f93d6a95641fa8d1d8a9a was pushed after that READY preview and needs final preview confirmation.
 ```
 
 Owner-reported browser acceptance:
@@ -175,13 +175,33 @@ Late Opportunity Lost cannot roll back an already CLOSED_WON Lead.
 Webhook responses and audit metadata now expose leadIgnored/preservedClosedWon/callbacksCancelled outcomes.
 ```
 
+### 6. Acceptance board alignment
+
+`/admin/leads/testing` now has explicit acceptance steps for:
+
+```txt
+strict click-to-call logs activity first
+strict click-to-call creates no ownership/reservation
+strict click-to-call blocks the dialer if logging fails
+no-answer/voicemail unowned boundary
+two-way-contact claim gate
+45-day claim timer
+DNC blackout
+My Workspace dashboard
+Warm Reply timer
+GHL appointment hardening
+GHL opportunity hardening
+aging sweep
+owner merge decision
+```
+
 ## Current controlled test plan
 
 PR #34 passed build/route/DB confirmation and owner-reported agent login. Merge still requires owner decision.
 
 ```txt
 Confirmed:
-1. Vercel preview READY through the strict click-to-call guard head 3dd9df8b892035ec29904f4197e5d5b7fe2f842f.
+1. Vercel preview READY through strict click-to-call code/docs head 95366ef51e9897159deaac3374460c4bbfbf4353.
 2. Preview runtime error/fatal log checks returned no errors for READY previews where the runtime-log tool completed.
 3. /api/cron/leads/aging returns 401 without Authorization.
 4. Production Neon remains 50 COLD / AVAILABLE, 0 OPEN / AVAILABLE claimable.
@@ -221,4 +241,4 @@ Still recommended before/at merge:
 
 ## Acceptance gates
 
-PR #34 is now ready for review. Merge/production activation still requires an explicit owner merge decision and preservation of remaining GHL/Servicing/Commissions/Finance gates.
+PR #34 is ready for review. Merge/production activation still requires an explicit owner merge decision, current acceptance evidence, and preservation of remaining GHL/Servicing/Commissions/Finance gates.
