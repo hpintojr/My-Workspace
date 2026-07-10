@@ -8,6 +8,7 @@
 - Shipped PR #67, `feat(leads): add acceptance history and runbook step navigation`.
 - After Hamilton instructed ChatGPT to keep coding, shipped PR #68, `feat(leads): add acceptance findings catalog`.
 - After Hamilton instructed ChatGPT to keep coding again, shipped PR #69, `feat(leads): add acceptance handoff packet`.
+- After Hamilton instructed ChatGPT to keep coding again, shipped PR #70, `feat(leads): add acceptance evidence gaps`.
 - Returned the execution lock to Claude in `02 Projects/MCD CRM - Agent and Admin Portals/LOCK.md`.
 
 ### PR #66 — Runbook step anchors
@@ -49,13 +50,25 @@
 
 - Branch: `pr-69-acceptance-handoff-packet`.
 - Head: `de5e4d27adefb08fdca75ad59843d928c6ecef63`.
-- Squash merge / latest production commit: `d90137bae6f3f2714816d45c084473848e590930`.
+- Squash merge / production commit: `d90137bae6f3f2714816d45c084473848e590930`.
 - Added `src/lib/lead-acceptance-handoff.ts` to build a read-only handoff packet from immutable acceptance audit records plus the findings catalog.
 - Added protected admin page `/admin/leads/acceptance-handoff`.
 - Added protected JSON endpoint `/api/admin/leads/acceptance-handoff`.
 - Linked the handoff packet from `/admin/leads/acceptance-findings`.
 - Extended `scripts/check-lead-flow-alignment.ts` to guard the packet model, page, endpoint, and navigation link.
 - PR-specific log: `01 Daily Logs/[G] 2026-07-09 MCD CRM PR69 Acceptance Handoff Packet.md`.
+
+### PR #70 — Acceptance evidence gaps
+
+- Branch: `pr-70-acceptance-evidence-gaps`.
+- Head: `50c9693c96dc7feb8fda0db7f3e5cda35e01070e`.
+- Squash merge / latest production commit: `c630a95d1dc2b5338f9fb06d594d21f4958e485e`.
+- Added `src/lib/lead-acceptance-gaps.ts` to derive incomplete, failed, or deferred evidence from the PR69 handoff packet.
+- Added protected admin page `/admin/leads/acceptance-gaps`.
+- Added protected JSON endpoint `/api/admin/leads/acceptance-gaps`.
+- Linked the evidence-gaps surface from `/admin/leads/acceptance-handoff`.
+- Extended `scripts/check-lead-flow-alignment.ts` to guard the gaps model, page, endpoint, and handoff navigation link.
+- PR-specific log: `01 Daily Logs/[G] 2026-07-09 MCD CRM PR70 Acceptance Evidence Gaps.md`.
 
 ## Findings cataloged
 
@@ -65,14 +78,7 @@
 - PR #67 resolved that by cataloging an explicit mapping in `src/lib/acceptance-runbook-links.ts`.
 - PR #68 made the findings visible inside the app at `/admin/leads/acceptance-findings`, instead of leaving them only in workspace logs.
 - PR #69 added `/admin/leads/acceptance-handoff` as a single in-app starting point with current evidence counts, recent acceptance records, cataloged findings, and closed gates.
-- The mapping intentionally groups several evidence steps into broader runbook sections:
-  - release/domain readiness evidence maps to `open-command-center` or `aging-preview`;
-  - click-to-call evidence maps to `click-to-call`;
-  - no-answer evidence maps to `no-answer-ownership`;
-  - two-way-contact, claim timer, and My Workspace responsibility map to `two-way-contact-claim`;
-  - controlled GHL appointment/opportunity evidence maps to `ghl-controlled-events`;
-  - owner production decision maps to `owner-decision`.
-- This keeps the deep-link system valid after PR #66 added stable runbook section anchors.
+- PR #70 added `/admin/leads/acceptance-gaps` as a focused view of only incomplete, failed, or deferred acceptance evidence.
 - Authenticated production acceptance remains Hamilton-only and was not performed by ChatGPT.
 - Closed operational gates remain closed: live GHL workflow activation, additional live imports/exports, Servicing, Commissions, Finance, payout, client onboarding, and production data changes outside controlled-test actions.
 
@@ -127,6 +133,20 @@
 - Production `/api/admin/leads/acceptance-handoff`: HTTP 200 sign-in boundary, not 404/500.
 - Production `/api/cron/leads/aging`: HTTP 401 without auth.
 
+### PR #70 evidence
+
+- Required checks: Vercel success; Commission Policy success run `395`; Verify CRM success run `209`; Application Build success run `357`.
+- Preview deployment `dpl_6ZeVrfQiCppkuXKBG1rXqwo8MtNL` reached READY at `https://crm-h6n3crnit-hamiltons-projects-f65eeb81.vercel.app`.
+- Preview `/api/status`: HTTP 200; environment `preview`; branch `pr-70-acceptance-evidence-gaps`; commit `50c9693c96dc7feb8fda0db7f3e5cda35e01070e`.
+- Preview `/admin/leads/acceptance-gaps`: HTTP 200 sign-in boundary, not 404/500.
+- Preview `/api/admin/leads/acceptance-gaps`: HTTP 200 sign-in boundary, not 404/500.
+- Preview `/api/cron/leads/aging`: HTTP 401 without auth.
+- Production deployment `dpl_FFCokdZ83EUpFBkPvHjCeFxGz8R8` reached READY and received the `crm.mercurycalldesk.com` alias.
+- Production `/api/status`: HTTP 200; environment `production`; branch `main`; commit `c630a95d1dc2b5338f9fb06d594d21f4958e485e`.
+- Production `/admin/leads/acceptance-gaps`: HTTP 200 sign-in boundary, not 404/500.
+- Production `/api/admin/leads/acceptance-gaps`: HTTP 200 sign-in boundary, not 404/500.
+- Production `/api/cron/leads/aging`: HTTP 401 without auth.
+
 ## Still open
 
 - Authenticated production acceptance remains Hamilton-only and is still not recorded by ChatGPT. The gate remains `0 / 18` unless Hamilton has since recorded outcomes through the authenticated acceptance board.
@@ -134,17 +154,17 @@
 - Additional live imports/exports remain closed.
 - Servicing, Commissions, Finance, payout, and client-onboarding activation remain closed.
 - Production data changes outside controlled-test actions remain closed.
-- The static findings catalog and handoff packet should be extended by a future guarded PR if new findings emerge.
+- The static findings catalog, handoff packet, and gaps surface should be extended by a future guarded PR if new findings or new acceptance lanes emerge.
 
 ## Start here next
 
-For Hamilton: sign in on `crm.mercurycalldesk.com` and start at `/admin/leads/acceptance-handoff`. Use the handoff packet, findings catalog, command center, runbook links, record links, and acceptance history to navigate authenticated production acceptance.
+For Hamilton: sign in on `crm.mercurycalldesk.com` and start at `/admin/leads/acceptance-handoff`. Use `/admin/leads/acceptance-gaps` for a focused list of incomplete, failed, or deferred evidence only.
 
-For Claude: read `02 Projects/MCD CRM - Agent and Admin Portals/LOCK.md`, then `01 Daily Logs/[G] 2026-07-09 MCD CRM PR69 Acceptance Handoff Packet.md`. Latest production commit is `d90137bae6f3f2714816d45c084473848e590930`.
+For Claude: read `02 Projects/MCD CRM - Agent and Admin Portals/LOCK.md`, then `01 Daily Logs/[G] 2026-07-09 MCD CRM PR70 Acceptance Evidence Gaps.md`. Latest production commit is `c630a95d1dc2b5338f9fb06d594d21f4958e485e`.
 
 ## Handback
 
-Lock holder is Claude as of `2026-07-10T03:09Z`. ChatGPT completed the owner-authorized continuation and returned the lock. Latest production commit: `d90137bae6f3f2714816d45c084473848e590930`.
+Lock holder is Claude as of `2026-07-10T03:23Z`. ChatGPT completed the owner-authorized continuation and returned the lock. Latest production commit: `c630a95d1dc2b5338f9fb06d594d21f4958e485e`.
 
 ## Safety boundary reaffirmation
 
