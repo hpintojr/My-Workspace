@@ -6,6 +6,7 @@
 - Continued only inside the authorized safe lane: read-only Lead acceptance visibility, navigation, protected pages/endpoints, and guard assertions.
 - Shipped PR #66 through PR #77 on `hpintojr/crm.mcd`, with all required CI green, preview smoke passed, and production smoke passed on `crm.mercurycalldesk.com`.
 - Returned the execution lock to Claude in `02 Projects/MCD CRM - Agent and Admin Portals/LOCK.md` after the latest PR.
+- Added a dedicated copy-paste continuation prompt: `01 Daily Logs/[G] 2026-07-09 MCD CRM Handoff Prompt After PR77.md`.
 
 ## PRs shipped
 
@@ -97,6 +98,8 @@
 For Hamilton: sign in on `crm.mercurycalldesk.com` and start at `/admin/leads/acceptance` or `/admin/leads/acceptance-overview`. The overview is now also linked from `/admin/leads`, `/admin/leads/acceptance-history`, `/admin/leads/acceptance-findings`, `/admin/leads/acceptance-command-center`, `/admin/leads/acceptance-report`, `/admin/leads/testing`, and `/admin/leads/acceptance-runbook`.
 
 For Claude: read `02 Projects/MCD CRM - Agent and Admin Portals/LOCK.md`, then `01 Daily Logs/[G] 2026-07-09 MCD CRM PR77 Acceptance Overview Board Runbook Links.md`. Latest production commit is `a5c33b1c534899e9199f5c24474ec8d217409a01`.
+
+Dedicated copy-paste prompt: `01 Daily Logs/[G] 2026-07-09 MCD CRM Handoff Prompt After PR77.md`.
 
 ## Handback
 
