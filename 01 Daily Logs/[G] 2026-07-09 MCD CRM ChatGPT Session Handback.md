@@ -4,7 +4,7 @@
 
 - Read the required workspace ground truth and used the execution lock for owner-authorized, scoped, read-only Lead acceptance-tooling work.
 - Continued only inside the authorized safe lane: read-only Lead acceptance visibility, navigation, protected pages/endpoints, and guard assertions.
-- Shipped PR #66 through PR #76 on `hpintojr/crm.mcd`, with all required CI green, preview smoke passed, and production smoke passed on `crm.mercurycalldesk.com`.
+- Shipped PR #66 through PR #77 on `hpintojr/crm.mcd`, with all required CI green, preview smoke passed, and production smoke passed on `crm.mercurycalldesk.com`.
 - Returned the execution lock to Claude in `02 Projects/MCD CRM - Agent and Admin Portals/LOCK.md` after the latest PR.
 
 ## PRs shipped
@@ -40,11 +40,14 @@
   - Production commit: `e2a429bc5003ed179532ffebc91a71a8d7ba251b`.
   - Added overview links from acceptance history and findings plus guard coverage.
 - PR #76 — `feat(leads): link acceptance overview from command center and report`
-  - Branch: `pr-76-acceptance-overview-operating-links`.
-  - Head: `32029527fed2cea9379a89c93eff424e16fd80c3`.
   - Production commit: `438b24fd4378edf2e0badf747956dc4c614bfd65`.
   - Added overview links from acceptance command center and acceptance report plus guard coverage.
-  - PR-specific log: `01 Daily Logs/[G] 2026-07-09 MCD CRM PR76 Acceptance Overview Operating Links.md`.
+- PR #77 — `feat(leads): link acceptance overview from board and runbook`
+  - Branch: `pr-77-acceptance-overview-board-runbook-links`.
+  - Head: `3876f9eb4e813118972746ce60df50c4cd1043e0`.
+  - Production commit: `a5c33b1c534899e9199f5c24474ec8d217409a01`.
+  - Added overview links from acceptance board and acceptance runbook plus guard coverage.
+  - PR-specific log: `01 Daily Logs/[G] 2026-07-09 MCD CRM PR77 Acceptance Overview Board Runbook Links.md`.
 
 ## Findings cataloged
 
@@ -60,23 +63,24 @@
 - PR #74 added `/admin/leads/acceptance` as a protected alias and surfaced the overview from `/admin/leads`.
 - PR #75 surfaced the overview from acceptance history and findings.
 - PR #76 surfaced the overview from the command center and report.
+- PR #77 surfaced the overview from the acceptance board and runbook.
 - Authenticated production acceptance remains Hamilton-only and was not performed by ChatGPT.
 - Closed operational gates remain closed: live GHL workflow activation, additional live imports/exports, Servicing, Commissions, Finance, payout, client onboarding, and production data changes outside controlled-test actions.
 
 ## Latest evidence
 
-### PR #76 evidence
+### PR #77 evidence
 
-- Required checks: Vercel success; Commission Policy success run `407`; Verify CRM success run `221`; Application Build success run `369`.
-- Preview deployment `dpl_CTrmvtSQ1o7uEmj6KML3beGhrbJA` reached READY.
-- Preview `/api/status`: HTTP 200; branch `pr-76-acceptance-overview-operating-links`; commit `32029527fed2cea9379a89c93eff424e16fd80c3`.
-- Preview `/admin/leads/acceptance-command-center`: HTTP 200 sign-in boundary, not 404/500.
-- Preview `/admin/leads/acceptance-report`: HTTP 200 sign-in boundary, not 404/500.
+- Required checks: Vercel success; Commission Policy success run `409`; Verify CRM success run `223`; Application Build success run `371`.
+- Preview deployment `dpl_5BgpE3iVXxuPWcZz4AqqZBpUoe5D` reached READY.
+- Preview `/api/status`: HTTP 200; branch `pr-77-acceptance-overview-board-runbook-links`; commit `3876f9eb4e813118972746ce60df50c4cd1043e0`.
+- Preview `/admin/leads/testing`: HTTP 200 sign-in boundary, not 404/500.
+- Preview `/admin/leads/acceptance-runbook`: HTTP 200 sign-in boundary, not 404/500.
 - Preview `/api/cron/leads/aging`: HTTP 401 without auth.
-- Production deployment `dpl_4DSFcqCFArg689VwVNKwoprGLVkV` reached READY and received the `crm.mercurycalldesk.com` alias.
-- Production `/api/status`: HTTP 200; commit `438b24fd4378edf2e0badf747956dc4c614bfd65`.
-- Production `/admin/leads/acceptance-command-center`: HTTP 200 sign-in boundary, not 404/500.
-- Production `/admin/leads/acceptance-report`: HTTP 200 sign-in boundary, not 404/500.
+- Production deployment `dpl_BsTdxcUHuMrAtGbE6ZY97RAodcBP` reached READY and received the `crm.mercurycalldesk.com` alias.
+- Production `/api/status`: HTTP 200; commit `a5c33b1c534899e9199f5c24474ec8d217409a01`.
+- Production `/admin/leads/testing`: HTTP 200 sign-in boundary, not 404/500.
+- Production `/admin/leads/acceptance-runbook`: HTTP 200 sign-in boundary, not 404/500.
 - Production `/api/cron/leads/aging`: HTTP 401 without auth.
 
 ## Still open
@@ -90,13 +94,13 @@
 
 ## Start here next
 
-For Hamilton: sign in on `crm.mercurycalldesk.com` and start at `/admin/leads/acceptance` or `/admin/leads/acceptance-overview`. The overview is now also linked from `/admin/leads`, `/admin/leads/acceptance-history`, `/admin/leads/acceptance-findings`, `/admin/leads/acceptance-command-center`, and `/admin/leads/acceptance-report`.
+For Hamilton: sign in on `crm.mercurycalldesk.com` and start at `/admin/leads/acceptance` or `/admin/leads/acceptance-overview`. The overview is now also linked from `/admin/leads`, `/admin/leads/acceptance-history`, `/admin/leads/acceptance-findings`, `/admin/leads/acceptance-command-center`, `/admin/leads/acceptance-report`, `/admin/leads/testing`, and `/admin/leads/acceptance-runbook`.
 
-For Claude: read `02 Projects/MCD CRM - Agent and Admin Portals/LOCK.md`, then `01 Daily Logs/[G] 2026-07-09 MCD CRM PR76 Acceptance Overview Operating Links.md`. Latest production commit is `438b24fd4378edf2e0badf747956dc4c614bfd65`.
+For Claude: read `02 Projects/MCD CRM - Agent and Admin Portals/LOCK.md`, then `01 Daily Logs/[G] 2026-07-09 MCD CRM PR77 Acceptance Overview Board Runbook Links.md`. Latest production commit is `a5c33b1c534899e9199f5c24474ec8d217409a01`.
 
 ## Handback
 
-Lock holder is Claude as of `2026-07-10T07:10Z`. ChatGPT completed the owner-authorized continuation and returned the lock. Latest production commit: `438b24fd4378edf2e0badf747956dc4c614bfd65`.
+Lock holder is Claude as of `2026-07-10T07:28Z`. ChatGPT completed the owner-authorized continuation and returned the lock. Latest production commit: `a5c33b1c534899e9199f5c24474ec8d217409a01`.
 
 ## Safety boundary reaffirmation
 
