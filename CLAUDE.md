@@ -61,34 +61,52 @@ CLAUDE.md
 - Never place credentials, customer data, or other sensitive information into logs or workspace files.
 ```
 
-## Execution ownership — updated 2026-07-06
+## Execution ownership — updated 2026-07-09
 
 ```txt
 Primary executor: Claude (Opus / 5.x). Claude holds the lock by default and does the building.
 Other AIs (ChatGPT, Gemini): review and verification only, unless Claude explicitly hands them the lock
-in writing via the lock file. This replaces the 2026-07-03 "Claude paused / ChatGPT execution owner"
-arrangement, which caused three days of back-and-forth and duplicated work.
+in writing via the lock file.
 
-Temporary exception: Hamilton explicitly authorized ChatGPT on 2026-07-06 to perform a limited Phase D
-reconciliation because Claude reached its session limit before recording the planned handoff. The connector
-blocked the LOCK.md update, so this exception is recorded in:
-  01 Daily Logs/[G] 2026-07-06 MCD CRM Phase D Reconciliation.md
-It applies only to that recovery session and does not change the default executor rule.
+Historical note: the 2026-07-06 temporary exception granting ChatGPT limited Phase D reconciliation
+authority expired when that recovery session ended. The 2026-07-08 Lead Flow Alignment and 2026-07-09
+Lead Acceptance Runbook work (PR #34, PR #35 through PR #58 by ChatGPT, PR #59 through PR #65 by Claude)
+have all been completed under this default rule.
 ```
 
-## MCD CRM — current state (2026-07-06)
+## MCD CRM — current state (2026-07-09)
 
 ```txt
-STATUS: UNBLOCKED. The admin/portal "login/MFA hang" is FIXED in production.
-Real cause was NOT auth: it was a Next.js dynamic-route slug collision
-(admin/servicing/[id] vs admin/servicing/[clientAccountId]) that hung every server-rendered page,
-plus a Vercel Deployment-Protection (SSO) wall that was blocking all *.vercel.app preview URLs.
-Both resolved. Full detail + the 13-layer review:
-  02 Projects/MCD CRM - Agent and Admin Portals/[C] MCD CRM — Production Scope & 13-Layer Review.md
+STATUS: HEALTHY. Production is on crm.mercurycalldesk.com at commit
+  4cba96ac145a77218f9fd62a2d31ce75c955a57c (main, PR #65 merged).
 
-Phase D database state is verified: LeadImportBatch / LeadImportRow tables, enums, and indexes already
-exist on production Neon; no import batch, import row, or Lead exists yet. Replacement PR #32 is the
-current reviewed branch; its Vercel preview is READY and no longer reproduces the routing hang.
+Lead Flow business rules shipped and locked (PR #34, PR #32 chain): activity-first
+Cold Lead workspace, click-to-call activity guarantee, no-answer/voicemail stay
+unowned, two-way-contact claim gate, 45-day openPoolReleaseAt timer, Warm Reply
+Triage 45-day timer, DNC blackout, secured aging cron, Shark Tank promotion, My
+Workspace dashboard, GHL appointment/opportunity relay hardening, build guards.
+
+Read-only acceptance tooling shipped in PRs #59 through #65 (this session, Claude
+executor):
+  - /admin/leads/acceptance-runbook  — 11-step runbook page (PR #59)
+  - /admin/leads/acceptance-runbook/checklist — printable checklist (PR #62)
+  - Where-to-record matrix on the runbook (PR #65)
+  - Runbook link on every admin surface: command-center, readiness, operating
+    status, audit, Lead review, acceptance command center, acceptance report,
+    acceptance board, controlled test data, controlled GHL harness, integration
+    monitor (PR #60, #61, #63, #64).
+  - Guard script scripts/check-lead-flow-alignment.ts extended to protect all
+    of the above.
+
+Custom-domain caveat: crm.mercurycalldesk.com is on latest production commit as of
+2026-07-09 22:57 UTC. Each PR's /api/status was verified after merge.
+
+Phase D lead import: 50 production Leads exist, all in COLD / AVAILABLE state
+(batch cmrbj55go0000la04pxcuuaci, run RUN_2026_07_08_e8a9beed). No new imports
+have been run since PR #34.
+
+CRON_SECRET remains configured in Vercel; unauthenticated /api/cron/leads/aging
+correctly returns 401 across preview and production.
 ```
 
 ## MCD CRM — the rules that don't change
@@ -106,17 +124,19 @@ owned-account exports, permitted business-site research. Scraping adapters are d
 ## Current next work (authoritative)
 
 ```txt
-1. [DONE 2026-07-06] Fix servicing slug collision. Merged to production as PR #31 (squash f338cc4).
-2. [DONE 2026-07-06] Build and validate replacement Phase D PR #32:
-   chatgpt/phase-d-reconciled-20260706 / head c052a1d / Vercel preview READY.
-   It includes the route fix plus corrected approval, duplicate-count, inserted-count, and replay behavior.
-3. [NEXT] Merge PR #32 using squash. It is mergeable; the ChatGPT GitHub connector safety gate blocked
-   the merge attempt, so it remains open. Treat PR #30 as superseded only after #32 merges.
-4. [NEXT] Confirm presence (not values) of LEAD_IMPORT_KEY_ID and LEAD_IMPORT_HMAC_SECRET in the relevant
-   Vercel/local environments, then complete a real-account preview login/MFA test for /admin, /portal,
-   and /admin/servicing.
-5. [NEXT] Run the first supervised, approved `mcd-leads export --run <id>` and log batch ID, final counts,
-   Lead/AuditLog evidence, and any reconciliation result.
-6. Then the 13-layer cleanup backlog (DB least-privilege/RLS, preview-vs-prod secret separation,
-   add a CI check, compute headroom) and backlog items #38-41 — none scoped with Hamilton yet.
+1. [DONE 2026-07-06] Servicing slug collision fixed (PR #31 / f338cc4).
+2. [DONE 2026-07-06] Phase D reconciliation PR #32 merged (route fix + approval/duplicate/inserted/replay).
+3. [DONE 2026-07-08] Lead Flow Alignment shipped (PR #34, merge commit 487ff615).
+   50 production Leads corrected to COLD / AVAILABLE; audit evidence recorded.
+4. [DONE 2026-07-09] Read-only acceptance tooling complete (PR #59-#65, current production
+   commit 4cba96ac). Runbook, printable checklist, discoverability across every admin surface,
+   where-to-record matrix, guard coverage extended.
+5. [NEXT] AUTHENTICATED PRODUCTION ACCEPTANCE. Drive on crm.mercurycalldesk.com. Use the
+   acceptance runbook at /admin/leads/acceptance-runbook and record every outcome on the
+   acceptance board /admin/leads/testing. 18 acceptance steps remain unrecorded (0 / 18 pass).
+   Owner production decision is the final step.
+6. [NEXT] After acceptance passes: 13-layer hardening backlog — preview/prod DB and secret
+   separation, RLS/runtime DB role, error tracking, Neon autoscaling/backup review, login
+   smoke test. Scope with Hamilton before starting.
+7. [NEXT] Backlog items #38-#41 remain unscoped.
 ```

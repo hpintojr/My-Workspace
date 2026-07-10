@@ -1,6 +1,6 @@
 # Workspace Index
 
-Updated: 2026-07-08
+Updated: 2026-07-09
 
 ## First read
 
@@ -57,35 +57,44 @@ MiniCRM is the system of record for agent onboarding, lead ownership, compliance
 ### Current status
 
 ```txt
+PRODUCTION IS HEALTHY.
+Custom domain crm.mercurycalldesk.com is on latest commit 4cba96ac145a77218f9fd62a2d31ce75c955a57c (main).
+
 Phase 1 onboarding: production-validated.
 Admin operations, partner portal, and read-only GHL-backed schedule: deployed.
-The July dynamic-route servicing incident is fixed and protected by an automated route-collision guard.
+July dynamic-route servicing incident: fixed and protected by an automated route-collision guard.
 
-Phase D lead import is no longer just readiness. One approved production import ran:
-- Batch: cmrbj55go0000la04pxcuuaci
-- Local run: RUN_2026_07_08_e8a9beed
-- 50 production Leads exist.
-- Data correction approved by Hamilton and applied after Neon safety-branch rehearsal.
-- Final verified state: 50 COLD / AVAILABLE, 0 OPEN / AVAILABLE claimable.
-- Audit evidence: 1 LEAD_BATCH_POOL_CORRECTED + 50 LEAD_POOL_CORRECTED records.
+Lead Flow business rules (PR #34, merge 487ff615, deployed 2026-07-08):
+- Cold Lead workspace, activity-first, no soft lock.
+- Click-to-call logs activity before dialer opens; dialer blocks if logging fails.
+- No-answer / voicemail stay unowned.
+- Two-way-contact claim gate; claim sets owner, claimedAt, 45-day openPoolReleaseAt.
+- Warm Reply Triage 45-day timer.
+- DNC blackout on unowned Cold Leads and owned Leads.
+- Secured aging cron with CRON_SECRET (401 without auth).
+- 45-day expired owned Leads return to Open Pool; 21-day stale Open Pool moves to Shark Tank.
+- My Workspace dashboard.
+- GHL appointment/opportunity relay hardening (controlled-only harness for testing).
+- Build guards protect lead-flow rules.
 
-PR #34 was merged to main after Hamilton's merge approval:
-feat(leads): align cold lead workspace with two-way-contact claim rules
-Merge commit: 487ff615170f2c9530da61e477935d969d814e69
-New main deployment: dpl_Hwq4jTsjmpdjJ8AmMffe8hYDAL9o
-New main deployment state: READY
-Runtime error/fatal log check for that deployment found no errors.
+Phase D lead import batch (2026-07-08):
+- Batch cmrbj55go0000la04pxcuuaci / local run RUN_2026_07_08_e8a9beed.
+- 50 production Leads exist, all COLD / AVAILABLE, 0 claimable.
+- Audit evidence: 1 LEAD_BATCH_POOL_CORRECTED + 50 LEAD_POOL_CORRECTED.
 
-Custom-domain caveat:
-crm.mercurycalldesk.com still resolved to older deployment dpl_8Qj5PcUQrBGfnYWHxvzPcGNGqG5C at the last check.
-Owner or Vercel settings need to promote/alias the custom domain to commit 487ff615170f2c9530da61e477935d969d814e69.
+Read-only acceptance tooling (PR #59-#65, 2026-07-09, Claude executor):
+- /admin/leads/acceptance-runbook (11 steps).
+- /admin/leads/acceptance-runbook/checklist (print-friendly companion).
+- Where-to-record matrix on the runbook.
+- Runbook link on every admin surface (command center, readiness, operating status,
+  audit, Lead review, acceptance command center, acceptance report, acceptance
+  board, controlled test data, controlled GHL harness, integration monitor).
+- Guard script scripts/check-lead-flow-alignment.ts extended to protect all of it.
 
-PR #34 delivered Cold Lead workspace, strict click-to-call logging, no-claim-before-two-way-contact guard, DNC on unowned Cold Leads, 45-day claim timer, secured aging cron, Shark Tank promotion, My Workspace dashboard, Warm Reply timer alignment, GHL appointment/opportunity relay hardening, acceptance board, and docs/build guards.
+CRON_SECRET confirmed configured in Vercel. Value not inspected.
 
-Hamilton confirmed CRON_SECRET is configured in Vercel. Value was not inspected or recorded.
-Hamilton confirmed agent login worked in the PR preview before merge.
-
-Current execution holder: ChatGPT, post-merge production verification, custom-domain promotion tracking, and project documentation reconciliation.
+Current execution holder: Claude (default per CLAUDE.md).
+Current gate: authenticated production acceptance (0 / 18 steps recorded).
 ```
 
 ### Read next
@@ -93,13 +102,16 @@ Current execution holder: ChatGPT, post-merge production verification, custom-do
 ```txt
 02 Projects/MCD CRM - Agent and Admin Portals/MCD CRM - Agent and Admin Portals Overview.md
 02 Projects/MCD CRM - Agent and Admin Portals/LOCK.md
-02 Projects/MCD CRM - Agent and Admin Portals/[G] Current Execution Scope — 2026-07-08.md
-02 Projects/MCD CRM - Agent and Admin Portals/[G] 2026-07-08 Lead Flow Alignment Scope Addendum.md
-02 Projects/MCD CRM - Agent and Admin Portals/[C] Local Lead Operations and MiniCRM Export Scope.md
 02 Projects/MCD CRM - Agent and Admin Portals/[C] MCD CRM — Production Scope & 13-Layer Review.md
+02 Projects/MCD CRM - Agent and Admin Portals/[C] Local Lead Operations and MiniCRM Export Scope.md
+01 Daily Logs/[C] 2026-07-09 MCD CRM PR65 Where To Record Matrix.md
+01 Daily Logs/[C] 2026-07-09 MCD CRM PR64 Runbook Links Batch 2.md
+01 Daily Logs/[C] 2026-07-09 MCD CRM PR63 Runbook Links Batch 1.md
+01 Daily Logs/[C] 2026-07-09 MCD CRM PR62 Printable Runbook Checklist.md
+01 Daily Logs/[C] 2026-07-09 MCD CRM PR61 Runbook Link on Acceptance Board.md
+01 Daily Logs/[C] 2026-07-09 MCD CRM PR60 Runbook Cross-Links.md
+01 Daily Logs/[C] 2026-07-09 MCD CRM PR59 Lead Acceptance Runbook.md
 01 Daily Logs/[G] 2026-07-08 MCD CRM Lead Flow Alignment and CRON Secret Configured.md
-01 Daily Logs/[C] 2026-07-07 Reviewed and Merged PR 32 to Production Lock Released.md
-01 Daily Logs/[G] 2026-07-07 MCD CRM Post-Merge Export Readiness.md
 Repo: hpintojr/crm.mcd
 Repo: mcd_lead_ops (local only, D:\GitHub\mcd_lead_ops)
 ```
@@ -107,15 +119,25 @@ Repo: mcd_lead_ops (local only, D:\GitHub\mcd_lead_ops)
 ### Current next actions
 
 ```txt
-1. Resolve custom-domain promotion: confirm crm.mercurycalldesk.com points to merge commit 487ff615170f2c9530da61e477935d969d814e69.
-2. Run controlled production smoke checks after custom-domain promotion.
-3. Verify /portal/leads Cold Lead behavior: strict click-to-call logs before dialer, blocks dialer if logging fails, no claim/no reservation, no-answer remains unowned, callback/qualified/follow-up unlocks claim.
-4. Verify claim creates owner, claimedAt, and 45-day openPoolReleaseAt only after two-way contact.
-5. Verify DNC suppresses and cancels callbacks.
-6. Verify /portal/workspace works without leadId and shows assigned records, callbacks, recent activity, and claim timer.
-7. Verify Warm Reply Triage assignment starts the 45-day timer.
-8. Keep GHL workflow activation, Servicing, Commissions, and Finance gated unless separately approved.
-9. Continue 13-layer hardening: preview/prod separation, RLS/runtime DB role, error tracking, login smoke test, Neon autoscaling/backup review.
+1. AUTHENTICATED PRODUCTION ACCEPTANCE (0 / 18 steps recorded, gate to broader rollout):
+   Start at /admin/leads/acceptance-runbook. Use the where-to-record matrix. Each
+   step lands on the acceptance board /admin/leads/testing as an immutable
+   LEAD_PRODUCTION_ACCEPTANCE_RECORDED audit event.
+   - Verify Cold Lead workspace visibility.
+   - Verify click-to-call logs activity first (dialer blocks if logging fails).
+   - Verify no-answer / voicemail stay unowned.
+   - Verify two-way-contact claim gate + 45-day openPoolReleaseAt.
+   - Verify Warm Reply Triage 45-day timer.
+   - Verify DNC blackout (unowned and owned Cold Leads, cancels callbacks).
+   - Verify GHL appointment / opportunity events via controlled harness only.
+   - Verify aging sweep dry-run mutationPerformed:false and expected candidates.
+   - Record owner production decision.
+2. Keep GHL workflow activation, additional live imports, Servicing, Commissions,
+   Finance, payout, and client-onboarding gated until explicit owner approval.
+3. After acceptance passes: 13-layer hardening backlog — preview/prod DB + secret
+   separation, RLS/runtime DB role, error tracking, login smoke test, Neon
+   autoscaling and backup review.
+4. Backlog items #38-#41 remain unscoped.
 ```
 
 ## Workspace rules

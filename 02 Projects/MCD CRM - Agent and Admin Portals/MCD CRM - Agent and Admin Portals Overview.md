@@ -1,6 +1,6 @@
 ---
 type: status
-date: 2026-07-08
+date: 2026-07-09
 project: MCD CRM - Agent and Admin Portals
 repository: hpintojr/crm.mcd
 ---
@@ -17,76 +17,98 @@ repository: hpintojr/crm.mcd
 5. This overview
 ```
 
-## Current status — authoritative 2026-07-08
+## Current status — authoritative 2026-07-09
 
 ```txt
-Production is healthy, but Lead Flow Alignment is still in PR review/test, not merged to main.
+Production is HEALTHY. Lead Flow business rules are merged and deployed.
+Custom domain crm.mercurycalldesk.com is on latest commit 4cba96ac (main).
 
-PHASE D LEAD IMPORT / FIRST PRODUCTION BATCH
-- PR #32 was reviewed and accepted by Claude, then merged to production as squash d25ac9f.
-- The signed lead-import API and read-only Admin reconciliation screens are live:
-  /admin/lead-imports
-  /admin/lead-imports/[batchId]
-- One approved production import ran from local run RUN_2026_07_08_e8a9beed.
-- MiniCRM batch ID: cmrbj55go0000la04pxcuuaci.
-- 50 Leads were inserted into production.
-- Initial imported state was OPEN / AVAILABLE, which conflicted with the finalized activity-first Cold Lead workflow.
-- Hamilton approved the production data correction.
-- ChatGPT rehearsed the correction on Neon branch test-lead-data-correction-20260708, then applied it to production main.
-- Final verified state: 50 Leads = COLD / AVAILABLE; 0 OPEN / AVAILABLE claimable.
-- Audit evidence: 1 LEAD_BATCH_POOL_CORRECTED record and 50 LEAD_POOL_CORRECTED records.
-- Current LeadLifecycle enum does not include VALIDATED; compatible corrected state is COLD / AVAILABLE.
+LEAD FLOW BUSINESS RULES — PR #34 (merged 2026-07-08 as 487ff615)
+- Cold Lead workspace in /portal/leads, activity-first, no soft lock.
+- Call-start activity logging with no soft lock, no claim, no ownership. Dialer
+  blocks if activity logging fails.
+- No-answer / voicemail stays unowned.
+- Callback / qualified / follow-up records two-way contact and unlocks claim.
+- Claim requires twoWayContactAt and starts 45-day openPoolReleaseAt timer.
+- DNC suppression works from unowned Cold Lead flow and owned Lead flow.
+- Secured daily aging sweep at /api/cron/leads/aging (401 without CRON_SECRET).
+- 45-day expired owned Leads return to Open Pool; 21-day stale Open Pool Leads
+  move to Shark Tank.
+- /portal/workspace works without leadId and shows assigned records, callbacks,
+  recent activity, and claim timer.
+- Warm Reply Triage 45-day timer aligned.
+- GHL appointment/opportunity relay hardened; controlled-only harness for tests.
+- Acceptance board at /admin/leads/testing writes immutable
+  LEAD_PRODUCTION_ACCEPTANCE_RECORDED audit events.
+- Build guard scripts/check-lead-flow-alignment.ts protects all lead-flow rules.
 
-LEAD FLOW ALIGNMENT — PR #34
-- Branch: lead-flow-alignment-20260708.
-- Draft PR #34: feat(leads): align cold lead workspace with two-way-contact claim rules.
-- Latest observed preview deployment for commit aa84dcfd4b5770e54f3733af9fb60766d7d31b6e reached READY.
-- PR #34 includes:
-  - Cold Lead workspace in /portal/leads.
-  - Call-start activity logging with no soft lock, no claim, and no ownership.
-  - No-answer / voicemail stays unowned.
-  - Callback / qualified / follow-up records two-way contact and unlocks claim eligibility.
-  - Claim requires twoWayContactAt and starts a 45-day openPoolReleaseAt responsibility timer.
-  - DNC suppression works from unowned Cold Lead flow and owned Lead flow.
-  - Secured daily aging sweep at /api/cron/leads/aging.
-  - 45-day expired owned Leads return to Open Pool.
-  - 21-day stale unclaimed Open Pool Leads move to Shark Tank.
-  - /portal/workspace now works without leadId and shows assigned records, callbacks, recent activity, and claim timer.
-  - Build guard checks protect the lead-flow rules.
+PHASE D LEAD IMPORT (state as of 2026-07-08)
+- Batch cmrbj55go0000la04pxcuuaci / local run RUN_2026_07_08_e8a9beed.
+- 50 Leads exist in production, all COLD / AVAILABLE, 0 claimable.
+- Audit evidence: 1 LEAD_BATCH_POOL_CORRECTED + 50 LEAD_POOL_CORRECTED.
+- No new imports have run since PR #34.
+
+READ-ONLY ACCEPTANCE TOOLING — PR #59 through PR #65 (2026-07-09, Claude executor)
+- PR #59 (9181aa00): /admin/leads/acceptance-runbook — 11-step read-only runbook.
+- PR #60 (2c837e8c): runbook links on /admin/command-center and /admin/readiness.
+- PR #61 (da570d7c): runbook link on /admin/leads/testing (acceptance board).
+- PR #62 (124d1248): /admin/leads/acceptance-runbook/checklist — printable checklist.
+- PR #63 (05d08d7c): runbook links on operating-status, audit, Lead review.
+- PR #64 (c383f25e): runbook links on acceptance-report, controlled-test-data,
+  controlled GHL harness, integration monitor.
+- PR #65 (4cba96ac): "Where to record each step" matrix on the runbook.
+- Guard extended to protect the runbook, checklist, matrix, and every runbook link.
+- No schema changes, no Neon migrations, no feature-flag changes, no GHL workflow
+  activation, no live GHL API calls, no live import/export submission, no Lead
+  business-rule changes, no Servicing/Commissions/Finance/payout/client-onboarding
+  activation across any of these 7 PRs.
 
 CONFIGURATION
-- Hamilton confirmed CRON_SECRET is configured in Vercel.
-- No secret value was inspected or recorded.
-- Existing lead import secrets remain configured; do not disclose values.
+- Hamilton confirmed CRON_SECRET is configured in Vercel. Value not inspected.
+- Existing lead-import secrets remain configured; do not disclose values.
 
 LOGIN / ADMIN / SERVICING
-- The July servicing outage fix remains in place: no competing [id] versus [clientAccountId] route.
-- The route-collision guard continues to run in Vercel build.
+- July servicing outage fix remains in place: no competing [id] vs [clientAccountId] route.
+- Route-collision guard continues to run in Vercel build.
 
 LOCK / HANDOFF
-- ChatGPT holds the current execution lock for controlled Lead Flow Alignment, PR #34 preview acceptance, and scope documentation reconciliation.
-- PR #34 remains draft and is not merged.
+- Claude holds the execution lock by default per CLAUDE.md.
+- No open PR blocked at review as of 2026-07-09.
+- Next work is authenticated production acceptance driven by Hamilton on the
+  custom domain; Claude will observe/navigate but not drive the Lead actions.
 ```
 
 ## Exact next work
 
 ```txt
-1. Run controlled preview acceptance for PR #34.
-2. Verify /portal/leads Cold Lead behavior:
-   - Cold Leads visible.
-   - Log call started creates activity only.
-   - No-answer/voicemail does not claim or reserve.
-   - Callback/qualified/follow-up records two-way contact and unlocks claim.
-3. Verify claim behavior:
-   - claim is blocked before two-way contact.
-   - claim succeeds only after two-way contact.
-   - claim sets ownerAgentId, claimedAt, and 45-day openPoolReleaseAt.
-4. Verify DNC suppresses and cancels scheduled callbacks.
-5. Verify /portal/workspace works without leadId and shows assigned records, callback queue, recent activity, and claim-timer responsibility.
-6. Verify the secured aging sweep contract without exposing CRON_SECRET.
-7. Keep PR #34 draft until preview acceptance is recorded.
-8. Keep GHL opportunity/reply, Servicing, Commissions, and Finance gated unless separately approved.
-9. Continue remaining 13-layer hardening: preview/prod DB + secret separation, RLS/runtime role, error tracking, login smoke test, Neon autoscaling and backup review.
+1. AUTHENTICATED PRODUCTION ACCEPTANCE (0 / 18 recorded, gate to broader rollout).
+   Start at /admin/leads/acceptance-runbook on crm.mercurycalldesk.com. The
+   where-to-record matrix maps each step to the surface it runs on. Every
+   outcome lands on the acceptance board /admin/leads/testing as an immutable
+   LEAD_PRODUCTION_ACCEPTANCE_RECORDED audit event.
+   - Verify Cold Lead workspace visibility on /portal/leads.
+   - Verify click-to-call activity is logged BEFORE the dialer opens; dialer
+     is blocked if logging fails.
+   - Verify no-answer / voicemail stay unowned.
+   - Verify two-way-contact claim gate: claim blocked before two-way contact,
+     succeeds after, and sets ownerAgentId, claimedAt, and 45-day
+     openPoolReleaseAt.
+   - Verify Warm Reply Triage 45-day timer.
+   - Verify DNC blackout on unowned and owned Cold Leads, and cancellation of
+     scheduled callbacks.
+   - Verify GHL appointment / opportunity events via the controlled harness
+     only (no live GHL workflow activation).
+   - Verify aging sweep dry-run mutationPerformed:false, expected
+     wouldReturnToOpenPool and wouldPromoteToSharkTank counts.
+   - Verify /portal/workspace works without leadId and shows assigned records,
+     callback queue, recent activity, and claim-timer responsibility.
+   - Verify the secured aging cron contract without exposing CRON_SECRET.
+   - Record OWNER PRODUCTION DECISION as the final step.
+2. Keep GHL workflow activation, additional live imports, Servicing, Commissions,
+   Finance, payout, and client-onboarding gated until explicit owner approval.
+3. After acceptance passes: 13-layer hardening backlog — preview/prod DB + secret
+   separation, RLS/runtime DB role, error tracking, login smoke test, Neon
+   autoscaling and backup review.
 ```
 
 ## Goal
