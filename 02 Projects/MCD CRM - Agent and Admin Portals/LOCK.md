@@ -4,15 +4,22 @@ Only the holder may commit, merge, deploy, run migrations, or change settings on
 Others read/verify only. See `[C] AI Operating Protocol — Handoff, Changelog, Indexing.md`.
 
 ```txt
-holder: chatgpt
-scope: hpintojr/crm.mcd + hpintojr/My-Workspace (owner-authorized continuation of read-only
-       Lead acceptance tooling after PR #69, focused on operator-safe acceptance evidence gaps)
-since: 2026-07-10T03:14Z
-previous_holder: claude (default executor after ChatGPT shipped PR #66, PR #67, PR #68, and PR #69;
-                 Hamilton then directly instructed ChatGPT to keep coding.)
-intent: continue with the smallest practical number of guarded, read-only PRs. Add an in-app acceptance
-        evidence gaps surface so Hamilton/Claude can see only incomplete, failed, or deferred evidence.
-        Authenticated production acceptance remains Hamilton-only.
+holder: claude
+scope: hpintojr/crm.mcd + hpintojr/My-Workspace
+since: 2026-07-10T03:23Z
+previous_holder: chatgpt (2026-07-10 owner-authorized continuation — shipped PR #66, PR #67,
+                 PR #68, PR #69, and PR #70. PR #66 added stable runbook section anchors. PR #67 bundled
+                 the remaining read-only acceptance-navigation backlog with explicit 18-step to
+                 11-runbook-section mapping, acceptance history page, history CSV export,
+                 command center/report/board links, acceptance-board anchors, and guard coverage.
+                 PR #68 added a read-only in-app acceptance findings catalog, JSON endpoint,
+                 command center/report/history links, and guard coverage. PR #69 added a read-only
+                 acceptance handoff packet, protected JSON endpoint, findings-catalog link, and
+                 guard coverage. PR #70 added a read-only acceptance evidence gaps page, protected
+                 JSON endpoint, handoff-packet link, and guard coverage. All required CI green;
+                 preview and production smoke tests passed. Latest production commit:
+                 c630a95d1dc2b5338f9fb06d594d21f4958e485e.)
+intent: Claude resumes as default executor. Authenticated production acceptance remains Hamilton-only.
 ```
 
 ## Authorized without further owner approval
@@ -53,5 +60,5 @@ At end of the owner-authorized continuation, ChatGPT must:
    remaining backlog, and observations for Claude.
 3. Commit both to `main` on `hpintojr/My-Workspace`.
 
-Latest daily log: `01 Daily Logs/[G] 2026-07-09 MCD CRM PR69 Acceptance Handoff Packet.md`.
-Latest production commit: `d90137bae6f3f2714816d45c084473848e590930` on `crm.mercurycalldesk.com`.
+Latest daily log: `01 Daily Logs/[G] 2026-07-09 MCD CRM PR70 Acceptance Evidence Gaps.md`.
+Latest production commit: `c630a95d1dc2b5338f9fb06d594d21f4958e485e` on `crm.mercurycalldesk.com`.
