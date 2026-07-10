@@ -10,6 +10,7 @@
 - Shipped PR #69, `feat(leads): add acceptance handoff packet`.
 - Shipped PR #70, `feat(leads): add acceptance evidence gaps`.
 - Shipped PR #71, `feat(leads): add acceptance evidence matrix`.
+- Shipped PR #72, `feat(leads): add acceptance closed gates`.
 - Returned the execution lock to Claude in `02 Projects/MCD CRM - Agent and Admin Portals/LOCK.md`.
 
 ## PRs shipped
@@ -73,13 +74,25 @@
 
 - Branch: `pr-71-acceptance-evidence-matrix`.
 - Head: `2551a2551febd43c366bfc71de07dec36abe8df7`.
-- Squash merge / latest production commit: `de89982853c52ec1f54a55a9ea36fa4f15cd706b`.
+- Squash merge / production commit: `de89982853c52ec1f54a55a9ea36fa4f15cd706b`.
 - Added `src/lib/lead-acceptance-matrix.ts` to derive a full all-step matrix from the PR69 handoff packet.
 - Added protected `/admin/leads/acceptance-matrix`.
 - Added protected `/api/admin/leads/acceptance-matrix`.
 - Linked the matrix from `/admin/leads/acceptance-handoff` and `/admin/leads/acceptance-gaps`.
 - Extended `scripts/check-lead-flow-alignment.ts` to guard the matrix model, page, endpoint, and cross-surface links.
 - PR-specific log: `01 Daily Logs/[G] 2026-07-09 MCD CRM PR71 Acceptance Evidence Matrix.md`.
+
+### PR #72 — Acceptance closed gates
+
+- Branch: `pr-72-acceptance-closed-gates`.
+- Head: `b6883a2990e05fd2b255a25ee6ce511bec666960`.
+- Squash merge / latest production commit: `82330d862ac88263e7e3dca3e5b96746de903170`.
+- Added `src/lib/lead-acceptance-gates.ts` to derive closed operational gate status from the PR69 handoff packet and `leadAcceptanceClosedGates`.
+- Added protected `/admin/leads/acceptance-gates`.
+- Added protected `/api/admin/leads/acceptance-gates`.
+- Linked closed gates from `/admin/leads/acceptance-handoff`, `/admin/leads/acceptance-gaps`, and `/admin/leads/acceptance-matrix`.
+- Extended `scripts/check-lead-flow-alignment.ts` to guard the gates model, page, endpoint, and cross-surface links.
+- PR-specific log: `01 Daily Logs/[G] 2026-07-09 MCD CRM PR72 Acceptance Closed Gates.md`.
 
 ## Findings cataloged
 
@@ -91,83 +104,24 @@
 - PR #69 added `/admin/leads/acceptance-handoff` as a single in-app starting point with current evidence counts, recent acceptance records, cataloged findings, and closed gates.
 - PR #70 added `/admin/leads/acceptance-gaps` as a focused view of only incomplete, failed, or deferred acceptance evidence.
 - PR #71 added `/admin/leads/acceptance-matrix` as a complete all-step evidence table.
+- PR #72 added `/admin/leads/acceptance-gates` as a focused view of closed operational gates that remain outside this read-only acceptance tooling lane.
 - Authenticated production acceptance remains Hamilton-only and was not performed by ChatGPT.
 - Closed operational gates remain closed: live GHL workflow activation, additional live imports/exports, Servicing, Commissions, Finance, payout, client onboarding, and production data changes outside controlled-test actions.
 
-## Evidence summary
+## Latest evidence
 
-### PR #66 evidence
+### PR #72 evidence
 
-- Required checks passed: Vercel, Commission Policy, Verify CRM, Application Build.
-- Preview `/api/status`: HTTP 200 for branch `pr-66-runbook-step-anchors` at `54dc92fc5ee6665139911bd26f346891e4577b0b`.
-- Preview protected runbook route returned HTTP 200 sign-in boundary; unauthenticated aging cron returned HTTP 401.
-- Production `/api/status`: HTTP 200 for `main` at `53ecd2cf12682b265d64ce473766e59c4d4a61f3`.
-- Production protected runbook route returned HTTP 200 sign-in boundary; unauthenticated aging cron returned HTTP 401.
-
-### PR #67 evidence
-
-- Required checks: Vercel success; Commission Policy success run `389`; Verify CRM success run `203`; Application Build success run `351`.
-- Preview `/api/status`: HTTP 200; branch `pr-67-acceptance-navigation-history`; commit `9b6e5569f9f583b8f2c8756575980340ce28323e`.
-- Preview protected acceptance surfaces returned HTTP 200 sign-in boundary, not 404/500.
+- Required checks: Vercel success; Commission Policy success run `399`; Verify CRM success run `213`; Application Build success run `361`.
+- Preview deployment `dpl_6Y6VFuSBGw8Bc271ZGfZuxKRSNER` reached READY.
+- Preview `/api/status`: HTTP 200; branch `pr-72-acceptance-closed-gates`; commit `b6883a2990e05fd2b255a25ee6ce511bec666960`.
+- Preview `/admin/leads/acceptance-gates`: HTTP 200 sign-in boundary, not 404/500.
+- Preview `/api/admin/leads/acceptance-gates`: HTTP 200 sign-in boundary, not 404/500.
 - Preview `/api/cron/leads/aging`: HTTP 401 without auth.
-- Production deployment `dpl_3G6NWfuvqh274ZfTqEx9XVjHQZin` reached READY and received the `crm.mercurycalldesk.com` alias.
-- Production `/api/status`: HTTP 200; commit `6c24a25bf425e10d1e5529af0835f4fc6e968543`.
-- Production `/admin/leads/acceptance-history`: HTTP 200 sign-in boundary, not 404/500.
-- Production `/api/cron/leads/aging`: HTTP 401 without auth.
-
-### PR #68 evidence
-
-- Required checks: Vercel success; Commission Policy success run `391`; Verify CRM success run `205`; Application Build success run `353`.
-- Preview `/api/status`: HTTP 200; branch `pr-68-acceptance-findings-catalog`; commit `96952f703b94d1401b9d23d42990b04e6030e9cb`.
-- Preview `/admin/leads/acceptance-findings`: HTTP 200 sign-in boundary, not 404/500.
-- Preview `/api/admin/leads/acceptance-findings`: HTTP 200 sign-in boundary, not 404/500.
-- Preview `/api/cron/leads/aging`: HTTP 401 without auth.
-- Production deployment `dpl_Fv6sbhUmHJ8SQ94etZnNqHxUEabR` reached READY and received the `crm.mercurycalldesk.com` alias.
-- Production `/api/status`: HTTP 200; commit `bde3c4faf8cca3e4536f7dfa0c07e8b3aa04e385`.
-- Production `/admin/leads/acceptance-findings`: HTTP 200 sign-in boundary, not 404/500.
-- Production `/api/admin/leads/acceptance-findings`: HTTP 200 sign-in boundary, not 404/500.
-- Production `/api/cron/leads/aging`: HTTP 401 without auth.
-
-### PR #69 evidence
-
-- Required checks: Vercel success; Commission Policy success run `393`; Verify CRM success run `207`; Application Build success run `355`.
-- Preview deployment `dpl_nE5jpC4goiM6GWF9XnsF2YU99Dea` reached READY.
-- Preview `/api/status`: HTTP 200; branch `pr-69-acceptance-handoff-packet`; commit `de5e4d27adefb08fdca75ad59843d928c6ecef63`.
-- Preview `/admin/leads/acceptance-handoff`: HTTP 200 sign-in boundary, not 404/500.
-- Preview `/api/admin/leads/acceptance-handoff`: HTTP 200 sign-in boundary, not 404/500.
-- Preview `/api/cron/leads/aging`: HTTP 401 without auth.
-- Production deployment `dpl_5HQiTr7cu2hn67XS5deBV7mwTDFn` reached READY and received the `crm.mercurycalldesk.com` alias.
-- Production `/api/status`: HTTP 200; commit `d90137bae6f3f2714816d45c084473848e590930`.
-- Production `/admin/leads/acceptance-handoff`: HTTP 200 sign-in boundary, not 404/500.
-- Production `/api/admin/leads/acceptance-handoff`: HTTP 200 sign-in boundary, not 404/500.
-- Production `/api/cron/leads/aging`: HTTP 401 without auth.
-
-### PR #70 evidence
-
-- Required checks: Vercel success; Commission Policy success run `395`; Verify CRM success run `209`; Application Build success run `357`.
-- Preview deployment `dpl_6ZeVrfQiCppkuXKBG1rXqwo8MtNL` reached READY.
-- Preview `/api/status`: HTTP 200; branch `pr-70-acceptance-evidence-gaps`; commit `50c9693c96dc7feb8fda0db7f3e5cda35e01070e`.
-- Preview `/admin/leads/acceptance-gaps`: HTTP 200 sign-in boundary, not 404/500.
-- Preview `/api/admin/leads/acceptance-gaps`: HTTP 200 sign-in boundary, not 404/500.
-- Preview `/api/cron/leads/aging`: HTTP 401 without auth.
-- Production deployment `dpl_FFCokdZ83EUpFBkPvHjCeFxGz8R8` reached READY and received the `crm.mercurycalldesk.com` alias.
-- Production `/api/status`: HTTP 200; commit `c630a95d1dc2b5338f9fb06d594d21f4958e485e`.
-- Production `/admin/leads/acceptance-gaps`: HTTP 200 sign-in boundary, not 404/500.
-- Production `/api/admin/leads/acceptance-gaps`: HTTP 200 sign-in boundary, not 404/500.
-- Production `/api/cron/leads/aging`: HTTP 401 without auth.
-
-### PR #71 evidence
-
-- Required checks: Vercel success; Commission Policy success run `397`; Verify CRM success run `211`; Application Build success run `359`.
-- Preview deployment `dpl_4odBW5NRN7Bh6XhL61tcwb1VLpxV` reached READY.
-- Preview `/api/status`: HTTP 200; branch `pr-71-acceptance-evidence-matrix`; commit `2551a2551febd43c366bfc71de07dec36abe8df7`.
-- Preview `/admin/leads/acceptance-matrix`: HTTP 200 sign-in boundary, not 404/500.
-- Preview `/api/admin/leads/acceptance-matrix`: HTTP 200 sign-in boundary, not 404/500.
-- Preview `/api/cron/leads/aging`: HTTP 401 without auth.
-- Production deployment `dpl_4RK98f7x9EHhaGVnCFBL36VpyEUd` reached READY and received the `crm.mercurycalldesk.com` alias.
-- Production `/api/status`: HTTP 200; commit `de89982853c52ec1f54a55a9ea36fa4f15cd706b`.
-- Production `/admin/leads/acceptance-matrix`: HTTP 200 sign-in boundary, not 404/500.
-- Production `/api/admin/leads/acceptance-matrix`: HTTP 200 sign-in boundary, not 404/500.
+- Production deployment `dpl_5Tu9D8MYkFYVcsYyKSAdLsyFNeDb` reached READY and received the `crm.mercurycalldesk.com` alias.
+- Production `/api/status`: HTTP 200; commit `82330d862ac88263e7e3dca3e5b96746de903170`.
+- Production `/admin/leads/acceptance-gates`: HTTP 200 sign-in boundary, not 404/500.
+- Production `/api/admin/leads/acceptance-gates`: HTTP 200 sign-in boundary, not 404/500.
 - Production `/api/cron/leads/aging`: HTTP 401 without auth.
 
 ## Still open
@@ -177,17 +131,17 @@
 - Additional live imports/exports remain closed.
 - Servicing, Commissions, Finance, payout, and client-onboarding activation remain closed.
 - Production data changes outside controlled-test actions remain closed.
-- The static findings catalog, handoff packet, gaps surface, and matrix should be extended by a future guarded PR if new findings or new acceptance lanes emerge.
+- Future guarded PRs should only extend read-only acceptance visibility/navigation unless Hamilton separately authorizes operational changes.
 
 ## Start here next
 
-For Hamilton: sign in on `crm.mercurycalldesk.com` and start at `/admin/leads/acceptance-handoff`. Use `/admin/leads/acceptance-matrix` for all evidence rows and `/admin/leads/acceptance-gaps` for incomplete, failed, or deferred evidence only.
+For Hamilton: sign in on `crm.mercurycalldesk.com` and start at `/admin/leads/acceptance-handoff`. Use `/admin/leads/acceptance-matrix` for all 18 steps, `/admin/leads/acceptance-gaps` for only incomplete/failed/deferred steps, and `/admin/leads/acceptance-gates` for closed operational gates.
 
-For Claude: read `02 Projects/MCD CRM - Agent and Admin Portals/LOCK.md`, then `01 Daily Logs/[G] 2026-07-09 MCD CRM PR71 Acceptance Evidence Matrix.md`. Latest production commit is `de89982853c52ec1f54a55a9ea36fa4f15cd706b`.
+For Claude: read `02 Projects/MCD CRM - Agent and Admin Portals/LOCK.md`, then `01 Daily Logs/[G] 2026-07-09 MCD CRM PR72 Acceptance Closed Gates.md`. Latest production commit is `82330d862ac88263e7e3dca3e5b96746de903170`.
 
 ## Handback
 
-Lock holder is Claude as of `2026-07-10T04:17Z`. ChatGPT completed the owner-authorized continuation and returned the lock. Latest production commit: `de89982853c52ec1f54a55a9ea36fa4f15cd706b`.
+Lock holder is Claude as of `2026-07-10T04:58Z`. ChatGPT completed the owner-authorized continuation and returned the lock. Latest production commit: `82330d862ac88263e7e3dca3e5b96746de903170`.
 
 ## Safety boundary reaffirmation
 
