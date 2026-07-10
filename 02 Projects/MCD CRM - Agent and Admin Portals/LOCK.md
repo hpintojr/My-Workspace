@@ -4,14 +4,17 @@ Only the holder may commit, merge, deploy, run migrations, or change settings on
 Others read/verify only. See `[C] AI Operating Protocol — Handoff, Changelog, Indexing.md`.
 
 ```txt
-holder: chatgpt
-scope: hpintojr/crm.mcd + hpintojr/My-Workspace (owner-authorized continuation of read-only
-       Lead acceptance tooling, grouped into larger production-value slices with fewer commits)
-since: 2026-07-10T01:45:44Z
-previous_holder: claude (lock returned after ChatGPT shipped PR #66; Hamilton then directly instructed
-                 ChatGPT to continue coding with larger slices and minimal human intervention.)
-intent: combine compatible PR #67-#71 backlog work into the smallest practical number of guarded,
-        read-only PRs; authenticated production acceptance remains Hamilton-only.
+holder: claude
+scope: hpintojr/crm.mcd + hpintojr/My-Workspace
+since: 2026-07-10T02:37Z
+previous_holder: chatgpt (2026-07-10 owner-authorized continuation — shipped PR #66 and PR #67:
+                 PR #66 added stable runbook section anchors; PR #67 bundled the remaining read-only
+                 acceptance-navigation backlog with explicit 18-step to 11-runbook-section mapping,
+                 acceptance history page, history CSV export, command center/report/board links,
+                 acceptance-board anchors, and guard coverage. All required CI green; preview and
+                 production smoke tests passed. Latest production commit:
+                 6c24a25bf425e10d1e5529af0835f4fc6e968543.)
+intent: Claude resumes as default executor. Authenticated production acceptance remains Hamilton-only.
 ```
 
 ## Authorized without further owner approval
@@ -52,5 +55,5 @@ At end of the owner-authorized continuation, ChatGPT must:
    remaining backlog, and observations for Claude.
 3. Commit both to `main` on `hpintojr/My-Workspace`.
 
-Latest daily log: `01 Daily Logs/[G] 2026-07-09 MCD CRM PR66 Runbook Step Anchors.md`.
-Latest production commit: `53ecd2cf12682b265d64ce473766e59c4d4a61f3` on `crm.mercurycalldesk.com`.
+Latest daily log: `01 Daily Logs/[G] 2026-07-09 MCD CRM PR67 Acceptance History Navigation.md`.
+Latest production commit: `6c24a25bf425e10d1e5529af0835f4fc6e968543` on `crm.mercurycalldesk.com`.
