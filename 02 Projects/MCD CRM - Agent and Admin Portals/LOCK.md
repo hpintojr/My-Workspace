@@ -4,18 +4,21 @@ Only the holder may commit, merge, deploy, run migrations, or change settings on
 Others read/verify only. See `[C] AI Operating Protocol — Handoff, Changelog, Indexing.md`.
 
 ```txt
-holder: chatgpt
+holder: claude
 scope: hpintojr/crm.mcd + hpintojr/My-Workspace
-since: 2026-07-10T23:30Z (owner-authorized continuation after Hamilton said "continue coding")
-previous_holder: claude (lock had been returned to Claude at 2026-07-10T23:18Z after ChatGPT
-                 shipped PR #80, #81, #82, and #83 under the authorized read-only/admin-navigation/guard scope.
-                 Latest shipped production commit at lock retake:
-                 5b4782611d8122150b70c386dc9eb27c334d7a0f.)
-intent: Continue within the same authorized read-only/admin-navigation/guard scope. Next safe backlog
-        candidate is /admin/leads/acceptance-diff. Authenticated production acceptance and owner
-        production decision remain Hamilton-only. Ship only after all four required checks are green,
-        verify Vercel production, write the required [G] daily log, and return the lock to Claude at
-        the end of the window.
+since: 2026-07-10T23:39Z (ChatGPT owner-authorized continuation complete; lock returned)
+previous_holder: chatgpt (2026-07-10T23:30Z owner-authorized continuation after Hamilton said
+                 "continue coding". ChatGPT shipped PR #84 under the authorized read-only/admin-navigation
+                 scope. PR #84 added the protected read-only acceptance diff page at
+                 /admin/leads/acceptance-diff and linked it from the acceptance overview. All four required
+                 checks were green before squash merge. Production deploy succeeded and /api/status
+                 confirmed latest production commit a2490ff0a764f2d967c5fe311a7a4d1df59ff2d4.
+                 Smoke tests confirmed the protected diff route returned the sign-in boundary
+                 unauthenticated, not 404/500. No Prisma schema changes, no Neon mutations, no feature
+                 flags, no live GHL calls, no live imports/exports, and no real Lead business-rule changes.)
+intent: Claude resumes the default execution lock. Authenticated production acceptance and owner
+        production decision remain Hamilton-only. Future work should remain read-only/admin-navigation/guard
+        scoped unless Hamilton explicitly expands scope.
 ```
 
 ## Authorized without further owner approval
@@ -57,6 +60,6 @@ At end of the owner-authorized continuation, ChatGPT must:
 3. Commit both to `main` on `hpintojr/My-Workspace`.
 
 Latest daily logs:
-- `01 Daily Logs/[G] 2026-07-10 MCD CRM PR83 Controlled Test Data History.md`.
-- `01 Daily Logs/[G] 2026-07-10 MCD CRM ChatGPT Continuation Handback 2.md`.
-Latest production commit: `5b4782611d8122150b70c386dc9eb27c334d7a0f` on `crm.mercurycalldesk.com`.
+- `01 Daily Logs/[G] 2026-07-10 MCD CRM PR84 Acceptance Diff.md`.
+- `01 Daily Logs/[G] 2026-07-10 MCD CRM ChatGPT Continuation Handback 3.md`.
+Latest production commit: `a2490ff0a764f2d967c5fe311a7a4d1df59ff2d4` on `crm.mercurycalldesk.com`.
