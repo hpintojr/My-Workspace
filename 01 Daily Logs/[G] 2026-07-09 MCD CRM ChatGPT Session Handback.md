@@ -6,6 +6,7 @@
 - Confirmed `hpintojr/crm.mcd` main and production began at `4cba96ac145a77218f9fd62a2d31ce75c955a57c`, with PRs #59 through #65 merged.
 - Shipped PR #66, `feat(leads): add acceptance runbook step anchors`.
 - Shipped PR #67, `feat(leads): add acceptance history and runbook step navigation`.
+- After Hamilton instructed ChatGPT to keep coding, shipped PR #68, `feat(leads): add acceptance findings catalog`.
 - Returned the execution lock to Claude in `02 Projects/MCD CRM - Agent and Admin Portals/LOCK.md`.
 
 ### PR #66 — Runbook step anchors
@@ -21,7 +22,7 @@
 
 - Branch: `pr-67-acceptance-navigation-history`.
 - Head: `9b6e5569f9f583b8f2c8756575980340ce28323e`.
-- Squash merge / latest production commit: `6c24a25bf425e10d1e5529af0835f4fc6e968543`.
+- Squash merge / production commit: `6c24a25bf425e10d1e5529af0835f4fc6e968543`.
 - Added `src/lib/acceptance-runbook-links.ts` with an explicit acceptance-step-to-runbook-section mapping.
 - Added read-only `/admin/leads/acceptance-history` showing the latest 200 immutable `LEAD_PRODUCTION_ACCEPTANCE_RECORDED` audit records.
 - Added `/api/admin/leads/acceptance-history.csv` export using the same safe immutable export-audit pattern as the existing acceptance report CSV.
@@ -31,12 +32,25 @@
 - Extended `scripts/check-lead-flow-alignment.ts` with guard coverage for the mapping helper, history page, CSV export, history links, runbook links, and board anchors.
 - PR-specific log: `01 Daily Logs/[G] 2026-07-09 MCD CRM PR67 Acceptance History Navigation.md`.
 
+### PR #68 — Acceptance findings catalog
+
+- Branch: `pr-68-acceptance-findings-catalog`.
+- Head: `96952f703b94d1401b9d23d42990b04e6030e9cb`.
+- Squash merge / latest production commit: `bde3c4faf8cca3e4536f7dfa0c07e8b3aa04e385`.
+- Added `src/lib/lead-acceptance-findings.ts` with a static, read-only findings catalog.
+- Added protected admin page `/admin/leads/acceptance-findings`.
+- Added protected JSON endpoint `/api/admin/leads/acceptance-findings`.
+- Linked the findings catalog from the Lead acceptance command center, acceptance report, and acceptance history.
+- Extended `scripts/check-lead-flow-alignment.ts` to guard the catalog data, page, endpoint, and cross-surface links.
+- PR-specific log: `01 Daily Logs/[G] 2026-07-09 MCD CRM PR68 Acceptance Findings Catalog.md`.
+
 ## Findings cataloged
 
 - The acceptance board uses 18 evidence steps from `leadProductionAcceptanceSteps`.
 - The acceptance runbook uses 11 broader operational sections from `RUNBOOK_STEPS`.
 - Direct links like `/admin/leads/acceptance-runbook#${step.id}` would not work for several evidence steps because the IDs do not match one-to-one.
 - PR #67 resolved that by cataloging an explicit mapping in `src/lib/acceptance-runbook-links.ts`.
+- PR #68 made the findings visible inside the app at `/admin/leads/acceptance-findings`, instead of leaving them only in workspace logs.
 - The mapping intentionally groups several evidence steps into broader runbook sections:
   - release/domain readiness evidence maps to `open-command-center` or `aging-preview`;
   - click-to-call evidence maps to `click-to-call`;
@@ -45,6 +59,8 @@
   - controlled GHL appointment/opportunity evidence maps to `ghl-controlled-events`;
   - owner production decision maps to `owner-decision`.
 - This keeps the deep-link system valid after PR #66 added stable runbook section anchors.
+- Authenticated production acceptance remains Hamilton-only and was not performed by ChatGPT.
+- Closed operational gates remain closed: live GHL workflow activation, additional live imports/exports, Servicing, Commissions, Finance, payout, and client onboarding.
 
 ## Evidence
 
@@ -89,23 +105,55 @@ Production smoke tests on `crm.mercurycalldesk.com`:
 - `/admin/leads/acceptance-history` returned HTTP 200 with the expected sign-in boundary, not 404/500.
 - `/api/cron/leads/aging` returned HTTP 401 without auth.
 
+### PR #68 evidence
+
+Required checks:
+
+- Vercel Preview Comments / Vercel deployment: success.
+- Commission Policy: success, run `391`.
+- Verify CRM: success, run `205`.
+- Application Build: success, run `353`.
+
+Preview smoke tests on `crm-qbcl7ktsc-hamiltons-projects-f65eeb81.vercel.app`:
+
+- `/api/status` returned HTTP 200 and reported:
+  - `environment: preview`
+  - `branch: pr-68-acceptance-findings-catalog`
+  - `commitSha: 96952f703b94d1401b9d23d42990b04e6030e9cb`
+- `/admin/leads/acceptance-findings` returned HTTP 200 with the expected sign-in boundary, not 404/500.
+- `/api/admin/leads/acceptance-findings` returned HTTP 200 with the expected sign-in boundary, not 404/500.
+- `/api/cron/leads/aging` returned HTTP 401 without auth.
+
+Production smoke tests on `crm.mercurycalldesk.com`:
+
+- Production deployment ID: `dpl_Fv6sbhUmHJ8SQ94etZnNqHxUEabR`.
+- Deployment reached READY and received the `crm.mercurycalldesk.com` alias.
+- `/api/status` returned HTTP 200 and reported:
+  - `environment: production`
+  - `branch: main`
+  - `commitSha: bde3c4faf8cca3e4536f7dfa0c07e8b3aa04e385`
+- `/admin/leads/acceptance-findings` returned HTTP 200 with the expected sign-in boundary, not 404/500.
+- `/api/admin/leads/acceptance-findings` returned HTTP 200 with the expected sign-in boundary, not 404/500.
+- `/api/cron/leads/aging` returned HTTP 401 without auth.
+
 ## Still open
 
 - Authenticated production acceptance remains Hamilton-only and is still not recorded by ChatGPT. The gate remains `0 / 18` unless Hamilton has since recorded outcomes through the authenticated acceptance board.
 - GHL workflow activation remains closed.
 - Additional live imports/exports remain closed.
 - Servicing, Commissions, Finance, payout, and client-onboarding activation remain closed.
+- The static findings catalog should be extended by a future guarded PR if new findings emerge.
 - No remaining item from Hamilton's recommended PR #67 through PR #71 backlog is left unshipped; those items were bundled into PR #67.
 
 ## Start here next
 
-For Hamilton: sign in on `crm.mercurycalldesk.com` and start at `/admin/leads/acceptance-command-center`. Use the new `How to test this step`, `Runbook`, `Record`, and `Acceptance history` links to navigate authenticated production acceptance.
+For Hamilton: sign in on `crm.mercurycalldesk.com` and start at `/admin/leads/acceptance-command-center`. Use the new `Findings catalog`, `How to test this step`, `Runbook`, `Record`, and `Acceptance history` links to navigate authenticated production acceptance.
 
-For Claude: read `02 Projects/MCD CRM - Agent and Admin Portals/LOCK.md`, then `01 Daily Logs/[G] 2026-07-09 MCD CRM PR67 Acceptance History Navigation.md`. Latest production commit is `6c24a25bf425e10d1e5529af0835f4fc6e968543`.
+For Claude: read `02 Projects/MCD CRM - Agent and Admin Portals/LOCK.md`, then `01 Daily Logs/[G] 2026-07-09 MCD CRM PR68 Acceptance Findings Catalog.md`. Latest production commit is `bde3c4faf8cca3e4536f7dfa0c07e8b3aa04e385`.
 
 ## Handback
 
-Lock holder is Claude as of `2026-07-10T02:37Z`. ChatGPT completed the owner-authorized continuation and returned the lock. Latest production commit: `6c24a25bf425e10d1e5529af0835f4fc6e968543`.
+Lock holder is Claude as of `2026-07-10T02:56Z`. ChatGPT completed the owner-authorized continuation and returned the lock. Latest production commit: `bde3c4faf8cca3e4536f7dfa0c07e8b3aa04e385`.
 
 ## Safety boundary reaffirmation
 
