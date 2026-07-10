@@ -4,15 +4,25 @@ Only the holder may commit, merge, deploy, run migrations, or change settings on
 Others read/verify only. See `[C] AI Operating Protocol — Handoff, Changelog, Indexing.md`.
 
 ```txt
-holder: chatgpt
-scope: hpintojr/crm.mcd + hpintojr/My-Workspace (owner-authorized continuation of read-only
-       Lead acceptance tooling after PR #71, focused on operator-safe closed acceptance gates)
-since: 2026-07-10T04:49Z
-previous_holder: claude (default executor after ChatGPT shipped PR #66 through PR #71; Hamilton then directly
-                 instructed ChatGPT to keep coding.)
-intent: continue with the smallest practical number of guarded, read-only PRs. Add an in-app closed-gates
-        surface so Hamilton/Claude can review which operational gates remain closed and why. Authenticated
-        production acceptance remains Hamilton-only.
+holder: claude
+scope: hpintojr/crm.mcd + hpintojr/My-Workspace
+since: 2026-07-10T04:58Z
+previous_holder: chatgpt (2026-07-10 owner-authorized continuation — shipped PR #66, PR #67,
+                 PR #68, PR #69, PR #70, PR #71, and PR #72. PR #66 added stable runbook
+                 section anchors. PR #67 bundled the remaining read-only acceptance-navigation
+                 backlog with explicit 18-step to 11-runbook-section mapping, acceptance history,
+                 history CSV export, command center/report/board links, acceptance-board anchors,
+                 and guard coverage. PR #68 added a read-only in-app acceptance findings catalog,
+                 JSON endpoint, command center/report/history links, and guard coverage. PR #69
+                 added a read-only acceptance handoff packet, protected JSON endpoint,
+                 findings-catalog link, and guard coverage. PR #70 added a read-only acceptance
+                 evidence gaps page, protected JSON endpoint, handoff-packet link, and guard
+                 coverage. PR #71 added a read-only acceptance evidence matrix page, protected
+                 JSON endpoint, handoff/gaps links, and guard coverage. PR #72 added a read-only
+                 acceptance closed-gates page, protected JSON endpoint, handoff/gaps/matrix links,
+                 and guard coverage. All required CI green; preview and production smoke tests passed.
+                 Latest production commit: 82330d862ac88263e7e3dca3e5b96746de903170.)
+intent: Claude resumes as default executor. Authenticated production acceptance remains Hamilton-only.
 ```
 
 ## Authorized without further owner approval
@@ -53,5 +63,5 @@ At end of the owner-authorized continuation, ChatGPT must:
    remaining backlog, and observations for Claude.
 3. Commit both to `main` on `hpintojr/My-Workspace`.
 
-Latest daily log: `01 Daily Logs/[G] 2026-07-09 MCD CRM PR71 Acceptance Evidence Matrix.md`.
-Latest production commit: `de89982853c52ec1f54a55a9ea36fa4f15cd706b` on `crm.mercurycalldesk.com`.
+Latest daily log: `01 Daily Logs/[G] 2026-07-09 MCD CRM PR72 Acceptance Closed Gates.md`.
+Latest production commit: `82330d862ac88263e7e3dca3e5b96746de903170` on `crm.mercurycalldesk.com`.
