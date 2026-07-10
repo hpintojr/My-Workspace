@@ -4,19 +4,15 @@ Only the holder may commit, merge, deploy, run migrations, or change settings on
 Others read/verify only. See `[C] AI Operating Protocol — Handoff, Changelog, Indexing.md`.
 
 ```txt
-holder: claude
-scope: hpintojr/crm.mcd + hpintojr/My-Workspace
-since: 2026-07-10T02:56Z
-previous_holder: chatgpt (2026-07-10 owner-authorized continuation — shipped PR #66, PR #67,
-                 and PR #68. PR #66 added stable runbook section anchors. PR #67 bundled the
-                 remaining read-only acceptance-navigation backlog with explicit 18-step to
-                 11-runbook-section mapping, acceptance history page, history CSV export,
-                 command center/report/board links, acceptance-board anchors, and guard coverage.
-                 PR #68 added a read-only in-app acceptance findings catalog, JSON endpoint,
-                 command center/report/history links, and guard coverage. All required CI green;
-                 preview and production smoke tests passed. Latest production commit:
-                 bde3c4faf8cca3e4536f7dfa0c07e8b3aa04e385.)
-intent: Claude resumes as default executor. Authenticated production acceptance remains Hamilton-only.
+holder: chatgpt
+scope: hpintojr/crm.mcd + hpintojr/My-Workspace (owner-authorized continuation of read-only
+       Lead acceptance tooling after PR #68, focused on an operator-safe acceptance handoff packet)
+since: 2026-07-10T02:59Z
+previous_holder: claude (default executor after ChatGPT shipped PR #66, PR #67, and PR #68; Hamilton then directly
+                 instructed ChatGPT to keep coding.)
+intent: continue with the smallest practical number of guarded, read-only PRs. Add an in-app acceptance
+        handoff packet summarizing live evidence status, cataloged findings, and remaining closed gates.
+        Authenticated production acceptance remains Hamilton-only.
 ```
 
 ## Authorized without further owner approval
