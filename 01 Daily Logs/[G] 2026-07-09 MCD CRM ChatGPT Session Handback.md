@@ -7,6 +7,7 @@
 - Shipped PR #66, `feat(leads): add acceptance runbook step anchors`.
 - Shipped PR #67, `feat(leads): add acceptance history and runbook step navigation`.
 - After Hamilton instructed ChatGPT to keep coding, shipped PR #68, `feat(leads): add acceptance findings catalog`.
+- After Hamilton instructed ChatGPT to keep coding again, shipped PR #69, `feat(leads): add acceptance handoff packet`.
 - Returned the execution lock to Claude in `02 Projects/MCD CRM - Agent and Admin Portals/LOCK.md`.
 
 ### PR #66 — Runbook step anchors
@@ -36,13 +37,25 @@
 
 - Branch: `pr-68-acceptance-findings-catalog`.
 - Head: `96952f703b94d1401b9d23d42990b04e6030e9cb`.
-- Squash merge / latest production commit: `bde3c4faf8cca3e4536f7dfa0c07e8b3aa04e385`.
+- Squash merge / production commit: `bde3c4faf8cca3e4536f7dfa0c07e8b3aa04e385`.
 - Added `src/lib/lead-acceptance-findings.ts` with a static, read-only findings catalog.
 - Added protected admin page `/admin/leads/acceptance-findings`.
 - Added protected JSON endpoint `/api/admin/leads/acceptance-findings`.
 - Linked the findings catalog from the Lead acceptance command center, acceptance report, and acceptance history.
 - Extended `scripts/check-lead-flow-alignment.ts` to guard the catalog data, page, endpoint, and cross-surface links.
 - PR-specific log: `01 Daily Logs/[G] 2026-07-09 MCD CRM PR68 Acceptance Findings Catalog.md`.
+
+### PR #69 — Acceptance handoff packet
+
+- Branch: `pr-69-acceptance-handoff-packet`.
+- Head: `de5e4d27adefb08fdca75ad59843d928c6ecef63`.
+- Squash merge / latest production commit: `d90137bae6f3f2714816d45c084473848e590930`.
+- Added `src/lib/lead-acceptance-handoff.ts` to build a read-only handoff packet from immutable acceptance audit records plus the findings catalog.
+- Added protected admin page `/admin/leads/acceptance-handoff`.
+- Added protected JSON endpoint `/api/admin/leads/acceptance-handoff`.
+- Linked the handoff packet from `/admin/leads/acceptance-findings`.
+- Extended `scripts/check-lead-flow-alignment.ts` to guard the packet model, page, endpoint, and navigation link.
+- PR-specific log: `01 Daily Logs/[G] 2026-07-09 MCD CRM PR69 Acceptance Handoff Packet.md`.
 
 ## Findings cataloged
 
@@ -51,6 +64,7 @@
 - Direct links like `/admin/leads/acceptance-runbook#${step.id}` would not work for several evidence steps because the IDs do not match one-to-one.
 - PR #67 resolved that by cataloging an explicit mapping in `src/lib/acceptance-runbook-links.ts`.
 - PR #68 made the findings visible inside the app at `/admin/leads/acceptance-findings`, instead of leaving them only in workspace logs.
+- PR #69 added `/admin/leads/acceptance-handoff` as a single in-app starting point with current evidence counts, recent acceptance records, cataloged findings, and closed gates.
 - The mapping intentionally groups several evidence steps into broader runbook sections:
   - release/domain readiness evidence maps to `open-command-center` or `aging-preview`;
   - click-to-call evidence maps to `click-to-call`;
@@ -60,7 +74,7 @@
   - owner production decision maps to `owner-decision`.
 - This keeps the deep-link system valid after PR #66 added stable runbook section anchors.
 - Authenticated production acceptance remains Hamilton-only and was not performed by ChatGPT.
-- Closed operational gates remain closed: live GHL workflow activation, additional live imports/exports, Servicing, Commissions, Finance, payout, and client onboarding.
+- Closed operational gates remain closed: live GHL workflow activation, additional live imports/exports, Servicing, Commissions, Finance, payout, client onboarding, and production data changes outside controlled-test actions.
 
 ## Evidence
 
@@ -76,65 +90,42 @@
 
 ### PR #67 evidence
 
-Required checks:
-
-- Vercel Preview Comments / Vercel deployment: success.
-- Commission Policy: success, run `389`.
-- Verify CRM: success, run `203`.
-- Application Build: success, run `351`.
-
-Preview smoke tests on `crm-jfo1rynqu-hamiltons-projects-f65eeb81.vercel.app`:
-
-- `/api/status` returned HTTP 200 and reported:
-  - `environment: preview`
-  - `branch: pr-67-acceptance-navigation-history`
-  - `commitSha: 9b6e5569f9f583b8f2c8756575980340ce28323e`
-- `/admin/leads/acceptance-history` returned HTTP 200 with the expected sign-in boundary, not 404/500.
-- `/admin/leads/acceptance-command-center` returned HTTP 200 with the expected sign-in boundary, not 404/500.
-- `/admin/leads/testing` returned HTTP 200 with the expected sign-in boundary, not 404/500.
-- `/api/cron/leads/aging` returned HTTP 401 without auth.
-
-Production smoke tests on `crm.mercurycalldesk.com`:
-
-- Production deployment ID: `dpl_3G6NWfuvqh274ZfTqEx9XVjHQZin`.
-- Deployment reached READY and received the `crm.mercurycalldesk.com` alias.
-- `/api/status` returned HTTP 200 and reported:
-  - `environment: production`
-  - `branch: main`
-  - `commitSha: 6c24a25bf425e10d1e5529af0835f4fc6e968543`
-- `/admin/leads/acceptance-history` returned HTTP 200 with the expected sign-in boundary, not 404/500.
-- `/api/cron/leads/aging` returned HTTP 401 without auth.
+- Required checks: Vercel success; Commission Policy success run `389`; Verify CRM success run `203`; Application Build success run `351`.
+- Preview `/api/status`: HTTP 200; branch `pr-67-acceptance-navigation-history`; commit `9b6e5569f9f583b8f2c8756575980340ce28323e`.
+- Preview protected acceptance surfaces returned HTTP 200 at the sign-in boundary, not 404/500.
+- Preview `/api/cron/leads/aging`: HTTP 401 without auth.
+- Production deployment `dpl_3G6NWfuvqh274ZfTqEx9XVjHQZin` reached READY and received the `crm.mercurycalldesk.com` alias.
+- Production `/api/status`: HTTP 200; environment `production`; branch `main`; commit `6c24a25bf425e10d1e5529af0835f4fc6e968543`.
+- Production `/admin/leads/acceptance-history`: HTTP 200 sign-in boundary, not 404/500.
+- Production `/api/cron/leads/aging`: HTTP 401 without auth.
 
 ### PR #68 evidence
 
-Required checks:
+- Required checks: Vercel success; Commission Policy success run `391`; Verify CRM success run `205`; Application Build success run `353`.
+- Preview `/api/status`: HTTP 200; branch `pr-68-acceptance-findings-catalog`; commit `96952f703b94d1401b9d23d42990b04e6030e9cb`.
+- Preview `/admin/leads/acceptance-findings`: HTTP 200 sign-in boundary, not 404/500.
+- Preview `/api/admin/leads/acceptance-findings`: HTTP 200 sign-in boundary, not 404/500.
+- Preview `/api/cron/leads/aging`: HTTP 401 without auth.
+- Production deployment `dpl_Fv6sbhUmHJ8SQ94etZnNqHxUEabR` reached READY and received the `crm.mercurycalldesk.com` alias.
+- Production `/api/status`: HTTP 200; environment `production`; branch `main`; commit `bde3c4faf8cca3e4536f7dfa0c07e8b3aa04e385`.
+- Production `/admin/leads/acceptance-findings`: HTTP 200 sign-in boundary, not 404/500.
+- Production `/api/admin/leads/acceptance-findings`: HTTP 200 sign-in boundary, not 404/500.
+- Production `/api/cron/leads/aging`: HTTP 401 without auth.
 
-- Vercel Preview Comments / Vercel deployment: success.
-- Commission Policy: success, run `391`.
-- Verify CRM: success, run `205`.
-- Application Build: success, run `353`.
+### PR #69 evidence
 
-Preview smoke tests on `crm-qbcl7ktsc-hamiltons-projects-f65eeb81.vercel.app`:
-
-- `/api/status` returned HTTP 200 and reported:
-  - `environment: preview`
-  - `branch: pr-68-acceptance-findings-catalog`
-  - `commitSha: 96952f703b94d1401b9d23d42990b04e6030e9cb`
-- `/admin/leads/acceptance-findings` returned HTTP 200 with the expected sign-in boundary, not 404/500.
-- `/api/admin/leads/acceptance-findings` returned HTTP 200 with the expected sign-in boundary, not 404/500.
-- `/api/cron/leads/aging` returned HTTP 401 without auth.
-
-Production smoke tests on `crm.mercurycalldesk.com`:
-
-- Production deployment ID: `dpl_Fv6sbhUmHJ8SQ94etZnNqHxUEabR`.
-- Deployment reached READY and received the `crm.mercurycalldesk.com` alias.
-- `/api/status` returned HTTP 200 and reported:
-  - `environment: production`
-  - `branch: main`
-  - `commitSha: bde3c4faf8cca3e4536f7dfa0c07e8b3aa04e385`
-- `/admin/leads/acceptance-findings` returned HTTP 200 with the expected sign-in boundary, not 404/500.
-- `/api/admin/leads/acceptance-findings` returned HTTP 200 with the expected sign-in boundary, not 404/500.
-- `/api/cron/leads/aging` returned HTTP 401 without auth.
+- Required checks: Vercel success; Commission Policy success run `393`; Verify CRM success run `207`; Application Build success run `355`.
+- Application Build job `86277555764` completed `npm run build` successfully.
+- Preview deployment `dpl_nE5jpC4goiM6GWF9XnsF2YU99Dea` reached READY at `https://crm-46sm2jeee-hamiltons-projects-f65eeb81.vercel.app`.
+- Preview `/api/status`: HTTP 200; environment `preview`; branch `pr-69-acceptance-handoff-packet`; commit `de5e4d27adefb08fdca75ad59843d928c6ecef63`.
+- Preview `/admin/leads/acceptance-handoff`: HTTP 200 sign-in boundary, not 404/500.
+- Preview `/api/admin/leads/acceptance-handoff`: HTTP 200 sign-in boundary, not 404/500.
+- Preview `/api/cron/leads/aging`: HTTP 401 without auth.
+- Production deployment `dpl_5HQiTr7cu2hn67XS5deBV7mwTDFn` reached READY and received the `crm.mercurycalldesk.com` alias.
+- Production `/api/status`: HTTP 200; environment `production`; branch `main`; commit `d90137bae6f3f2714816d45c084473848e590930`.
+- Production `/admin/leads/acceptance-handoff`: HTTP 200 sign-in boundary, not 404/500.
+- Production `/api/admin/leads/acceptance-handoff`: HTTP 200 sign-in boundary, not 404/500.
+- Production `/api/cron/leads/aging`: HTTP 401 without auth.
 
 ## Still open
 
@@ -142,18 +133,18 @@ Production smoke tests on `crm.mercurycalldesk.com`:
 - GHL workflow activation remains closed.
 - Additional live imports/exports remain closed.
 - Servicing, Commissions, Finance, payout, and client-onboarding activation remain closed.
-- The static findings catalog should be extended by a future guarded PR if new findings emerge.
-- No remaining item from Hamilton's recommended PR #67 through PR #71 backlog is left unshipped; those items were bundled into PR #67.
+- Production data changes outside controlled-test actions remain closed.
+- The static findings catalog and handoff packet should be extended by a future guarded PR if new findings emerge.
 
 ## Start here next
 
-For Hamilton: sign in on `crm.mercurycalldesk.com` and start at `/admin/leads/acceptance-command-center`. Use the new `Findings catalog`, `How to test this step`, `Runbook`, `Record`, and `Acceptance history` links to navigate authenticated production acceptance.
+For Hamilton: sign in on `crm.mercurycalldesk.com` and start at `/admin/leads/acceptance-handoff`. Use the handoff packet, findings catalog, command center, runbook links, record links, and acceptance history to navigate authenticated production acceptance.
 
-For Claude: read `02 Projects/MCD CRM - Agent and Admin Portals/LOCK.md`, then `01 Daily Logs/[G] 2026-07-09 MCD CRM PR68 Acceptance Findings Catalog.md`. Latest production commit is `bde3c4faf8cca3e4536f7dfa0c07e8b3aa04e385`.
+For Claude: read `02 Projects/MCD CRM - Agent and Admin Portals/LOCK.md`, then `01 Daily Logs/[G] 2026-07-09 MCD CRM PR69 Acceptance Handoff Packet.md`. Latest production commit is `d90137bae6f3f2714816d45c084473848e590930`.
 
 ## Handback
 
-Lock holder is Claude as of `2026-07-10T02:56Z`. ChatGPT completed the owner-authorized continuation and returned the lock. Latest production commit: `bde3c4faf8cca3e4536f7dfa0c07e8b3aa04e385`.
+Lock holder is Claude as of `2026-07-10T03:09Z`. ChatGPT completed the owner-authorized continuation and returned the lock. Latest production commit: `d90137bae6f3f2714816d45c084473848e590930`.
 
 ## Safety boundary reaffirmation
 
