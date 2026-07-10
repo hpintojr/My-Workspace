@@ -61,24 +61,27 @@ CLAUDE.md
 - Never place credentials, customer data, or other sensitive information into logs or workspace files.
 ```
 
-## Execution ownership — updated 2026-07-09
+## Execution ownership — updated 2026-07-10
 
 ```txt
 Primary executor: Claude (Opus / 5.x). Claude holds the lock by default and does the building.
 Other AIs (ChatGPT, Gemini): review and verification only, unless Claude explicitly hands them the lock
-in writing via the lock file.
+in writing via LOCK.md.
 
 Historical note: the 2026-07-06 temporary exception granting ChatGPT limited Phase D reconciliation
-authority expired when that recovery session ended. The 2026-07-08 Lead Flow Alignment and 2026-07-09
-Lead Acceptance Runbook work (PR #34, PR #35 through PR #58 by ChatGPT, PR #59 through PR #65 by Claude)
-have all been completed under this default rule.
+authority expired when that recovery session ended. The 2026-07-08 Lead Flow Alignment shipped as PR
+#34 by ChatGPT. The 2026-07-09 Lead Acceptance Runbook arc (PR #59-#65) was shipped by Claude. A
+2026-07-10 owner-authorized 2h30m continuation window handed the lock to ChatGPT, which shipped PR
+#66-#77 (runbook step anchors + acceptance cockpit + visibility pages + cross-links) and returned the
+lock to Claude at 2026-07-10T07:28Z with a full handback log. Claude is the current holder as of
+this update.
 ```
 
-## MCD CRM — current state (2026-07-09)
+## MCD CRM — current state (2026-07-10)
 
 ```txt
 STATUS: HEALTHY. Production is on crm.mercurycalldesk.com at commit
-  4cba96ac145a77218f9fd62a2d31ce75c955a57c (main, PR #65 merged).
+  a5c33b1c534899e9199f5c24474ec8d217409a01 (main, PR #77 merged).
 
 Lead Flow business rules shipped and locked (PR #34, PR #32 chain): activity-first
 Cold Lead workspace, click-to-call activity guarantee, no-answer/voicemail stay
@@ -86,24 +89,40 @@ unowned, two-way-contact claim gate, 45-day openPoolReleaseAt timer, Warm Reply
 Triage 45-day timer, DNC blackout, secured aging cron, Shark Tank promotion, My
 Workspace dashboard, GHL appointment/opportunity relay hardening, build guards.
 
-Read-only acceptance tooling shipped in PRs #59 through #65 (this session, Claude
-executor):
-  - /admin/leads/acceptance-runbook  — 11-step runbook page (PR #59)
+Read-only acceptance visibility and navigation shipped in PRs #59 through #77
+(2026-07-09 through 2026-07-10). PR #59-#65 by Claude, PR #66-#77 by ChatGPT
+under owner-authorized 2h30m lock window.
+
+Runbook + step navigation:
+  - /admin/leads/acceptance-runbook  — 11-step read-only runbook (PR #59)
   - /admin/leads/acceptance-runbook/checklist — printable checklist (PR #62)
   - Where-to-record matrix on the runbook (PR #65)
-  - Runbook link on every admin surface: command-center, readiness, operating
+  - Stable step-anchor IDs on the runbook (PR #66)
+  - Explicit 18-step-to-11-section acceptance mapping (PR #67)
+
+Cockpit and visibility surfaces (all read-only, no mutations):
+  - /admin/leads/acceptance-history + CSV export (PR #67)
+  - /admin/leads/acceptance-findings + JSON endpoint (PR #68)
+  - /admin/leads/acceptance-handoff + JSON endpoint (PR #69)
+  - /admin/leads/acceptance-gaps + JSON endpoint (PR #70)
+  - /admin/leads/acceptance-matrix + JSON endpoint (PR #71)
+  - /admin/leads/acceptance-gates + JSON endpoint (PR #72)
+  - /admin/leads/acceptance-overview + JSON endpoint — single cockpit (PR #73)
+  - /admin/leads/acceptance — protected alias to the overview (PR #74)
+
+Cross-linking:
+  - Runbook link on every admin surface: command center, readiness, operating
     status, audit, Lead review, acceptance command center, acceptance report,
     acceptance board, controlled test data, controlled GHL harness, integration
     monitor (PR #60, #61, #63, #64).
-  - Guard script scripts/check-lead-flow-alignment.ts extended to protect all
-    of the above.
+  - Overview link from history, findings, command center, report, board, runbook,
+    and Lead review (PR #74-#77).
 
-Custom-domain caveat: crm.mercurycalldesk.com is on latest production commit as of
-2026-07-09 22:57 UTC. Each PR's /api/status was verified after merge.
+Guard: scripts/check-lead-flow-alignment.ts is extended to protect every route,
+label, and cross-link listed above.
 
-Phase D lead import: 50 production Leads exist, all in COLD / AVAILABLE state
-(batch cmrbj55go0000la04pxcuuaci, run RUN_2026_07_08_e8a9beed). No new imports
-have been run since PR #34.
+Phase D lead import: 50 production Leads exist, all COLD / AVAILABLE (batch
+cmrbj55go0000la04pxcuuaci, run RUN_2026_07_08_e8a9beed). No new imports since PR #34.
 
 CRON_SECRET remains configured in Vercel; unauthenticated /api/cron/leads/aging
 correctly returns 401 across preview and production.
@@ -128,15 +147,16 @@ owned-account exports, permitted business-site research. Scraping adapters are d
 2. [DONE 2026-07-06] Phase D reconciliation PR #32 merged (route fix + approval/duplicate/inserted/replay).
 3. [DONE 2026-07-08] Lead Flow Alignment shipped (PR #34, merge commit 487ff615).
    50 production Leads corrected to COLD / AVAILABLE; audit evidence recorded.
-4. [DONE 2026-07-09] Read-only acceptance tooling complete (PR #59-#65, current production
-   commit 4cba96ac). Runbook, printable checklist, discoverability across every admin surface,
-   where-to-record matrix, guard coverage extended.
-5. [NEXT] AUTHENTICATED PRODUCTION ACCEPTANCE. Drive on crm.mercurycalldesk.com. Use the
-   acceptance runbook at /admin/leads/acceptance-runbook and record every outcome on the
-   acceptance board /admin/leads/testing. 18 acceptance steps remain unrecorded (0 / 18 pass).
-   Owner production decision is the final step.
-6. [NEXT] After acceptance passes: 13-layer hardening backlog — preview/prod DB and secret
+4. [DONE 2026-07-09] Read-only acceptance runbook tooling complete (PR #59-#65).
+5. [DONE 2026-07-10] Acceptance cockpit + visibility pages complete (PR #66-#77 by ChatGPT
+   under owner-authorized lock window; production commit a5c33b1c).
+6. [NEXT] AUTHENTICATED PRODUCTION ACCEPTANCE — Hamilton-only. Sign in on
+   crm.mercurycalldesk.com. Start at /admin/leads/acceptance or /admin/leads/acceptance-overview.
+   Follow the runbook at /admin/leads/acceptance-runbook. Record each outcome on the acceptance
+   board /admin/leads/testing (writes immutable LEAD_PRODUCTION_ACCEPTANCE_RECORDED audits).
+   18 acceptance steps remain unrecorded (0 / 18). Owner production decision is the final step.
+7. [NEXT] After acceptance passes: 13-layer hardening backlog — preview/prod DB and secret
    separation, RLS/runtime DB role, error tracking, Neon autoscaling/backup review, login
    smoke test. Scope with Hamilton before starting.
-7. [NEXT] Backlog items #38-#41 remain unscoped.
+8. [NEXT] Backlog items #38-#41 remain unscoped.
 ```

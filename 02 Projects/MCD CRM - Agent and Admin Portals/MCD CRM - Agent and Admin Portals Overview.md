@@ -1,6 +1,6 @@
 ---
 type: status
-date: 2026-07-09
+date: 2026-07-10
 project: MCD CRM - Agent and Admin Portals
 repository: hpintojr/crm.mcd
 ---
@@ -17,7 +17,7 @@ repository: hpintojr/crm.mcd
 5. This overview
 ```
 
-## Current status — authoritative 2026-07-09
+## Current status — authoritative 2026-07-10
 
 ```txt
 Production is HEALTHY. Lead Flow business rules are merged and deployed.
@@ -48,20 +48,46 @@ PHASE D LEAD IMPORT (state as of 2026-07-08)
 - Audit evidence: 1 LEAD_BATCH_POOL_CORRECTED + 50 LEAD_POOL_CORRECTED.
 - No new imports have run since PR #34.
 
-READ-ONLY ACCEPTANCE TOOLING — PR #59 through PR #65 (2026-07-09, Claude executor)
+READ-ONLY ACCEPTANCE VISIBILITY / NAVIGATION — PR #59 through PR #77 (2026-07-09 to 2026-07-10)
+
+Runbook + step navigation (PR #59-#67):
 - PR #59 (9181aa00): /admin/leads/acceptance-runbook — 11-step read-only runbook.
 - PR #60 (2c837e8c): runbook links on /admin/command-center and /admin/readiness.
-- PR #61 (da570d7c): runbook link on /admin/leads/testing (acceptance board).
-- PR #62 (124d1248): /admin/leads/acceptance-runbook/checklist — printable checklist.
+- PR #61 (da570d7c): runbook link on /admin/leads/testing.
+- PR #62 (124d1248): /admin/leads/acceptance-runbook/checklist.
 - PR #63 (05d08d7c): runbook links on operating-status, audit, Lead review.
 - PR #64 (c383f25e): runbook links on acceptance-report, controlled-test-data,
-  controlled GHL harness, integration monitor.
-- PR #65 (4cba96ac): "Where to record each step" matrix on the runbook.
-- Guard extended to protect the runbook, checklist, matrix, and every runbook link.
-- No schema changes, no Neon migrations, no feature-flag changes, no GHL workflow
-  activation, no live GHL API calls, no live import/export submission, no Lead
-  business-rule changes, no Servicing/Commissions/Finance/payout/client-onboarding
-  activation across any of these 7 PRs.
+  GHL harness, integrations.
+- PR #65 (4cba96ac): where-to-record matrix on the runbook.
+- PR #66 (53ecd2cf): stable runbook step-anchor IDs.
+- PR #67 (6c24a25b): explicit 18-step to 11-section acceptance mapping,
+  /admin/leads/acceptance-history + CSV, acceptance-board anchors.
+
+Cockpit and visibility pages (PR #68-#74, each read-only page + protected JSON endpoint):
+- PR #68 (bde3c4fa): /admin/leads/acceptance-findings.
+- PR #69 (d90137ba): /admin/leads/acceptance-handoff.
+- PR #70 (c630a95d): /admin/leads/acceptance-gaps.
+- PR #71 (de899828): /admin/leads/acceptance-matrix.
+- PR #72 (82330d86): /admin/leads/acceptance-gates.
+- PR #73 (4ece2e01): /admin/leads/acceptance-overview.
+- PR #74 (d757f5b2): /admin/leads/acceptance protected alias + Lead review overview link.
+
+Cross-linking (PR #75-#77):
+- PR #75 (e2a429bc): overview links from history and findings.
+- PR #76 (438b24fd): overview links from command center and report.
+- PR #77 (a5c33b1c, current production commit): overview links from board and runbook.
+
+Guard: scripts/check-lead-flow-alignment.ts extended to protect every route,
+label, endpoint, and cross-link.
+
+Executor split: PR #59-#65 by Claude. PR #66-#77 by ChatGPT under owner-authorized
+2h30m lock window that returned the lock to Claude at 2026-07-10T07:28Z. Full
+ChatGPT session summary: 01 Daily Logs/[G] 2026-07-09 MCD CRM ChatGPT Session Handback.md.
+
+No schema changes, no Neon migrations, no feature-flag changes, no GHL workflow
+activation, no live GHL API calls, no live import/export submission, no Lead
+business-rule changes, no Servicing/Commissions/Finance/payout/client-onboarding
+activation across any of these 19 PRs.
 
 CONFIGURATION
 - Hamilton confirmed CRON_SECRET is configured in Vercel. Value not inspected.
@@ -72,8 +98,10 @@ LOGIN / ADMIN / SERVICING
 - Route-collision guard continues to run in Vercel build.
 
 LOCK / HANDOFF
-- Claude holds the execution lock by default per CLAUDE.md.
-- No open PR blocked at review as of 2026-07-09.
+- Claude holds the execution lock as of 2026-07-10T07:28Z per LOCK.md.
+- ChatGPT completed a 2h30m owner-authorized continuation shipping PR #66-#77
+  and returned the lock cleanly. See ChatGPT Session Handback log.
+- No open PR blocked at review as of 2026-07-10.
 - Next work is authenticated production acceptance driven by Hamilton on the
   custom domain; Claude will observe/navigate but not drive the Lead actions.
 ```
@@ -82,8 +110,10 @@ LOCK / HANDOFF
 
 ```txt
 1. AUTHENTICATED PRODUCTION ACCEPTANCE (0 / 18 recorded, gate to broader rollout).
-   Start at /admin/leads/acceptance-runbook on crm.mercurycalldesk.com. The
-   where-to-record matrix maps each step to the surface it runs on. Every
+   Start at /admin/leads/acceptance (protected alias) or /admin/leads/acceptance-overview
+   on crm.mercurycalldesk.com. The overview cockpit surfaces history, findings,
+   handoff packet, gaps, matrix, and closed gates; jump to the runbook from there.
+   The where-to-record matrix maps each step to the surface it runs on. Every
    outcome lands on the acceptance board /admin/leads/testing as an immutable
    LEAD_PRODUCTION_ACCEPTANCE_RECORDED audit event.
    - Verify Cold Lead workspace visibility on /portal/leads.

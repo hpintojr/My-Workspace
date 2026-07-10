@@ -1,6 +1,6 @@
 # Workspace Index
 
-Updated: 2026-07-09
+Updated: 2026-07-10
 
 ## First read
 
@@ -58,7 +58,7 @@ MiniCRM is the system of record for agent onboarding, lead ownership, compliance
 
 ```txt
 PRODUCTION IS HEALTHY.
-Custom domain crm.mercurycalldesk.com is on latest commit 4cba96ac145a77218f9fd62a2d31ce75c955a57c (main).
+Custom domain crm.mercurycalldesk.com is on latest commit a5c33b1c534899e9199f5c24474ec8d217409a01 (main).
 
 Phase 1 onboarding: production-validated.
 Admin operations, partner portal, and read-only GHL-backed schedule: deployed.
@@ -82,18 +82,38 @@ Phase D lead import batch (2026-07-08):
 - 50 production Leads exist, all COLD / AVAILABLE, 0 claimable.
 - Audit evidence: 1 LEAD_BATCH_POOL_CORRECTED + 50 LEAD_POOL_CORRECTED.
 
-Read-only acceptance tooling (PR #59-#65, 2026-07-09, Claude executor):
-- /admin/leads/acceptance-runbook (11 steps).
-- /admin/leads/acceptance-runbook/checklist (print-friendly companion).
-- Where-to-record matrix on the runbook.
+Read-only acceptance visibility and navigation (PR #59-#77, 2026-07-09 through
+2026-07-10; PR #59-#65 by Claude, PR #66-#77 by ChatGPT under owner-authorized lock).
+Runbook + step navigation:
+- /admin/leads/acceptance-runbook (11 steps, PR #59).
+- /admin/leads/acceptance-runbook/checklist (printable, PR #62).
+- Where-to-record matrix (PR #65).
+- Stable step-anchor IDs (PR #66).
+- Explicit 18-step to 11-section mapping (PR #67).
+
+Cockpit and visibility pages (each read-only + protected JSON endpoint):
+- /admin/leads/acceptance-history + CSV export (PR #67).
+- /admin/leads/acceptance-findings (PR #68).
+- /admin/leads/acceptance-handoff (PR #69).
+- /admin/leads/acceptance-gaps (PR #70).
+- /admin/leads/acceptance-matrix (PR #71).
+- /admin/leads/acceptance-gates (PR #72).
+- /admin/leads/acceptance-overview (PR #73).
+- /admin/leads/acceptance — protected alias to overview (PR #74).
+
+Cross-linking:
 - Runbook link on every admin surface (command center, readiness, operating status,
   audit, Lead review, acceptance command center, acceptance report, acceptance
   board, controlled test data, controlled GHL harness, integration monitor).
-- Guard script scripts/check-lead-flow-alignment.ts extended to protect all of it.
+- Overview link from history, findings, command center, report, board, runbook,
+  and Lead review (PR #74-#77).
+
+Guard script scripts/check-lead-flow-alignment.ts extended to protect all of it.
 
 CRON_SECRET confirmed configured in Vercel. Value not inspected.
 
-Current execution holder: Claude (default per CLAUDE.md).
+Current execution holder: Claude (default per CLAUDE.md, resumed at 2026-07-10T07:28Z
+after ChatGPT's owner-authorized continuation window).
 Current gate: authenticated production acceptance (0 / 18 steps recorded).
 ```
 
@@ -104,6 +124,8 @@ Current gate: authenticated production acceptance (0 / 18 steps recorded).
 02 Projects/MCD CRM - Agent and Admin Portals/LOCK.md
 02 Projects/MCD CRM - Agent and Admin Portals/[C] MCD CRM — Production Scope & 13-Layer Review.md
 02 Projects/MCD CRM - Agent and Admin Portals/[C] Local Lead Operations and MiniCRM Export Scope.md
+01 Daily Logs/[G] 2026-07-09 MCD CRM ChatGPT Session Handback.md
+01 Daily Logs/[G] 2026-07-09 MCD CRM PR77 Acceptance Overview Board Runbook Links.md
 01 Daily Logs/[C] 2026-07-09 MCD CRM PR65 Where To Record Matrix.md
 01 Daily Logs/[C] 2026-07-09 MCD CRM PR64 Runbook Links Batch 2.md
 01 Daily Logs/[C] 2026-07-09 MCD CRM PR63 Runbook Links Batch 1.md
@@ -120,7 +142,9 @@ Repo: mcd_lead_ops (local only, D:\GitHub\mcd_lead_ops)
 
 ```txt
 1. AUTHENTICATED PRODUCTION ACCEPTANCE (0 / 18 steps recorded, gate to broader rollout):
-   Start at /admin/leads/acceptance-runbook. Use the where-to-record matrix. Each
+   Start at /admin/leads/acceptance or /admin/leads/acceptance-overview (single cockpit
+   surfacing history, findings, handoff packet, gaps, matrix, and closed gates).
+   From the overview, jump to the runbook and use the where-to-record matrix. Each
    step lands on the acceptance board /admin/leads/testing as an immutable
    LEAD_PRODUCTION_ACCEPTANCE_RECORDED audit event.
    - Verify Cold Lead workspace visibility.
