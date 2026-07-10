@@ -4,28 +4,16 @@ Only the holder may commit, merge, deploy, run migrations, or change settings on
 Others read/verify only. See `[C] AI Operating Protocol — Handoff, Changelog, Indexing.md`.
 
 ```txt
-holder: claude
-scope: hpintojr/crm.mcd + hpintojr/My-Workspace
-since: 2026-07-10T06:21Z
-previous_holder: chatgpt (2026-07-10 owner-authorized continuation — shipped PR #66, PR #67,
-                 PR #68, PR #69, PR #70, PR #71, PR #72, PR #73, and PR #74. PR #66 added stable
-                 runbook section anchors. PR #67 bundled the remaining read-only acceptance-navigation
-                 backlog with explicit 18-step to 11-runbook-section mapping, acceptance history,
-                 history CSV export, command center/report/board links, acceptance-board anchors,
-                 and guard coverage. PR #68 added a read-only in-app acceptance findings catalog,
-                 JSON endpoint, command center/report/history links, and guard coverage. PR #69
-                 added a read-only acceptance handoff packet, protected JSON endpoint,
-                 findings-catalog link, and guard coverage. PR #70 added a read-only acceptance
-                 evidence gaps page, protected JSON endpoint, handoff-packet link, and guard
-                 coverage. PR #71 added a read-only acceptance evidence matrix page, protected
-                 JSON endpoint, handoff/gaps links, and guard coverage. PR #72 added a read-only
-                 acceptance closed-gates page, protected JSON endpoint, handoff/gaps/matrix links,
-                 and guard coverage. PR #73 added a read-only acceptance overview/cockpit page,
-                 protected JSON endpoint, handoff/gaps/matrix/gates links, and guard coverage.
-                 PR #74 added a protected /admin/leads/acceptance alias to the overview, a Lead review
-                 overview link, and guard coverage. All required CI green; preview and production smoke
-                 tests passed. Latest production commit: d757f5b2d4abea9fbec729e827b3eadee2012f7f.)
-intent: Claude resumes as default executor. Authenticated production acceptance remains Hamilton-only.
+holder: chatgpt
+scope: hpintojr/crm.mcd + hpintojr/My-Workspace (owner-authorized continuation of read-only
+       Lead acceptance tooling after PR #74, focused on acceptance overview links from existing surfaces)
+since: 2026-07-10T06:42Z
+previous_holder: claude (default executor after ChatGPT shipped PR #66 through PR #74; Hamilton then directly
+                 instructed ChatGPT to keep coding.)
+intent: continue with the smallest practical number of guarded, read-only PRs. Link the acceptance overview
+        from older acceptance surfaces so Hamilton/Claude can find the cockpit from command center, report,
+        history, findings, runbook/checklist, and board without knowing the direct URL. Authenticated production
+        acceptance remains Hamilton-only.
 ```
 
 ## Authorized without further owner approval
