@@ -77,11 +77,13 @@ lock to Claude at 2026-07-10T07:28Z with a full handback log. Claude is the curr
 this update.
 ```
 
-## MCD CRM — current state (2026-07-10)
+## MCD CRM — current state (2026-07-10 late afternoon)
 
 ```txt
 STATUS: HEALTHY. Production is on crm.mercurycalldesk.com at commit
-  a5c33b1c534899e9199f5c24474ec8d217409a01 (main, PR #77 merged).
+  860c0e94310546dc7603b49f3495e99e4e6365d9 (main, PR #79 merged, Vercel prod
+  deploy succeeded at 2026-07-10T22:12:57Z after one transient prod-build
+  failure that Hamilton resolved with Redeploy).
 
 Lead Flow business rules shipped and locked (PR #34, PR #32 chain): activity-first
 Cold Lead workspace, click-to-call activity guarantee, no-answer/voicemail stay
@@ -92,6 +94,20 @@ Workspace dashboard, GHL appointment/opportunity relay hardening, build guards.
 Read-only acceptance visibility and navigation shipped in PRs #59 through #77
 (2026-07-09 through 2026-07-10). PR #59-#65 by Claude, PR #66-#77 by ChatGPT
 under owner-authorized 2h30m lock window.
+
+PR #78 (Claude, 2026-07-10) fixed the admin acceptance-operator path in
+`src/lib/lead-workspace.ts::activeAgent()` so ADMIN_ROLES may record
+click-to-call / disposition / DNC on Leads that pass `isControlledTestLead()`
+only, and added `id="cold-lead-review"` + scroll-mt anchor on the Cold Lead
+review section so Review/Disposition links jump to the detail instead of
+leaving the operator scrolled at the top. Guard extended.
+
+PR #79 (Claude, 2026-07-10) applied the same controlled-Lead-only exemption
+inside `src/lib/claims.ts::claimAvailableLead()`, replacing the unconditional
+ADMIN early-throw with a check that only fires when the target Lead is not
+controlled test data. Real production Leads still require an AGENT-role user
+with `canClaimLeads: true`; managers still get the reassignment error on real
+Leads. Guard extended.
 
 Runbook + step navigation:
   - /admin/leads/acceptance-runbook  — 11-step read-only runbook (PR #59)
@@ -150,13 +166,25 @@ owned-account exports, permitted business-site research. Scraping adapters are d
 4. [DONE 2026-07-09] Read-only acceptance runbook tooling complete (PR #59-#65).
 5. [DONE 2026-07-10] Acceptance cockpit + visibility pages complete (PR #66-#77 by ChatGPT
    under owner-authorized lock window; production commit a5c33b1c).
-6. [NEXT] AUTHENTICATED PRODUCTION ACCEPTANCE — Hamilton-only. Sign in on
-   crm.mercurycalldesk.com. Start at /admin/leads/acceptance or /admin/leads/acceptance-overview.
-   Follow the runbook at /admin/leads/acceptance-runbook. Record each outcome on the acceptance
-   board /admin/leads/testing (writes immutable LEAD_PRODUCTION_ACCEPTANCE_RECORDED audits).
-   18 acceptance steps remain unrecorded (0 / 18). Owner production decision is the final step.
-7. [NEXT] After acceptance passes: 13-layer hardening backlog — preview/prod DB and secret
+6. [DONE 2026-07-10 late afternoon] PR #78 + PR #79 — narrowly-scoped admin acceptance-operator
+   permissions on controlled test Leads only, in both the workspace disposition path and the
+   claim path. Fixed the Cold Lead review scroll anchor. Production commit 860c0e94.
+7. [IN PROGRESS] AUTHENTICATED PRODUCTION ACCEPTANCE — Hamilton-only. Live progress recorded
+   during 2026-07-10 afternoon walkthrough on crm.mercurycalldesk.com:
+     PASS  (12): step 1 (custom domain), 2 (protected routes), 3 (cron 401 auth),
+                 5 (Lead pool state), 6 (Cold workspace), 7 (click-to-call activity),
+                 9 (no-answer disposition), 10 (callback-requested / two-way contact),
+                 11 (45-day claim), 12 (DNC blackout), 13 (My Workspace), 17 (aging-preview).
+     Deferred (5): 4 (Vercel runtime logs), 8 (Cold Lead second call attempt),
+                   14 (Warm Reply Triage timer), 15/16 (GHL harness).
+     Owner-only (1): 18 (owner production decision).
+   Steps 7-12 were executed on a live controlled test Lead
+   (`cmrepsdug0004ii040m00sjs1`) through the entire lifecycle: activity → two-way
+   contact → claim → DNC + archive. Selected findings and audit trail are
+   preserved in immutable LEAD_PRODUCTION_ACCEPTANCE_RECORDED events.
+8. [NEXT] Record the deferred steps and the owner production decision when Hamilton is ready.
+9. [NEXT] After acceptance passes: 13-layer hardening backlog — preview/prod DB and secret
    separation, RLS/runtime DB role, error tracking, Neon autoscaling/backup review, login
    smoke test. Scope with Hamilton before starting.
-8. [NEXT] Backlog items #38-#41 remain unscoped.
+10. [NEXT] Backlog items #38-#41 remain unscoped.
 ```

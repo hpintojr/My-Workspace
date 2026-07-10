@@ -1,6 +1,6 @@
 # Workspace Index
 
-Updated: 2026-07-10
+Updated: 2026-07-10 (late afternoon)
 
 ## First read
 
@@ -58,7 +58,7 @@ MiniCRM is the system of record for agent onboarding, lead ownership, compliance
 
 ```txt
 PRODUCTION IS HEALTHY.
-Custom domain crm.mercurycalldesk.com is on latest commit a5c33b1c534899e9199f5c24474ec8d217409a01 (main).
+Custom domain crm.mercurycalldesk.com is on latest commit 860c0e94310546dc7603b49f3495e99e4e6365d9 (main, PR #79).
 
 Phase 1 onboarding: production-validated.
 Admin operations, partner portal, and read-only GHL-backed schedule: deployed.
@@ -113,8 +113,18 @@ Guard script scripts/check-lead-flow-alignment.ts extended to protect all of it.
 CRON_SECRET confirmed configured in Vercel. Value not inspected.
 
 Current execution holder: Claude (default per CLAUDE.md, resumed at 2026-07-10T07:28Z
-after ChatGPT's owner-authorized continuation window).
-Current gate: authenticated production acceptance (0 / 18 steps recorded).
+after ChatGPT's owner-authorized continuation window). Handoff planned at end of
+this session to unblock a ChatGPT continuation window while Claude usage refreshes.
+Current gate: authenticated production acceptance — 12 / 18 recorded PASS, 5 deferred
+with operator notes, 1 owner-only (owner production decision).
+
+New during 2026-07-10 afternoon:
+- PR #78 (Claude): admin acceptance-operator disposition/DNC on controlled test
+  Leads only; Cold Lead review scroll-mt anchor. Production commit 4cba96ac ->
+  3bccb51d.
+- PR #79 (Claude): admin acceptance-operator claim on controlled test Leads only,
+  extending the PR #78 pattern into claims.ts. Production commit 3bccb51d ->
+  860c0e94 after one transient Vercel prod-build failure resolved by Redeploy.
 ```
 
 ### Read next
@@ -141,7 +151,8 @@ Repo: mcd_lead_ops (local only, D:\GitHub\mcd_lead_ops)
 ### Current next actions
 
 ```txt
-1. AUTHENTICATED PRODUCTION ACCEPTANCE (0 / 18 steps recorded, gate to broader rollout):
+1. AUTHENTICATED PRODUCTION ACCEPTANCE (12 / 18 PASS + 5 deferred + 1 owner-only,
+   gate to broader rollout):
    Start at /admin/leads/acceptance or /admin/leads/acceptance-overview (single cockpit
    surfacing history, findings, handoff packet, gaps, matrix, and closed gates).
    From the overview, jump to the runbook and use the where-to-record matrix. Each

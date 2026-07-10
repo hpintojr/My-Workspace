@@ -21,7 +21,7 @@ repository: hpintojr/crm.mcd
 
 ```txt
 Production is HEALTHY. Lead Flow business rules are merged and deployed.
-Custom domain crm.mercurycalldesk.com is on latest commit 4cba96ac (main).
+Custom domain crm.mercurycalldesk.com is on latest commit 860c0e94 (main, PR #79).
 
 LEAD FLOW BUSINESS RULES — PR #34 (merged 2026-07-08 as 487ff615)
 - Cold Lead workspace in /portal/leads, activity-first, no soft lock.
@@ -75,7 +75,21 @@ Cockpit and visibility pages (PR #68-#74, each read-only page + protected JSON e
 Cross-linking (PR #75-#77):
 - PR #75 (e2a429bc): overview links from history and findings.
 - PR #76 (438b24fd): overview links from command center and report.
-- PR #77 (a5c33b1c, current production commit): overview links from board and runbook.
+- PR #77 (a5c33b1c): overview links from board and runbook.
+
+Admin acceptance-operator narrow permission on controlled test Leads only (PR #78-#79, 2026-07-10 afternoon):
+- PR #78 (Claude, prod 3bccb51d): src/lib/lead-workspace.ts::activeAgent()
+  now allows ADMIN_ROLES on Leads that pass isControlledTestLead() only. Auto-
+  provisions an "Acceptance Operator (<ROLE>)" Agent with canClaimLeads:true for
+  the admin user so click-to-call, disposition, and DNC actions succeed on the
+  controlled test Lead without redirecting to /login. src/app/portal/leads/page.tsx
+  gained id="cold-lead-review" + scroll-mt-6 on the Cold Lead detail section, and
+  the open/review/disposition anchors point at #cold-lead-review. Guard extended.
+- PR #79 (Claude, prod 860c0e94): src/lib/claims.ts::claimAvailableLead() applies
+  the same controlled-Lead-only exemption. Real production Leads still throw the
+  original "Use reassignment controls for manager lead assignment." error for
+  ADMIN roles. Controlled test Leads fall through to the existing agent +
+  canClaimLeads + capacity + claim path. Guard extended.
 
 Guard: scripts/check-lead-flow-alignment.ts extended to protect every route,
 label, endpoint, and cross-link.
@@ -97,8 +111,29 @@ LOGIN / ADMIN / SERVICING
 - July servicing outage fix remains in place: no competing [id] vs [clientAccountId] route.
 - Route-collision guard continues to run in Vercel build.
 
+LIVE ACCEPTANCE PROGRESS — 2026-07-10 afternoon
+- PASS (12): step 1 (custom domain), 2 (protected routes), 3 (cron 401),
+             5 (Lead pool state), 6 (Cold workspace), 7 (click-to-call activity),
+             9 (no-answer disposition), 10 (callback-requested / two-way contact),
+             11 (45-day claim), 12 (DNC blackout), 13 (My Workspace),
+             17 (aging-preview).
+- Deferred (5): 4 (Vercel runtime logs), 8 (second Cold Lead call attempt),
+                14 (Warm Reply Triage timer), 15/16 (GHL harness).
+- Owner-only (1): 18 (owner production decision).
+- Controlled test Lead exercised: cmrepsdug0004ii040m00sjs1 ("MCD Controlled
+  Lead Test", 555-010-0934). Full lifecycle: Cold -> activity-first click-to-call
+  -> no-answer disposition (stayed unowned) -> callback-requested disposition
+  (twoWayContactAt set, moved to NURTURE / NURTURING) -> claim (lifecycle
+  CLAIMED, ownerAgentId set to auto-provisioned Acceptance Operator (OWNER),
+  claimedAt + 45-day openPoolReleaseAt set) -> DNC + suppress (lifecycle
+  Suppressed, archived). Immutable LEAD_PRODUCTION_ACCEPTANCE_RECORDED audits
+  written per step. GHL export remained blocked by MCD_CONTROLLED_TEST_NO_GHL_EXPORT
+  the entire time.
+
 LOCK / HANDOFF
-- Claude holds the execution lock as of 2026-07-10T07:28Z per LOCK.md.
+- Claude held the execution lock 2026-07-10T07:28Z through 2026-07-10 evening.
+  At end of the afternoon session Claude handed the lock to ChatGPT for a
+  continuation coding window. See LOCK.md for the current holder.
 - ChatGPT completed a 2h30m owner-authorized continuation shipping PR #66-#77
   and returned the lock cleanly. See ChatGPT Session Handback log.
 - No open PR blocked at review as of 2026-07-10.
