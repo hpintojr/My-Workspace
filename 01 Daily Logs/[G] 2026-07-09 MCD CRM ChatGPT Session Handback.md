@@ -11,6 +11,7 @@
 - Shipped PR #70, `feat(leads): add acceptance evidence gaps`.
 - Shipped PR #71, `feat(leads): add acceptance evidence matrix`.
 - Shipped PR #72, `feat(leads): add acceptance closed gates`.
+- Shipped PR #73, `feat(leads): add acceptance overview`.
 - Returned the execution lock to Claude in `02 Projects/MCD CRM - Agent and Admin Portals/LOCK.md`.
 
 ## PRs shipped
@@ -86,13 +87,25 @@
 
 - Branch: `pr-72-acceptance-closed-gates`.
 - Head: `b6883a2990e05fd2b255a25ee6ce511bec666960`.
-- Squash merge / latest production commit: `82330d862ac88263e7e3dca3e5b96746de903170`.
+- Squash merge / production commit: `82330d862ac88263e7e3dca3e5b96746de903170`.
 - Added `src/lib/lead-acceptance-gates.ts` to derive closed operational gate status from the PR69 handoff packet and `leadAcceptanceClosedGates`.
 - Added protected `/admin/leads/acceptance-gates`.
 - Added protected `/api/admin/leads/acceptance-gates`.
 - Linked closed gates from `/admin/leads/acceptance-handoff`, `/admin/leads/acceptance-gaps`, and `/admin/leads/acceptance-matrix`.
 - Extended `scripts/check-lead-flow-alignment.ts` to guard the gates model, page, endpoint, and cross-surface links.
 - PR-specific log: `01 Daily Logs/[G] 2026-07-09 MCD CRM PR72 Acceptance Closed Gates.md`.
+
+### PR #73 — Acceptance overview
+
+- Branch: `pr-73-acceptance-overview`.
+- Head: `53417c48c26c49faca32cf10f0b8cf51b7c64617`.
+- Squash merge / latest production commit: `4ece2e018ed784badaf1bf5a514de2c6bbc8b6a3`.
+- Added `src/lib/lead-acceptance-overview.ts` to derive a single acceptance overview from the handoff packet and closed-gates model.
+- Added protected `/admin/leads/acceptance-overview`.
+- Added protected `/api/admin/leads/acceptance-overview`.
+- Linked the overview from `/admin/leads/acceptance-handoff`, `/admin/leads/acceptance-gaps`, `/admin/leads/acceptance-matrix`, and `/admin/leads/acceptance-gates`.
+- Extended `scripts/check-lead-flow-alignment.ts` to guard the overview model, page, endpoint, and cross-surface links.
+- PR-specific log: `01 Daily Logs/[G] 2026-07-09 MCD CRM PR73 Acceptance Overview.md`.
 
 ## Findings cataloged
 
@@ -101,10 +114,11 @@
 - Direct links like `/admin/leads/acceptance-runbook#${step.id}` would not work for several evidence steps because the IDs do not match one-to-one.
 - PR #67 resolved that by cataloging an explicit mapping in `src/lib/acceptance-runbook-links.ts`.
 - PR #68 made the findings visible inside the app at `/admin/leads/acceptance-findings`.
-- PR #69 added `/admin/leads/acceptance-handoff` as a single in-app starting point with current evidence counts, recent acceptance records, cataloged findings, and closed gates.
+- PR #69 added `/admin/leads/acceptance-handoff` as an in-app packet with current evidence counts, recent acceptance records, cataloged findings, and closed gates.
 - PR #70 added `/admin/leads/acceptance-gaps` as a focused view of only incomplete, failed, or deferred acceptance evidence.
 - PR #71 added `/admin/leads/acceptance-matrix` as a complete all-step evidence table.
 - PR #72 added `/admin/leads/acceptance-gates` as a focused view of closed operational gates that remain outside this read-only acceptance tooling lane.
+- PR #73 added `/admin/leads/acceptance-overview` as the single landing page/cockpit for acceptance visibility and navigation.
 - Authenticated production acceptance remains Hamilton-only and was not performed by ChatGPT.
 - Closed operational gates remain closed: live GHL workflow activation, additional live imports/exports, Servicing, Commissions, Finance, payout, client onboarding, and production data changes outside controlled-test actions.
 
@@ -124,6 +138,20 @@
 - Production `/api/admin/leads/acceptance-gates`: HTTP 200 sign-in boundary, not 404/500.
 - Production `/api/cron/leads/aging`: HTTP 401 without auth.
 
+### PR #73 evidence
+
+- Required checks: Vercel success; Commission Policy success run `401`; Verify CRM success run `215`; Application Build success run `363`.
+- Preview deployment `dpl_HVkb3UYNboL3baac8hLaxsMWFPuG` reached READY.
+- Preview `/api/status`: HTTP 200; branch `pr-73-acceptance-overview`; commit `53417c48c26c49faca32cf10f0b8cf51b7c64617`.
+- Preview `/admin/leads/acceptance-overview`: HTTP 200 sign-in boundary, not 404/500.
+- Preview `/api/admin/leads/acceptance-overview`: HTTP 200 sign-in boundary, not 404/500.
+- Preview `/api/cron/leads/aging`: HTTP 401 without auth.
+- Production deployment `dpl_CMLDjJDWiHrgc2qkVKiTnBr5ipWD` reached READY and received the `crm.mercurycalldesk.com` alias.
+- Production `/api/status`: HTTP 200; commit `4ece2e018ed784badaf1bf5a514de2c6bbc8b6a3`.
+- Production `/admin/leads/acceptance-overview`: HTTP 200 sign-in boundary, not 404/500.
+- Production `/api/admin/leads/acceptance-overview`: HTTP 200 sign-in boundary, not 404/500.
+- Production `/api/cron/leads/aging`: HTTP 401 without auth.
+
 ## Still open
 
 - Authenticated production acceptance remains Hamilton-only and is still not recorded by ChatGPT. The gate remains `0 / 18` unless Hamilton has since recorded outcomes through the authenticated acceptance board.
@@ -135,13 +163,13 @@
 
 ## Start here next
 
-For Hamilton: sign in on `crm.mercurycalldesk.com` and start at `/admin/leads/acceptance-handoff`. Use `/admin/leads/acceptance-matrix` for all 18 steps, `/admin/leads/acceptance-gaps` for only incomplete/failed/deferred steps, and `/admin/leads/acceptance-gates` for closed operational gates.
+For Hamilton: sign in on `crm.mercurycalldesk.com` and start at `/admin/leads/acceptance-overview`. Use `/admin/leads/acceptance-handoff` for the operator packet, `/admin/leads/acceptance-matrix` for all 18 steps, `/admin/leads/acceptance-gaps` for only incomplete/failed/deferred steps, and `/admin/leads/acceptance-gates` for closed operational gates.
 
-For Claude: read `02 Projects/MCD CRM - Agent and Admin Portals/LOCK.md`, then `01 Daily Logs/[G] 2026-07-09 MCD CRM PR72 Acceptance Closed Gates.md`. Latest production commit is `82330d862ac88263e7e3dca3e5b96746de903170`.
+For Claude: read `02 Projects/MCD CRM - Agent and Admin Portals/LOCK.md`, then `01 Daily Logs/[G] 2026-07-09 MCD CRM PR73 Acceptance Overview.md`. Latest production commit is `4ece2e018ed784badaf1bf5a514de2c6bbc8b6a3`.
 
 ## Handback
 
-Lock holder is Claude as of `2026-07-10T04:58Z`. ChatGPT completed the owner-authorized continuation and returned the lock. Latest production commit: `82330d862ac88263e7e3dca3e5b96746de903170`.
+Lock holder is Claude as of `2026-07-10T05:35Z`. ChatGPT completed the owner-authorized continuation and returned the lock. Latest production commit: `4ece2e018ed784badaf1bf5a514de2c6bbc8b6a3`.
 
 ## Safety boundary reaffirmation
 
