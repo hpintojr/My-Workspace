@@ -46,7 +46,7 @@ intent: Claude resumes from ChatGPT's PR #95 handback. Authenticated production 
 - Add or improve read-only summaries, tables, timelines, or matrices sourced from existing data.
 - Squash-merge each PR only when all four CI checks are `success` (Vercel Preview Comments,
   policy-check, Typecheck and contract guards, build). Never merge on a red or in-progress check.
-- Write a `[G] 2026-07-11 MCD CRM PR#… …` handoff log to `hpintojr/My-Workspace`
+- Write a `[G] 2026-07-11 MCD CRM PR#…` handoff log to `hpintojr/My-Workspace`
   `01 Daily Logs/` after every merged PR. Include PR head, merge commit, production commit
   from `/api/status`, the smoke-test results, and the safety-boundary reaffirmation.
 
@@ -62,6 +62,8 @@ intent: Claude resumes from ChatGPT's PR #95 handback. Authenticated production 
 - Changes to CLAUDE.md's Protected Workspace Command Registry.
 - Committing private customer information or credentials.
 - Claiming a root cause without direct evidence (build, query, diff, live test).
+- Mutating or correcting production audit-trail data (e.g. a corrupted `AuditLog.reason` field),
+  even when the root cause has been directly confirmed via read-only query.
 
 ## Lock return protocol
 
@@ -83,5 +85,12 @@ Latest daily logs:
 - `01 Daily Logs/[G] 2026-07-11 MCD CRM ChatGPT Continuation Handback After PR95.md`.
 - `01 Daily Logs/[G] 2026-07-11 MCD CRM Claude Handoff Prompt After PR95.md`.
 - `01 Daily Logs/[C] 2026-07-11 MCD CRM PR96 Controlled Warm Reply Simulation.md`.
+- `01 Daily Logs/[C] 2026-07-11 MCD CRM PR97 Latest Production Commit Live Fix.md`.
 
-Latest production commit: `b6984858be64da1ea1798a3fa5e991b052658024` on `crm.mercurycalldesk.com`.
+Latest production commit: `ea0f6e1125b9a5b2811eff15076ddc3e88225652` on `crm.mercurycalldesk.com`.
+
+Open item awaiting Hamilton's decision (not authorized to resolve unilaterally): the "Deferred 2"
+card (`click-to-call-blocks-on-error`) on `/admin/leads/acceptance-runbook/deferred` shows garbled
+text because the stored `AuditLog.reason` field on production row `cmren4vkg0004if045djbybwo` is
+itself corrupted (two step-notes spliced together at write time). See the PR97 daily log for full
+detail and remediation options.
