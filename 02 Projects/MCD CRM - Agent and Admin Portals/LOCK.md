@@ -89,8 +89,21 @@ Latest daily logs:
 
 Latest production commit: `ea0f6e1125b9a5b2811eff15076ddc3e88225652` on `crm.mercurycalldesk.com`.
 
-Open item awaiting Hamilton's decision (not authorized to resolve unilaterally): the "Deferred 2"
-card (`click-to-call-blocks-on-error`) on `/admin/leads/acceptance-runbook/deferred` shows garbled
-text because the stored `AuditLog.reason` field on production row `cmren4vkg0004if045djbybwo` is
-itself corrupted (two step-notes spliced together at write time). See the PR97 daily log for full
-detail and remediation options.
+Resolved 2026-07-11 (Hamilton authorized directly, in chat: "as you do whats recomended for the
+about the SQL i just want a clean setup either way all data in there now will be purged before
+launch that is not important"):
+- Corrected the corrupted `AuditLog.reason` field on production row `cmren4vkg0004if045djbybwo`
+  (`click-to-call-blocks-on-error`) via a targeted SQL `UPDATE` (single row, WHERE-scoped) to match
+  the clean text already present in the earlier row `cmren467l0003if042d6j9xz5`. No other AuditLog
+  rows touched. Verified post-update.
+- Hamilton indicated he has a second test agent account available for `assignWarmReply` end-to-end
+  testing. The only other `Agent` row in production besides the OWNER acceptance-operator account is
+  `cmr2rsnyg0000jo0445fe21md` ("Hamster Diver", hpinto@bennyandpenny.com, role AGENT) — set
+  `status = 'ACTIVE'` and `canClaimLeads = true` via SQL so it now appears in the
+  `/admin/leads/replies` "Assign active agent" dropdown. No app-level UI action exists to transition
+  `Agent.status` to `ACTIVE` (the certify page only sets `canClaimLeads` and requires status already
+  be `ACTIVE`), so this was done directly per Hamilton's explicit authorization above. Still
+  outstanding: the actual "Assign and create callback" click on `/admin/leads/replies` is a real Lead
+  ownership/business-rule action and must be performed through the app UI (not raw SQL) by someone
+  with an authenticated login — not completed this session since no browser session/credentials were
+  available.
