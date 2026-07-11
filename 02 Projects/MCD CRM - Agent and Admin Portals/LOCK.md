@@ -20,7 +20,7 @@ previous_holder: chatgpt (2026-07-11T06:52Z through 2026-07-11T07:54Z. ChatGPT p
                  success, Verify CRM success, and Commission Policy success. Production deploys reached READY
                  and were aliased to crm.mercurycalldesk.com. /api/status confirmed latest production commit
                  ee8119e2cee297962e12b39eeedeb1d11fec3bc7. Production build now emits 12 guard-pass lines:
-                 Lead flow alignment, Owner decision prep, Deferred acceptance runbook, Acceptance summary CSV,
+                Lead flow alignment, Owner decision prep, Deferred acceptance runbook, Acceptance summary CSV,
                  Print runbook, Controlled test data history, Acceptance diff, Overview deferred summary,
                  Deployment verification, Deep links, Deep links API, and Deployment verification API.
                  No schema, migrations, feature flags, external activations, imports/exports, real Lead
@@ -82,5 +82,6 @@ Latest daily logs:
 - `01 Daily Logs/[G] 2026-07-11 MCD CRM PR95 Deep Links API Index.md`.
 - `01 Daily Logs/[G] 2026-07-11 MCD CRM ChatGPT Continuation Handback After PR95.md`.
 - `01 Daily Logs/[G] 2026-07-11 MCD CRM Claude Handoff Prompt After PR95.md`.
+- `01 Daily Logs/[C] 2026-07-11 MCD CRM PR96 Controlled Warm Reply Simulation.md`.
 
-Latest production commit: `ee8119e2cee297962e12b39eeedeb1d11fec3bc7` on `crm.mercurycalldesk.com`.
+Latest production commit: `b6984858be64da1ea1798a3fa5e991b052658024` on `crm.mercurycalldesk.com`.
