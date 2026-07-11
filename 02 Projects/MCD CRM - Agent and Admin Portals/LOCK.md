@@ -4,22 +4,18 @@ Only the holder may commit, merge, deploy, run migrations, or change settings on
 Others read/verify only. See `[C] AI Operating Protocol — Handoff, Changelog, Indexing.md`.
 
 ```txt
-holder: claude
+holder: chatgpt
 scope: hpintojr/crm.mcd + hpintojr/My-Workspace
-since: 2026-07-11T03:31Z (ChatGPT owner-authorized continuation complete; lock returned)
-previous_holder: chatgpt (2026-07-11T03:25Z owner-authorized continuation after Hamilton said
-                 "keep coding". ChatGPT shipped PR #85 under the authorized read-only/admin-navigation
-                 scope. PR #85 added the protected read-only owner decision prep page at
-                 /admin/leads/owner-decision-prep and linked it from the acceptance overview. All four
-                 required checks were green before squash merge. Production deploy succeeded and
-                 /api/status confirmed latest production commit
-                 68fc1f13aa8d15cd69f321af04c7964f001b0424. Smoke tests confirmed the protected owner
-                 prep route returned the sign-in boundary unauthenticated, not 404/500. No out-of-scope
-                 data changes, settings changes, external workflow activation, imports/exports, or real
-                 Lead business-rule changes.)
-intent: Claude resumes the default execution lock. Authenticated production acceptance and owner
-        production decision remain Hamilton-only. Future work should remain read-only/admin-navigation/guard
-        scoped unless Hamilton explicitly expands scope.
+since: 2026-07-11T04:08Z (owner-authorized continuation after Hamilton said "keep coding")
+previous_holder: claude (lock had been returned to Claude at 2026-07-11T03:31Z after ChatGPT
+                 shipped PR #85 under the authorized read-only/admin-navigation scope.
+                 Latest shipped production commit at lock retake:
+                 68fc1f13aa8d15cd69f321af04c7964f001b0424.)
+intent: Continue within the same authorized read-only/admin-navigation/guard scope. Authenticated
+        production acceptance and owner production decision remain Hamilton-only. Ship one small
+        safe guard-only PR for owner-decision prep coverage, only after all four required checks
+        are green, verify Vercel production, write the required [G] daily log, and return the lock
+        to Claude at the end of the window.
 ```
 
 ## Authorized without further owner approval
