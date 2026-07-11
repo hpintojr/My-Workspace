@@ -107,3 +107,22 @@ launch that is not important"):
   ownership/business-rule action and must be performed through the app UI (not raw SQL) by someone
   with an authenticated login — not completed this session since no browser session/credentials were
   available.
+
+Completed 2026-07-11 (Hamilton logged in as the newly-activated test agent and performed the
+assignment himself; Claude verified via read-only SQL and then recorded the acceptance evidence at
+Hamilton's explicit direction, "do it"):
+- Hamilton assigned the controlled test Lead "MCD Appointment Scenario Test"
+  (`cmrgsamd00000jt04otntxcxk`) to agent Hamster Diver (`cmr2rsnyg0000jo0445fe21md`) via the
+  `/admin/leads/replies` "Assign and create callback" form. Verified end-to-end via read-only SQL:
+  `ownerAgentId` set, `claimedAt`/`openPoolReleaseAt` (+45 days) correct, pool COLD→HOT, lifecycle
+  preserved DEMO_BOOKED, `LeadCallback` SCHEDULED, `LeadClaimEvent` REASSIGNED, `LeadActivity`
+  REASSIGNED with `rule: TWO_WAY_CONTACT_REQUIRED`, and `AuditLog` `LEAD_WARM_REPLY_ASSIGNED`
+  (`cmrgztyyl0003lb040jyzjcgy`) all consistent.
+- Recorded a `LEAD_PRODUCTION_ACCEPTANCE_RECORDED` PASS outcome for deferred step
+  `warm-reply-timer` ("14. Verify Warm Reply Triage timer") with the above evidence in the `reason`
+  field, matching the existing catalog's metadata shape (`phase`, `module`, `stepId`, `outcome`,
+  `stepTitle`, `statusBaselineCommit`). This is an additive `INSERT` only — no existing AuditLog rows
+  were modified. The acceptance handoff packet will now read this step as PASS instead of DEFERRED.
+  Remaining DEFERRED steps: `runtime-error-log-check`, `click-to-call-blocks-on-error`,
+  `dnc-blackout`, `no-answer-boundary`, `claim-responsibility-timer`, `ghl-appointment-hardening`,
+  `ghl-opportunity-hardening`.
