@@ -5,37 +5,32 @@ Others read/verify only. See `[C] AI Operating Protocol — Handoff, Changelog, 
 `02 Projects/MCD CRM - Agent and Admin Portals/[C] ChatGPT-to-Claude Handoff Protocol — Composio Mandate.md`.
 
 ```txt
-holder: chatgpt
+holder: claude
 scope: hpintojr/crm.mcd + hpintojr/My-Workspace
-since: 2026-07-11T06:52Z (Claude owner-authorized continuation complete; lock handed to ChatGPT)
-previous_holder: claude (2026-07-11T04:17Z through 2026-07-11T06:52Z. Claude picked up after
-                 ChatGPT's PR #86 continuation, verified state via Composio (GitHub + Vercel),
-                 committed the ChatGPT-to-Claude Handoff Protocol with Composio mandate, and
-                 shipped four PRs under the authorized read-only/admin-navigation/guard scope:
-                 PR #87 focused guards for PR #80-#84 (prod 7799e5cc),
-                 PR #88 deferred-blocker summary on /admin/leads/acceptance-overview (prod f4b0d0a0),
-                 PR #89 /admin/leads/deployment-verification page (prod 34e4d664),
-                 PR #90 /admin/leads/deep-links hub with 9 stable hash anchors (prod 7020d5bd).
-                 All four PRs green on Vercel Preview Comments, policy-check, Typecheck and
-                 contract guards, and build before merge. Production deploys reached READY and
-                 were aliased to crm.mercurycalldesk.com. /api/status confirmed latest production
-                 commit 7020d5bdfda99553a5a1c0fcfd542938e3cff21c. Ten focused guard-pass lines
-                 now emit on every production build.
-                 Mid-session event: GitHub Actions refused to start required workflows on the
-                 private repo with the boilerplate 'recent account payments have failed or your
-                 spending limit needs to be increased' annotation. Hamilton changed repo
-                 visibility to public to remove the private-repo Actions minute cap. Claude
-                 triggered re-run failed jobs via Composio; all three came back success on the
-                 same head SHA. No secrets exposed by that visibility change; env vars live in
-                 Vercel + Neon, not the repo. No runtime app behavior changes, data path
-                 changes, settings changes, external workflow activation, imports/exports, or
-                 real Lead business-rule changes across the four PRs.)
-intent: ChatGPT resumes for owner-authorized continuation. Authenticated production acceptance
-        and owner production decision remain Hamilton-only. Future work should remain
-        read-only/admin-navigation/guard scoped unless Hamilton explicitly expands scope. When
-        the lock returns to Claude, Claude must access hpintojr/My-Workspace exclusively via
-        the Composio MCP connector per the [C] ChatGPT-to-Claude Handoff Protocol — Composio
-        Mandate document in this project folder.
+since: 2026-07-11T07:54Z (ChatGPT owner-authorized continuation complete; lock returned to Claude)
+previous_holder: chatgpt (2026-07-11T06:52Z through 2026-07-11T07:54Z. ChatGPT picked up after
+                 Claude's PR #90 continuation, verified state via GitHub + Vercel + read-only Neon
+                 discovery, and shipped five PRs under the authorized read-only/admin-navigation/guard scope:
+                 PR #91 deployment-verification guard-line drift fix (prod 091c4dae),
+                 PR #92 deep-link backlinks from sister pages to /admin/leads/deep-links anchors (prod 7c650395),
+                 PR #93 protected read-only /api/admin/leads/deep-links plus shared deep-links catalog (prod d694c5c1),
+                 PR #94 protected read-only /api/admin/leads/deployment-verification plus shared deployment snapshot helper (prod 7127aeb2),
+                 PR #95 API-links index on /admin/leads/deep-links (prod ee8119e2).
+                 All five PRs were merged only after Vercel status success, GitHub Actions Application Build
+                 success, Verify CRM success, and Commission Policy success. Production deploys reached READY
+                 and were aliased to crm.mercurycalldesk.com. /api/status confirmed latest production commit
+                 ee8119e2cee297962e12b39eeedeb1d11fec3bc7. Production build now emits 12 guard-pass lines:
+                 Lead flow alignment, Owner decision prep, Deferred acceptance runbook, Acceptance summary CSV,
+                 Print runbook, Controlled test data history, Acceptance diff, Overview deferred summary,
+                 Deployment verification, Deep links, Deep links API, and Deployment verification API.
+                 No schema, migrations, feature flags, external activations, imports/exports, real Lead
+                 business-rule changes, mutable API behavior, Servicing, Commissions, Finance, payout, or
+                 client-onboarding activation occurred.)
+intent: Claude resumes from ChatGPT's PR #95 handback. Authenticated production acceptance and owner
+        production decision remain Hamilton-only. Future work should remain read-only/admin-navigation/guard
+        scoped unless Hamilton explicitly expands scope. Claude must access hpintojr/My-Workspace exclusively
+        via the Composio MCP connector per the [C] ChatGPT-to-Claude Handoff Protocol — Composio Mandate
+        document in this project folder.
 ```
 
 ## Authorized without further owner approval
@@ -80,11 +75,12 @@ At end of the owner-authorized continuation, ChatGPT must:
 
 Latest daily logs:
 
-- `01 Daily Logs/[C] 2026-07-11 MCD CRM PR87 Focused Guards PR80-PR84.md`.
-- `01 Daily Logs/[C] 2026-07-11 MCD CRM PR88 Overview Deferred Blockers.md`.
-- `01 Daily Logs/[C] 2026-07-11 MCD CRM PR89 Deployment Verification Page.md`.
-- `01 Daily Logs/[C] 2026-07-11 MCD CRM PR90 Deep Links Hub and Session Close.md`.
-- `01 Daily Logs/[C] 2026-07-11 MCD CRM Claude Session Handback for ChatGPT.md`.
-- `01 Daily Logs/[C] 2026-07-11 MCD CRM ChatGPT Handoff Prompt After PR90.md`.
+- `01 Daily Logs/[G] 2026-07-11 MCD CRM PR91 Deployment Verification Guard Lines.md`.
+- `01 Daily Logs/[G] 2026-07-11 MCD CRM PR92 Deep Link Backlinks.md`.
+- `01 Daily Logs/[G] 2026-07-11 MCD CRM PR93 Deep Links JSON API.md`.
+- `01 Daily Logs/[G] 2026-07-11 MCD CRM PR94 Deployment Verification JSON API.md`.
+- `01 Daily Logs/[G] 2026-07-11 MCD CRM PR95 Deep Links API Index.md`.
+- `01 Daily Logs/[G] 2026-07-11 MCD CRM ChatGPT Continuation Handback After PR95.md`.
+- `01 Daily Logs/[G] 2026-07-11 MCD CRM Claude Handoff Prompt After PR95.md`.
 
-Latest production commit: `7020d5bdfda99553a5a1c0fcfd542938e3cff21c` on `crm.mercurycalldesk.com`.
+Latest production commit: `ee8119e2cee297962e12b39eeedeb1d11fec3bc7` on `crm.mercurycalldesk.com`.
