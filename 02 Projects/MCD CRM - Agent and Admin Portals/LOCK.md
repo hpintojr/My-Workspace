@@ -4,21 +4,18 @@ Only the holder may commit, merge, deploy, run migrations, or change settings on
 Others read/verify only. See `[C] AI Operating Protocol — Handoff, Changelog, Indexing.md`.
 
 ```txt
-holder: claude
+holder: chatgpt
 scope: hpintojr/crm.mcd + hpintojr/My-Workspace
-since: 2026-07-10T23:39Z (ChatGPT owner-authorized continuation complete; lock returned)
-previous_holder: chatgpt (2026-07-10T23:30Z owner-authorized continuation after Hamilton said
-                 "continue coding". ChatGPT shipped PR #84 under the authorized read-only/admin-navigation
-                 scope. PR #84 added the protected read-only acceptance diff page at
-                 /admin/leads/acceptance-diff and linked it from the acceptance overview. All four required
-                 checks were green before squash merge. Production deploy succeeded and /api/status
-                 confirmed latest production commit a2490ff0a764f2d967c5fe311a7a4d1df59ff2d4.
-                 Smoke tests confirmed the protected diff route returned the sign-in boundary
-                 unauthenticated, not 404/500. No Prisma schema changes, no Neon mutations, no feature
-                 flags, no live GHL calls, no live imports/exports, and no real Lead business-rule changes.)
-intent: Claude resumes the default execution lock. Authenticated production acceptance and owner
-        production decision remain Hamilton-only. Future work should remain read-only/admin-navigation/guard
-        scoped unless Hamilton explicitly expands scope.
+since: 2026-07-11T03:25Z (owner-authorized continuation after Hamilton said "keep coding")
+previous_holder: claude (lock had been returned to Claude at 2026-07-10T23:39Z after ChatGPT
+                 shipped PR #84 under the authorized read-only/admin-navigation/guard scope.
+                 Latest shipped production commit at lock retake:
+                 a2490ff0a764f2d967c5fe311a7a4d1df59ff2d4.)
+intent: Continue within the same authorized read-only/admin-navigation/guard scope. Authenticated
+        production acceptance and owner production decision remain Hamilton-only. Pick one small
+        safe read-only backlog item, ship only after all four required checks are green, verify
+        Vercel production, write the required [G] daily log, and return the lock to Claude at the
+        end of the window.
 ```
 
 ## Authorized without further owner approval
