@@ -4,18 +4,22 @@ Only the holder may commit, merge, deploy, run migrations, or change settings on
 Others read/verify only. See `[C] AI Operating Protocol — Handoff, Changelog, Indexing.md`.
 
 ```txt
-holder: chatgpt
+holder: claude
 scope: hpintojr/crm.mcd + hpintojr/My-Workspace
-since: 2026-07-11T04:08Z (owner-authorized continuation after Hamilton said "keep coding")
-previous_holder: claude (lock had been returned to Claude at 2026-07-11T03:31Z after ChatGPT
-                 shipped PR #85 under the authorized read-only/admin-navigation scope.
-                 Latest shipped production commit at lock retake:
-                 68fc1f13aa8d15cd69f321af04c7964f001b0424.)
-intent: Continue within the same authorized read-only/admin-navigation/guard scope. Authenticated
-        production acceptance and owner production decision remain Hamilton-only. Ship one small
-        safe guard-only PR for owner-decision prep coverage, only after all four required checks
-        are green, verify Vercel production, write the required [G] daily log, and return the lock
-        to Claude at the end of the window.
+since: 2026-07-11T04:17Z (ChatGPT owner-authorized continuation complete; lock returned)
+previous_holder: chatgpt (2026-07-11T04:08Z owner-authorized continuation after Hamilton said
+                 "keep coding". ChatGPT shipped PR #86 under the authorized guard-only scope.
+                 PR #86 added focused owner-decision prep guard coverage and wired it into
+                 check:lead-flow-alignment plus the production build path. All four required
+                 checks were green before squash merge. Production deploy succeeded and
+                 /api/status confirmed latest production commit
+                 aa19a8d213b11c7671f049b5ff90f6e658865ab7. Smoke tests confirmed the protected
+                 owner-decision prep route returned the sign-in boundary unauthenticated, not
+                 404/500. No runtime app behavior changes, data path changes, settings changes,
+                 external workflow activation, imports/exports, or real Lead business-rule changes.)
+intent: Claude resumes the default execution lock. Authenticated production acceptance and owner
+        production decision remain Hamilton-only. Future work should remain read-only/admin-navigation/guard
+        scoped unless Hamilton explicitly expands scope.
 ```
 
 ## Authorized without further owner approval
@@ -40,10 +44,10 @@ intent: Continue within the same authorized read-only/admin-navigation/guard sco
 - Feature flag changes.
 - Live external workflow activation or live external API calls.
 - Live import or export submission.
-- Lead claim, DNC, ownership, approval, suppression, or two-way-contact business-rule changes.
+- Real Lead ownership, approval, suppression, contact-gate, or routing business-rule changes.
 - Servicing, Commissions, Finance, payout, or client-onboarding activation.
 - Changes to CLAUDE.md's Protected Workspace Command Registry.
-- Committing secrets, credentials, customer data, or other sensitive data.
+- Committing private customer information or credentials.
 - Claiming a root cause without direct evidence (build, query, diff, live test).
 
 ## Lock return protocol
@@ -57,6 +61,6 @@ At end of the owner-authorized continuation, ChatGPT must:
 3. Commit both to `main` on `hpintojr/My-Workspace`.
 
 Latest daily logs:
-- `01 Daily Logs/[G] 2026-07-10 MCD CRM PR85 Owner Decision Prep.md`.
-- `01 Daily Logs/[G] 2026-07-10 MCD CRM ChatGPT Continuation Handback 4.md`.
-Latest production commit: `68fc1f13aa8d15cd69f321af04c7964f001b0424` on `crm.mercurycalldesk.com`.
+- `01 Daily Logs/[G] 2026-07-10 MCD CRM PR86 Owner Decision Prep Guard.md`.
+- `01 Daily Logs/[G] 2026-07-10 MCD CRM ChatGPT Continuation Handback 5.md`.
+Latest production commit: `aa19a8d213b11c7671f049b5ff90f6e658865ab7` on `crm.mercurycalldesk.com`.
