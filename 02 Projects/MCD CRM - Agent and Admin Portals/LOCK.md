@@ -92,10 +92,11 @@ Latest daily logs:
 - `01 Daily Logs/[C] 2026-07-11 MCD CRM Live Browser QA Final 3 Tests.md`.
 - `01 Daily Logs/[C] 2026-07-11 MCD CRM Owner Production Decision.md`.
 - `01 Daily Logs/[C] 2026-07-12 MCD CRM Structure Scaffolding Assessment and Safety-Branch Migration Test.md`.
+- `01 Daily Logs/[C] 2026-07-12 MCD CRM PR99 Migration Correction and Commission Schema Drift Finding.md`.
 
-Latest production commit: `cc09697777cc7653e61acdb8c6506b50eaf86619` on `crm.mercurycalldesk.com`
-(PR #98, merged and deployed 2026-07-12T01:2x UTC; Vercel deployment `dpl_Ez9BMzxMK99AnDwMp8aMRMNh23sn`
-confirmed READY/PROMOTED/aliased; guard fix reverified live via the admin GHL test harness).
+Latest production commit: `159738a9d7fda42c61a229b23cbbe39cdba57e38` on `crm.mercurycalldesk.com`
+(PR #99, merged and deployed 2026-07-12; Vercel deployment `dpl_7XbE2TCBHhqPPJTtjzqwfXdVDbWg`
+confirmed READY/PROMOTED/aliased).
 
 ## MILESTONE 2026-07-12: Lead Flow acceptance runbook complete, owner production decision recorded PASS
 
@@ -150,8 +151,26 @@ another handoff to chatgpt", narrowed via follow-up choice to "read-only scaffol
   stale. Then ran only the still-missing Commission/Payout objects (4 enums, 4 tables, 8 foreign keys,
   6 indexes) on the same branch — all 22 statements applied cleanly. Verified columns, types, and all
   8 foreign keys on the branch afterward.
-- Actionable conclusion for whoever picks this up next (including a ChatGPT handoff): the migration
-  file in the repo should be corrected/split before it is ever run against production — the
-  Commission/Payout half is now proven safe on a disposable branch, but the Client/Service half of
-  that same file would fail if run as-is. No production writes, feature-flag changes, or repo
-  migration-file edits were made this round; those remain Hamilton's call.
+
+## PR #99 merged 2026-07-12: migration file corrected, deployed — and a deeper, separate schema drift found
+
+- Corrected `prisma/migrations/20260701092000_add_client_service_and_ledger/migration.sql` to contain
+  only the Commission/Payout portion (Client/Service portion removed — confirmed already live in
+  production per the assessment above). Added `scripts/check-commission-payout-migration-guard.ts` to
+  prevent the removed DDL from being silently re-added. Merged via squash after 4 green CI checks
+  (merge commit `159738a9d7fda42c61a229b23cbbe39cdba57e38`). Production deployment confirmed
+  `READY`/`PROMOTED` via `VERCEL_GET_DEPLOYMENT` (`dpl_7XbE2TCBHhqPPJTtjzqwfXdVDbWg`), aliased to
+  `crm.mercurycalldesk.com`, git SHA matches the merge commit. No production database write occurred —
+  this is a repo-file correction only.
+- **New finding, not yet acted on:** reading `src/lib/commission-ledger-actions.ts` and
+  `src/lib/commission-read-model.ts` (live app code) shows the corrected `CommissionLedgerEntry` table
+  still does not match what the application actually reads/writes. Enum names differ
+  (`CommissionEntryType`/`CommissionEntryStatus` in the migration vs.
+  `CommissionLedgerEntryType`/`CommissionLedgerEntryStatus` with a `PENDING_VERIFICATION` status in the
+  app code), most dollar-amount column names differ (e.g. migration's `amountCollectedCents` vs. app's
+  `grossCollectedCents`), and the app code also depends on three tables that exist in no migration file
+  at all: `CommissionHold`, `CommissionEligibilityDecision`, `AgentCommissionProfile`. This means the
+  migration is proven safe to *run* (no SQL errors) but not proven *correct* — applying it as-is would
+  not make Commissions functional. Full detail, and what would need Hamilton's separate authorization to
+  investigate/fix next: `01 Daily Logs/[C] 2026-07-12 MCD CRM PR99 Migration Correction and Commission
+  Schema Drift Finding.md`.
