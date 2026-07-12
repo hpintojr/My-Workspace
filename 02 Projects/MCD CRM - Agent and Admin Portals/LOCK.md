@@ -91,6 +91,7 @@ Latest daily logs:
 - `01 Daily Logs/[C] 2026-07-11 MCD CRM Acceptance Evidence Recorded.md`.
 - `01 Daily Logs/[C] 2026-07-11 MCD CRM Live Browser QA Final 3 Tests.md`.
 - `01 Daily Logs/[C] 2026-07-11 MCD CRM Owner Production Decision.md`.
+- `01 Daily Logs/[C] 2026-07-12 MCD CRM Structure Scaffolding Assessment and Safety-Branch Migration Test.md`.
 
 Latest production commit: `cc09697777cc7653e61acdb8c6506b50eaf86619` on `crm.mercurycalldesk.com`
 (PR #98, merged and deployed 2026-07-12T01:2x UTC; Vercel deployment `dpl_Ez9BMzxMK99AnDwMp8aMRMNh23sn`
@@ -124,54 +125,33 @@ workflow automation, additional live imports/exports, Servicing module expansion
 activation, Finance/client-onboarding activation, and any production data change outside the
 controlled-test workflow.
 
-Resolved 2026-07-11 (Hamilton authorized directly, in chat: "as you do whats recomended for the
-about the SQL i just want a clean setup either way all data in there now will be purged before
-launch that is not important"):
-- Corrected the corrupted `AuditLog.reason` field on production row `cmren4vkg0004if045djbybwo`
-  (`click-to-call-blocks-on-error`) via a targeted SQL `UPDATE` (single row, WHERE-scoped) to match
-  the clean text already present in the earlier row `cmren467l0003if042d6j9xz5`. No other AuditLog
-  rows touched. Verified post-update.
-- Hamilton indicated he has a second test agent account available for `assignWarmReply` end-to-end
-  testing. The only other `Agent` row in production besides the OWNER acceptance-operator account is
-  `cmr2rsnyg0000jo0445fe21md` ("Hamster Diver", hpinto@bennyandpenny.com, role AGENT) — set
-  `status = 'ACTIVE'` and `canClaimLeads = true` via SQL so it now appears in the
-  `/admin/leads/replies` "Assign active agent" dropdown. No app-level UI action exists to transition
-  `Agent.status` to `ACTIVE` (the certify page only sets `canClaimLeads` and requires status already
-  be `ACTIVE`), so this was done directly per Hamilton's explicit authorization above. Still
-  outstanding: the actual "Assign and create callback" click on `/admin/leads/replies` is a real Lead
-  ownership/business-rule action and must be performed through the app UI (not raw SQL) by someone
-  with an authenticated login — not completed this session since no browser session/credentials were
-  available.
+## Structure assessment 2026-07-12 (Hamilton authorized directly: "start the structure before I do
+another handoff to chatgpt", narrowed via follow-up choice to "read-only scaffolding for all three"
+[Servicing, Commissions, Finance] plus "test the staged migration on a safety branch")
 
-Completed 2026-07-11 (Hamilton logged in as the newly-activated test agent and performed the
-assignment himself; Claude verified via read-only SQL and then recorded the acceptance evidence at
-Hamilton's explicit direction, "do it"):
-- Hamilton assigned the controlled test Lead "MCD Appointment Scenario Test"
-  (`cmrgsamd00000jt04otntxcxk`) to agent Hamster Diver (`cmr2rsnyg0000jo0445fe21md`) via the
-  `/admin/leads/replies` "Assign and create callback" form. Verified end-to-end via read-only SQL:
-  `ownerAgentId` set, `claimedAt`/`openPoolReleaseAt` (+45 days) correct, pool COLD→HOT, lifecycle
-  preserved DEMO_BOOKED, `LeadCallback` SCHEDULED, `LeadClaimEvent` REASSIGNED, `LeadActivity`
-  REASSIGNED with `rule: TWO_WAY_CONTACT_REQUIRED`, and `AuditLog` `LEAD_WARM_REPLY_ASSIGNED`
-  (`cmrgztyyl0003lb040jyzjcgy`) all consistent.
-- Recorded a `LEAD_PRODUCTION_ACCEPTANCE_RECORDED` PASS outcome for deferred step
-  `warm-reply-timer` ("14. Verify Warm Reply Triage timer") with the above evidence in the `reason`
-  field, matching the existing catalog's metadata shape (`phase`, `module`, `stepId`, `outcome`,
-  `stepTitle`, `statusBaselineCommit`). This is an additive `INSERT` only — no existing AuditLog rows
-  were modified. The acceptance handoff packet will now read this step as PASS instead of DEFERRED.
-
-Completed 2026-07-11/12 (Hamilton authorized directly, in chat: "yes please provide fix and carry
-on with the rest of the project please code in bid slices and use a little human intervention as
-needed. I need you to complete as much as you can end-to-end"):
-- Ran the full 7-item production QA validation checklist against controlled test Leads only.
-  6 of 7 passed cleanly; GHL appointment hardening found one real gap (fixed as PR #98, see above).
-- Recorded 6 QA-verified acceptance steps as PASS: `runtime-error-log-check`, `no-answer-boundary`,
-  `claim-responsibility-timer`, `dnc-blackout`, `ghl-appointment-hardening`, `ghl-opportunity-hardening`.
-
-Completed 2026-07-12 (Hamilton explicitly directed Claude to operate the authenticated browser
-session directly rather than defer the final 3 steps as owner-only):
-- Created 3 fresh controlled test Leads and executed the final 3 acceptance steps as genuine live
-  browser tests: `click-to-call-logs-first`, `click-to-call-blocks-on-error`,
-  `two-way-contact-claim-gate`. All PASS with real network/UI/database evidence. See MILESTONE
-  section above and `01 Daily Logs/[C] 2026-07-11 MCD CRM Live Browser QA Final 3 Tests.md`.
-- Hamilton recorded the owner production decision as PASS, approving Lead Flow for normal
-  production use (see MILESTONE section above).
+- Read the live source of `/admin/readiness`, `/admin/servicing`, `/admin/commissions`, `/admin/finance`,
+  and `/admin/finance-preview` directly from `main` before writing anything. Finding: the read-only
+  scaffolding Hamilton asked for is already built and already deployed, safely gated behind
+  `features.servicing` / `features.commissions` (both still `false`). No new pages were written this
+  round because none is missing; writing duplicates would have created drift against already-shipped,
+  already-reviewed code. Full detail: `01 Daily Logs/[C] 2026-07-12 MCD CRM Structure Scaffolding
+  Assessment and Safety-Branch Migration Test.md`.
+- Created a disposable Neon branch (`br-aged-night-ajbqk1j7`, `qa/commission-payout-migration-test-20260712`,
+  auto-expires 2026-07-19, forked from production's default branch — not production itself) to test
+  the migration file the roadmap lists as staged: `prisma/migrations/20260701092000_add_client_service_and_ledger`.
+- Read-only check against production first (`get_database_tables`, no risk) found `ClientAccount`,
+  `ClientServiceActivity`, `ClientServiceCase`, and `ClientServiceAssignmentEvent` already live in
+  production today — undocumented in the project's own `_mcd_schema_migrations` ledger and in the
+  roadmap doc. Only the Commission/Payout half of the migration file
+  (`CommissionLedgerEntry`, `PayoutBatch`, `PayoutDestination`, `PayoutLine` + 4 enums) is genuinely
+  still pending anywhere.
+- Confirmed this by running the migration file exactly as committed on the safety branch first: it
+  fails immediately (`type "ClientAccountStatus" already exists`), proving the Client/Service half is
+  stale. Then ran only the still-missing Commission/Payout objects (4 enums, 4 tables, 8 foreign keys,
+  6 indexes) on the same branch — all 22 statements applied cleanly. Verified columns, types, and all
+  8 foreign keys on the branch afterward.
+- Actionable conclusion for whoever picks this up next (including a ChatGPT handoff): the migration
+  file in the repo should be corrected/split before it is ever run against production — the
+  Commission/Payout half is now proven safe on a disposable branch, but the Client/Service half of
+  that same file would fail if run as-is. No production writes, feature-flag changes, or repo
+  migration-file edits were made this round; those remain Hamilton's call.
