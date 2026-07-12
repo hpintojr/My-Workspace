@@ -10,7 +10,8 @@ scope: hpintojr/crm.mcd + hpintojr/My-Workspace
 since: 2026-07-11T07:54Z (ChatGPT owner-authorized continuation complete; lock returned to Claude)
 previous_holder: chatgpt (2026-07-11T06:52Z through 2026-07-11T07:54Z. ChatGPT picked up after
                  Claude's PR #90 continuation, verified state via GitHub + Vercel + read-only Neon
-                 discovery, and shipped five PRs under the authorized read-only/admin-navigation/guard scope:
+                 discovery, and shipped five PRs under the authorized read-only/admin-navigation/guard
+                 scope:
                  PR #91 deployment-verification guard-line drift fix (prod 091c4dae),
                  PR #92 deep-link backlinks from sister pages to /admin/leads/deep-links anchors (prod 7c650395),
                  PR #93 protected read-only /api/admin/leads/deep-links plus shared deep-links catalog (prod d694c5c1),
@@ -86,8 +87,12 @@ Latest daily logs:
 - `01 Daily Logs/[G] 2026-07-11 MCD CRM Claude Handoff Prompt After PR95.md`.
 - `01 Daily Logs/[C] 2026-07-11 MCD CRM PR96 Controlled Warm Reply Simulation.md`.
 - `01 Daily Logs/[C] 2026-07-11 MCD CRM PR97 Latest Production Commit Live Fix.md`.
+- `01 Daily Logs/[C] 2026-07-11 MCD CRM PR98 Appointment Closed-Won Guard Fix.md`.
 
-Latest production commit: `ea0f6e1125b9a5b2811eff15076ddc3e88225652` on `crm.mercurycalldesk.com`.
+Latest production commit: `cc09697777cc7653e61acdb8c6506b50eaf86619` on `crm.mercurycalldesk.com`
+(PR #98, merged and deployed 2026-07-12T01:2x UTC; Vercel deployment `dpl_Ez9BMzxMK99AnDwMp8aMRMNh23sn`
+confirmed READY/PROMOTED/aliased; guard fix reverified live via the admin GHL test harness — see
+`01 Daily Logs/[C] 2026-07-11 MCD CRM PR98 Appointment Closed-Won Guard Fix.md`).
 
 Resolved 2026-07-11 (Hamilton authorized directly, in chat: "as you do whats recomended for the
 about the SQL i just want a clean setup either way all data in there now will be purged before
@@ -126,3 +131,24 @@ Hamilton's explicit direction, "do it"):
   Remaining DEFERRED steps: `runtime-error-log-check`, `click-to-call-blocks-on-error`,
   `dnc-blackout`, `no-answer-boundary`, `claim-responsibility-timer`, `ghl-appointment-hardening`,
   `ghl-opportunity-hardening`.
+
+Completed 2026-07-11/12 (Hamilton authorized directly, in chat: "yes please provide fix and carry
+on with the rest of the project please code in bid slices and use a little human intervention as
+needed. I need you to complete as much as you can end-to-end"):
+- Ran the full 7-item production QA validation checklist against controlled test Leads only
+  (runtime logs, no-answer/voicemail ownership boundary, 45-day claim timer, DNC blackout
+  owned+unowned, dialer fault injection, GHL appointment hardening, GHL opportunity hardening).
+  6 of 7 passed cleanly; GHL appointment hardening found one real gap (below). Full report:
+  `01 Daily Logs/` QA report shared with Hamilton in-session (not committed as a repo file; see
+  chat history for the complete PASS/FAIL evidence per item).
+- Found and fixed the gap: booking-family GHL appointment events (booked/confirmed/rescheduled)
+  were not guarded against reopening an already Closed Won Lead, asymmetric with the correctly-
+  guarded opportunity-side code. Hamilton authorized the fix directly ("yes please provide fix").
+  Shipped as PR #98, merged only after all 4 CI checks green, deployed to production, and
+  reverified live via the admin GHL test harness. Full detail:
+  `01 Daily Logs/[C] 2026-07-11 MCD CRM PR98 Appointment Closed-Won Guard Fix.md`.
+- Remaining DEFERRED acceptance steps (unchanged by this work, still need Hamilton's authenticated
+  review/recording per the Lock's Hamilton-only acceptance boundary): `runtime-error-log-check`,
+  `click-to-call-blocks-on-error` (already resolved above, pending catalog update),
+  `dnc-blackout`, `no-answer-boundary`, `claim-responsibility-timer` — all separately smoke-tested
+  PASS in this session's QA pass and ready for Hamilton to review/record as acceptance evidence.
