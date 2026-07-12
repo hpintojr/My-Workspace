@@ -5,44 +5,18 @@ Others read/verify only. See `[C] AI Operating Protocol — Handoff, Changelog, 
 `02 Projects/MCD CRM - Agent and Admin Portals/[C] ChatGPT-to-Claude Handoff Protocol — Composio Mandate.md`.
 
 ```txt
-holder: claude
+holder: chatgpt
 scope: hpintojr/crm.mcd + hpintojr/My-Workspace
-since: 2026-07-12T04:42Z (ChatGPT completed the owner-authorized Commission migration correction and returned the lock)
-previous_holder: chatgpt (2026-07-12T04:30Z through 2026-07-12T04:42Z. In this stretch ChatGPT:
-                  1) Read this lock, Claude's full schema-drift map, the PR #99 precedent, the existing
-                     staged migration/guard, and all six authoritative Commission source/policy files.
-                  2) Created disposable Neon branch br-little-rain-aj8nppg1
-                     (qa/commission-schema-correction-20260712-chatgpt) from production main in project
-                     jolly-lab-80341970. All DDL/DML testing was confined to that child branch.
-                  3) Derived and tested the exact corrected schema: source-aligned CommissionLedgerEntry
-                     enums/columns plus new CommissionHold, CommissionEligibilityDecision, and
-                     AgentCommissionProfile tables, while retaining the staged payout tables.
-                  4) Reset the child branch from parent and reapplied the exact final DDL from scratch;
-                     verified enum values, columns/types/defaults/nullability, constraints, indexes, and
-                     FKs from PostgreSQL catalogs; then passed an app-style profile-upsert, eligibility-
-                     supersession, ledger, hold/release, clearance, and payout-link lifecycle smoke test.
-                     Synthetic branch-only records were deleted after verification.
-                  5) Shipped PR #100 changing exactly the migration file and its existing regression guard.
-                     The guard remains wired into check:lead-flow-alignment and now rejects the obsolete
-                     schema while requiring the app-used shape. All 4 checks were green before squash merge.
-                  6) Squash-merged PR #100 as 1da5be86c720b04314ddc0248bd20e022bf532fc.
-                     Vercel deployment dpl_EEBBDYGCKAezVi9FiyFtsUL2UDLf reached READY on production and
-                     was aliased to crm-mcd.vercel.app and crm.mercurycalldesk.com. /api/status returned
-                     HTTP 200 on main at that exact commit.
-                  7) Ran one final read-only production information_schema check confirming
-                     CommissionLedgerEntry, CommissionHold, CommissionEligibilityDecision, and
-                     AgentCommissionProfile are still absent from production, proving no migration ran.
-                  8) Deleted disposable Neon branch br-little-rain-aj8nppg1 and wrote
-                     `01 Daily Logs/[G] 2026-07-12 MCD CRM PR100 Commission Schema Migration Correction.md`.
-                  No production database DDL/DML occurred. No feature flags changed. No Servicing,
-                  Commissions, Finance, payout, or client-onboarding activation occurred.)
-intent: Claude resumes as execution-lock holder. PR #100 is complete and the staged migration is now
-        source-aligned and safety-branch-tested, but it remains unapplied to production. Applying that
-        migration, changing any feature flag, or activating Commissions/Servicing/Finance/payout/client
-        onboarding still requires a new, explicit Hamilton authorization. Until then, continue only work
-        allowed below and preserve the inactive-state boundaries. Claude must access hpintojr/My-Workspace
-        exclusively through the Composio MCP connector per the [C] ChatGPT-to-Claude Handoff Protocol —
-        Composio Mandate document in this project folder.
+since: 2026-07-12T05:27Z (Hamilton instructed ChatGPT to continue coding)
+previous_holder: claude (2026-07-12T04:42Z through 2026-07-12T05:27Z. No additional Claude work was
+                 recorded in LOCK.md during this interval; PR #100 remained the latest completed work.)
+intent: ChatGPT resumes autonomous coding within the standing owner-authorized read-only admin,
+        navigation, summary, API GET, and regression-guard scope. First identify the highest-value
+        remaining repository gap, then ship it through a focused branch, all four green checks,
+        squash merge, production deployment verification, daily log, and lock handback. Applying
+        migrations to production, changing feature flags, live external workflow/API activation,
+        real Lead business-rule mutations, or activating Servicing/Commissions/Finance/payout/client
+        onboarding remain explicitly unauthorized.
 ```
 
 ## Authorized without further owner approval
