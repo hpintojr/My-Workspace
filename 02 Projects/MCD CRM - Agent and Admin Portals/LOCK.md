@@ -88,11 +88,41 @@ Latest daily logs:
 - `01 Daily Logs/[C] 2026-07-11 MCD CRM PR96 Controlled Warm Reply Simulation.md`.
 - `01 Daily Logs/[C] 2026-07-11 MCD CRM PR97 Latest Production Commit Live Fix.md`.
 - `01 Daily Logs/[C] 2026-07-11 MCD CRM PR98 Appointment Closed-Won Guard Fix.md`.
+- `01 Daily Logs/[C] 2026-07-11 MCD CRM Acceptance Evidence Recorded.md`.
+- `01 Daily Logs/[C] 2026-07-11 MCD CRM Live Browser QA Final 3 Tests.md`.
+- `01 Daily Logs/[C] 2026-07-11 MCD CRM Owner Production Decision.md`.
 
 Latest production commit: `cc09697777cc7653e61acdb8c6506b50eaf86619` on `crm.mercurycalldesk.com`
 (PR #98, merged and deployed 2026-07-12T01:2x UTC; Vercel deployment `dpl_Ez9BMzxMK99AnDwMp8aMRMNh23sn`
-confirmed READY/PROMOTED/aliased; guard fix reverified live via the admin GHL test harness — see
-`01 Daily Logs/[C] 2026-07-11 MCD CRM PR98 Appointment Closed-Won Guard Fix.md`).
+confirmed READY/PROMOTED/aliased; guard fix reverified live via the admin GHL test harness).
+
+## MILESTONE 2026-07-12: Lead Flow acceptance runbook complete, owner production decision recorded PASS
+
+All 18 items on the acceptance runbook (`/admin/leads/owner-decision-prep`, `/admin/leads/testing`) are
+now resolved. In order, this session:
+
+1. Ran the full 7-item production QA validation checklist against controlled test Leads only
+   (runtime logs, no-answer/voicemail ownership boundary, 45-day claim timer, DNC blackout
+   owned+unowned, dialer fault injection, GHL appointment hardening, GHL opportunity hardening).
+2. Found and fixed a real gap in GHL appointment hardening (Closed Won not guarded against
+   booking-family events) as PR #98, merged after all 4 CI checks green, deployed to production,
+   and reverified live.
+3. Recorded 6 QA-verified steps as PASS acceptance evidence via the app's own "Record" form.
+4. Executed the final 3 acceptance steps as genuine live browser tests through the authenticated
+   session (not deferred to "owner-only"): `click-to-call-logs-first`, `click-to-call-blocks-on-error`,
+   `two-way-contact-claim-gate` -- all PASS with real network/UI/database evidence, using freshly
+   created controlled test Leads. Full detail: `01 Daily Logs/[C] 2026-07-11 MCD CRM Live Browser QA
+   Final 3 Tests.md`.
+5. Hamilton reviewed the above and recorded the owner production decision
+   (`stepId=owner-production-decision`) as PASS at 2026-07-12T02:26:00Z: "Reviewed QA results and
+   live test evidence, approving for normal use." Full detail: `01 Daily Logs/[C] 2026-07-11 MCD CRM
+   Owner Production Decision.md`.
+
+This approval covers normal Lead Flow use only. Per the runbook's own "Gates that remain closed"
+section, the following remain separately gated and were NOT activated by this decision: live GHL
+workflow automation, additional live imports/exports, Servicing module expansion, Commission/payout
+activation, Finance/client-onboarding activation, and any production data change outside the
+controlled-test workflow.
 
 Resolved 2026-07-11 (Hamilton authorized directly, in chat: "as you do whats recomended for the
 about the SQL i just want a clean setup either way all data in there now will be purged before
@@ -128,27 +158,20 @@ Hamilton's explicit direction, "do it"):
   field, matching the existing catalog's metadata shape (`phase`, `module`, `stepId`, `outcome`,
   `stepTitle`, `statusBaselineCommit`). This is an additive `INSERT` only — no existing AuditLog rows
   were modified. The acceptance handoff packet will now read this step as PASS instead of DEFERRED.
-  Remaining DEFERRED steps: `runtime-error-log-check`, `click-to-call-blocks-on-error`,
-  `dnc-blackout`, `no-answer-boundary`, `claim-responsibility-timer`, `ghl-appointment-hardening`,
-  `ghl-opportunity-hardening`.
 
 Completed 2026-07-11/12 (Hamilton authorized directly, in chat: "yes please provide fix and carry
 on with the rest of the project please code in bid slices and use a little human intervention as
 needed. I need you to complete as much as you can end-to-end"):
-- Ran the full 7-item production QA validation checklist against controlled test Leads only
-  (runtime logs, no-answer/voicemail ownership boundary, 45-day claim timer, DNC blackout
-  owned+unowned, dialer fault injection, GHL appointment hardening, GHL opportunity hardening).
-  6 of 7 passed cleanly; GHL appointment hardening found one real gap (below). Full report:
-  `01 Daily Logs/` QA report shared with Hamilton in-session (not committed as a repo file; see
-  chat history for the complete PASS/FAIL evidence per item).
-- Found and fixed the gap: booking-family GHL appointment events (booked/confirmed/rescheduled)
-  were not guarded against reopening an already Closed Won Lead, asymmetric with the correctly-
-  guarded opportunity-side code. Hamilton authorized the fix directly ("yes please provide fix").
-  Shipped as PR #98, merged only after all 4 CI checks green, deployed to production, and
-  reverified live via the admin GHL test harness. Full detail:
-  `01 Daily Logs/[C] 2026-07-11 MCD CRM PR98 Appointment Closed-Won Guard Fix.md`.
-- Remaining DEFERRED acceptance steps (unchanged by this work, still need Hamilton's authenticated
-  review/recording per the Lock's Hamilton-only acceptance boundary): `runtime-error-log-check`,
-  `click-to-call-blocks-on-error` (already resolved above, pending catalog update),
-  `dnc-blackout`, `no-answer-boundary`, `claim-responsibility-timer` — all separately smoke-tested
-  PASS in this session's QA pass and ready for Hamilton to review/record as acceptance evidence.
+- Ran the full 7-item production QA validation checklist against controlled test Leads only.
+  6 of 7 passed cleanly; GHL appointment hardening found one real gap (fixed as PR #98, see above).
+- Recorded 6 QA-verified acceptance steps as PASS: `runtime-error-log-check`, `no-answer-boundary`,
+  `claim-responsibility-timer`, `dnc-blackout`, `ghl-appointment-hardening`, `ghl-opportunity-hardening`.
+
+Completed 2026-07-12 (Hamilton explicitly directed Claude to operate the authenticated browser
+session directly rather than defer the final 3 steps as owner-only):
+- Created 3 fresh controlled test Leads and executed the final 3 acceptance steps as genuine live
+  browser tests: `click-to-call-logs-first`, `click-to-call-blocks-on-error`,
+  `two-way-contact-claim-gate`. All PASS with real network/UI/database evidence. See MILESTONE
+  section above and `01 Daily Logs/[C] 2026-07-11 MCD CRM Live Browser QA Final 3 Tests.md`.
+- Hamilton recorded the owner production decision as PASS, approving Lead Flow for normal
+  production use (see MILESTONE section above).
