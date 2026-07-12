@@ -9,7 +9,7 @@ holder: chatgpt
 scope: hpintojr/crm.mcd + hpintojr/My-Workspace
 since: 2026-07-12T06:40Z (Hamilton directed ChatGPT to take over while Claude usage is unavailable until Monday 9:00 AM Pacific and to complete as much as possible end to end without human intervention)
 previous_holder: claude (2026-07-12T06:38Z through 2026-07-12T06:40Z. No additional Claude work was recorded after PR #102.)
-intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment verification, and handoff. PRs #103-#118 are complete and deployed. Continue only with evidence-backed code hardening, regression coverage, read-only dashboards, and operator UX that do not require production mutations, external workflow calls, migrations, or settings changes. Current next scope: harden the Admin controlled-GHL-test-event request boundary without invoking the endpoint or changing preview/apply semantics. Do not apply the staged Commission migration, change production feature flags, identify or use the two Servicing onboarding candidates, mutate production Leads/Client Accounts/Service Cases/acceptance records, call live GHL, activate payment providers, release payouts, store financial-account data, or move money.
+intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment verification, and handoff. PRs #103-#119 are complete and deployed. Continue only with evidence-backed code hardening, regression coverage, read-only dashboards, and operator UX that do not require production mutations, external workflow calls, migrations, or settings changes. Current next scope: retire the unused legacy `POST /api/admin/leads` writer so it cannot bypass the guarded preview/commit import lifecycle. Do not apply the staged Commission migration, change production feature flags, identify or use the two Servicing onboarding candidates, mutate production Leads/Client Accounts/Service Cases/acceptance records, call live GHL, activate payment providers, release payouts, store financial-account data, or move money.
 ```
 
 ## Authorized without further owner approval
@@ -20,7 +20,7 @@ intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment v
 - Add GitHub Actions for non-mutating smoke tests and repository validation.
 - Add opt-in or disposable-branch database test harnesses that never target production.
 - Run read-only production database/catalog queries.
-- Improve operator UX, observability, request boundaries, and expected-error handling without changing business-rule outcomes or mutating production records during deployment.
+- Improve operator UX, observability, request boundaries, expected-error handling, and retire unused bypass routes without changing supported business-rule outcomes or mutating production records during deployment.
 - Create branches, PRs, run CI, squash-merge after all required checks pass, and verify Vercel production deployments.
 - Close clearly superseded draft PRs only after confirming they are not current work.
 - Write `[G]` daily logs after each merged PR or significant investigation.
@@ -55,17 +55,14 @@ intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment v
 - **PR #114 — Atomic account activation**
 - **PR #115 — Framework header suppression**
 - **PR #116 — Atomic GHL webhook retry claim**
-  - Only one concurrent retry can reopen an `ERROR` WebhookEvent.
 - **PR #117 — Inbound GHL webhook request boundary**
-  - Secret verification occurs before body reads across all six inbound GHL routes.
-  - Added declared/actual 1 MiB limits, no-store/noindex/request-ID responses, post-schema location verification, and sanitized failure evidence.
-  - No webhook was invoked during validation.
 - **PR #118 — Authenticated portal write request boundary**
-  - Added declared/actual 16 KiB limits and centralized no-store/noindex/request-ID responses.
-  - Applied to portal actions, DNC, call-start, release, and logout compatibility metadata.
-  - All four Lead write routes authorize before body parsing.
-  - Known call-start failures use approved messages; unexpected errors remain visible to telemetry.
-  - No portal POST endpoint was invoked during validation.
+- **PR #119 — Admin controlled test request boundary**
+  - Added one generic authenticated 16 KiB JSON parser and no-store/noindex/request-ID response contract.
+  - Kept the portal API through a compatibility adapter.
+  - Admin authorization occurs before body parsing.
+  - Only exact known controlled-test validation outcomes are public; unexpected failures remain telemetry errors.
+  - Preview/apply service semantics are unchanged and the endpoint was not invoked.
 
 ## Daily logs
 
@@ -82,6 +79,7 @@ intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment v
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM PR116 Atomic GHL Webhook Retry Claim.md`
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM PR117 GHL Webhook Request Boundary.md`
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM PR118 Portal Write Request Boundary.md`
+- `01 Daily Logs/[G] 2026-07-12 MCD CRM PR119 Admin Controlled Test Request Boundary.md`
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM Autonomous Hardening and Repository Cleanup.md`
 
 ## Repository hygiene
@@ -90,9 +88,9 @@ The obsolete draft PRs #1, #6, #7, #8, #9, #11, #12, #13, #14, #15, #16, and #17
 
 ## Current production baseline
 
-- Latest production commit: `31dc8068b562041a7fc455a3ed6c8af2a8f65113` (PR #118).
-- Vercel deployment: `dpl_BHci8wpkkANCkL7E4MLF5Z57uF4k`, READY and aliased to `crm.mercurycalldesk.com`.
-- `/api/status`: HTTP 200, environment `production`, branch `main`, exact PR #118 merge SHA, no-store, noindex, and the complete security-header baseline intact.
+- Latest production commit: `f3ed57f58e90f2db14c0fae180fcbc54c7882221` (PR #119).
+- Vercel deployment: `dpl_3xsrHHHaWFsvZBkGLUyVVBw4y8JU`, READY and aliased to `crm.mercurycalldesk.com`.
+- `/api/status`: HTTP 200, environment `production`, branch `main`, exact PR #119 merge SHA, no-store, noindex, and the complete security-header baseline intact.
 - No signup, activation, portal write, controlled-test, cron, or GHL webhook POST route was invoked during preview or production verification.
 - Vercel reported no runtime errors in the latest one-hour window after deployment.
 - PR #109 did not invoke the production cron; the expanded readiness window awaits a later independent scheduled or specifically authorized run.
@@ -104,9 +102,9 @@ The obsolete draft PRs #1, #6, #7, #8, #9, #11, #12, #13, #14, #15, #16, and #17
 
 ## Current branch state
 
-- PR #118 branch `agent/portal-write-request-boundary` is merged.
+- PR #119 branch `agent/admin-controlled-test-boundary` is merged.
 - No new implementation branch is currently active.
-- Next planned branch: Admin controlled-GHL-test-event request boundary, source-only validation and no endpoint invocation.
+- Next planned branch: retire the unused legacy Admin Lead import writer and enforce the modern guarded import path.
 
 ## Lock return protocol
 
