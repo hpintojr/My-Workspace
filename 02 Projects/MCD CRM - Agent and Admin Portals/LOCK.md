@@ -9,7 +9,7 @@ holder: chatgpt
 scope: hpintojr/crm.mcd + hpintojr/My-Workspace
 since: 2026-07-12T06:40Z (Hamilton directed ChatGPT to take over while Claude usage is unavailable until Monday 9:00 AM Pacific and to complete as much as possible end to end without human intervention)
 previous_holder: claude (2026-07-12T06:38Z through 2026-07-12T06:40Z. No additional Claude work was recorded after PR #102.)
-intent: ChatGPT owns autonomous implementation, PR, CI, merge, deployment verification, and handoff during this interval. Prioritize fully testable code and repository work that does not require unsafe assumptions or customer-data mutation. Allowed targets include production smoke automation, observability/readiness, static security and contract guards, disposable-branch database lifecycle testing, documentation alignment, and repository hygiene. Do not apply the staged Commission migration, change production feature flags, identify or use the two Servicing onboarding candidates, mutate production Leads/Client Accounts/Service Cases/acceptance records, call live GHL, activate payment providers, release payouts, store financial-account data, or move money unless Hamilton gives a specific subsequent instruction naming that action.
+intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment verification, and handoff during this interval. PRs #103-#107 are complete. Continue with evidence-backed code hardening that does not require production mutations or settings changes. The next traced issue is the `/portal/leads` manager claim-action mismatch: the service correctly restricts managers to controlled-test Lead claims, but the UI renders the claim action for any claim-eligible selected Lead. Preserve the controlled-test admin path and all existing claim eligibility/atomicity rules; align UI and stale server-action handling only. Do not apply the staged Commission migration, change production feature flags, identify or use the two Servicing onboarding candidates, mutate production Leads/Client Accounts/Service Cases/acceptance records, call live GHL, activate payment providers, release payouts, store financial-account data, or move money unless Hamilton gives a specific subsequent instruction naming that action.
 ```
 
 ## Authorized without further owner approval
@@ -20,6 +20,7 @@ intent: ChatGPT owns autonomous implementation, PR, CI, merge, deployment verifi
 - Add GitHub Actions for non-mutating smoke tests and repository validation.
 - Add opt-in or disposable-branch database test harnesses that never target production.
 - Run read-only production database/catalog queries.
+- Improve operator UX and expected-error handling without changing business-rule outcomes or mutating production records during deployment.
 - Create branches, PRs, run CI, squash-merge after all required checks pass, and verify Vercel production deployments.
 - Close clearly superseded draft PRs only after confirming they are not current work.
 - Write `[G]` daily logs after each merged PR or significant investigation.
@@ -38,15 +39,49 @@ intent: ChatGPT owns autonomous implementation, PR, CI, merge, deployment verifi
 - Committing private customer information or credentials.
 - Changing CLAUDE.md's Protected Workspace Command Registry.
 
+## Autonomous work completed after PR #102
+
+- **PR #103 — Production Smoke automation**
+  - Exact production SHA convergence, status contract, public login, protected page/API boundaries.
+  - Runs on main push, manual dispatch, and six-hour schedule.
+- **PR #104 — Lead aging cron resilience**
+  - Bounded read-only DB readiness retries, structured retryable 503 responses, request IDs.
+  - Mutating aging sweep remains single-execution and is never automatically replayed.
+- **PR #105 — Global HTTP security headers**
+  - CSP frame/base/form/object restrictions, anti-framing, nosniff, referrer, permissions, opener, DNS and legacy protections.
+  - Production Smoke enforces the header baseline.
+- **PR #106 — Auth telemetry hygiene**
+  - Expected `CredentialsSignin` outcomes reclassified to compact informational telemetry.
+  - Unexpected Auth.js failures remain errors; lockout, MFA and audit behavior unchanged.
+- **PR #107 — Certification precondition UX**
+  - Ineligible approval choices disabled; prerequisite summary added.
+  - Stale expected precondition failures redirect to clear banners instead of production exceptions.
+  - Server-side eligibility enforcement and audit behavior unchanged.
+
+Daily logs:
+
+- `01 Daily Logs/[G] 2026-07-12 MCD CRM PR106 Auth Telemetry Hygiene.md`
+- `01 Daily Logs/[G] 2026-07-12 MCD CRM PR107 Certification Precondition UX.md`
+
 ## Current production baseline
 
-- Latest production commit: `3ef0117798e110d795a8784946680bf8a99d07bb` (PR #102).
-- Vercel deployment: `dpl_7VqiqbgwAAvuQNdHfGboVcuxjYgG`, READY and aliased to `crm.mercurycalldesk.com`.
+- Latest production commit: `0c882fe3dadd85ec59b53cd234387be54fa2ec6e` (PR #107).
+- Vercel deployment: `dpl_12C58zheLg4xhiETRzqxGUMLSSQC`, READY and aliased to `crm.mercurycalldesk.com`.
+- `/api/status`: HTTP 200, production, main, exact PR #107 merge SHA, no-store and security headers intact.
 - Lead Flow: 18/18 acceptance PASS and owner decision recorded.
 - Project Readiness: live at `/admin/project-readiness`.
 - Servicing preflight: live at `/admin/servicing/acceptance-command-center`; expected decision `OWNER_AUTHORIZATION_REQUIRED`.
 - Production Servicing state: two aggregate onboarding candidates, zero Client Accounts, zero Service Cases, zero Servicing acceptance records.
 - Commission/Payout production schema: cleanly staged only; 0 of 7 tables and no current or legacy Commission enum types.
+
+## Current branch state
+
+- `agent/manager-claim-action-boundary` exists from the PR #107 production baseline.
+- No commits have been made to that branch yet.
+- Direct evidence:
+  - `src/lib/claims.ts` allows managers to claim only controlled-test Leads and requires reassignment controls for real Leads.
+  - `src/app/portal/leads/page.tsx` currently renders the claim form whenever the Lead is claim-eligible, regardless of actor/agent claim permission.
+  - Vercel recorded one expected `Use reassignment controls for manager lead assignment.` runtime error from this mismatch.
 
 ## Lock return protocol
 
