@@ -5,18 +5,53 @@ Others read/verify only. See `[C] AI Operating Protocol — Handoff, Changelog, 
 `02 Projects/MCD CRM - Agent and Admin Portals/[C] ChatGPT-to-Claude Handoff Protocol — Composio Mandate.md`.
 
 ```txt
-holder: chatgpt
+holder: claude
 scope: hpintojr/crm.mcd + hpintojr/My-Workspace
-since: 2026-07-12T06:25Z (Hamilton instructed ChatGPT to keep coding)
-previous_holder: claude (2026-07-12T05:50Z through 2026-07-12T06:25Z. No additional Claude work was
-                 recorded in LOCK.md during this interval; PR #101 remained the latest completed work.)
-intent: ChatGPT resumes autonomous coding within the standing owner-authorized read-only admin,
-        navigation, summary, API GET, and regression-guard scope. The next end-to-end slice is to
-        prepare Client Servicing for a future owner-authorized acceptance window by building a
-        protected read-only Servicing acceptance command center/preflight, API snapshot, navigation,
-        and focused guards. This work must not enable SERVICING_ENABLED, record acceptance outcomes,
-        create or mutate Client Accounts or Service Cases, apply migrations, call GHL, activate any
-        external workflow, or change Commission/Finance/payout state.
+since: 2026-07-12T06:38Z (ChatGPT completed PR #102 Servicing Acceptance Preflight)
+previous_holder: chatgpt (2026-07-12T06:25Z through 2026-07-12T06:38Z. In this stretch ChatGPT:
+                  1) Took the lock after Hamilton instructed ChatGPT to keep coding. Claude had recorded
+                     no additional work after PR #101.
+                  2) Inspected the existing Servicing acceptance board, Client Account onboarding, launch,
+                     case, ownership/House workflows, raw-SQL read models, and production Client/Service
+                     table and enum contracts.
+                  3) Ran read-only production preflight queries confirming all four Client/Service tables,
+                     zero Servicing acceptance records, zero Client Accounts, zero Service Cases, and two
+                     aggregate verified Closed Won onboarding candidates. No candidate identity was exposed.
+                  4) Built a shared read-only Servicing acceptance snapshot with schema checks, Lead Flow
+                     prerequisite evidence, feature-gate separation, latest Servicing acceptance outcomes,
+                     aggregate operational queues, and hard decisions: BLOCKED_SCHEMA,
+                     BLOCKED_LEAD_ACCEPTANCE, UNSAFE_GATE_COMBINATION, OWNER_AUTHORIZATION_REQUIRED, or
+                     CONTROLLED_WINDOW_OPEN.
+                  5) Added protected `/admin/servicing/acceptance-command-center` and
+                     `/api/admin/servicing/acceptance-readiness` with aggregate counts only and no-store JSON.
+                  6) Shared the nine Servicing acceptance-step definitions with the existing board, added
+                     stable step anchors/deep links, and linked the preflight from the board and Operating Status.
+                  7) Added `scripts/check-servicing-acceptance-preflight-guard.ts`, wired into
+                     `check:lead-flow-alignment` and production build. The guard rejects mutation primitives
+                     in the preflight files and added `Servicing acceptance preflight guard passed.` to
+                     deployment verification.
+                  8) Shipped PR #102. All four gates were green: Commission Policy, Verify CRM, Application
+                     Build, and Vercel Ready/success with zero unresolved toolbar threads. Squash-merged as
+                     3ef0117798e110d795a8784946680bf8a99d07bb.
+                  9) Verified Vercel production deployment dpl_7VqiqbgwAAvuQNdHfGboVcuxjYgG READY and
+                     aliased to crm-mcd.vercel.app and crm.mercurycalldesk.com. `/api/status` returned HTTP
+                     200 on main at the exact merge commit. Live unauthenticated
+                     `/admin/servicing/acceptance-command-center` returned the secure sign-in boundary.
+                 10) Ran a final read-only production query confirming the state remained unchanged:
+                     two aggregate onboarding candidates, zero Client Accounts, zero Service Cases, and
+                     zero Servicing acceptance records.
+                 11) Wrote `01 Daily Logs/[G] 2026-07-12 MCD CRM PR102 Servicing Acceptance Preflight.md`.
+                     No migration, production DDL/DML, feature flag, acceptance write, Client/Service
+                     mutation, GHL call, Commission/Finance activation, payout, or money movement occurred.)
+intent: Claude resumes as execution-lock holder with PR #102 live. Use
+        `/admin/servicing/acceptance-command-center` as the source-derived preflight before any Servicing
+        test decision. Current expected decision is OWNER_AUTHORIZATION_REQUIRED: schema and Lead Flow
+        prerequisites are ready, Commission/Finance remain closed, and two aggregate onboarding candidates
+        exist, but SERVICING_ENABLED is still closed and no test records have been used. A controlled
+        Servicing window remains a separate Hamilton-only authorization. Do not enable the gate, identify or
+        use candidates, create Client Accounts or Service Cases, or record acceptance results without that
+        authorization. Commission migration/application and all platform-hardening settings remain separate.
+        Claude must access hpintojr/My-Workspace exclusively through the Composio MCP connector.
 ```
 
 ## Authorized without further owner approval
@@ -36,16 +71,20 @@ intent: ChatGPT resumes autonomous coding within the standing owner-authorized r
   `/api/status`, smoke-test results, and the safety-boundary reaffirmation.
 - Read-only investigation of production DB (`SELECT`/catalog only, no DDL/DML) and read-only GitHub source review.
 - Disposable Neon safety-branch creation and DDL testing (never production itself) only when the specific correction is authorized.
-- Read-only verification of PR #100's staged Commission migration and PR #101's readiness surface is allowed; applying or activating is not.
+- Read-only verification of PR #100's staged Commission migration, PR #101's readiness surface, and PR #102's Servicing preflight is allowed; applying or activating is not.
 
 ## Not authorized — still requires Hamilton before any action
 
 - Applying `20260701092000_add_client_service_and_ledger` or any other migration to production.
 - Prisma schema changes beyond separately and explicitly authorized work.
 - Any other production-schema or production-data branch change.
-- Feature flag changes.
+- Feature flag changes, including `SERVICING_ENABLED`.
 - Live external workflow activation or live external API calls.
 - Live import or export submission.
+- Identifying or using the aggregate Servicing onboarding candidates.
+- Creating, launching, reassigning, or otherwise mutating Client Accounts.
+- Creating, responding to, resolving, or otherwise mutating Service Cases.
+- Recording Servicing acceptance outcomes.
 - Real Lead ownership, approval, suppression, contact-gate, or routing business-rule changes.
 - Servicing, Commissions, Finance, payout, or client-onboarding activation.
 - Changes to CLAUDE.md's Protected Workspace Command Registry.
@@ -73,32 +112,34 @@ Latest daily logs:
 - `01 Daily Logs/[C] 2026-07-12 MCD CRM Commission Schema Drift Full Read-Only Map.md`.
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM PR100 Commission Schema Migration Correction.md`.
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM PR101 Project Readiness Control Plane.md`.
+- `01 Daily Logs/[G] 2026-07-12 MCD CRM PR102 Servicing Acceptance Preflight.md`.
 
-Latest production commit: `728bc8ac5cc324cc6c1b54523368a8891f00439b` on `crm.mercurycalldesk.com`
-(PR #101, squash-merged and deployed 2026-07-12; Vercel deployment
-`dpl_6EZu9dPvUotdvPo2ekWNxf2y9dWY` confirmed READY and aliased; `/api/status` returned HTTP 200 with
+Latest production commit: `3ef0117798e110d795a8784946680bf8a99d07bb` on `crm.mercurycalldesk.com`
+(PR #102, squash-merged and deployed 2026-07-12; Vercel deployment
+`dpl_7VqiqbgwAAvuQNdHfGboVcuxjYgG` confirmed READY and aliased; `/api/status` returned HTTP 200 with
 that exact `main` commit).
 
-## MILESTONE 2026-07-12: Lead Flow acceptance complete and Project Readiness control plane live
+## MILESTONE 2026-07-12: Lead Flow accepted; Project and Servicing readiness control planes live
 
-All 18 Lead Flow acceptance items and the owner production decision are PASS. PR #101 now provides a
-single protected, source-derived preflight at `/admin/project-readiness` and JSON at
-`/api/admin/project-readiness` for deployment, gates, acceptance, integration health, and schema state.
-Normal Lead Flow use is approved; external GHL configuration and all other module activations remain separate.
+All 18 Lead Flow acceptance items and the owner production decision are PASS. PR #101 provides the
+cross-module Project Readiness control plane. PR #102 now provides a protected aggregate-only Servicing
+acceptance preflight at `/admin/servicing/acceptance-command-center` with JSON at
+`/api/admin/servicing/acceptance-readiness`.
 
 ## Client Servicing state
 
 - The onboarding, launch, service-case, healthy-account protection, and House-transfer workflows are built.
-- Production catalog verification confirms `ClientAccount`, `ClientServiceActivity`,
-  `ClientServiceCase`, and `ClientServiceAssignmentEvent` are present.
-- Expected Project Readiness state: `SOURCE_ALIGNED`.
-- A controlled Servicing acceptance window and feature-gate change still require explicit Hamilton authorization.
+- Production catalog verification confirms all four required Client/Service tables are present.
+- Lead Flow prerequisite is complete.
+- Commission and Finance remain closed.
+- Production currently has two aggregate eligible onboarding candidates, zero Client Accounts, zero Service Cases, and zero Servicing acceptance records.
+- Expected Servicing preflight decision: `OWNER_AUTHORIZATION_REQUIRED`.
+- A controlled Servicing acceptance window, use of any candidate, and the feature-gate change still require explicit Hamilton authorization.
 
 ## Commission schema state — corrected migration, cleanly staged, not applied
 
 - PR #100 corrected the staged migration to match application raw SQL and added the missing Commission tables.
-- Production catalog verification after PR #101 confirms 0 of 7 Commission/Payout tables are present.
-- Current and legacy Commission enum types are absent.
+- Production has 0 of 7 Commission/Payout tables; current and legacy Commission enum types are absent.
 - Expected Project Readiness state: `STAGED_ONLY`, not partial drift.
 - Production migration apply, controlled Commission acceptance, and feature activation must remain separate owner decisions.
 
