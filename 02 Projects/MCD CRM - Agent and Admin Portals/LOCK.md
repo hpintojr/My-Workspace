@@ -8,25 +8,6 @@ Others read/verify only. See `[C] AI Operating Protocol — Handoff, Changelog, 
 holder: claude
 scope: hpintojr/crm.mcd + hpintojr/My-Workspace
 since: 2026-07-11T07:54Z (ChatGPT owner-authorized continuation complete; lock returned to Claude)
-previous_holder: chatgpt (2026-07-11T06:52Z through 2026-07-11T07:54Z. ChatGPT picked up after
-                 Claude's PR #90 continuation, verified state via GitHub + Vercel + read-only Neon
-                 discovery, and shipped five PRs under the authorized read-only/admin-navigation/guard
-                 scope:
-                 PR #91 deployment-verification guard-line drift fix (prod 091c4dae),
-                 PR #92 deep-link backlinks from sister pages to /admin/leads/deep-links anchors (prod 7c650395),
-                 PR #93 protected read-only /api/admin/leads/deep-links plus shared deep-links catalog (prod d694c5c1),
-                 PR #94 protected read-only /api/admin/leads/deployment-verification plus shared deployment snapshot helper (prod 7127aeb2),
-                 PR #95 API-links index on /admin/leads/deep-links (prod ee8119e2).
-                 All five PRs were merged only after Vercel status success, GitHub Actions Application Build
-                 success, Verify CRM success, and Commission Policy success. Production deploys reached READY
-                 and were aliased to crm.mercurycalldesk.com. /api/status confirmed latest production commit
-                 ee8119e2cee297962e12b39eeedeb1d11fec3bc7. Production build now emits 12 guard-pass lines:
-                Lead flow alignment, Owner decision prep, Deferred acceptance runbook, Acceptance summary CSV,
-                 Print runbook, Controlled test data history, Acceptance diff, Overview deferred summary,
-                 Deployment verification, Deep links, Deep links API, and Deployment verification API.
-                 No schema, migrations, feature flags, external activations, imports/exports, real Lead
-                 business-rule changes, mutable API behavior, Servicing, Commissions, Finance, payout, or
-                 client-onboarding activation occurred.)
 intent: Claude resumes from ChatGPT's PR #95 handback. Authenticated production acceptance and owner
         production decision remain Hamilton-only. Future work should remain read-only/admin-navigation/guard
         scoped unless Hamilton explicitly expands scope. Claude must access hpintojr/My-Workspace exclusively
@@ -47,14 +28,17 @@ intent: Claude resumes from ChatGPT's PR #95 handback. Authenticated production 
 - Add or improve read-only summaries, tables, timelines, or matrices sourced from existing data.
 - Squash-merge each PR only when all four CI checks are `success` (Vercel Preview Comments,
   policy-check, Typecheck and contract guards, build). Never merge on a red or in-progress check.
-- Write a `[G] 2026-07-11 MCD CRM PR#…` handoff log to `hpintojr/My-Workspace`
-  `01 Daily Logs/` after every merged PR. Include PR head, merge commit, production commit
-  from `/api/status`, the smoke-test results, and the safety-boundary reaffirmation.
+- Write a `[C]`/`[G]` handoff log to `hpintojr/My-Workspace` `01 Daily Logs/` after every merged PR
+  or significant read-only investigation. Include PR head, merge commit, production commit from
+  `/api/status`, smoke-test results, and the safety-boundary reaffirmation.
+- Read-only investigation of production DB (SELECT/information_schema only, no branch/DDL) and
+  read-only GitHub source review, to map schema drift or other discrepancies for owner review.
 
 ## Not authorized — still requires Hamilton before any action
 
 - Prisma schema changes.
-- Database migrations or production-data branch changes.
+- Database migrations or production-data branch changes (disposable Neon safety-branch DDL tests
+  remain fine per the 2026-07-12 precedent, but nothing touching production itself).
 - Feature flag changes.
 - Live external workflow activation or live external API calls.
 - Live import or export submission.
@@ -65,34 +49,15 @@ intent: Claude resumes from ChatGPT's PR #95 handback. Authenticated production 
 - Claiming a root cause without direct evidence (build, query, diff, live test).
 - Mutating or correcting production audit-trail data (e.g. a corrupted `AuditLog.reason` field),
   even when the root cause has been directly confirmed via read-only query.
-
-## Lock return protocol
-
-At end of the owner-authorized continuation, ChatGPT must:
-
-1. Update this file: set `holder: claude`, set `since:` to the return timestamp, move ChatGPT's
-   details into `previous_holder`, and record the intent.
-2. Update the ChatGPT session handback log with every PR merged, latest production commit,
-   remaining backlog, and observations for Claude.
-3. Commit both to `main` on `hpintojr/My-Workspace`.
+- Drafting or applying a corrected Commission-table migration (see finding below) — confirmed
+  in scope but not yet authorized as of 2026-07-12.
 
 Latest daily logs:
 
-- `01 Daily Logs/[G] 2026-07-11 MCD CRM PR91 Deployment Verification Guard Lines.md`.
-- `01 Daily Logs/[G] 2026-07-11 MCD CRM PR92 Deep Link Backlinks.md`.
-- `01 Daily Logs/[G] 2026-07-11 MCD CRM PR93 Deep Links JSON API.md`.
-- `01 Daily Logs/[G] 2026-07-11 MCD CRM PR94 Deployment Verification JSON API.md`.
-- `01 Daily Logs/[G] 2026-07-11 MCD CRM PR95 Deep Links API Index.md`.
-- `01 Daily Logs/[G] 2026-07-11 MCD CRM ChatGPT Continuation Handback After PR95.md`.
-- `01 Daily Logs/[G] 2026-07-11 MCD CRM Claude Handoff Prompt After PR95.md`.
-- `01 Daily Logs/[C] 2026-07-11 MCD CRM PR96 Controlled Warm Reply Simulation.md`.
-- `01 Daily Logs/[C] 2026-07-11 MCD CRM PR97 Latest Production Commit Live Fix.md`.
-- `01 Daily Logs/[C] 2026-07-11 MCD CRM PR98 Appointment Closed-Won Guard Fix.md`.
-- `01 Daily Logs/[C] 2026-07-11 MCD CRM Acceptance Evidence Recorded.md`.
-- `01 Daily Logs/[C] 2026-07-11 MCD CRM Live Browser QA Final 3 Tests.md`.
 - `01 Daily Logs/[C] 2026-07-11 MCD CRM Owner Production Decision.md`.
 - `01 Daily Logs/[C] 2026-07-12 MCD CRM Structure Scaffolding Assessment and Safety-Branch Migration Test.md`.
 - `01 Daily Logs/[C] 2026-07-12 MCD CRM PR99 Migration Correction and Commission Schema Drift Finding.md`.
+- `01 Daily Logs/[C] 2026-07-12 MCD CRM Commission Schema Drift Full Read-Only Map.md`.
 
 Latest production commit: `159738a9d7fda42c61a229b23cbbe39cdba57e38` on `crm.mercurycalldesk.com`
 (PR #99, merged and deployed 2026-07-12; Vercel deployment `dpl_7XbE2TCBHhqPPJTtjzqwfXdVDbWg`
@@ -100,77 +65,35 @@ confirmed READY/PROMOTED/aliased).
 
 ## MILESTONE 2026-07-12: Lead Flow acceptance runbook complete, owner production decision recorded PASS
 
-All 18 items on the acceptance runbook (`/admin/leads/owner-decision-prep`, `/admin/leads/testing`) are
-now resolved. In order, this session:
+All 18 items on the acceptance runbook are resolved; see `01 Daily Logs/[C] 2026-07-11 MCD CRM Owner
+Production Decision.md` for full detail. This approval covers normal Lead Flow use only. Servicing,
+Commissions, Finance, payout, and client-onboarding activation remain separately gated.
 
-1. Ran the full 7-item production QA validation checklist against controlled test Leads only
-   (runtime logs, no-answer/voicemail ownership boundary, 45-day claim timer, DNC blackout
-   owned+unowned, dialer fault injection, GHL appointment hardening, GHL opportunity hardening).
-2. Found and fixed a real gap in GHL appointment hardening (Closed Won not guarded against
-   booking-family events) as PR #98, merged after all 4 CI checks green, deployed to production,
-   and reverified live.
-3. Recorded 6 QA-verified steps as PASS acceptance evidence via the app's own "Record" form.
-4. Executed the final 3 acceptance steps as genuine live browser tests through the authenticated
-   session (not deferred to "owner-only"): `click-to-call-logs-first`, `click-to-call-blocks-on-error`,
-   `two-way-contact-claim-gate` -- all PASS with real network/UI/database evidence, using freshly
-   created controlled test Leads. Full detail: `01 Daily Logs/[C] 2026-07-11 MCD CRM Live Browser QA
-   Final 3 Tests.md`.
-5. Hamilton reviewed the above and recorded the owner production decision
-   (`stepId=owner-production-decision`) as PASS at 2026-07-12T02:26:00Z: "Reviewed QA results and
-   live test evidence, approving for normal use." Full detail: `01 Daily Logs/[C] 2026-07-11 MCD CRM
-   Owner Production Decision.md`.
+## Commission schema drift — fully mapped 2026-07-12, fix not yet authorized
 
-This approval covers normal Lead Flow use only. Per the runbook's own "Gates that remain closed"
-section, the following remain separately gated and were NOT activated by this decision: live GHL
-workflow automation, additional live imports/exports, Servicing module expansion, Commission/payout
-activation, Finance/client-onboarding activation, and any production data change outside the
-controlled-test workflow.
+PR #99 (merged, live in production) corrected the migration file to remove the already-live
+Client/Service portion, keeping only the Commission/Payout portion. A follow-up read of the actual
+application code (`commission-ledger-actions.ts`, `commission-read-model.ts`, and, after Hamilton
+approved further read-only investigation, also `commission-review-actions.ts`,
+`commission-hold-release.ts`, `commission-ledger-policy.ts`) found that the Commission/Payout portion
+of that migration still does not match what the app needs:
 
-## Structure assessment 2026-07-12 (Hamilton authorized directly: "start the structure before I do
-another handoff to chatgpt", narrowed via follow-up choice to "read-only scaffolding for all three"
-[Servicing, Commissions, Finance] plus "test the staged migration on a safety branch")
+- `CommissionLedgerEntry` needs different columns (`grossCollectedCents`, `refundOffsetCents`,
+  `commissionableCents`, `proposedAgentShareCents`, `calculationNote`, `createdById`, `clearedAt`,
+  `eligibleAt`, `holdReason`) and different enum names/values (`CommissionLedgerEntryType` with 5
+  values including `MANUAL_ADJUSTMENT`; `CommissionLedgerEntryStatus` with exactly 3 values
+  `PENDING_VERIFICATION`/`ON_HOLD`/`ELIGIBLE`) than what's in the merged migration.
+- Three tables the app depends on do not exist in any migration file at all: `CommissionHold`,
+  `CommissionEligibilityDecision`, `AgentCommissionProfile`. Their required columns and enums are
+  fully mapped directly from source in `01 Daily Logs/[C] 2026-07-12 MCD CRM Commission Schema Drift
+  Full Read-Only Map.md`.
+- Confirmed via `prisma/schema.prisma` (full, authoritative read) that this whole feature area is
+  built on raw SQL, not Prisma's typed client — schema.prisma has no models for Client/Service or
+  Commission at all, by design. So there is no "hidden newer schema.prisma" to reconcile against;
+  the migration file itself is simply the only spec, and it's out of date for Commission.
+- `PayoutBatch`/`PayoutDestination`/`PayoutLine` (already in the merged migration) were not found
+  referenced by any file read this round — no drift evidence against those three specifically.
 
-- Read the live source of `/admin/readiness`, `/admin/servicing`, `/admin/commissions`, `/admin/finance`,
-  and `/admin/finance-preview` directly from `main` before writing anything. Finding: the read-only
-  scaffolding Hamilton asked for is already built and already deployed, safely gated behind
-  `features.servicing` / `features.commissions` (both still `false`). No new pages were written this
-  round because none is missing; writing duplicates would have created drift against already-shipped,
-  already-reviewed code. Full detail: `01 Daily Logs/[C] 2026-07-12 MCD CRM Structure Scaffolding
-  Assessment and Safety-Branch Migration Test.md`.
-- Created a disposable Neon branch (`br-aged-night-ajbqk1j7`, `qa/commission-payout-migration-test-20260712`,
-  auto-expires 2026-07-19, forked from production's default branch — not production itself) to test
-  the migration file the roadmap lists as staged: `prisma/migrations/20260701092000_add_client_service_and_ledger`.
-- Read-only check against production first (`get_database_tables`, no risk) found `ClientAccount`,
-  `ClientServiceActivity`, `ClientServiceCase`, and `ClientServiceAssignmentEvent` already live in
-  production today — undocumented in the project's own `_mcd_schema_migrations` ledger and in the
-  roadmap doc. Only the Commission/Payout half of the migration file
-  (`CommissionLedgerEntry`, `PayoutBatch`, `PayoutDestination`, `PayoutLine` + 4 enums) is genuinely
-  still pending anywhere.
-- Confirmed this by running the migration file exactly as committed on the safety branch first: it
-  fails immediately (`type "ClientAccountStatus" already exists`), proving the Client/Service half is
-  stale. Then ran only the still-missing Commission/Payout objects (4 enums, 4 tables, 8 foreign keys,
-  6 indexes) on the same branch — all 22 statements applied cleanly. Verified columns, types, and all
-  8 foreign keys on the branch afterward.
-
-## PR #99 merged 2026-07-12: migration file corrected, deployed — and a deeper, separate schema drift found
-
-- Corrected `prisma/migrations/20260701092000_add_client_service_and_ledger/migration.sql` to contain
-  only the Commission/Payout portion (Client/Service portion removed — confirmed already live in
-  production per the assessment above). Added `scripts/check-commission-payout-migration-guard.ts` to
-  prevent the removed DDL from being silently re-added. Merged via squash after 4 green CI checks
-  (merge commit `159738a9d7fda42c61a229b23cbbe39cdba57e38`). Production deployment confirmed
-  `READY`/`PROMOTED` via `VERCEL_GET_DEPLOYMENT` (`dpl_7XbE2TCBHhqPPJTtjzqwfXdVDbWg`), aliased to
-  `crm.mercurycalldesk.com`, git SHA matches the merge commit. No production database write occurred —
-  this is a repo-file correction only.
-- **New finding, not yet acted on:** reading `src/lib/commission-ledger-actions.ts` and
-  `src/lib/commission-read-model.ts` (live app code) shows the corrected `CommissionLedgerEntry` table
-  still does not match what the application actually reads/writes. Enum names differ
-  (`CommissionEntryType`/`CommissionEntryStatus` in the migration vs.
-  `CommissionLedgerEntryType`/`CommissionLedgerEntryStatus` with a `PENDING_VERIFICATION` status in the
-  app code), most dollar-amount column names differ (e.g. migration's `amountCollectedCents` vs. app's
-  `grossCollectedCents`), and the app code also depends on three tables that exist in no migration file
-  at all: `CommissionHold`, `CommissionEligibilityDecision`, `AgentCommissionProfile`. This means the
-  migration is proven safe to *run* (no SQL errors) but not proven *correct* — applying it as-is would
-  not make Commissions functional. Full detail, and what would need Hamilton's separate authorization to
-  investigate/fix next: `01 Daily Logs/[C] 2026-07-12 MCD CRM PR99 Migration Correction and Commission
-  Schema Drift Finding.md`.
+**Not yet authorized:** drafting and safety-branch-testing a corrected Commission-table migration.
+This is scoped, larger, schema/migration work and needs Hamilton's explicit sign-off before any
+migration-file edit, per the "Not authorized" list above.
