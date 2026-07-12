@@ -9,7 +9,7 @@ holder: chatgpt
 scope: hpintojr/crm.mcd + hpintojr/My-Workspace
 since: 2026-07-12T06:40Z (Hamilton directed ChatGPT to take over while Claude usage is unavailable until Monday 9:00 AM Pacific and to complete as much as possible end to end without human intervention)
 previous_holder: claude (2026-07-12T06:38Z through 2026-07-12T06:40Z. No additional Claude work was recorded after PR #102.)
-intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment verification, and handoff during this interval. PRs #103-#115 are complete and deployed. Continue only with evidence-backed code hardening that does not require production mutations or settings changes. Select the next scope from current source and runtime evidence while preserving all business-rule outcomes and protected production data. Do not apply the staged Commission migration, change production feature flags, identify or use the two Servicing onboarding candidates, mutate production Leads/Client Accounts/Service Cases/acceptance records, call live GHL, activate payment providers, release payouts, store financial-account data, or move money.
+intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment verification, and handoff during this interval. PRs #103-#116 are complete and deployed. Continue only with evidence-backed code hardening that does not require production mutations or settings changes. The next source-backed scope is the shared inbound GHL webhook request boundary: authenticate before reading request bodies, add bounded JSON parsing and consistent no-store/request-ID responses, and remove raw exception disclosure without sending a webhook or changing event semantics. Do not apply the staged Commission migration, change production feature flags, identify or use the two Servicing onboarding candidates, mutate production Leads/Client Accounts/Service Cases/acceptance records, call live GHL, activate payment providers, release payouts, store financial-account data, or move money.
 ```
 
 ## Authorized without further owner approval
@@ -83,6 +83,11 @@ intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment v
   - Disabled the default `X-Powered-By: Next.js` response header centrally.
   - Added source and deployed Production Smoke checks that fail if the framework disclosure returns.
   - Preserved routing, authentication, caching, response bodies, and the complete global security-header baseline.
+- **PR #116 — Atomic GHL webhook retry claim**
+  - Replaced the failed-event read-then-update replay flow with a conditional `status: ERROR` compare-and-set claim.
+  - Only the single `count = 1` winner may reopen and reprocess a failed event; concurrent retries remain duplicates.
+  - All six shared GHL consumers inherit the atomic replay contract.
+  - No webhook endpoint was invoked during validation or production verification.
 
 Daily logs:
 
@@ -96,6 +101,7 @@ Daily logs:
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM PR113 Public Signup Boundary.md`
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM PR114 Atomic Account Activation.md`
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM PR115 Framework Header Suppression.md`
+- `01 Daily Logs/[G] 2026-07-12 MCD CRM PR116 Atomic GHL Webhook Retry Claim.md`
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM Autonomous Hardening and Repository Cleanup.md`
 
 ## Repository hygiene
@@ -104,11 +110,10 @@ The obsolete draft PRs #1, #6, #7, #8, #9, #11, #12, #13, #14, #15, #16, and #17
 
 ## Current production baseline
 
-- Latest production commit: `970f120701462247d0e789c2c1cc020f82786a6b` (PR #115).
-- Vercel deployment: `dpl_Du7dbPxUmLs9nocwbn7dm7nNVeqv`, READY and aliased to `crm.mercurycalldesk.com`.
-- `/api/status`: HTTP 200, environment `production`, branch `main`, exact PR #115 merge SHA, no-store, noindex, and the complete security-header baseline intact.
-- `/login`: HTTP 200 with the expected branded noindex sign-in surface and complete security headers.
-- `X-Powered-By` is absent on both tested JSON and HTML production responses.
+- Latest production commit: `ca559be251e6c48e6e21849acb8a5d9f7cb00329` (PR #116).
+- Vercel deployment: `dpl_4HAzRLQNnkr9PoxSDu5zRd6Dn66q`, READY and aliased to `crm.mercurycalldesk.com`.
+- `/api/status`: HTTP 200, environment `production`, branch `main`, exact PR #116 merge SHA, no-store, noindex, and the complete security-header baseline intact.
+- No GHL webhook route was invoked during preview or production verification.
 - Vercel reported no runtime errors in the latest one-hour window after deployment.
 - PR #109 did not invoke the production cron; the expanded readiness window awaits a later independent scheduled or specifically authorized run.
 - Lead Flow: 18/18 acceptance PASS and owner decision recorded.
@@ -119,7 +124,7 @@ The obsolete draft PRs #1, #6, #7, #8, #9, #11, #12, #13, #14, #15, #16, and #17
 
 ## Current branch state
 
-- PR #115 branch `agent/remove-powered-by-header` is merged.
+- PR #116 branch `agent/atomic-ghl-retry-claim` is merged.
 - No new implementation branch is currently active.
 
 ## Lock return protocol
