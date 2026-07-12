@@ -9,7 +9,7 @@ holder: chatgpt
 scope: hpintojr/crm.mcd + hpintojr/My-Workspace
 since: 2026-07-12T06:40Z (Hamilton directed ChatGPT to take over while Claude usage is unavailable until Monday 9:00 AM Pacific and to complete as much as possible end to end without human intervention)
 previous_holder: claude (2026-07-12T06:38Z through 2026-07-12T06:40Z. No additional Claude work was recorded after PR #102.)
-intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment verification, and handoff. PRs #103-#121 are complete and deployed. Continue only with evidence-backed code hardening, regression coverage, read-only dashboards, and operator UX that do not require production mutations, external workflow calls, migrations, or settings changes. Current next scope: audit and standardize remaining protected Admin read-only JSON APIs so they use the shared no-store/noindex/request-ID response contract without changing query or business behavior. Start with controlled-test-data reporting. Do not apply the staged Commission migration, change production feature flags, identify or use the two Servicing onboarding candidates, mutate production Leads/Client Accounts/Service Cases/acceptance records, call live GHL, activate payment providers, release payouts, store financial-account data, or move money.
+intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment verification, and handoff. PRs #103-#122 are complete and deployed. Continue only with evidence-backed code hardening, regression coverage, read-only dashboards, and operator UX that do not require production mutations, external workflow calls, migrations, or settings changes. Current next scope: standardize the second protected Lead acceptance report cluster on the shared no-store/noindex/request-ID response contract, preserving every report/query body. Keep CSV/download endpoints separate. Do not apply the staged Commission migration, change production feature flags, identify or use the two Servicing onboarding candidates, mutate production Leads/Client Accounts/Service Cases/acceptance records, call live GHL, activate payment providers, release payouts, store financial-account data, or move money.
 ```
 
 ## Authorized without further owner approval
@@ -60,9 +60,11 @@ intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment v
 - **PR #119 — Admin controlled test request boundary**
 - **PR #120 — Legacy Admin Lead import retirement**
 - **PR #121 — Aggregate Integration Health control plane**
-  - Added protected page and API for aggregate webhook/error health and GHL configuration readiness.
-  - Exact source guards reject payload, event/location ID, message/reference, contact-data, credential, and mutation selection.
-  - Unauthenticated access resolves to sign-in; no authenticated snapshot was queried during verification.
+- **PR #122 — Protected Admin read report response boundary**
+  - Standardized deployment verification, project readiness, Servicing readiness, and controlled-test-data reports.
+  - Added request IDs, no-store/noindex metadata, role-only viewer metadata, and Servicing HTTP 503 on read failure.
+  - Underlying snapshot/query/report bodies remain unchanged.
+  - Unauthenticated preview access resolved to sign-in; no protected report contents were queried.
 
 ## Daily logs
 
@@ -82,6 +84,7 @@ intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment v
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM PR119 Admin Controlled Test Request Boundary.md`
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM PR120 Legacy Admin Lead Import Retirement.md`
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM PR121 Integration Health Control Plane.md`
+- `01 Daily Logs/[G] 2026-07-12 MCD CRM PR122 Admin Read Report Response Boundary.md`
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM Autonomous Hardening and Repository Cleanup.md`
 
 ## Repository hygiene
@@ -90,10 +93,10 @@ The obsolete draft PRs #1, #6, #7, #8, #9, #11, #12, #13, #14, #15, #16, and #17
 
 ## Current production baseline
 
-- Latest production commit: `0e589831cb5f1d9e5d13002d3fc29b25448d65a7` (PR #121).
-- Vercel deployment: `dpl_H1YszkAkbuvAFuFh4J3ogTZ8ghzC`, READY and aliased to `crm.mercurycalldesk.com`.
-- `/api/status`: HTTP 200, environment `production`, branch `main`, exact PR #121 merge SHA, no-store, noindex, and the complete security-header baseline intact.
-- No authenticated Integration Health snapshot, signup, activation, portal write, controlled-test, import, cron, or GHL webhook POST route was invoked during preview or production verification.
+- Latest production commit: `6f044a463f1a65d0f5469c394bb52db308119847` (PR #122).
+- Vercel deployment: `dpl_39ZsC9SZTn6Xio5UAeWHx4pNC5Zh`, READY and aliased to `crm.mercurycalldesk.com`.
+- `/api/status`: HTTP 200, environment `production`, branch `main`, exact PR #122 merge SHA, no-store, noindex, and the complete security-header baseline intact.
+- No protected report, authenticated Integration Health snapshot, signup, activation, portal write, controlled-test, import, cron, or GHL webhook POST route was invoked during preview or production verification.
 - Vercel reported no runtime errors in the latest one-hour window after deployment.
 - PR #109 did not invoke the production cron; the expanded readiness window awaits a later independent scheduled or specifically authorized run.
 - Lead Flow: 18/18 acceptance PASS and owner decision recorded.
@@ -105,9 +108,9 @@ The obsolete draft PRs #1, #6, #7, #8, #9, #11, #12, #13, #14, #15, #16, and #17
 
 ## Current branch state
 
-- PR #121 branch `agent/integration-health-control-plane` is merged.
+- PR #122 branch `agent/admin-read-report-boundary` is merged.
 - No new implementation branch is currently active.
-- Next planned branch: standardize protected Admin read-only JSON response metadata, starting with controlled-test-data.
+- Next planned branch: standardize non-download Lead acceptance report APIs while keeping CSV/download contracts separate.
 
 ## Lock return protocol
 
