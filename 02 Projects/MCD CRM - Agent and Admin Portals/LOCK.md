@@ -9,7 +9,7 @@ holder: chatgpt
 scope: hpintojr/crm.mcd + hpintojr/My-Workspace
 since: 2026-07-12T06:40Z (Hamilton directed ChatGPT to take over while Claude usage is unavailable until Monday 9:00 AM Pacific and to complete as much as possible end to end without human intervention)
 previous_holder: claude (2026-07-12T06:38Z through 2026-07-12T06:40Z. No additional Claude work was recorded after PR #102.)
-intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment verification, and handoff during this interval. PRs #103-#108 are complete and deployed. Continue with evidence-backed code hardening that does not require production mutations or settings changes. Select the next scope from current source, build, and runtime evidence; keep all business-rule outcomes and protected production data unchanged unless Hamilton gives a specific subsequent instruction naming the action. Do not apply the staged Commission migration, change production feature flags, identify or use the two Servicing onboarding candidates, mutate production Leads/Client Accounts/Service Cases/acceptance records, call live GHL, activate payment providers, release payouts, store financial-account data, or move money.
+intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment verification, and handoff during this interval. PRs #103-#109 are complete and deployed. Continue with evidence-backed code hardening that does not require production mutations or settings changes. The next source-backed audit is unconditional `[route-trace]` progress logging in authentication and top-level page/layout entry points; make tracing explicitly opt-in while preserving errors, security audits, authorization behavior, and an operator-controlled diagnostic path. Do not apply the staged Commission migration, change production feature flags, identify or use the two Servicing onboarding candidates, mutate production Leads/Client Accounts/Service Cases/acceptance records, call live GHL, activate payment providers, release payouts, store financial-account data, or move money.
 ```
 
 ## Authorized without further owner approval
@@ -43,47 +43,39 @@ intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment v
 
 - **PR #103 — Production Smoke automation**
   - Exact production SHA convergence, status contract, public login, protected page/API boundaries.
-  - Runs on main push, manual dispatch, and six-hour schedule.
 - **PR #104 — Lead aging cron resilience**
-  - Bounded read-only DB readiness retries, structured retryable 503 responses, request IDs.
-  - Mutating aging sweep remains single-execution and is never automatically replayed.
+  - Added bounded read-only DB readiness retries while keeping the mutating sweep single-execution.
 - **PR #105 — Global HTTP security headers**
-  - CSP frame/base/form/object restrictions, anti-framing, nosniff, referrer, permissions, opener, DNS and legacy protections.
-  - Production Smoke enforces the header baseline.
+  - Added and deployed the global browser/security response-header baseline.
 - **PR #106 — Auth telemetry hygiene**
-  - Expected `CredentialsSignin` outcomes reclassified to compact informational telemetry.
-  - Unexpected Auth.js failures remain errors; lockout, MFA and audit behavior unchanged.
+  - Reclassified expected credential outcomes without changing authentication, MFA, lockout, or audit behavior.
 - **PR #107 — Certification precondition UX**
-  - Ineligible approval choices disabled; prerequisite summary added.
-  - Stale expected precondition failures redirect to clear banners instead of production exceptions.
-  - Server-side eligibility enforcement and audit behavior unchanged.
+  - Disabled invalid approvals and redirected expected prerequisite failures to clear operator feedback.
 - **PR #108 — Manager claim action boundary**
-  - Direct claim now renders only when both Lead-side gates and actor-side claim permission are satisfied.
-  - Managers retain direct claim only for controlled acceptance-test Leads; real Leads show reassignment guidance.
-  - Known stale claim failures return operator feedback while unexpected failures remain errors.
-  - Existing capacity, two-way-contact gate, atomic `updateMany`, 45-day timer, claim events, and audit behavior remain unchanged.
+  - Aligned direct claim rendering with the existing Agent/controlled-test manager service rules.
+- **PR #109 — Lead aging readiness window**
+  - Expanded only the read-only `SELECT 1` readiness probe to five attempts with 1/2/4/8-second backoff.
+  - Added an explicit 90-second route duration budget.
+  - Preserved exactly one mutating sweep execution outside all retry logic.
 
 Daily logs:
 
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM PR106 Auth Telemetry Hygiene.md`
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM PR107 Certification Precondition UX.md`
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM PR108 Manager Claim Action Boundary.md`
+- `01 Daily Logs/[G] 2026-07-12 MCD CRM PR109 Lead Aging Readiness Window.md`
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM Autonomous Hardening and Repository Cleanup.md`
 
 ## Repository hygiene
 
-The following obsolete draft PRs were confirmed superseded by current `main`, given an explanatory comment, and closed without merge:
-
-- #1, #6, #7, #8, #9, #11, #12, #13, #14, #15, #16, and #17.
-
-The GitHub open-PR queue was confirmed empty after cleanup and again before PR #108 opened.
+The obsolete draft PRs #1, #6, #7, #8, #9, #11, #12, #13, #14, #15, #16, and #17 were confirmed superseded, commented, and closed without merge.
 
 ## Current production baseline
 
-- Latest production commit: `69d99abfde8e9bf254f087b773fdab54602159cb` (PR #108).
-- Vercel deployment: `dpl_2Tk6nyPoGCAsysQLGjba95gL9ddD`, READY and aliased to `crm.mercurycalldesk.com`.
-- `/api/status`: HTTP 200, environment `production`, branch `main`, exact PR #108 merge SHA, no-store and the full security-header baseline intact.
-- Vercel runtime errors: none found in the latest one-hour window after PR #108 deployed.
+- Latest production commit: `6e11cd99bb39b0943bbb6907299bd25dcf701770` (PR #109).
+- Vercel deployment: `dpl_8UL8sGzdbApDgCjrtpf2TgtJBixW`, READY and aliased to `crm.mercurycalldesk.com`.
+- `/api/status`: HTTP 200, environment `production`, branch `main`, exact PR #109 merge SHA, no-store and the full security-header baseline intact.
+- PR #109 did not invoke the production cron; the expanded readiness window awaits a later independent scheduled or specifically authorized run.
 - Lead Flow: 18/18 acceptance PASS and owner decision recorded.
 - Project Readiness: live at `/admin/project-readiness`.
 - Servicing preflight: live at `/admin/servicing/acceptance-command-center`; expected decision `OWNER_AUTHORIZATION_REQUIRED`.
@@ -92,9 +84,8 @@ The GitHub open-PR queue was confirmed empty after cleanup and again before PR #
 
 ## Current branch state
 
-- PR #108 branch `agent/manager-claim-action-boundary-v2` is merged.
-- The earlier empty branch `agent/manager-claim-action-boundary` was never used and contains no work.
-- No new implementation branch is currently active; select the next branch from current evidence.
+- PR #109 branch `agent/lead-aging-readiness-window` is merged.
+- No new implementation branch is currently active.
 
 ## Lock return protocol
 
