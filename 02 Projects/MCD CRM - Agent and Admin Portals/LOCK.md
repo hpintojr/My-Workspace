@@ -9,7 +9,7 @@ holder: chatgpt
 scope: hpintojr/crm.mcd + hpintojr/My-Workspace
 since: 2026-07-12T06:40Z (Hamilton directed ChatGPT to take over while Claude usage is unavailable until Monday 9:00 AM Pacific and to complete as much as possible end to end without human intervention)
 previous_holder: claude (2026-07-12T06:38Z through 2026-07-12T06:40Z. No additional Claude work was recorded after PR #102.)
-intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment verification, and handoff during this interval. PRs #103-#112 are complete and deployed. Continue only with evidence-backed code hardening that does not require production mutations or settings changes. The next source-backed audit is the public `/api/signup` boundary: verify duplicate/concurrency handling, response disclosure, GHL side-effect ordering, and sanitized observability without invoking the production endpoint or changing applicant eligibility. Do not apply the staged Commission migration, change production feature flags, identify or use the two Servicing onboarding candidates, mutate production Leads/Client Accounts/Service Cases/acceptance records, call live GHL, activate payment providers, release payouts, store financial-account data, or move money.
+intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment verification, and handoff during this interval. PRs #103-#113 are complete and deployed. Continue only with evidence-backed code hardening that does not require production mutations or settings changes. The next source-backed audit is the public account-activation boundary: verify token handling, request limits, replay behavior, response disclosure, password validation, and sanitized observability without invoking a production activation or changing user eligibility. Do not apply the staged Commission migration, change production feature flags, identify or use the two Servicing onboarding candidates, mutate production Leads/Client Accounts/Service Cases/acceptance records, call live GHL, activate payment providers, release payouts, store financial-account data, or move money.
 ```
 
 ## Authorized without further owner approval
@@ -67,6 +67,12 @@ intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment v
 - **PR #112 — Centralized global security headers**
   - Removed the weaker duplicate response-header copy from middleware while preserving the NextAuth wrapper and matcher.
   - Kept `next.config.mjs` as the sole global header source and strengthened the guard against future middleware drift.
+- **PR #113 — Public signup boundary**
+  - Added 16 KiB request limits, normalized signup fields/email, and made accepted responses no-store/noindex with request IDs.
+  - Reserved the Agent, required onboarding documents, and initial audit atomically before the GHL side effect.
+  - Made duplicate/concurrent retries idempotent and indistinguishable through one HTTP 202 `{ok:true}` response.
+  - Removed public Agent/GHL identifiers and stored only sanitized integration evidence.
+  - No signup endpoint was invoked during validation or production verification.
 
 Daily logs:
 
@@ -77,6 +83,7 @@ Daily logs:
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM PR110 Opt-In Route Tracing.md`
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM PR111 Minimal Public Status.md`
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM PR112 Centralized Security Headers.md`
+- `01 Daily Logs/[G] 2026-07-12 MCD CRM PR113 Public Signup Boundary.md`
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM Autonomous Hardening and Repository Cleanup.md`
 
 ## Repository hygiene
@@ -85,10 +92,11 @@ The obsolete draft PRs #1, #6, #7, #8, #9, #11, #12, #13, #14, #15, #16, and #17
 
 ## Current production baseline
 
-- Latest production commit: `b15b5189192efb2a04cb4b8a85c953a8baa04716` (PR #112).
-- Vercel deployment: `dpl_6KoiZEi97uFKooHVSf6p5err1G47`, READY and aliased to `crm.mercurycalldesk.com`.
-- `/api/status`: HTTP 200, environment `production`, branch `main`, exact PR #112 merge SHA, no-store, noindex, and the complete global security-header baseline intact.
-- Unauthenticated `/admin/project-readiness` still resolves to the branded `/login` surface with the complete global header baseline.
+- Latest production commit: `b9fa939455f2f8aad92c24ea65fc508b81e6dbe0` (PR #113).
+- Vercel deployment: `dpl_9AXSq1r5Bfw9oheJMthceThd5eRN`, READY and aliased to `crm.mercurycalldesk.com`.
+- `/api/status`: HTTP 200, environment `production`, branch `main`, exact PR #113 merge SHA, no-store, noindex, and the complete global security-header baseline intact.
+- `/signup`: HTTP 200 with the expected Partner sign-up form, `noindex, nofollow`, and the complete global security-header baseline.
+- No POST was sent to `/api/signup`; no Agent/application record was created and no GHL call was made during verification.
 - Vercel reported no runtime errors in the latest one-hour window after deployment.
 - PR #109 did not invoke the production cron; the expanded readiness window awaits a later independent scheduled or specifically authorized run.
 - Lead Flow: 18/18 acceptance PASS and owner decision recorded.
@@ -99,7 +107,7 @@ The obsolete draft PRs #1, #6, #7, #8, #9, #11, #12, #13, #14, #15, #16, and #17
 
 ## Current branch state
 
-- PR #112 branch `agent/centralize-security-headers` is merged.
+- PR #113 branch `agent/public-signup-boundary` is merged.
 - No new implementation branch is currently active.
 
 ## Lock return protocol
