@@ -9,7 +9,7 @@ holder: chatgpt
 scope: hpintojr/crm.mcd + hpintojr/My-Workspace
 since: 2026-07-12T06:40Z (Hamilton directed ChatGPT to take over while Claude usage is unavailable until Monday 9:00 AM Pacific and to complete as much as possible end to end without human intervention)
 previous_holder: claude (2026-07-12T06:38Z through 2026-07-12T06:40Z. No additional Claude work was recorded after PR #102.)
-intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment verification, and handoff. PRs #103-#123 are complete and deployed. Continue only with evidence-backed code hardening, regression coverage, read-only dashboards, and operator UX that do not require production mutations, external workflow calls, migrations, or settings changes. Current next scope: harden protected CSV/download response metadata through a download-specific helper, preserving filenames, content types, columns, query bounds, and export AuditLog evidence. Do not invoke exports. Do not apply the staged Commission migration, change production feature flags, identify or use the two Servicing onboarding candidates, mutate production Leads/Client Accounts/Service Cases/acceptance records, call live GHL, activate payment providers, release payouts, store financial-account data, or move money.
+intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment verification, and handoff. PRs #103-#125 are complete and deployed. Continue only with evidence-backed code hardening, regression coverage, read-only dashboards, and operator UX that do not require production mutations, external workflow calls, production migrations, or settings changes. Current next scope: harden the supported Admin Lead-import preview and commit request boundaries so authorization occurs before bounded JSON parsing, responses use the shared request-ID/no-store/noindex contract, and unexpected errors remain generic while preserving the existing 500-row import service and business outcomes. Do not invoke imports or exports. Do not apply the staged Commission migration, change production feature flags, identify or use the two Servicing onboarding candidates, mutate production Leads/Client Accounts/Service Cases/acceptance records, call live GHL, activate payment providers, release payouts, store financial-account data, or move money.
 ```
 
 ## Authorized without further owner approval
@@ -18,7 +18,7 @@ intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment v
 - Add navigation, source-derived summaries, deep links, and operational matrices.
 - Add regression guards and wire them into CI/build.
 - Add GitHub Actions for non-mutating smoke tests and repository validation.
-- Add opt-in or disposable-branch database test harnesses that never target production.
+- Add opt-in or disposable-database test harnesses that never target production.
 - Run read-only production database/catalog queries.
 - Improve operator UX, observability, request/response boundaries, expected-error handling, and retire unused bypass routes without changing supported business-rule outcomes or mutating production records during deployment.
 - Create branches, PRs, run CI, squash-merge after all required checks pass, and verify Vercel production deployments.
@@ -64,8 +64,15 @@ intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment v
 - **PR #123 — Lead acceptance JSON report response boundary**
   - Standardized nine non-download Lead acceptance and dry-run report APIs on the shared request-ID/no-store/noindex contract.
   - Preserved every helper, calculation, AuditLog query, result field, and aging dry-run behavior.
-  - Kept acceptance CSV/download routes separate with their content-type and attachment contracts intact.
-  - No report, aging preview, or CSV endpoint was accessed during verification.
+- **PR #124 — Protected CSV download response boundary**
+  - Centralized attachment content type, filename, no-store/noindex, and request-ID headers across four privileged CSV exports.
+  - Preserved export columns, query bounds, role restrictions, filenames, and export AuditLog evidence.
+- **PR #125 — Signed Lead-import response boundary**
+  - Standardized all six signed lifecycle routes on bounded request IDs and no-store/noindex JSON responses.
+  - Preserved HMAC, replay, concurrency, schemas, response bodies/statuses, import outcomes, and private acquisition rules.
+  - Activated PR #124's previously omitted CSV guard in the authoritative build and deployment-verification contracts.
+  - Replaced a deleted Neon CI endpoint with a temporary PostgreSQL 17 service container.
+  - The disposable database builds the Prisma schema, applies the exact committed research-field trigger, and passes both lifecycle and research/private-provenance harnesses without Neon or production access.
 
 ## Daily logs
 
@@ -87,6 +94,7 @@ intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment v
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM PR121 Integration Health Control Plane.md`
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM PR122 Admin Read Report Response Boundary.md`
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM PR123 Lead Acceptance Report Boundary.md`
+- `01 Daily Logs/[G] 2026-07-12 MCD CRM PR125 Signed Lead Import Response Boundary.md`
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM Autonomous Hardening and Repository Cleanup.md`
 
 ## Repository hygiene
@@ -95,11 +103,12 @@ The obsolete draft PRs #1, #6, #7, #8, #9, #11, #12, #13, #14, #15, #16, and #17
 
 ## Current production baseline
 
-- Latest production commit: `7b3d22756349863e7623ff76dd7d09d6cb28e913` (PR #123).
-- Vercel deployment: `dpl_FadS48Mpiqsw4iCjX3Ev3KuwsfUm`, READY and aliased to `crm.mercurycalldesk.com`.
-- `/api/status`: HTTP 200, environment `production`, branch `main`, exact PR #123 merge SHA, no-store, noindex, and the complete security-header baseline intact.
-- No protected report, aging preview, CSV/download, authenticated Integration Health snapshot, signup, activation, portal write, controlled-test, import, cron, or GHL webhook POST route was invoked during preview or production verification.
+- Latest production commit: `991bb0a2bce200b3a30da4d62a5c7d4dc16789b6` (PR #125).
+- Vercel deployment: `dpl_8h85PUVycYfpVWd9tTevKQVcPUic`, READY and aliased to `crm.mercurycalldesk.com`.
+- `/api/status`: HTTP 200, environment `production`, branch `main`, exact PR #125 merge SHA, no-store, noindex, and the complete security-header baseline intact.
+- No protected report, aging preview, CSV/download, signed or Admin import, authenticated Integration Health snapshot, signup, activation, portal write, controlled-test, cron, or GHL webhook POST route was invoked during preview or production verification.
 - Vercel reported no runtime errors in the latest one-hour window after deployment.
+- The isolated Lead-import integration suite uses only a temporary PostgreSQL service container; no Neon or production database is used.
 - PR #109 did not invoke the production cron; the expanded readiness window awaits a later independent scheduled or specifically authorized run.
 - Lead Flow: 18/18 acceptance PASS and owner decision recorded.
 - Project Readiness: live at `/admin/project-readiness`.
@@ -110,9 +119,9 @@ The obsolete draft PRs #1, #6, #7, #8, #9, #11, #12, #13, #14, #15, #16, and #17
 
 ## Current branch state
 
-- PR #123 branch `agent/lead-acceptance-report-boundary` is merged.
+- PR #125 branch `agent/lead-import-response-boundary` is merged.
 - No new implementation branch is currently active.
-- Next planned branch: protected CSV/download response metadata boundary, preserving all export bodies and audit evidence.
+- Next planned branch: `agent/admin-lead-import-request-boundary`.
 
 ## Lock return protocol
 
