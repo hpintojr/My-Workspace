@@ -7,9 +7,9 @@ Others read/verify only. See `[C] AI Operating Protocol — Handoff, Changelog, 
 ```txt
 holder: chatgpt
 scope: hpintojr/crm.mcd + hpintojr/My-Workspace
-since: 2026-07-12T06:40Z (Hamilton directed ChatGPT to take over while Claude usage is unavailable and to complete as much as possible end to end without human intervention)
+since: 2026-07-12T06:40Z (Hamilton directed ChatGPT to take over and complete as much as possible end to end without human intervention)
 previous_holder: claude (2026-07-12T06:38Z through 2026-07-12T06:40Z. No additional Claude work was recorded after PR #102.)
-intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment verification, and handoff. PRs #103-#133 are complete; PR #133 repaired PR #132's failed build and delivered the protected Build Guard Registry control plane to production. Continue only with evidence-backed code hardening, regression coverage, read-only dashboards, operator UX, and disposable-database/browser test harnesses that do not require production mutations, external workflow calls, production migrations, credentials, or settings changes. Current next scope: build an authenticated end-to-end test foundation using synthetic users, localhost-only execution, and a disposable PostgreSQL service; initially cover unauthenticated protection, Admin login, role boundaries, logout/session protection, and test-environment safety sentinels. Do not target production or preview databases, invoke production imports/exports/controlled tests/cron/signup/activation/webhooks, apply the staged Commission migration, change production feature flags, identify or use the two Servicing onboarding candidates, mutate production Leads/Client Accounts/Service Cases/acceptance records, call live GHL, activate payment providers, release payouts, store financial-account data, or move money.
+intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment verification, and handoff. PRs #103-#134 are complete and deployed. Continue only with evidence-backed code hardening, regression coverage, read-only dashboards, operator UX, and disposable-database/browser test harnesses that do not require production mutations, external workflow calls, production migrations, real credentials, or settings changes. Current next scope: extend the disposable authenticated browser suite with synthetic MFA and failed-login/lockout behavior while preserving localhost-only execution and disabled business modules. Do not target production or preview databases, invoke production imports/exports/controlled tests/cron/signup/activation/webhooks, apply the staged Commission migration, change production feature flags, identify or use the two Servicing onboarding candidates, mutate production Leads/Client Accounts/Service Cases/acceptance records, call live GHL, activate payment providers, release payouts, store financial-account data, or move money.
 ```
 
 ## Authorized without further owner approval
@@ -18,7 +18,7 @@ intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment v
 - Add navigation, source-derived summaries, deep links, and operational matrices.
 - Add regression guards and wire them into CI/build.
 - Add GitHub Actions for non-mutating smoke tests and repository validation.
-- Add opt-in or disposable-database test harnesses that never target production.
+- Add opt-in or disposable-database/browser test harnesses that never target production.
 - Run read-only production database/catalog queries.
 - Improve operator UX, observability, request/response boundaries, expected-error handling, and retire unused bypass routes without changing supported business-rule outcomes or mutating production records during deployment.
 - Create branches, PRs, run CI, squash-merge after all required checks pass, and verify Vercel production deployments.
@@ -41,59 +41,15 @@ intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment v
 
 ## Autonomous work completed after PR #102
 
-- **PR #103 — Production Smoke automation**
-- **PR #104 — Lead aging cron resilience**
-- **PR #105 — Global HTTP security headers**
-- **PR #106 — Auth telemetry hygiene**
-- **PR #107 — Certification precondition UX**
-- **PR #108 — Manager claim action boundary**
-- **PR #109 — Lead aging readiness window**
-- **PR #110 — Opt-in route tracing**
-- **PR #111 — Minimal public deployment status**
-- **PR #112 — Centralized global security headers**
-- **PR #113 — Public signup boundary**
-- **PR #114 — Atomic account activation**
-- **PR #115 — Framework header suppression**
-- **PR #116 — Atomic GHL webhook retry claim**
-- **PR #117 — Inbound GHL webhook request boundary**
-- **PR #118 — Authenticated portal write request boundary**
-- **PR #119 — Admin controlled test request boundary**
-- **PR #120 — Legacy Admin Lead import retirement**
-- **PR #121 — Aggregate Integration Health control plane**
-- **PR #122 — Protected Admin read report response boundary**
-- **PR #123 — Lead acceptance JSON report response boundary**
-- **PR #124 — Protected CSV download response boundary**
-- **PR #125 — Signed Lead-import response boundary**
-- **PR #126 — Admin Lead-import request boundary**
-- **PR #127 — Route Boundary Registry**
-  - Added a fail-closed source scanner for direct route body parsers, direct response constructors, and route-level error messages.
-  - Established an exact reviewed baseline of 11 approved findings across 8 routes and zero frozen debt.
-  - Added protected `/admin/route-boundaries` and `/api/admin/route-boundaries` control planes with role-only metadata and no database/runtime payload access.
-- **PR #128 — Signed Lead Import Domain Error Mapping**
-  - Centralized three named typed-domain mappings across five signed import routes.
-  - Preserved exact public messages and HTTP statuses while keeping unknown failures generic.
-  - Reduced the Route Boundary Registry from 11 findings across 8 routes to 6 approved findings across 4 routes.
-- **PR #129 — Shared Route JSON Boundary**
-  - Centralized direct JSON response construction for activation, signup, Lead-aging cron, and public status.
-  - Preserved exact route payload/status/header contracts and request-ID behavior.
-  - Reduced the Route Boundary Registry from 6 findings across 4 routes to 2 approved bounded raw-body reads across 2 routes.
-- **PR #130 — Zero-Finding Route Boundary Registry**
-  - Centralized the final bounded public JSON body reads for activation and signup.
-  - Preserved exact declared/read/actual/parse ordering, route-specific limits, and public failure contracts.
-  - Established a fail-closed zero-finding Route Boundary Registry with zero frozen debt.
-- **PR #131 — Build Guard Registry**
-  - Replaced duplicated guard order and executable pass-line arrays with a reviewed source manifest and non-shell sequential runner.
-  - Preserved all 43 Lead-flow guard executions and 44 deployment-visible pass lines.
-  - Added exact manifest self-validation, mechanically verified compatibility evidence, and deployment-verification derivation.
-- **PR #132 — Protected Build Guard Registry Control Plane**
-  - Added Admin-only `/admin/build-guards` and `/api/admin/build-guards` static manifest views with role-only viewer metadata and no database or mutation access.
-  - Added a source/privacy guard and advanced the registry to 45 deployment-visible entries and 44 Lead-flow executions.
-  - The merged production build failed because older PR #131 version/count literals remained in executable guards; the prior healthy PR #131 deployment stayed live.
-- **PR #133 — Build Guard Registry Drift Repair**
-  - Replaced copied PR/count assertions with manifest-declared expected counts and derived deployment versioning.
-  - Restored omitted README and documentation-index control-plane links.
-  - Passed all 44 guards, all three GitHub workflows, Prisma generation, and the Next.js production build.
-  - Delivered the PR #132 control plane to production.
+- PRs #103-#126: production smoke, cron/auth/security hardening, public and authenticated request boundaries, GHL replay/request protection, import retirement, Integration Health, Admin report/CSV boundaries, and signed/Admin Lead-import boundaries.
+- **PR #127 — Route Boundary Registry:** fail-closed recursive route scanner and protected source-derived control plane.
+- **PR #128 — Signed Lead Import Domain Error Mapping:** centralized exact typed error mapping; registry 11 → 6 findings.
+- **PR #129 — Shared Route JSON Boundary:** centralized public/cron response construction; registry 6 → 2 findings.
+- **PR #130 — Zero-Finding Route Boundary Registry:** centralized final body reads; registry 0 findings and 0 frozen debt.
+- **PR #131 — Build Guard Registry:** reviewed manifest, non-shell sequential runner, and mechanically verified deployment evidence.
+- **PR #132 — Protected Build Guard Registry Control Plane:** Admin-only static manifest page/API; initial merged build exposed stale PR #131 assertions.
+- **PR #133 — Build Guard Registry Drift Repair:** manifest-declared counts and derived versioning; restored navigation; delivered PR #132 safely to production.
+- **PR #134 — Authenticated E2E Foundation:** localhost-only Playwright workflow with disposable PostgreSQL 17, synthetic Owner/Agent accounts, real credentials sessions, Admin/Agent role boundaries, logout invalidation, failure artifacts, and a fail-closed source safety guard.
 
 ## Daily logs
 
@@ -124,6 +80,7 @@ intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment v
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM PR131 Build Guard Registry.md`
 - `01 Daily Logs/[G] 2026-07-13 MCD CRM PR132 Build Guard Control Plane.md`
 - `01 Daily Logs/[G] 2026-07-13 MCD CRM PR133 Build Guard Registry Drift Repair.md`
+- `01 Daily Logs/[G] 2026-07-13 MCD CRM PR134 Authenticated E2E Foundation.md`
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM Autonomous Hardening and Repository Cleanup.md`
 
 ## Repository hygiene
@@ -132,26 +89,25 @@ The obsolete draft PRs #1, #6, #7, #8, #9, #11, #12, #13, #14, #15, #16, and #17
 
 ## Current production baseline
 
-- Latest production commit: `9dba97967fa05e599bd8c9e76c5ab67b781c149f` (PR #133).
-- Vercel deployment: `dpl_AERgCF3XQP8u37dEPnTSEhkUxVRY`, READY and aliased to `crm.mercurycalldesk.com`.
-- `/api/status`: HTTP 200, environment `production`, branch `main`, exact PR #133 merge SHA, no-store, noindex, and the complete security-header baseline intact.
-- No protected report, route-boundary snapshot, build-guard snapshot, aging preview, CSV/download, signed or Admin import, authenticated Integration Health snapshot, signup, activation, portal write, controlled-test, cron, or GHL webhook POST route was invoked during PR #133 preview or production verification.
+- Latest production commit: `e2dce3f00db54cb98f62a2fbe76e5d5e6edaabca` (PR #134).
+- Vercel deployment: `dpl_641k9gGXbfLNmNJvSR6VTFPKZyK9`, READY and aliased to `crm.mercurycalldesk.com`.
+- `/api/status`: HTTP 200, environment `production`, branch `main`, exact PR #134 merge SHA, no-store, noindex, and the complete security-header baseline intact.
+- No protected production application route was authenticated or invoked during PR #134 production verification; the browser suite ran only against localhost and disposable PostgreSQL.
 - Vercel reported no error or fatal runtime logs for the new deployment during the verification window.
 - Lead Flow: 18/18 acceptance PASS and owner decision recorded.
-- Project Readiness: live at `/admin/project-readiness`.
-- Route Boundary Registry: live at `/admin/route-boundaries`, protected and source-derived; current baseline is 0 findings and 0 frozen debt.
-- Build Guard Registry: live at `/admin/build-guards`, protected and source-derived; current manifest contains 45 deployment-visible entries, 44 Lead-flow executions, and one build-prelude entry. Version and counts are manifest-driven.
-- Integration Health: live at `/admin/integrations/health`, protected aggregate-only.
-- Servicing preflight: live at `/admin/servicing/acceptance-command-center`; expected decision `OWNER_AUTHORIZATION_REQUIRED`.
-- Production Servicing state: two aggregate onboarding candidates, zero Client Accounts, zero Service Cases, zero Servicing acceptance records.
-- Commission/Payout production schema: cleanly staged only; 0 of 7 tables and no current or legacy Commission enum types.
+- Route Boundary Registry: 0 findings and 0 frozen debt.
+- Build Guard Registry: 46 deployment-visible entries, 45 Lead-flow executions, and one build-prelude entry; version and counts are manifest-driven.
+- Authenticated E2E: PostgreSQL service, Prisma schema, synthetic Owner/Agent seed, Chromium, unauthenticated redirects, Owner Admin access/logout, and Agent/Admin role separation PASS.
+- Project Readiness, Build Guard Registry, Route Boundary Registry, Integration Health, and Servicing preflight remain deployed and protected.
+- Production Servicing: two aggregate onboarding candidates, zero Client Accounts, zero Service Cases, zero Servicing acceptance records.
+- Commission/Payout production schema: staged only; 0 of 7 tables and no current or legacy Commission enum types.
 
 ## Current branch state
 
-- PR #133 branch `agent/repair-build-guard-manifest-drift` is merged.
+- PR #134 branch `agent/authenticated-e2e-foundation` is merged.
 - No new implementation branch is currently active.
-- Next planned branch: `agent/authenticated-e2e-foundation`.
+- Next planned branch: `agent/authenticated-e2e-mfa-lockout`.
 
 ## Lock return protocol
 
-At the end of this execution interval, ChatGPT must update this file, write a complete `[G]` handoff log, record every merged PR and the latest verified production commit, and return the holder to Claude unless Hamilton directs otherwise.
+At the end of this execution interval, ChatGPT must update this file, write a complete `[G]` handoff log, record every merged PR and latest verified production commit, and return the holder to Claude unless Hamilton directs otherwise.
