@@ -5,11 +5,11 @@ Others read/verify only. See `[C] AI Operating Protocol — Handoff, Changelog, 
 `02 Projects/MCD CRM - Agent and Admin Portals/[C] ChatGPT-to-Claude Handoff Protocol — Composio Mandate.md`.
 
 ```txt
-holder: chatgpt
+holder: claude
 scope: hpintojr/crm.mcd + hpintojr/My-Workspace
-since: 2026-07-12T06:40Z (Hamilton directed ChatGPT to take over and complete as much as possible end to end without human intervention)
-previous_holder: claude (2026-07-12T06:38Z through 2026-07-12T06:40Z. No additional Claude work was recorded after PR #102.)
-intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment verification, and handoff. PRs #103-#137 are complete and deployed. Continue only with evidence-backed code hardening, regression coverage, read-only dashboards, operator UX, and disposable-database/browser test harnesses that do not require production mutations, external workflow calls, production migrations, real credentials, or settings changes. Current next scope: extend the localhost-only authenticated E2E harness to prove expired lockout recovery and correct-password denial for synthetic SUSPENDED and OFFBOARDED accounts, including read-only persisted evidence. Do not target production or preview databases, invoke production imports/exports/controlled tests/cron/signup/activation/webhooks, apply the staged Commission migration, change production feature flags, identify or use Servicing onboarding candidates, mutate production Leads/Client Accounts/Service Cases/acceptance records, call live GHL, activate payment providers, release payouts, store financial-account data, or move money.
+since: 2026-07-13T18:04Z (ChatGPT completed PR #138, verified production, and returned execution authority under the handback protocol)
+previous_holder: chatgpt (2026-07-12T06:40Z through 2026-07-13T18:04Z. Completed PRs #103-#138 under the standing autonomous scope and verified PR #138 production.)
+intent: Claude resumes evidence-backed implementation, PR, CI, merge, deployment verification, and handoff. PRs #103-#138 are complete and deployed. Continue only with evidence-backed code hardening, regression coverage, read-only dashboards, operator UX, and disposable-database/browser test harnesses that do not require production mutations, external workflow calls, production migrations, real credentials, or settings changes. Current next scope: read-only current-deployment runtime reliability and configuration/state verification, then maintain the synthetic/local browser, accessibility, responsive, and route/role evidence matrix. Do not target production or preview databases, invoke production imports/exports/controlled tests/cron/signup/activation/webhooks, apply the staged Commission migration, change production feature flags, identify or use Servicing onboarding candidates, mutate production Leads/Client Accounts/Service Cases/acceptance records, call live GHL, activate payment providers, release payouts, store financial-account data, or move money.
 ```
 
 ## Authorized without further owner approval
@@ -49,6 +49,7 @@ intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment v
 - **PR #135 — Authenticated MFA and Lockout E2E:** generic credential errors, MFA required/invalid/valid TOTP, and five-attempt lockout.
 - **PR #136 — Persisted Authentication Security Evidence:** read-only proof of counters, lock timestamps, MFA reasons, login/logout ordering, and AuditLog consistency.
 - **PR #137 — Live Session Authorization Enforcement:** proved issued sessions immediately lose access after User suspension or Owner→Agent role change, while the role-changed session can reach the Agent portal using current database authorization.
+- **PR #138 — Account-State Recovery and Inactive Login Denial:** proved five-failure active lockout, bounded expired-lock recovery with reset state, and correct-password session denial for synthetic SUSPENDED and DISABLED Users; persisted User/AuditLog evidence is read-only.
 
 ## Daily logs
 
@@ -83,26 +84,27 @@ intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment v
 - `01 Daily Logs/[G] 2026-07-13 MCD CRM PR135 Authenticated MFA and Lockout E2E.md`
 - `01 Daily Logs/[G] 2026-07-13 MCD CRM PR136 Persisted Authentication Security Evidence.md`
 - `01 Daily Logs/[G] 2026-07-13 MCD CRM PR137 Live Session Authorization Enforcement.md`
+- `01 Daily Logs/[G] 2026-07-13 MCD CRM PR138 Account State Recovery and Inactive Login Denial.md`
 
 ## Current production baseline
 
-- Latest production commit: `640009d995928f0ba218cbdf29ca02eaa6654453` (PR #137).
-- Vercel deployment: `dpl_3cnnVbeGcwcUVUKmecWuwirurrUe`, READY and aliased to `crm.mercurycalldesk.com`.
-- `/api/status`: HTTP 200, environment `production`, branch `main`, exact PR #137 merge SHA, no-store, noindex, and complete security headers.
+- Latest production commit: `c7aadba2433c869fbfd1dd7175d0fd721b149085` (PR #138).
+- Vercel deployment: `dpl_E8fA5JUTMzrA7WKhq4NnXX1CrjjS`, READY and aliased to `crm.mercurycalldesk.com`.
+- `/api/status`: HTTP 200, environment `production`, branch `main`, exact PR #138 merge SHA, no-store, noindex, and complete security headers.
 - No protected production route was authenticated or invoked; all browser, status/role mutations, and persisted assertions ran only against localhost and disposable PostgreSQL.
 - Vercel reported no error or fatal runtime logs during verification.
 - Lead Flow: 18/18 acceptance PASS.
 - Route Boundary Registry: 0 findings and 0 frozen debt.
-- Build Guard Registry: 46 deployment-visible entries, 45 Lead-flow executions, one build-prelude entry; manifest version `2026-07-13-pr137`.
-- Authenticated E2E: six synthetic identities, eight browser scenarios, and persisted User/AuditLog evidence PASS.
+- Build Guard Registry: 46 deployment-visible entries, 45 Lead-flow executions, one build-prelude entry; manifest version `2026-07-13-pr138`.
+- Authenticated E2E: eight synthetic identities, ten browser scenarios, expired-lock recovery, inactive correct-password denial, and persisted User/AuditLog evidence PASS.
 - Production Servicing remains two aggregate candidates with zero Client Accounts, Service Cases, or Servicing acceptance records.
 - Commission/Payout production schema remains staged only: 0 of 7 tables and no Commission enum types.
 
 ## Current branch state
 
-- PR #137 branch `agent/authenticated-e2e-live-session-enforcement` is merged.
+- PR #138 branch `agent/authenticated-e2e-account-state-edges` is merged.
 - No implementation branch is active.
-- Next planned branch: `agent/authenticated-e2e-account-state-edges`.
+- Next planned scope: read-only current-deployment runtime reliability and configuration/state verification.
 
 ## Lock return protocol
 
