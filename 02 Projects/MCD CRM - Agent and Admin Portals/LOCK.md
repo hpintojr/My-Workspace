@@ -5,11 +5,11 @@ Others read/verify only. See `[C] AI Operating Protocol — Handoff, Changelog, 
 `02 Projects/MCD CRM - Agent and Admin Portals/[C] ChatGPT-to-Claude Handoff Protocol — Composio Mandate.md`.
 
 ```txt
-holder: claude
-scope: standard CRM.MCD execution; ChatGPT's narrow Mercury Call Desk GHL + Stripe Sandbox configuration interval is complete. The saved Stripe Sandbox intake workflow remains Draft. No code, database, deployment, UI/frontend, live Stripe, financial-account storage, payout release, or money movement was performed.
-since: 2026-07-13T20:15:00-07:00 (Hamilton approved paid GHL webhook execution and selected manual external-payout recording)
-previous_holder: chatgpt (completed narrow GHL + Stripe Sandbox configuration)
-intent: ChatGPT saved the GHL inbound-webhook trigger from a real Stripe Sandbox payment_intent.succeeded mapping reference, left the workflow Draft, and recorded the production-backend, finance-field, and pipeline-separation requirements in the [G] daily log. Claude resumes the standard execution holder role.
+holder: chatgpt
+scope: Mercury Call Desk Connect-ready commission build only — inspect and implement the secure backend/data contract, create Sandbox-only Stripe Connect test configuration, and add the related GHL finance fields/workflows where browser access permits. Preserve manual admin approval for every transfer/payout. No frontend/UI work, deployment, migration, production feature flag, live Stripe/Connect activation, financial-account storage, payout release, or money movement.
+since: 2026-07-13T21:15:00-07:00 (Hamilton directed the Connect option be built for an efficient, extensible agent experience)
+previous_holder: claude (standard execution holder)
+intent: ChatGPT holds this narrow build interval. The architecture must retain manual-external payout as the safe default and make Stripe Connect a separately enabled, admin-controlled option. Return holder to Claude with a complete [G] handoff when finished.
 ```
 
 ## Authorized without further owner approval
