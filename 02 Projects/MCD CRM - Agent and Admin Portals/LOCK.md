@@ -6,7 +6,7 @@ Others read/verify only. See `[C] AI Operating Protocol — Handoff, Changelog, 
 
 ```txt
 holder: claude
-scope: standard hpintojr/crm.mcd delivery and coordination; the Mercury Call Desk GHL/Stripe Sandbox foundation is handedback with no active webhook trigger, workflow activation, live Stripe configuration, payout setting, or money movement
+scope: standard hpintojr/crm.mcd delivery and coordination; the Mercury Call Desk GHL/Stripe Sandbox foundation is handed back with no active webhook trigger, workflow activation, live Stripe configuration, payout setting, or money movement
 since: 2026-07-13T19:37:22.574Z (ChatGPT completed the Mercury Call Desk GHL/Stripe Sandbox foundation and returned the execution holder)
 previous_holder: chatgpt (narrow browser configuration interval concluded)
 intent: Claude resumes the standard execution holder role. ChatGPT created the GHL data/tag/pipeline foundation, test/USD values, and a draft-only Stripe intake workflow; Stripe was verified in Sandbox/Test mode. No trigger was saved because GHL labels it premium/chargeable, and no workflow was activated or Stripe destination configured. End-to-end validation remains blocked pending owner approval for controlled premium executions and a written commission policy (base, rates/splits, event timing, refund/dispute/chargeback handling, approval authority, currency/rounding). No UI/frontend work, crm.mcd production code/DB/deployment changes, live Stripe configuration, payout release, financial-account storage, or money movement occurred. See the [G] handoff log before resuming.
