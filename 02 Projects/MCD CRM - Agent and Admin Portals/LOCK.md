@@ -9,7 +9,7 @@ holder: chatgpt
 scope: hpintojr/crm.mcd + hpintojr/My-Workspace
 since: 2026-07-12T06:40Z (Hamilton directed ChatGPT to take over while Claude usage is unavailable until Monday 9:00 AM Pacific and to complete as much as possible end to end without human intervention)
 previous_holder: claude (2026-07-12T06:38Z through 2026-07-12T06:40Z. No additional Claude work was recorded after PR #102.)
-intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment verification, and handoff. PRs #103-#130 are complete and deployed. Continue only with evidence-backed code hardening, regression coverage, read-only dashboards, and operator UX that do not require production mutations, external workflow calls, production migrations, or settings changes. Current next scope: investigate and, if source evidence confirms, centralize the duplicated build-guard order and pass-line inventory into a fail-closed source manifest while preserving every existing guard and application build outcome. Do not invoke imports, exports, controlled tests, cron, signup, activation, or webhooks. Do not apply the staged Commission migration, change production feature flags, identify or use the two Servicing onboarding candidates, mutate production Leads/Client Accounts/Service Cases/acceptance records, call live GHL, activate payment providers, release payouts, store financial-account data, or move money.
+intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment verification, and handoff. PRs #103-#131 are complete and deployed. Continue only with evidence-backed code hardening, regression coverage, read-only dashboards, and operator UX that do not require production mutations, external workflow calls, production migrations, or settings changes. Current next scope: add a protected, source-derived Build Guard Registry page and JSON API using static manifest data only, with Admin authorization, role-only viewer metadata, no database access, no mutations, Settings navigation, privacy guards, and deployment-verification wiring. Do not invoke imports, exports, controlled tests, cron, signup, activation, or webhooks. Do not apply the staged Commission migration, change production feature flags, identify or use the two Servicing onboarding candidates, mutate production Leads/Client Accounts/Service Cases/acceptance records, call live GHL, activate payment providers, release payouts, store financial-account data, or move money.
 ```
 
 ## Authorized without further owner approval
@@ -81,6 +81,10 @@ intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment v
   - Centralized the final bounded public JSON body reads for activation and signup.
   - Preserved exact declared/read/actual/parse ordering, route-specific limits, and public failure contracts.
   - Established a fail-closed zero-finding Route Boundary Registry with zero frozen debt.
+- **PR #131 — Build Guard Registry**
+  - Replaced duplicated guard order and executable pass-line arrays with a reviewed source manifest and non-shell sequential runner.
+  - Preserved all 43 Lead-flow guard executions and 44 deployment-visible pass lines.
+  - Added exact manifest self-validation, mechanically verified compatibility evidence, and deployment-verification derivation.
 
 ## Daily logs
 
@@ -108,6 +112,7 @@ intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment v
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM PR128 Signed Lead Import Domain Error Mapping.md`
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM PR129 Shared Route JSON Boundary.md`
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM PR130 Zero Finding Route Boundary Registry.md`
+- `01 Daily Logs/[G] 2026-07-12 MCD CRM PR131 Build Guard Registry.md`
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM Autonomous Hardening and Repository Cleanup.md`
 
 ## Repository hygiene
@@ -116,14 +121,15 @@ The obsolete draft PRs #1, #6, #7, #8, #9, #11, #12, #13, #14, #15, #16, and #17
 
 ## Current production baseline
 
-- Latest production commit: `0a2dcd423cd8ebabee457b198d640e9f37e243ef` (PR #130).
-- Vercel deployment: `dpl_65KNxfgCxhisenFwqSeSMSCu25Jk`, READY and aliased to `crm.mercurycalldesk.com`.
-- `/api/status`: HTTP 200, environment `production`, branch `main`, exact PR #130 merge SHA, no-store, noindex, and the complete security-header baseline intact.
-- No protected report, route-boundary snapshot, aging preview, CSV/download, signed or Admin import, authenticated Integration Health snapshot, signup, activation, portal write, controlled-test, cron, or GHL webhook POST route was invoked during preview or production verification.
+- Latest production commit: `28e88eb43ce9756d80cf26c8e70667fccfe3074d` (PR #131).
+- Vercel deployment: `dpl_9k2ihbsFrWetonu3LqGbevTAECCf`, READY and aliased to `crm.mercurycalldesk.com`.
+- `/api/status`: HTTP 200, environment `production`, branch `main`, exact PR #131 merge SHA, no-store, noindex, and the complete security-header baseline intact.
+- No protected report, route-boundary snapshot, build-guard snapshot, aging preview, CSV/download, signed or Admin import, authenticated Integration Health snapshot, signup, activation, portal write, controlled-test, cron, or GHL webhook POST route was invoked during preview or production verification.
 - Vercel reported no error or fatal runtime logs for the new deployment during the verification window.
 - Lead Flow: 18/18 acceptance PASS and owner decision recorded.
 - Project Readiness: live at `/admin/project-readiness`.
 - Route Boundary Registry: live at `/admin/route-boundaries`, protected and source-derived; current baseline is 0 findings and 0 frozen debt.
+- Build Guard Registry: source manifest contains 44 deployment-visible entries and 43 Lead-flow executions; protected control plane is the next planned slice.
 - Integration Health: live at `/admin/integrations/health`, protected aggregate-only.
 - Servicing preflight: live at `/admin/servicing/acceptance-command-center`; expected decision `OWNER_AUTHORIZATION_REQUIRED`.
 - Production Servicing state: two aggregate onboarding candidates, zero Client Accounts, zero Service Cases, zero Servicing acceptance records.
@@ -131,9 +137,9 @@ The obsolete draft PRs #1, #6, #7, #8, #9, #11, #12, #13, #14, #15, #16, and #17
 
 ## Current branch state
 
-- PR #130 branch `agent/shared-public-json-body-boundary` is merged.
+- PR #131 branch `agent/build-guard-registry` is merged.
 - No new implementation branch is currently active.
-- Next planned branch: `agent/build-guard-registry` if the source investigation confirms a behavior-preserving manifest design.
+- Next planned branch: `agent/build-guard-control-plane`.
 
 ## Lock return protocol
 
