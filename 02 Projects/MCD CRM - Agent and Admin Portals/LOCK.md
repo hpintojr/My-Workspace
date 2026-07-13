@@ -7,9 +7,9 @@ Others read/verify only. See `[C] AI Operating Protocol — Handoff, Changelog, 
 ```txt
 holder: chatgpt
 scope: hpintojr/crm.mcd + hpintojr/My-Workspace
-since: 2026-07-12T06:40Z (Hamilton directed ChatGPT to take over while Claude usage is unavailable until Monday 9:00 AM Pacific and to complete as much as possible end to end without human intervention)
+since: 2026-07-12T06:40Z (Hamilton directed ChatGPT to take over while Claude usage is unavailable and to complete as much as possible end to end without human intervention)
 previous_holder: claude (2026-07-12T06:38Z through 2026-07-12T06:40Z. No additional Claude work was recorded after PR #102.)
-intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment verification, and handoff. PRs #103-#131 are complete and deployed. Continue only with evidence-backed code hardening, regression coverage, read-only dashboards, and operator UX that do not require production mutations, external workflow calls, production migrations, or settings changes. Current next scope: add a protected, source-derived Build Guard Registry page and JSON API using static manifest data only, with Admin authorization, role-only viewer metadata, no database access, no mutations, Settings navigation, privacy guards, and deployment-verification wiring. Do not invoke imports, exports, controlled tests, cron, signup, activation, or webhooks. Do not apply the staged Commission migration, change production feature flags, identify or use the two Servicing onboarding candidates, mutate production Leads/Client Accounts/Service Cases/acceptance records, call live GHL, activate payment providers, release payouts, store financial-account data, or move money.
+intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment verification, and handoff. PRs #103-#133 are complete; PR #133 repaired PR #132's failed build and delivered the protected Build Guard Registry control plane to production. Continue only with evidence-backed code hardening, regression coverage, read-only dashboards, operator UX, and disposable-database/browser test harnesses that do not require production mutations, external workflow calls, production migrations, credentials, or settings changes. Current next scope: build an authenticated end-to-end test foundation using synthetic users, localhost-only execution, and a disposable PostgreSQL service; initially cover unauthenticated protection, Admin login, role boundaries, logout/session protection, and test-environment safety sentinels. Do not target production or preview databases, invoke production imports/exports/controlled tests/cron/signup/activation/webhooks, apply the staged Commission migration, change production feature flags, identify or use the two Servicing onboarding candidates, mutate production Leads/Client Accounts/Service Cases/acceptance records, call live GHL, activate payment providers, release payouts, store financial-account data, or move money.
 ```
 
 ## Authorized without further owner approval
@@ -85,6 +85,15 @@ intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment v
   - Replaced duplicated guard order and executable pass-line arrays with a reviewed source manifest and non-shell sequential runner.
   - Preserved all 43 Lead-flow guard executions and 44 deployment-visible pass lines.
   - Added exact manifest self-validation, mechanically verified compatibility evidence, and deployment-verification derivation.
+- **PR #132 — Protected Build Guard Registry Control Plane**
+  - Added Admin-only `/admin/build-guards` and `/api/admin/build-guards` static manifest views with role-only viewer metadata and no database or mutation access.
+  - Added a source/privacy guard and advanced the registry to 45 deployment-visible entries and 44 Lead-flow executions.
+  - The merged production build failed because older PR #131 version/count literals remained in executable guards; the prior healthy PR #131 deployment stayed live.
+- **PR #133 — Build Guard Registry Drift Repair**
+  - Replaced copied PR/count assertions with manifest-declared expected counts and derived deployment versioning.
+  - Restored omitted README and documentation-index control-plane links.
+  - Passed all 44 guards, all three GitHub workflows, Prisma generation, and the Next.js production build.
+  - Delivered the PR #132 control plane to production.
 
 ## Daily logs
 
@@ -113,6 +122,8 @@ intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment v
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM PR129 Shared Route JSON Boundary.md`
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM PR130 Zero Finding Route Boundary Registry.md`
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM PR131 Build Guard Registry.md`
+- `01 Daily Logs/[G] 2026-07-13 MCD CRM PR132 Build Guard Control Plane.md`
+- `01 Daily Logs/[G] 2026-07-13 MCD CRM PR133 Build Guard Registry Drift Repair.md`
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM Autonomous Hardening and Repository Cleanup.md`
 
 ## Repository hygiene
@@ -121,15 +132,15 @@ The obsolete draft PRs #1, #6, #7, #8, #9, #11, #12, #13, #14, #15, #16, and #17
 
 ## Current production baseline
 
-- Latest production commit: `28e88eb43ce9756d80cf26c8e70667fccfe3074d` (PR #131).
-- Vercel deployment: `dpl_9k2ihbsFrWetonu3LqGbevTAECCf`, READY and aliased to `crm.mercurycalldesk.com`.
-- `/api/status`: HTTP 200, environment `production`, branch `main`, exact PR #131 merge SHA, no-store, noindex, and the complete security-header baseline intact.
-- No protected report, route-boundary snapshot, build-guard snapshot, aging preview, CSV/download, signed or Admin import, authenticated Integration Health snapshot, signup, activation, portal write, controlled-test, cron, or GHL webhook POST route was invoked during preview or production verification.
+- Latest production commit: `9dba97967fa05e599bd8c9e76c5ab67b781c149f` (PR #133).
+- Vercel deployment: `dpl_AERgCF3XQP8u37dEPnTSEhkUxVRY`, READY and aliased to `crm.mercurycalldesk.com`.
+- `/api/status`: HTTP 200, environment `production`, branch `main`, exact PR #133 merge SHA, no-store, noindex, and the complete security-header baseline intact.
+- No protected report, route-boundary snapshot, build-guard snapshot, aging preview, CSV/download, signed or Admin import, authenticated Integration Health snapshot, signup, activation, portal write, controlled-test, cron, or GHL webhook POST route was invoked during PR #133 preview or production verification.
 - Vercel reported no error or fatal runtime logs for the new deployment during the verification window.
 - Lead Flow: 18/18 acceptance PASS and owner decision recorded.
 - Project Readiness: live at `/admin/project-readiness`.
 - Route Boundary Registry: live at `/admin/route-boundaries`, protected and source-derived; current baseline is 0 findings and 0 frozen debt.
-- Build Guard Registry: source manifest contains 44 deployment-visible entries and 43 Lead-flow executions; protected control plane is the next planned slice.
+- Build Guard Registry: live at `/admin/build-guards`, protected and source-derived; current manifest contains 45 deployment-visible entries, 44 Lead-flow executions, and one build-prelude entry. Version and counts are manifest-driven.
 - Integration Health: live at `/admin/integrations/health`, protected aggregate-only.
 - Servicing preflight: live at `/admin/servicing/acceptance-command-center`; expected decision `OWNER_AUTHORIZATION_REQUIRED`.
 - Production Servicing state: two aggregate onboarding candidates, zero Client Accounts, zero Service Cases, zero Servicing acceptance records.
@@ -137,9 +148,9 @@ The obsolete draft PRs #1, #6, #7, #8, #9, #11, #12, #13, #14, #15, #16, and #17
 
 ## Current branch state
 
-- PR #131 branch `agent/build-guard-registry` is merged.
+- PR #133 branch `agent/repair-build-guard-manifest-drift` is merged.
 - No new implementation branch is currently active.
-- Next planned branch: `agent/build-guard-control-plane`.
+- Next planned branch: `agent/authenticated-e2e-foundation`.
 
 ## Lock return protocol
 
