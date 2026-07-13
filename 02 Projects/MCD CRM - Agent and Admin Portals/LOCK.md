@@ -5,11 +5,11 @@ Others read/verify only. See `[C] AI Operating Protocol — Handoff, Changelog, 
 `02 Projects/MCD CRM - Agent and Admin Portals/[C] ChatGPT-to-Claude Handoff Protocol — Composio Mandate.md`.
 
 ```txt
-holder: chatgpt
-scope: Mercury Call Desk Connect-ready commission build only — inspect and implement the secure backend/data contract, create Sandbox-only Stripe Connect test configuration, and add the related GHL finance fields/workflows where browser access permits. Preserve manual admin approval for every transfer/payout. No frontend/UI work, deployment, migration, production feature flag, live Stripe/Connect activation, financial-account storage, payout release, or money movement.
-since: 2026-07-13T21:15:00-07:00 (Hamilton directed the Connect option be built for an efficient, extensible agent experience)
-previous_holder: claude (standard execution holder)
-intent: ChatGPT holds this narrow build interval. The architecture must retain manual-external payout as the safe default and make Stripe Connect a separately enabled, admin-controlled option. Return holder to Claude with a complete [G] handoff when finished.
+holder: claude
+scope: Standard execution holder — review the unmerged, non-deploying Stripe Connect readiness draft PR #139 and continue only within the existing production gates and financial safety boundary.
+since: 2026-07-13T23:31:00-07:00 (ChatGPT completed the authorized Connect-readiness interval)
+previous_holder: chatgpt
+intent: ChatGPT created a safe readiness-only foundation and Draft PR #139. Manual external payout remains the default; the optional Stripe Connect route has no live configuration, provider action, Connected Account, transfer, payout, migration, deployment, or feature-gate activation.
 ```
 
 ## Authorized without further owner approval
@@ -50,6 +50,7 @@ intent: ChatGPT holds this narrow build interval. The architecture must retain m
 - **PR #136 — Persisted Authentication Security Evidence:** read-only proof of counters, lock timestamps, MFA reasons, login/logout ordering, and AuditLog consistency.
 - **PR #137 — Live Session Authorization Enforcement:** proved issued sessions immediately lose access after User suspension or Owner→Agent role change, while the role-changed session can reach the Agent portal using current database authorization.
 - **PR #138 — Account-State Recovery and Inactive Login Denial:** proved five-failure active lockout, bounded expired-lock recovery with reset state, and correct-password session denial for synthetic SUSPENDED and DISABLED Users; persisted User/AuditLog evidence is read-only.
+- **Draft PR #139 — Stripe Connect readiness foundation:** pure no-side-effect Connect/manual-external route policy, server-only readiness contract, Commission-policy coverage, and agent/admin safety documentation. Vercel preview, Application Build, Verify CRM, and Commission Policy passed; isolated Authenticated E2E remained in progress at handback. No merge/deploy/provider action.
 
 ## Daily logs
 
@@ -105,8 +106,8 @@ intent: ChatGPT holds this narrow build interval. The architecture must retain m
 ## Current branch state
 
 - PR #138 branch `agent/authenticated-e2e-account-state-edges` is merged.
-- No implementation branch is active.
-- Next planned scope: read-only current-deployment runtime reliability and configuration/state verification.
+- Draft PR #139 branch `codex/connect-readiness-foundation-20260713` is open and unmerged; it is a readiness-only change with no deployment or activation. Review the pending Authenticated E2E result before ordinary draft review.
+- Next planned scope: read-only current-deployment runtime reliability/configuration verification, plus the separately controlled Stripe Sandbox backend/ledger acceptance preparation if explicitly authorized.
 
 ## Lock return protocol
 
