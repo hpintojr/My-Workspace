@@ -5,11 +5,11 @@ Others read/verify only. See `[C] AI Operating Protocol — Handoff, Changelog, 
 `02 Projects/MCD CRM - Agent and Admin Portals/[C] ChatGPT-to-Claude Handoff Protocol — Composio Mandate.md`.
 
 ```txt
-holder: chatgpt
-scope: narrow Mercury Call Desk GHL + Stripe Sandbox configuration only — align the fresh GHL model to the approved sales/finance separation, add manual-external-payout tracking fields, save/test the paid GHL Stripe intake workflow, and configure a Stripe Sandbox test destination/controlled test event. No CRM.MCD code, database, deployment, UI/frontend work, live Stripe configuration, financial-account storage, payout release, or money movement.
+holder: claude
+scope: standard CRM.MCD execution; ChatGPT's narrow Mercury Call Desk GHL + Stripe Sandbox configuration interval is complete. The saved Stripe Sandbox intake workflow remains Draft. No code, database, deployment, UI/frontend, live Stripe, financial-account storage, payout release, or money movement was performed.
 since: 2026-07-13T20:15:00-07:00 (Hamilton approved paid GHL webhook execution and selected manual external-payout recording)
-previous_holder: claude (standard execution holder)
-intent: ChatGPT holds this narrow configuration interval. The approved commission policy is 50% of Net Commissionable Profit after collected retail revenue, published partner wholesale cost, and actual processor fee; payout remains manually made outside Stripe and is only recorded/audited in the admin flow. Return holder to Claude with a complete [G] handoff when finished.
+previous_holder: chatgpt (completed narrow GHL + Stripe Sandbox configuration)
+intent: ChatGPT saved the GHL inbound-webhook trigger from a real Stripe Sandbox payment_intent.succeeded mapping reference, left the workflow Draft, and recorded the production-backend, finance-field, and pipeline-separation requirements in the [G] daily log. Claude resumes the standard execution holder role.
 ```
 
 ## Authorized without further owner approval
