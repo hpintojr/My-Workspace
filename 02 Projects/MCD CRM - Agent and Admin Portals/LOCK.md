@@ -5,11 +5,11 @@ Others read/verify only. See `[C] AI Operating Protocol — Handoff, Changelog, 
 `02 Projects/MCD CRM - Agent and Admin Portals/[C] ChatGPT-to-Claude Handoff Protocol — Composio Mandate.md`.
 
 ```txt
-holder: claude
-scope: standard hpintojr/crm.mcd delivery and coordination; the Mercury Call Desk GHL/Stripe Sandbox foundation is handed back with no active webhook trigger, workflow activation, live Stripe configuration, payout setting, or money movement
-since: 2026-07-13T19:37:22.574Z (ChatGPT completed the Mercury Call Desk GHL/Stripe Sandbox foundation and returned the execution holder)
-previous_holder: chatgpt (narrow browser configuration interval concluded)
-intent: Claude resumes the standard execution holder role. ChatGPT created the GHL data/tag/pipeline foundation, test/USD values, and a draft-only Stripe intake workflow; Stripe was verified in Sandbox/Test mode. No trigger was saved because GHL labels it premium/chargeable, and no workflow was activated or Stripe destination configured. End-to-end validation remains blocked pending owner approval for controlled premium executions and a written commission policy (base, rates/splits, event timing, refund/dispute/chargeback handling, approval authority, currency/rounding). No UI/frontend work, crm.mcd production code/DB/deployment changes, live Stripe configuration, payout release, financial-account storage, or money movement occurred. See the [G] handoff log before resuming.
+holder: chatgpt
+scope: narrow Mercury Call Desk GHL + Stripe Sandbox configuration only — align the fresh GHL model to the approved sales/finance separation, add manual-external-payout tracking fields, save/test the paid GHL Stripe intake workflow, and configure a Stripe Sandbox test destination/controlled test event. No CRM.MCD code, database, deployment, UI/frontend work, live Stripe configuration, financial-account storage, payout release, or money movement.
+since: 2026-07-13T20:15:00-07:00 (Hamilton approved paid GHL webhook execution and selected manual external-payout recording)
+previous_holder: claude (standard execution holder)
+intent: ChatGPT holds this narrow configuration interval. The approved commission policy is 50% of Net Commissionable Profit after collected retail revenue, published partner wholesale cost, and actual processor fee; payout remains manually made outside Stripe and is only recorded/audited in the admin flow. Return holder to Claude with a complete [G] handoff when finished.
 ```
 
 ## Authorized without further owner approval
