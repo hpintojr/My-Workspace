@@ -32,6 +32,14 @@ Do not treat the 2026-07-10 historical record below as the current production ba
 ```
 
 
+## External CRM and Stripe Sandbox checkpoint — 2026-07-13
+
+- Mercury Call Desk GHL now has the browser-created lead, sync, Stripe payment, gross-revenue, commission rate/amount/status fields; lifecycle tags; test/USD custom values; and a ten-stage revenue-and-commission pipeline.
+- `MCD - Stripe Test Intake (Draft)` is draft-only and contains no trigger, action, enrollment, or publication.
+- Stripe was inspected in the Mercury Call Desk **Sandbox/Test** account; its Test Workbench has no webhook destinations. No live Stripe or payout/bank configuration was touched.
+- End-to-end commission validation is **not complete**. GHL's Inbound Webhook is premium/chargeable per execution and must be explicitly approved before controlled testing. The owner must also define commission base, rates/splits, timing, refund/dispute/chargeback rules, approval authority, and rounding.
+- Evidence: `01 Daily Logs/[G] 2026-07-13 MCD CRM GHL and Stripe Sandbox Foundation.md`.
+
 ## Read first
 
 ```txt
