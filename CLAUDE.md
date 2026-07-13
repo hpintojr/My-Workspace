@@ -61,7 +61,7 @@ CLAUDE.md
 - Never place credentials, customer data, or other sensitive information into logs or workspace files.
 ```
 
-## Execution ownership — updated 2026-07-10
+## Execution ownership — updated 2026-07-13
 
 ```txt
 Primary executor: Claude (Opus / 5.x). Claude holds the lock by default and does the building.
@@ -75,9 +75,39 @@ authority expired when that recovery session ended. The 2026-07-08 Lead Flow Ali
 #66-#77 (runbook step anchors + acceptance cockpit + visibility pages + cross-links) and returned the
 lock to Claude at 2026-07-10T07:28Z with a full handback log. Claude is the current holder as of
 this update.
+
+2026-07-13 checkpoint: ChatGPT held the owner-authorized execution lock through PR #138,
+then completed green CI, Vercel preview/production verification, daily-log/ledger reconciliation,
+and returned the holder to Claude in LOCK.md. PRs #103-#138 are deployed; the next scope is
+read-only deployment reliability and configuration/state evidence, not production mutation.
 ```
 
-## MCD CRM — current state (2026-07-10 late afternoon)
+## MCD CRM — current state (2026-07-13)
+
+```txt
+STATUS: HEALTHY. Production is on crm.mercurycalldesk.com at merge commit
+  c7aadba2433c869fbfd1dd7175d0fd721b149085 (main, PR #138).
+Vercel production deployment dpl_E8fA5JUTMzrA7WKhq4NnXX1CrjjS is READY.
+
+PR #138 is the current verified authentication baseline:
+- all GitHub checks passed: Verify CRM, Commission Policy, Application Build,
+  Authenticated E2E, and persisted security assertions;
+- disposable localhost/PostgreSQL coverage proves active lockout, verified
+  expired-lock recovery, correct-password denial for SUSPENDED and DISABLED
+  Users, and read-only User/AuditLog evidence;
+- UserStatus does not contain OFFBOARDED (that exists only for Agent profiles),
+  so no unapproved schema migration was introduced;
+- production /api/status returned 200 with the exact merge SHA and complete
+  no-store/noindex/security-header posture; Vercel error/fatal and Chrome
+  console checks were clean.
+
+Read the MCD CRM Overview, Master Completion Ledger, PR #138 daily log, and
+LOCK.md for detailed evidence and the next safe work. Production migrations,
+feature-flag changes, real-record mutations, live GHL activation, payment,
+payout, and money movement remain prohibited without a specific owner instruction.
+```
+
+## MCD CRM — historical state (superseded 2026-07-10 late afternoon)
 
 ```txt
 STATUS: HEALTHY. Production is on crm.mercurycalldesk.com at commit
@@ -156,7 +186,7 @@ Permitted lead inputs only: user files, referrals, web forms, PPC leads, license
 owned-account exports, permitted business-site research. Scraping adapters are declined and stubbed.
 ```
 
-## Current next work (authoritative)
+## Historical next work — superseded
 
 ```txt
 1. [DONE 2026-07-06] Servicing slug collision fixed (PR #31 / f338cc4).
