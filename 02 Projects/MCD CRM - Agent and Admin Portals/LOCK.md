@@ -5,11 +5,11 @@ Others read/verify only. See `[C] AI Operating Protocol — Handoff, Changelog, 
 `02 Projects/MCD CRM - Agent and Admin Portals/[C] ChatGPT-to-Claude Handoff Protocol — Composio Mandate.md`.
 
 ```txt
-holder: claude
-scope: hpintojr/crm.mcd + hpintojr/My-Workspace
-since: 2026-07-13T18:04Z (ChatGPT completed PR #138, verified production, and returned execution authority under the handback protocol)
-previous_holder: chatgpt (2026-07-12T06:40Z through 2026-07-13T18:04Z. Completed PRs #103-#138 under the standing autonomous scope and verified PR #138 production.)
-intent: Claude resumes evidence-backed implementation, PR, CI, merge, deployment verification, and handoff. PRs #103-#138 are complete and deployed. Continue only with evidence-backed code hardening, regression coverage, read-only dashboards, operator UX, and disposable-database/browser test harnesses that do not require production mutations, external workflow calls, production migrations, real credentials, or settings changes. Current next scope: read-only current-deployment runtime reliability and configuration/state verification, then maintain the synthetic/local browser, accessibility, responsive, and route/role evidence matrix. Do not target production or preview databases, invoke production imports/exports/controlled tests/cron/signup/activation/webhooks, apply the staged Commission migration, change production feature flags, identify or use Servicing onboarding candidates, mutate production Leads/Client Accounts/Service Cases/acceptance records, call live GHL, activate payment providers, release payouts, store financial-account data, or move money.
+holder: chatgpt
+scope: Mercury Call Desk GHL location lEdLVFW0uqKMhmkgFrsX + Stripe Sandbox test configuration + hpintojr/My-Workspace coordination; no crm.mcd production code, database, or deployment changes
+since: 2026-07-13T18:46:11.541Z (Hamilton issued a new, scope-specific browser mandate for GHL foundation and Stripe Sandbox core-flow validation)
+previous_holder: claude (holder under the PR #138 handback; superseded for this narrowly authorized external-configuration interval)
+intent: ChatGPT may inspect and configure the Mercury Call Desk GHL foundation through the browser (fields, tags, custom values, pipeline/workflow drafts and only the narrowly needed controlled-test activation), and configure Stripe Sandbox test webhook/event handling required to validate lead capture → commission calculation → GHL tag write-back. No UI/frontend work, no crm.mcd production code/DB/deployment changes, no real customer data, no live Stripe configuration, no payout release, no financial-account storage, and no money movement. Return holder to Claude with a complete [G] handoff when this bounded work ends.
 ```
 
 ## Authorized without further owner approval
