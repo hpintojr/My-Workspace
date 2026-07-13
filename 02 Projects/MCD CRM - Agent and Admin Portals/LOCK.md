@@ -5,11 +5,11 @@ Others read/verify only. See `[C] AI Operating Protocol — Handoff, Changelog, 
 `02 Projects/MCD CRM - Agent and Admin Portals/[C] ChatGPT-to-Claude Handoff Protocol — Composio Mandate.md`.
 
 ```txt
-holder: chatgpt
-scope: Mercury Call Desk GHL location lEdLVFW0uqKMhmkgFrsX + Stripe Sandbox test configuration + hpintojr/My-Workspace coordination; no crm.mcd production code, database, or deployment changes
-since: 2026-07-13T18:46:11.541Z (Hamilton issued a new, scope-specific browser mandate for GHL foundation and Stripe Sandbox core-flow validation)
-previous_holder: claude (holder under the PR #138 handback; superseded for this narrowly authorized external-configuration interval)
-intent: ChatGPT may inspect and configure the Mercury Call Desk GHL foundation through the browser (fields, tags, custom values, pipeline/workflow drafts and only the narrowly needed controlled-test activation), and configure Stripe Sandbox test webhook/event handling required to validate lead capture → commission calculation → GHL tag write-back. No UI/frontend work, no crm.mcd production code/DB/deployment changes, no real customer data, no live Stripe configuration, no payout release, no financial-account storage, and no money movement. Return holder to Claude with a complete [G] handoff when this bounded work ends.
+holder: claude
+scope: standard hpintojr/crm.mcd delivery and coordination; the Mercury Call Desk GHL/Stripe Sandbox foundation is handedback with no active webhook trigger, workflow activation, live Stripe configuration, payout setting, or money movement
+since: 2026-07-13T19:37:22.574Z (ChatGPT completed the Mercury Call Desk GHL/Stripe Sandbox foundation and returned the execution holder)
+previous_holder: chatgpt (narrow browser configuration interval concluded)
+intent: Claude resumes the standard execution holder role. ChatGPT created the GHL data/tag/pipeline foundation, test/USD values, and a draft-only Stripe intake workflow; Stripe was verified in Sandbox/Test mode. No trigger was saved because GHL labels it premium/chargeable, and no workflow was activated or Stripe destination configured. End-to-end validation remains blocked pending owner approval for controlled premium executions and a written commission policy (base, rates/splits, event timing, refund/dispute/chargeback handling, approval authority, currency/rounding). No UI/frontend work, crm.mcd production code/DB/deployment changes, live Stripe configuration, payout release, financial-account storage, or money movement occurred. See the [G] handoff log before resuming.
 ```
 
 ## Authorized without further owner approval
@@ -85,6 +85,8 @@ intent: ChatGPT may inspect and configure the Mercury Call Desk GHL foundation t
 - `01 Daily Logs/[G] 2026-07-13 MCD CRM PR136 Persisted Authentication Security Evidence.md`
 - `01 Daily Logs/[G] 2026-07-13 MCD CRM PR137 Live Session Authorization Enforcement.md`
 - `01 Daily Logs/[G] 2026-07-13 MCD CRM PR138 Account State Recovery and Inactive Login Denial.md`
+
+- `01 Daily Logs/[G] 2026-07-13 MCD CRM GHL and Stripe Sandbox Foundation.md`
 
 ## Current production baseline
 
