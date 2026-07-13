@@ -9,7 +9,7 @@ holder: chatgpt
 scope: hpintojr/crm.mcd + hpintojr/My-Workspace
 since: 2026-07-12T06:40Z (Hamilton directed ChatGPT to take over while Claude usage is unavailable until Monday 9:00 AM Pacific and to complete as much as possible end to end without human intervention)
 previous_holder: claude (2026-07-12T06:38Z through 2026-07-12T06:40Z. No additional Claude work was recorded after PR #102.)
-intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment verification, and handoff. PRs #103-#128 are complete and deployed. Continue only with evidence-backed code hardening, regression coverage, read-only dashboards, and operator UX that do not require production mutations, external workflow calls, production migrations, or settings changes. Current next scope: centralize the four remaining direct JSON response constructors used by public activation, public signup, the secret-authenticated Lead-aging cron, and the minimal public status endpoint while preserving each exact payload/status/header contract and reducing the Route Boundary Registry from 6 findings to the two required bounded raw-body reads. Do not invoke imports, exports, controlled tests, cron, signup, activation, or webhooks. Do not apply the staged Commission migration, change production feature flags, identify or use the two Servicing onboarding candidates, mutate production Leads/Client Accounts/Service Cases/acceptance records, call live GHL, activate payment providers, release payouts, store financial-account data, or move money.
+intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment verification, and handoff. PRs #103-#129 are complete and deployed. Continue only with evidence-backed code hardening, regression coverage, read-only dashboards, and operator UX that do not require production mutations, external workflow calls, production migrations, or settings changes. Current next scope: extract the identical bounded public JSON body-read sequence from activation and signup into a source-only shared helper while preserving exact 413/400 bodies and pre-parse byte-limit ordering, reducing the Route Boundary Registry from two findings to zero. Do not invoke imports, exports, controlled tests, cron, signup, activation, or webhooks. Do not apply the staged Commission migration, change production feature flags, identify or use the two Servicing onboarding candidates, mutate production Leads/Client Accounts/Service Cases/acceptance records, call live GHL, activate payment providers, release payouts, store financial-account data, or move money.
 ```
 
 ## Authorized without further owner approval
@@ -73,6 +73,10 @@ intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment v
   - Centralized three named typed-domain mappings across five signed import routes.
   - Preserved exact public messages and HTTP statuses while keeping unknown failures generic.
   - Reduced the Route Boundary Registry from 11 findings across 8 routes to 6 approved findings across 4 routes, with zero raw-error findings and zero frozen debt.
+- **PR #129 — Shared Route JSON Boundary**
+  - Centralized direct JSON response construction for activation, signup, Lead-aging cron, and public status.
+  - Preserved exact route payload/status/header contracts and request-ID behavior.
+  - Reduced the Route Boundary Registry from 6 findings across 4 routes to 2 approved bounded raw-body reads across 2 routes.
 
 ## Daily logs
 
@@ -98,6 +102,7 @@ intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment v
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM PR126 Admin Lead Import Request Boundary.md`
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM PR127 Route Boundary Registry.md`
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM PR128 Signed Lead Import Domain Error Mapping.md`
+- `01 Daily Logs/[G] 2026-07-12 MCD CRM PR129 Shared Route JSON Boundary.md`
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM Autonomous Hardening and Repository Cleanup.md`
 
 ## Repository hygiene
@@ -106,15 +111,15 @@ The obsolete draft PRs #1, #6, #7, #8, #9, #11, #12, #13, #14, #15, #16, and #17
 
 ## Current production baseline
 
-- Latest production commit: `5f496064d613504c61b748d41a42308489fa47b6` (PR #128).
-- Vercel deployment: `dpl_6nsuappa3URBFgmfCi4DeqRmqi4J`, READY and aliased to `crm.mercurycalldesk.com`.
-- `/api/status`: HTTP 200, environment `production`, branch `main`, exact PR #128 merge SHA, no-store, noindex, and the complete security-header baseline intact.
+- Latest production commit: `d6274810a5ebb118490c08e2542a25381c9a35d8` (PR #129).
+- Vercel deployment: `dpl_88f59ZwNy92NRGhsDDqDmRjeJyrb`, READY and aliased to `crm.mercurycalldesk.com`.
+- `/api/status`: HTTP 200, environment `production`, branch `main`, exact PR #129 merge SHA, no-store, noindex, and the complete security-header baseline intact.
 - No protected report, route-boundary snapshot, aging preview, CSV/download, signed or Admin import, authenticated Integration Health snapshot, signup, activation, portal write, controlled-test, cron, or GHL webhook POST route was invoked during preview or production verification.
 - Vercel reported no error or fatal runtime logs for the new deployment during the verification window.
 - The isolated Lead-import integration suite uses only a temporary PostgreSQL service container; no Neon or production database is used.
 - Lead Flow: 18/18 acceptance PASS and owner decision recorded.
 - Project Readiness: live at `/admin/project-readiness`.
-- Route Boundary Registry: live at `/admin/route-boundaries`, protected and source-derived; current baseline is 6 approved findings across 4 routes.
+- Route Boundary Registry: live at `/admin/route-boundaries`, protected and source-derived; current baseline is 2 approved findings across 2 routes.
 - Integration Health: live at `/admin/integrations/health`, protected aggregate-only.
 - Servicing preflight: live at `/admin/servicing/acceptance-command-center`; expected decision `OWNER_AUTHORIZATION_REQUIRED`.
 - Production Servicing state: two aggregate onboarding candidates, zero Client Accounts, zero Service Cases, zero Servicing acceptance records.
@@ -122,9 +127,9 @@ The obsolete draft PRs #1, #6, #7, #8, #9, #11, #12, #13, #14, #15, #16, and #17
 
 ## Current branch state
 
-- PR #128 branch `agent/signed-import-domain-error-mapping` is merged.
+- PR #129 branch `agent/shared-route-json-boundary` is merged.
 - No new implementation branch is currently active.
-- Next planned branch: `agent/shared-route-json-boundary`.
+- Next planned branch: `agent/shared-public-json-body-boundary`.
 
 ## Lock return protocol
 
