@@ -9,7 +9,7 @@ holder: chatgpt
 scope: hpintojr/crm.mcd + hpintojr/My-Workspace
 since: 2026-07-12T06:40Z (Hamilton directed ChatGPT to take over and complete as much as possible end to end without human intervention)
 previous_holder: claude (2026-07-12T06:38Z through 2026-07-12T06:40Z. No additional Claude work was recorded after PR #102.)
-intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment verification, and handoff. PRs #103-#135 are complete and deployed. Continue only with evidence-backed code hardening, regression coverage, read-only dashboards, operator UX, and disposable-database/browser test harnesses that do not require production mutations, external workflow calls, production migrations, real credentials, or settings changes. Current next scope: add disposable post-browser assertions for persisted authentication state and audit evidence, including failed-login reset after successful Owner login, MFA-required/invalid/success evidence, exact lockout counters and future lock timestamp, and login/logout audit sequencing where source contracts support it. Do not target production or preview databases, invoke production imports/exports/controlled tests/cron/signup/activation/webhooks, apply the staged Commission migration, change production feature flags, identify or use the two Servicing onboarding candidates, mutate production Leads/Client Accounts/Service Cases/acceptance records, call live GHL, activate payment providers, release payouts, store financial-account data, or move money.
+intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment verification, and handoff. PRs #103-#136 are complete and deployed. Continue only with evidence-backed code hardening, regression coverage, read-only dashboards, operator UX, and disposable-database/browser test harnesses that do not require production mutations, external workflow calls, production migrations, real credentials, or settings changes. Current next scope: investigate and, if confirmed by source and disposable tests, close any stale-session authorization gap where an already-issued session can retain protected access after the underlying User becomes non-ACTIVE. Use synthetic localhost-only users and disposable PostgreSQL; preserve existing role routing and do not touch production sessions or accounts. Do not target production or preview databases, invoke production imports/exports/controlled tests/cron/signup/activation/webhooks, apply the staged Commission migration, change production feature flags, identify or use the two Servicing onboarding candidates, mutate production Leads/Client Accounts/Service Cases/acceptance records, call live GHL, activate payment providers, release payouts, store financial-account data, or move money.
 ```
 
 ## Authorized without further owner approval
@@ -50,7 +50,8 @@ intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment v
 - **PR #132 — Protected Build Guard Registry Control Plane:** Admin-only static manifest page/API; initial merged build exposed stale PR #131 assertions.
 - **PR #133 — Build Guard Registry Drift Repair:** manifest-declared counts and derived versioning; restored navigation; delivered PR #132 safely to production.
 - **PR #134 — Authenticated E2E Foundation:** localhost-only Playwright workflow with disposable PostgreSQL 17, synthetic Owner/Agent accounts, real credentials sessions, Admin/Agent role boundaries, logout invalidation, failure artifacts, and a fail-closed source safety guard.
-- **PR #135 — Authenticated MFA and Lockout E2E:** added isolated synthetic MFA and lockout identities; proved generic credential errors, MFA required/invalid/valid TOTP behavior, and five-attempt lockout with the correct password blocked. The first run exposed only an ambiguous Next.js route-announcer alert selector; failure artifacts were used to scope assertions to the login form, and the clean rerun passed all six scenarios.
+- **PR #135 — Authenticated MFA and Lockout E2E:** added isolated synthetic MFA and lockout identities; proved generic credential errors, MFA required/invalid/valid TOTP behavior, and five-attempt lockout with the correct password blocked.
+- **PR #136 — Persisted Authentication Security Evidence:** added a read-only post-browser verifier proving account counters, lock timestamps, MFA reason metadata, login/logout sequencing, exact lockout audit counters, and User/AuditLog timestamp consistency against disposable PostgreSQL.
 
 ## Daily logs
 
@@ -83,6 +84,7 @@ intent: ChatGPT continues autonomous implementation, PR, CI, merge, deployment v
 - `01 Daily Logs/[G] 2026-07-13 MCD CRM PR133 Build Guard Registry Drift Repair.md`
 - `01 Daily Logs/[G] 2026-07-13 MCD CRM PR134 Authenticated E2E Foundation.md`
 - `01 Daily Logs/[G] 2026-07-13 MCD CRM PR135 Authenticated MFA and Lockout E2E.md`
+- `01 Daily Logs/[G] 2026-07-13 MCD CRM PR136 Persisted Authentication Security Evidence.md`
 - `01 Daily Logs/[G] 2026-07-12 MCD CRM Autonomous Hardening and Repository Cleanup.md`
 
 ## Repository hygiene
@@ -91,24 +93,24 @@ The obsolete draft PRs #1, #6, #7, #8, #9, #11, #12, #13, #14, #15, #16, and #17
 
 ## Current production baseline
 
-- Latest production commit: `a29426406f3e6c5492133555b61532ab3b096ea7` (PR #135).
-- Vercel deployment: `dpl_94E7BvBPYF4WQp5rrd6Xi444J2mY`, READY and aliased to `crm.mercurycalldesk.com`.
-- `/api/status`: HTTP 200, environment `production`, branch `main`, exact PR #135 merge SHA, no-store, noindex, and the complete security-header baseline intact.
-- No protected production application route was authenticated or invoked during PR #135 production verification; all credential and browser activity ran only against localhost and disposable PostgreSQL.
+- Latest production commit: `db5e849dd4de1969373652967ba2c1b18a90734b` (PR #136).
+- Vercel deployment: `dpl_AedTKpYmK71U3Na2UHFtxoJbrBUb`, READY and aliased to `crm.mercurycalldesk.com`.
+- `/api/status`: HTTP 200, environment `production`, branch `main`, exact PR #136 merge SHA, no-store, noindex, and the complete security-header baseline intact.
+- No protected production application route was authenticated or invoked during PR #136 production verification; all browser and persisted security assertions ran only against localhost and disposable PostgreSQL.
 - Vercel reported no error or fatal runtime logs for the new deployment during the verification window.
 - Lead Flow: 18/18 acceptance PASS and owner decision recorded.
 - Route Boundary Registry: 0 findings and 0 frozen debt.
-- Build Guard Registry: 46 deployment-visible entries, 45 Lead-flow executions, and one build-prelude entry; current manifest version is `2026-07-13-pr135` and counts are manifest-driven.
-- Authenticated E2E: four synthetic identities and six browser scenarios PASS, including generic credential failures, Owner/Agent routing, logout invalidation, MFA required/invalid/valid TOTP, and five-attempt lockout.
+- Build Guard Registry: 46 deployment-visible entries, 45 Lead-flow executions, and one build-prelude entry; current manifest version is `2026-07-13-pr136` and counts are manifest-driven.
+- Authenticated E2E: four synthetic identities and six browser scenarios PASS; persisted User and AuditLog security evidence also PASS.
 - Project Readiness, Build Guard Registry, Route Boundary Registry, Integration Health, and Servicing preflight remain deployed and protected.
 - Production Servicing: two aggregate onboarding candidates, zero Client Accounts, zero Service Cases, zero Servicing acceptance records.
 - Commission/Payout production schema: staged only; 0 of 7 tables and no current or legacy Commission enum types.
 
 ## Current branch state
 
-- PR #135 branch `agent/authenticated-e2e-mfa-lockout` is merged.
+- PR #136 branch `agent/authenticated-e2e-security-state` is merged.
 - No new implementation branch is currently active.
-- Next planned branch: `agent/authenticated-e2e-security-state`.
+- Next planned branch: `agent/live-session-status-enforcement` if the source investigation confirms stale sessions remain authorized after User status changes.
 
 ## Lock return protocol
 
