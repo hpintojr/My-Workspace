@@ -91,3 +91,16 @@ This is the durable evidence ledger required for end-to-end completion. It is no
 ## Production restrictions carried forward
 
 No production migration, flag/configuration change, live GHL workflow, real Lead/Client/Service mutation, import/export, controlled-test apply, onboarding activation, secret change, payment/payout action, or money movement is authorized by this ledger.
+
+
+## External CRM and Stripe Sandbox foundation — 2026-07-13
+
+| Area | Evidence | Status | Remaining work / restriction |
+|---|---|---|---|
+| Mercury Call Desk GHL data foundation | Browser-created MCD contact/opportunity folders, lead/sync/payment/commission fields, lifecycle tags, test/USD custom values, and the ten-stage `MCD CRM - Revenue & Commission` pipeline. | COMPLETE | Preserve GHL as backend-only; no agent-facing frontend work was started. |
+| GHL workflow shell | `MCD - Stripe Test Intake (Draft)` exists with no trigger, actions, enrollment, or publication. | OWNER DECISION REQUIRED | GHL labels Inbound Webhook as premium with extra per-execution charges; approve controlled-test usage before saving/activating it. |
+| Stripe Sandbox | Browser confirmed `Mercury Call Desk — Stripe [Test]`; its test Workbench has no webhook destinations. | COMPLETE | Configure only minimal test events after the charge approval and a signed/controlled receiving design are approved. |
+| Commission calculation and write-back | Data states are represented, but no formula or automation is configured. | OWNER DECISION REQUIRED | Owner must define base, rate/split, timing, refunds/disputes/chargebacks, approval authority, and rounding before a test can calculate or write a commission result. |
+| Payout settings / money movement | Not changed. | PROHIBITED PRODUCTION ACTION | No payout schedule, bank setting, payout release, financial-account storage, or money movement without action-time owner approval. |
+
+Evidence log: `01 Daily Logs/[G] 2026-07-13 MCD CRM GHL and Stripe Sandbox Foundation.md`.
