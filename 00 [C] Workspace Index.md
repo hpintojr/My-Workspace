@@ -1,6 +1,6 @@
 # Workspace Index
 
-Updated: 2026-07-10 (late afternoon)
+Updated: 2026-07-13
 
 ## First read
 
@@ -54,7 +54,32 @@ The agent program and brand/onboarding work. Do not disclose the underlying vend
 
 MiniCRM is the system of record for agent onboarding, lead ownership, compliance, source lineage, and later service/finance. GHL is backend-only; agents never receive GHL access.
 
-### Current status
+### Authoritative current status — 2026-07-13
+
+```txt
+PRODUCTION IS HEALTHY.
+Custom domain crm.mercurycalldesk.com is on c7aadba2433c869fbfd1dd7175d0fd721b149085 (main, PR #138).
+Vercel deployment dpl_E8fA5JUTMzrA7WKhq4NnXX1CrjjS is READY.
+
+PR #138 is the verified authentication account-state baseline:
+- disposable localhost/PostgreSQL proof of active lockout, expired-lock recovery,
+  suspended/disabled correct-password denial, and persisted User/AuditLog evidence;
+- Verify CRM, Commission Policy, Application Build, Authenticated E2E, persisted
+  assertions, Vercel preview, and Vercel production verification passed;
+- UserStatus uses DISABLED as the supported terminal inactive status. OFFBOARDED
+  applies to Agent profiles only; no unapproved production schema migration occurred.
+
+Production /api/status returns HTTP 200 for the exact PR #138 SHA with no-store,
+noindex, CSP, HSTS, anti-framing, MIME, permissions, opener, and referrer headers.
+Vercel error/fatal and Chrome console checks were clean.
+
+Current holder: Claude. PR #138 handback and the Master Completion Ledger are the
+authoritative next-read documents. Do not perform production migrations, feature
+flag/settings changes, real-record mutations, live GHL activation, payment, payout,
+or money movement without a specific Hamilton instruction.
+```
+
+### Historical status — superseded
 
 ```txt
 PRODUCTION IS HEALTHY.
@@ -132,6 +157,8 @@ New during 2026-07-10 afternoon:
 ```txt
 02 Projects/MCD CRM - Agent and Admin Portals/MCD CRM - Agent and Admin Portals Overview.md
 02 Projects/MCD CRM - Agent and Admin Portals/LOCK.md
+02 Projects/MCD CRM - Agent and Admin Portals/[G] Master Completion Ledger — 2026-07-13.md
+01 Daily Logs/[G] 2026-07-13 MCD CRM PR138 Account State Recovery and Inactive Login Denial.md
 02 Projects/MCD CRM - Agent and Admin Portals/[C] MCD CRM — Production Scope & 13-Layer Review.md
 02 Projects/MCD CRM - Agent and Admin Portals/[C] Local Lead Operations and MiniCRM Export Scope.md
 01 Daily Logs/[G] 2026-07-09 MCD CRM ChatGPT Session Handback.md
@@ -148,7 +175,17 @@ Repo: hpintojr/crm.mcd
 Repo: mcd_lead_ops (local only, D:\GitHub\mcd_lead_ops)
 ```
 
-### Current next actions
+### Current next actions — 2026-07-13
+
+```txt
+1. Read-only current-deployment runtime reliability and configuration/state verification.
+2. Maintain the synthetic/local role-route, responsive, keyboard, and browser evidence matrix.
+3. Inspect dependency, backup/restore, RLS, and least-privilege posture read-only.
+4. Prepare owner-decision packets for any action that would require a production migration,
+   feature-flag change, real data mutation, GHL activation, payment, payout, or money movement.
+```
+
+### Historical next actions — superseded
 
 ```txt
 1. AUTHENTICATED PRODUCTION ACCEPTANCE (12 / 18 PASS + 5 deferred + 1 owner-only,
