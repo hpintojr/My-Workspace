@@ -2,55 +2,46 @@
 
 ## Scope
 
-Browser-only administrative foundation for the Mercury Call Desk GoHighLevel sub-account and the connected Stripe Sandbox. No application code, database schema, Vercel configuration, frontend/UI work, live Stripe configuration, payout release, financial-account storage, real customer data, or money movement was changed.
+Browser-only administrative foundation for the Mercury Call Desk GoHighLevel sub-account and connected Stripe Sandbox. No CRM.MCD application code, database schema, Vercel configuration, frontend/UI work, live Stripe configuration, payout release, financial-account storage, real customer data, or money movement was changed.
 
-## Completed
+## Owner decisions recorded
 
-### GoHighLevel — Mercury Call Desk only
+- Hamilton approved controlled paid executions of GoHighLevel's premium Inbound Webhook trigger.
+- Commission policy is 50% of Net Commissionable Profit: collected retail revenue less the published partner wholesale cost and the actual payment-processor fee.
+- Payouts will be made manually outside Stripe and recorded/audited through the future Admin Commissions panel. Stripe Connect, bank accounts, payout schedules, and payout releases are out of scope.
 
-- Created folders:
-  - `MCD CRM - Contact`
-  - `MCD CRM - Opportunity`
-- Added contact fields:
-  - `MCD Stripe Customer ID`
-  - `MCD Last Stripe Event ID`
-  - `MCD Sync Error`
-  - `MCD Lead Status` (New, Contacted, Qualified, Nurture, Unqualified, Closed Won, Closed Lost)
-  - `MCD Sync Status` (Pending, Synced, Error)
-- Added opportunity fields:
-  - `MCD Commission Status` (Not Eligible, Pending Payment, Payment Received, Calculated, Pending Approval, Approved, Paid, Disputed, Reversed)
-  - `MCD Gross Revenue`
-  - `MCD Commission Amount`
-  - `MCD Commission Rate (%)`
-  - `MCD Stripe Payment ID`
-- Created pipeline `MCD CRM - Revenue & Commission` with stages:
-  `Lead Captured`, `Contacted`, `Qualified`, `Proposal Sent`, `Closed Won`, `Payment Pending`, `Payment Received`, `Commission Calculated`, `Commission Approved`, `Commission Paid`.
-- Created tags:
-  `mcd:lead:new`, `mcd:lead:contacted`, `mcd:lead:qualified`, `mcd:lead:lost`, `mcd:deal:won`, `mcd:payment:received`, `mcd:commission:calculated`, `mcd:commission:approved`, `mcd:commission:paid`, `mcd:sync:error`.
-- Added custom values:
-  - `MCD CRM: Stripe Mode = test`
-  - `MCD CRM: Currency = USD`
-- Created the draft-only workflow `MCD - Stripe Test Intake (Draft)`. It has no trigger, actions, enrollment, or publication.
+## GoHighLevel — Mercury Call Desk only
 
-### Stripe
+- Created folders `MCD CRM - Contact` and `MCD CRM - Opportunity`.
+- Added the initial contact, opportunity, tag, custom-value, and combined revenue/commission-pipeline foundation documented in the project record.
+- Created `MCD - Stripe Test Intake (Draft)`.
+- Saved its Inbound Webhook trigger using a mapping reference received from a real Stripe Sandbox `payment_intent.succeeded` event.
+- Verified the workflow still shows **Draft** and its publish toggle remains off.
+- The pre-existing Create Contact action is still unconfigured; no contact, opportunity, commission, tag, or payout record was created by this controlled mapping test.
 
-- Confirmed the account is **Mercury Call Desk — Stripe [Test]** and shows the Stripe Sandbox/Test mode banner.
-- Confirmed the Test Workbench has no configured webhook destinations.
-- No live-mode settings, payout schedule/bank information, payment method, destination, event delivery, or money movement was changed.
+## Stripe Sandbox
 
-## Blockers / owner decisions
+- Configured a Sandbox-only Workbench destination for the draft GHL intake.
+- Limited the destination to `payment_intent.succeeded`.
+- Triggered one controlled Sandbox payment-intent event successfully and used the received payload strictly as the GHL mapping reference.
+- No live-mode settings, payout schedule, bank details, payment method, destination payout, or money movement was changed.
 
-1. GoHighLevel marks its Inbound Webhook trigger as a premium trigger with additional per-execution charges. Its generated receiver was inspected but not saved; explicit approval to incur those controlled-test executions is required.
-2. Commission calculation cannot be implemented or validated until the owner specifies:
-   - the commission base (gross vs. net, tax/shipping/fees treatment);
-   - agent/manager split and rate or tier source;
-   - timing (payment captured, paid invoice, payout, or another event);
-   - refund, partial-refund, dispute, chargeback, reversal, and clawback rules;
-   - approval/paid authority and currency/rounding policy.
-3. After (1) and (2), Stripe Sandbox should be configured with the minimum event set and a controlled synthetic customer/payment test run should prove:
-   `lead captured → Stripe test payment → payment-received field/tag → commission field/status/tag → audit/error write-back`.
-4. Payout schedule/banking configuration remains out of scope until action-time owner confirmation, even in a test-oriented setup.
+## Validation result
+
+The first transport milestone is proven:
+
+`Stripe Sandbox payment event → GHL inbound-webhook receipt → saved mapping reference on a Draft workflow`.
+
+This is deliberately not a production-ready end-to-end commission flow. Direct Stripe-to-GHL webhook delivery does not provide the required production guarantees for Stripe-signature verification, idempotency, retrieval of the actual processor fee, or safe write-back sequencing.
+
+## Required next work before any publish
+
+1. Build a secure backend handler that verifies Stripe signatures, enforces idempotency, retrieves the balance transaction/actual processor fee, calculates the approved commission policy, and then writes controlled GHL field/tag updates.
+2. Add the remaining finance-opportunity fields for wholesale cost, processor fee, net commissionable profit, cleared funds, payout due date, eligibility, manual payout method/reference/timestamps, and adjustments/offsets. The direct GHL custom-field settings route did not render in this browser session, so these were not claimed as completed.
+3. Split the current combined pipeline into the approved agent-facing Sales pipeline and restricted Finance/Commission workflow before agent dashboards are built.
+4. Keep the intake workflow Draft until the backend and a controlled full test prove:
+   `lead capture → test payment → payment/commission calculation → GHL field/tag write-back → manual payout audit state`.
 
 ## Handback
 
-This browser foundation is evidence only; it does not claim end-to-end validation. The authoritative lock holder returns to Claude after the coordination documents are updated.
+The narrow browser-configuration interval is complete. The coordinating lock returns to Claude.
