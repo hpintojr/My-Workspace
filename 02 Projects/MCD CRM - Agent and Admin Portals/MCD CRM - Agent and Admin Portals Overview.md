@@ -1,11 +1,36 @@
 ---
 type: status
-date: 2026-07-10
+date: 2026-07-13
 project: MCD CRM - Agent and Admin Portals
 repository: hpintojr/crm.mcd
 ---
 
 # MCD CRM — Agent and Admin Portals Overview
+
+## Authoritative current checkpoint — 2026-07-13
+
+```txt
+Production is HEALTHY on main commit c7aadba2433c869fbfd1dd7175d0fd721b149085 (PR #138).
+Vercel deployment dpl_E8fA5JUTMzrA7WKhq4NnXX1CrjjS is READY and aliased to crm.mercurycalldesk.com.
+/api/status returned HTTP 200 for production/main/the exact PR #138 merge SHA with no-store, noindex, CSP, HSTS, anti-framing, MIME, permissions, opener, and referrer headers.
+
+PR #138 completed the localhost-only authenticated E2E account-state scope:
+- five-failure active lockout and correct-password denial;
+- verified expiry followed by successful Owner login and reset lock state;
+- correct-password denial for synthetic SUSPENDED and DISABLED Users;
+- read-only persisted User/AuditLog evidence.
+
+All required PR checks passed: Verify CRM, Commission Policy, Application Build, Authenticated E2E, and persisted security assertions. Vercel preview and production were READY; post-deployment Vercel error/fatal query and Chrome console check were clean.
+
+Read next:
+1. LOCK.md
+2. [G] Master Completion Ledger — 2026-07-13.md
+3. 01 Daily Logs/[G] 2026-07-13 MCD CRM PR138 Account State Recovery and Inactive Login Denial.md
+4. [C] AI Operating Protocol — Handoff, Changelog, Indexing.md
+
+Do not treat the 2026-07-10 historical record below as the current production baseline or execution queue. Production migrations, feature-flag/configuration changes, real-record mutations, live GHL activation, payments, payouts, and money movement remain prohibited without specific owner approval.
+```
+
 
 ## Read first
 
@@ -17,7 +42,7 @@ repository: hpintojr/crm.mcd
 5. This overview
 ```
 
-## Current status — authoritative 2026-07-10
+## Historical status snapshot — superseded 2026-07-10
 
 ```txt
 Production is HEALTHY. Lead Flow business rules are merged and deployed.
@@ -141,7 +166,7 @@ LOCK / HANDOFF
   custom domain; Claude will observe/navigate but not drive the Lead actions.
 ```
 
-## Exact next work
+## Historical next work — superseded
 
 ```txt
 1. AUTHENTICATED PRODUCTION ACCEPTANCE (0 / 18 recorded, gate to broader rollout).
