@@ -1,7 +1,7 @@
 ---
 type: project-overview
 date: 2026-06-24
-updated: 2026-06-30
+updated: 2026-07-14
 project: MCD - Mercury Call Desk
 ---
 
@@ -34,14 +34,14 @@ Partner pathway: Standard Sales Partner → Advanced Partner / Manager → separ
 
 ## Phase focus
 
-1. **Partner program and onboarding — NOW**
-   - Finalize the attorney-reviewed Sales Partner and Confidentiality/IP agreements.
-   - Configure mandatory onboarding, document safe, countersignature, role-based access, and CRM audit trail.
-   - Certify Partners before active lead access.
+1. **Partner program and onboarding — core flow implemented; delivery decision pending**
+   - The CRM signup, durable applicant record, GHL contact handoff, and manual approval gate have been verified.
+   - The GHL onboarding workflow is published and begins only when an administrator approves the applicant by applying the `agent-approved` tag.
+   - Choose and validate the final document-delivery architecture before a live approval run: one consolidated packet, or a custom coordinator that sends one email with four secure document links.
 
-2. **CRM / MiniCRM operations — NOW**
-   - Build lead attribution, two-way-contact protection, OpenPool, Shark Tank, House Account, service-cadence, DNC, commission, and restricted former-Partner access controls.
-   - Maintain all customer contracts, support activity, and commission evidence inside approved systems.
+2. **CRM / MiniCRM operations — core build active**
+   - The production CRM is live with agent signup, GHL handoff, the admin review surface, and the approval gate.
+   - Continue validating lead attribution, two-way-contact protection, OpenPool, Shark Tank, House Account, service cadence, DNC, commission, and former-Partner controls against the approved business terms.
 
 3. **Advanced Partner / reseller pathway — LATER**
    - Establish qualification standards, custom-pricing floor, separate reseller terms, and independent business requirements.
@@ -68,13 +68,14 @@ The current business terms establish, among other things:
 
 - Attorney-ready business specification and two coordinated agreement drafts.
 - A partner onboarding package that clearly distinguishes active access, certification, authority level, and account-service eligibility.
-- A GoHighLevel/MiniCRM model that preserves attribution, commissions, client protection, documents, and audit evidence.
+- A live GoHighLevel/MiniCRM foundation with an audited applicant handoff and controlled document trigger.
 - An Advanced Partner pathway and a later, separate reseller-channel model.
 
 ## Remaining launch gates
 
 1. California attorney review of independent-contractor structure, arbitration, cancellation terms, residuals, and corporate signer title.
 2. Confirm the confidential Advanced Partner minimum-margin schedule.
-3. Build the GHL/MiniCRM onboarding/countersignature workflow and restricted access roles.
+3. Decide and validate the compliant one-email onboarding-document delivery design; do not remove the administrator approval gate.
 4. Align customer contracts and public pricing with the approved setup-fee, annual-plan, support, and cancellation rules.
-5. Complete outbound-compliance review before a phone/SMS program is activated.
+5. Merge and deploy the pending fail-closed approval handoff patch before live approvals.
+6. Complete outbound-compliance review before a phone/SMS program is activated.
