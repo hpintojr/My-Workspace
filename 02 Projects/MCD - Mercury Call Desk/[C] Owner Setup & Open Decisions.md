@@ -1,9 +1,9 @@
 ---
 type: tracker
 date: 2026-06-24
-updated: 2026-06-30
+updated: 2026-07-14
 project: MCD - Mercury Call Desk
-status: BUSINESS TERMS LOCKED. Legal review, CRM implementation, and confidential Advanced Partner margin schedule remain open.
+status: BUSINESS TERMS LOCKED. CRM/GHL core foundation is deployed; legal review, final onboarding-document delivery validation, and confidential Advanced Partner margin schedule remain open.
 ---
 
 # Owner Setup & Open Decisions
@@ -54,7 +54,7 @@ No paperwork, no system access, no exceptions. Hamilton countersigns and enables
 
 The system of record must preserve signed PDF, agreement version, timestamps, signer IP/audit trail, countersignature, W-9, profile completion, and certification record.
 
-## 4. CRM / role design — IMPLEMENTATION REQUIRED
+## 4. CRM / role design — FOUNDATION IMPLEMENTED; REMAINING CONTROLS REQUIRE VALIDATION
 
 ```txt
 Active Partner role:       dedicated GHL backend user + MiniCRM Partner role
@@ -64,6 +64,15 @@ Former-role restrictions:  no OpenPool, Shark Tank, directories, leads, export, 
 Former-role expiration:    30 days after final commission payout clears
 Record retention:          seven years
 ```
+
+### Current implementation status (2026-07-14)
+
+- Production CRM signup creates a durable applicant record and hands the contact to the Mercury Call Desk GHL location.
+- An administrator must complete the review/approval action before GHL receives the `agent-approved` tag; the published GHL onboarding workflow is triggered by that tag.
+- The workflow currently creates four independent document actions (Sales Partner Agreement, Confidentiality/IP, W-9/Payout Intake, and New Hire Acknowledgment), with separate completion-relay workflows for audit status.
+- A pending CRM code patch makes this approval handoff fail closed if the GHL contact/tag write fails. It must be reviewed, merged, and deployed before live approvals.
+- Finance/Stripe Connect readiness work is in a separate draft CRM pull request. It does not enable connected accounts, transfers, automatic payouts, or migrations.
+- Read `02-crm-gohighlevel/2026-07-14 CRM + GHL Implementation Handoff.md` before modifying this flow.
 
 ## 5. Lead and account rules — LOCKED
 
@@ -182,8 +191,10 @@ Existing account economics:  remain unchanged while contract pricing/structure s
 ```txt
 [ ] California attorney review: independent-contractor structure, corporate title, cancellation/nonrefund wording, residuals, arbitration, and agreements.
 [ ] Set confidential Advanced Partner minimum percentage-margin schedule.
-[ ] Build GHL/MiniCRM: onboarding/countersignature gate, document safe, audit trail, roles, 7-year retention, former-partner view.
-[ ] Configure fields/statuses: self-sourced referral, two-way contact, OpenPool, Shark Tank, House Account, service cadence, account-health confirmation, DNC, residual eligibility.
+[~] Build GHL/MiniCRM: core applicant signup, GHL handoff, approval gate, and document workflow are deployed. Remaining: production-proof document delivery, document safe/countersignature, roles, 7-year retention, and former-partner view.
+[~] Configure fields/statuses: validate and complete self-sourced referral, two-way contact, OpenPool, Shark Tank, House Account, service cadence, account-health confirmation, DNC, and residual eligibility against the approved terms.
+[ ] Review, merge, and deploy the pending fail-closed GHL approval-handoff patch before authorizing a live applicant.
+[ ] Select and validate the onboarding-document architecture: a single consolidated secure packet, or a custom coordinator that sends one email with four secure document links.
 [ ] Align customer agreement and public pricing with this tracker.
 [ ] Complete outbound-compliance review before activating any Partner phone/SMS program.
 ```
