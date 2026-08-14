@@ -68,9 +68,25 @@ the **calendar appointment** pinned to Alex. Proven end to end against live reco
            appointment assignedUserId UNCHANGED, still Alex
 ```
 
-Contact and opportunity now read *Kenny Jumps*. The appointment still reads *Alex*. The GHL
-contact timeline for this record shows the appointment created and updated, and the opportunity
-moved New Appointment → Assigned — but no appointment reassignment event, because none occurred.
+Contact and opportunity now read *Kenny Jumps*. The appointment still reads *Alex*. The
+appointment's `dateUpdated` is `23:01:51Z` — three seconds after creation and ~14 minutes *before*
+the reassignment — so the appointment record was never successfully written to at reassignment
+time.
+
+**Correction logged 2026-08-13:** an earlier version of this file said "no appointment
+reassignment event, because none occurred." That was an overreach. A write that GHL *rejects* also
+leaves `dateUpdated` untouched, so this evidence cannot distinguish "nothing tried" from "something
+tried and was refused."
+
+**HYPOTHESIS (Hamilton, high confidence):** a Salesforce workflow already exists that moves the
+calendar event to the newly assigned user and then emails that agent. If so it *is* firing and
+being rejected by GHL — the observed error *"The user id not part of calendar team"* is a
+rejection message, which requires an attempted assignment to produce. *Confirming test:* read the
+sync-failure log shipped 2026-08-13 for entries around `2026-08-13T23:16Z`, and inspect the
+Salesforce workflow directly. See `[C] LSP Runbook — FCA Appointment Assignment Cutover.md`.
+
+If the hypothesis holds, nothing needs building on the automation side and the calendar is the
+sole remaining blocker.
 
 ### Why — proven cause
 

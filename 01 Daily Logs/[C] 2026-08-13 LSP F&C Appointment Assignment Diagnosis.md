@@ -116,3 +116,60 @@ First file to read: `02 Projects/LSP/LSP Overview.md`.
 Two warnings the next session must not violate: the **Aug 26 records are live on purpose** —
 verify the fix against them before cancelling; and the **Web Leads queue is intentional** — do not
 "fix" the Salesforce assignment rule.
+
+---
+
+## Addendum — 2026-08-13, later session
+
+### Correction to my own finding
+
+Hamilton challenged the framing: he recalls a Salesforce workflow that already moves the calendar
+event to the newly assigned user and then emails that agent. He is right that my write-up
+overreached.
+
+What I proved: the appointment's `dateUpdated` (`23:01:51Z`) predates the reassignment
+(`23:16:11Z`), so the record was never successfully written.
+What I wrongly implied: that nothing attempted the write. A **rejected** write also leaves
+`dateUpdated` untouched. My evidence cannot separate "nothing tried" from "something tried and was
+refused."
+
+The observed GHL error *"The user id not part of calendar team"* is a rejection message and
+requires an attempted assignment to produce it. That points at an automation that exists and is
+being refused, not one that is missing. Labeled HYPOTHESIS in the Overview with its confirming
+test. Corrected the Overview sentence.
+
+If the hypothesis holds, nothing needs building on the automation side and the calendar is the sole
+blocker — a better position than the original write-up implied.
+
+### New standing constraint from Hamilton
+
+**Agents work only in Salesforce, never in GoHighLevel.** No GHL logins, no GHL-branded
+notifications, no links into GHL in any agent-facing email. GHL is backend-only. This mirrors the
+MCD CRM rule and is now recorded in the runbook's constraints block.
+
+This changes the design, not just the policy: if Salesforce owns agent assignment, the replacement
+GHL calendar should be a team calendar with all agents as members and **round-robin distribution
+left OFF**, so GHL does not compete with Salesforce for the same field. The runbook records both
+branches and makes Phase 0 decide between them.
+
+### What I changed
+
+- `02 Projects/LSP/[C] LSP Runbook — FCA Appointment Assignment Cutover.md` — new. Phase 0
+  (verify the Salesforce workflow and the agent email) through Phase 5 (cleanup), plus rollback,
+  open questions, and the tooling constraints that make this a human-run procedure.
+- `02 Projects/LSP/LSP Overview.md` — corrected the overreaching sentence; added the workflow
+  hypothesis and its confirming test.
+
+### Still open — added
+
+- Verify the Salesforce workflow exists, what it targets, and whether it was rejected (Phase 0).
+- Audit the agent notification email for any link into GHL (constraint violation if present).
+- Resolve whether agents need login-less GHL user records to be valid assignment targets on a team
+  calendar. This is the sharpest tension between the Salesforce-only rule and the fix.
+- Locate where the 2026-08-13 sync-failure logging writes.
+
+### Handback
+
+Lock holder remains **claude**, scope `lsp.fca`, read-only. Still no GHL record mutated. Next
+action: run Phase 0 of the runbook — confirm the Salesforce workflow fired and was rejected. That
+single answer determines whether the remaining work is one config change or a build.
