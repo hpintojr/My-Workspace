@@ -78,15 +78,21 @@ reassignment event, because none occurred." That was an overreach. A write that 
 leaves `dateUpdated` untouched, so this evidence cannot distinguish "nothing tried" from "something
 tried and was refused."
 
-**HYPOTHESIS (Hamilton, high confidence):** a Salesforce workflow already exists that moves the
-calendar event to the newly assigned user and then emails that agent. If so it *is* firing and
-being rejected by GHL — the observed error *"The user id not part of calendar team"* is a
-rejection message, which requires an attempted assignment to produce. *Confirming test:* read the
-sync-failure log shipped 2026-08-13 for entries around `2026-08-13T23:16Z`, and inspect the
-Salesforce workflow directly. See `[C] LSP Runbook — FCA Appointment Assignment Cutover.md`.
+**HYPOTHESIS — DISPROVEN 2026-08-13 (live E2E test):** the theory was that a Salesforce workflow
+moves the calendar event to the newly assigned user, emails that agent, and is being rejected by
+GHL. Direct inspection proved otherwise. The only owner-change automation is Flow
+`F&C Lead Owner to Salesforce Calendar` (301V500000oWTDNIA4, active): trigger
+`ISCHANGED(OwnerId)` on Lead, one Update Records element that moves **Salesforce Events only**.
+It contains **no GHL callout of any kind**. A full E2E test (lead `00QV500000fr7WoMAI` /
+GHL contact `MiCyWvjbgkOAxIb5HhBg`, owner changed Web Leads → Kenny Jumps at 20:34 PT) confirmed:
+the SF Event moved to Kenny, and **no GHL record changed** — contact, opportunity, and
+appointment all still read Alex minutes later. The agent-email flow `Lead Assignment
+Notification` exists but is **inactive**. Full evidence in
+`[C] LSP Runbook — FCA Appointment Assignment Cutover.md` (Phase 0 result).
 
-If the hypothesis holds, nothing needs building on the automation side and the calendar is the
-sole remaining blocker.
+Consequence: the 20260813T2 SyncTest's contact/opportunity flip must have been performed
+GHL-side, not by Salesforce. Two things now need building/deciding, not one: the team calendar
+(unchanged) AND a Salesforce→GHL assignment sync, which does not exist.
 
 ### Why — proven cause
 
