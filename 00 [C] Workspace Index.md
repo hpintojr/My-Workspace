@@ -1,6 +1,6 @@
 # Workspace Index
 
-Updated: 2026-07-13
+Updated: 2026-08-13
 
 ## First read
 
@@ -210,6 +210,46 @@ Repo: mcd_lead_ops (local only, D:\GitHub\mcd_lead_ops)
    separation, RLS/runtime DB role, error tracking, login smoke test, Neon
    autoscaling and backup review.
 4. Backlog items #38-#41 remain unscoped.
+```
+
+## LSP - Loan Streamline Pro / Free & Clear Advantage
+
+Free & Clear Advantage is a brand inside the Loan Streamline Pro GHL sub-account, not its own
+sub-account. FCA prospects book a one-hour telephone consultation from the F&C website.
+
+```txt
+02 Projects/LSP/LSP Overview.md          <- read first
+02 Projects/LSP/LOCK.md
+01 Daily Logs/[C] 2026-08-13 LSP F&C Appointment Assignment Diagnosis.md
+```
+
+### Authoritative current status — 2026-08-13
+
+```txt
+BLOCKED on one owner-only configuration decision.
+
+Shipped and working: confirmation card + ICS, the 949 number on the site, 15-minute overdue
+threshold, two real bugs fixed and merged, sync failures no longer silent.
+
+Open blocker: reassigning an FCA booking updates the contact and the opportunity but leaves the
+calendar appointment pinned to Alex. Proven on live record FCA Assign SyncTest 20260813T2 --
+appointment 8Uq6LAB34FjSNg5hw7Da still reads Alex while contact 0Pkh4K2X5fSe28rqxkkR and
+opportunity 9XaL0GhTnBKH9a5Ubmkm both read Kenny Jumps.
+
+Cause: booking calendar hqwmzN40nNDRQZeJqqbR is personal to Alex and has no team. It also cannot
+model five agents in concurrent slots, so it gates correct assignment, real per-slot capacity, and
+any future round robin -- three things behind one decision.
+
+Decision (owner only): convert or replace the calendar. That changes GHL_CALENDAR_ID in Vercel and
+strands existing appointments on the old calendar.
+
+Live IDs: location oY7nDZUrZG0KegzadZgI · calendar hqwmzN40nNDRQZeJqqbR ·
+pipeline loWWhGAtaHtbjBRmBstP · Alex 8tTyPhJCYmCqsCFvaiq6 · Kenny Jumps dyxxuG3Xe4F76scURNj2
+
+DO NOT: cancel the Aug 26 test records before verifying the fix against them -- they are the
+reproduction. DO NOT "fix" the Salesforce Web Leads assignment rule -- that queue is intentional.
+
+Current holder: Claude. Read the LSP Overview before any work in this scope.
 ```
 
 ## Workspace rules

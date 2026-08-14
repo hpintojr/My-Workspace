@@ -186,6 +186,52 @@ Permitted lead inputs only: user files, referrals, web forms, PPC leads, license
 owned-account exports, permitted business-site research. Scraping adapters are declined and stubbed.
 ```
 
+## LSP — Free & Clear Advantage — current state (2026-08-13)
+
+```txt
+STATUS: BLOCKED on one owner-only configuration decision. Diagnosis complete and proven.
+
+Free & Clear Advantage is a brand INSIDE the Loan Streamline Pro GHL sub-account
+(oY7nDZUrZG0KegzadZgI). It is not its own sub-account. Every fresh session gets this wrong.
+
+Working: confirmation card + ICS live, site shows the 949, 15-minute overdue threshold,
+two real bugs fixed and merged, sync failures no longer invisible.
+
+Blocker: reassigning an FCA booking updates the contact and opportunity but leaves the calendar
+appointment pinned to Alex. Proven on live record FCA Assign SyncTest 20260813T2 -- appointment
+8Uq6LAB34FjSNg5hw7Da reads Alex (8tTyPhJCYmCqsCFvaiq6) while contact 0Pkh4K2X5fSe28rqxkkR and
+opportunity 9XaL0GhTnBKH9a5Ubmkm both read Kenny Jumps (dyxxuG3Xe4F76scURNj2).
+
+Cause: booking calendar hqwmzN40nNDRQZeJqqbR is personal to Alex, so it has no team to add agents
+to, and it cannot model five agents in concurrent slots. One decision gates three things:
+correct assignment, real per-slot capacity, and any future round robin.
+
+Decision (owner only): convert or replace the calendar. Changes GHL_CALENDAR_ID in Vercel and
+strands existing appointments on the old calendar.
+
+HARD WARNINGS:
+- The Aug 26 test records are live ON PURPOSE. They are the reproduction. Verify any fix against
+  them BEFORE cancelling them.
+- The Web Leads queue is intentional. Do NOT "fix" the Salesforce assignment rule.
+
+Read 02 Projects/LSP/LSP Overview.md and 02 Projects/LSP/LOCK.md before any work in this scope.
+Claude holds the lock, read-only. No GHL record has been mutated.
+```
+
+## Workspace source-of-truth exception — logged 2026-08-13
+
+```txt
+Rule 1 and Operating Protocol section 8 require editing this repo through the GitHub MCP only,
+never local file writes. On 2026-08-13 that was impossible: no GitHub connector was available in
+the session, none exists in the MCP registry, and the sandbox cannot reach github.com
+(git fetch -> HTTP 403 from proxy after CONNECT). Hamilton was shown the conflict and authorized
+local writes plus a local commit for the LSP diagnosis work.
+
+Separately and predating that session: the local clone is 2 commits AHEAD of origin/main. There is
+committed work in D:\GitHub\My Workspace that GitHub has never seen, so the stated source of truth
+is currently behind the local folder. Reconcile before relying on rule 1 as written.
+```
+
 ## Historical next work — superseded
 
 ```txt
