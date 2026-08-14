@@ -1,11 +1,44 @@
 ---
 type: status
-date: 2026-07-10
+date: 2026-07-13
 project: MCD CRM - Agent and Admin Portals
 repository: hpintojr/crm.mcd
 ---
 
 # MCD CRM — Agent and Admin Portals Overview
+
+## Authoritative current checkpoint — 2026-07-13
+
+```txt
+Production is HEALTHY on main commit c7aadba2433c869fbfd1dd7175d0fd721b149085 (PR #138).
+Vercel deployment dpl_E8fA5JUTMzrA7WKhq4NnXX1CrjjS is READY and aliased to crm.mercurycalldesk.com.
+/api/status returned HTTP 200 for production/main/the exact PR #138 merge SHA with no-store, noindex, CSP, HSTS, anti-framing, MIME, permissions, opener, and referrer headers.
+
+PR #138 completed the localhost-only authenticated E2E account-state scope:
+- five-failure active lockout and correct-password denial;
+- verified expiry followed by successful Owner login and reset lock state;
+- correct-password denial for synthetic SUSPENDED and DISABLED Users;
+- read-only persisted User/AuditLog evidence.
+
+All required PR checks passed: Verify CRM, Commission Policy, Application Build, Authenticated E2E, and persisted security assertions. Vercel preview and production were READY; post-deployment Vercel error/fatal query and Chrome console check were clean.
+
+Read next:
+1. LOCK.md
+2. [G] Master Completion Ledger — 2026-07-13.md
+3. 01 Daily Logs/[G] 2026-07-13 MCD CRM PR138 Account State Recovery and Inactive Login Denial.md
+4. [C] AI Operating Protocol — Handoff, Changelog, Indexing.md
+
+Do not treat the 2026-07-10 historical record below as the current production baseline or execution queue. Production migrations, feature-flag/configuration changes, real-record mutations, live GHL activation, payments, payouts, and money movement remain prohibited without specific owner approval.
+```
+
+
+## External CRM and Stripe Sandbox checkpoint — 2026-07-13
+
+- Mercury Call Desk GHL now has the browser-created lead, sync, Stripe payment, gross-revenue, commission rate/amount/status fields; lifecycle tags; test/USD custom values; and a ten-stage revenue-and-commission pipeline.
+- `MCD - Stripe Test Intake (Draft)` is draft-only and contains no trigger, action, enrollment, or publication.
+- Stripe was inspected in the Mercury Call Desk **Sandbox/Test** account; its Test Workbench has no webhook destinations. No live Stripe or payout/bank configuration was touched.
+- End-to-end commission validation is **not complete**. GHL's Inbound Webhook is premium/chargeable per execution and must be explicitly approved before controlled testing. The owner must also define commission base, rates/splits, timing, refund/dispute/chargeback rules, approval authority, and rounding.
+- Evidence: `01 Daily Logs/[G] 2026-07-13 MCD CRM GHL and Stripe Sandbox Foundation.md`.
 
 ## Read first
 
@@ -17,11 +50,11 @@ repository: hpintojr/crm.mcd
 5. This overview
 ```
 
-## Current status — authoritative 2026-07-10
+## Historical status snapshot — superseded 2026-07-10
 
 ```txt
 Production is HEALTHY. Lead Flow business rules are merged and deployed.
-Custom domain crm.mercurycalldesk.com is on latest commit 4cba96ac (main).
+Custom domain crm.mercurycalldesk.com is on latest commit 860c0e94 (main, PR #79).
 
 LEAD FLOW BUSINESS RULES — PR #34 (merged 2026-07-08 as 487ff615)
 - Cold Lead workspace in /portal/leads, activity-first, no soft lock.
@@ -75,7 +108,21 @@ Cockpit and visibility pages (PR #68-#74, each read-only page + protected JSON e
 Cross-linking (PR #75-#77):
 - PR #75 (e2a429bc): overview links from history and findings.
 - PR #76 (438b24fd): overview links from command center and report.
-- PR #77 (a5c33b1c, current production commit): overview links from board and runbook.
+- PR #77 (a5c33b1c): overview links from board and runbook.
+
+Admin acceptance-operator narrow permission on controlled test Leads only (PR #78-#79, 2026-07-10 afternoon):
+- PR #78 (Claude, prod 3bccb51d): src/lib/lead-workspace.ts::activeAgent()
+  now allows ADMIN_ROLES on Leads that pass isControlledTestLead() only. Auto-
+  provisions an "Acceptance Operator (<ROLE>)" Agent with canClaimLeads:true for
+  the admin user so click-to-call, disposition, and DNC actions succeed on the
+  controlled test Lead without redirecting to /login. src/app/portal/leads/page.tsx
+  gained id="cold-lead-review" + scroll-mt-6 on the Cold Lead detail section, and
+  the open/review/disposition anchors point at #cold-lead-review. Guard extended.
+- PR #79 (Claude, prod 860c0e94): src/lib/claims.ts::claimAvailableLead() applies
+  the same controlled-Lead-only exemption. Real production Leads still throw the
+  original "Use reassignment controls for manager lead assignment." error for
+  ADMIN roles. Controlled test Leads fall through to the existing agent +
+  canClaimLeads + capacity + claim path. Guard extended.
 
 Guard: scripts/check-lead-flow-alignment.ts extended to protect every route,
 label, endpoint, and cross-link.
@@ -97,8 +144,29 @@ LOGIN / ADMIN / SERVICING
 - July servicing outage fix remains in place: no competing [id] vs [clientAccountId] route.
 - Route-collision guard continues to run in Vercel build.
 
+LIVE ACCEPTANCE PROGRESS — 2026-07-10 afternoon
+- PASS (12): step 1 (custom domain), 2 (protected routes), 3 (cron 401),
+             5 (Lead pool state), 6 (Cold workspace), 7 (click-to-call activity),
+             9 (no-answer disposition), 10 (callback-requested / two-way contact),
+             11 (45-day claim), 12 (DNC blackout), 13 (My Workspace),
+             17 (aging-preview).
+- Deferred (5): 4 (Vercel runtime logs), 8 (second Cold Lead call attempt),
+                14 (Warm Reply Triage timer), 15/16 (GHL harness).
+- Owner-only (1): 18 (owner production decision).
+- Controlled test Lead exercised: cmrepsdug0004ii040m00sjs1 ("MCD Controlled
+  Lead Test", 555-010-0934). Full lifecycle: Cold -> activity-first click-to-call
+  -> no-answer disposition (stayed unowned) -> callback-requested disposition
+  (twoWayContactAt set, moved to NURTURE / NURTURING) -> claim (lifecycle
+  CLAIMED, ownerAgentId set to auto-provisioned Acceptance Operator (OWNER),
+  claimedAt + 45-day openPoolReleaseAt set) -> DNC + suppress (lifecycle
+  Suppressed, archived). Immutable LEAD_PRODUCTION_ACCEPTANCE_RECORDED audits
+  written per step. GHL export remained blocked by MCD_CONTROLLED_TEST_NO_GHL_EXPORT
+  the entire time.
+
 LOCK / HANDOFF
-- Claude holds the execution lock as of 2026-07-10T07:28Z per LOCK.md.
+- Claude held the execution lock 2026-07-10T07:28Z through 2026-07-10 evening.
+  At end of the afternoon session Claude handed the lock to ChatGPT for a
+  continuation coding window. See LOCK.md for the current holder.
 - ChatGPT completed a 2h30m owner-authorized continuation shipping PR #66-#77
   and returned the lock cleanly. See ChatGPT Session Handback log.
 - No open PR blocked at review as of 2026-07-10.
@@ -106,7 +174,7 @@ LOCK / HANDOFF
   custom domain; Claude will observe/navigate but not drive the Lead actions.
 ```
 
-## Exact next work
+## Historical next work — superseded
 
 ```txt
 1. AUTHENTICATED PRODUCTION ACCEPTANCE (0 / 18 recorded, gate to broader rollout).

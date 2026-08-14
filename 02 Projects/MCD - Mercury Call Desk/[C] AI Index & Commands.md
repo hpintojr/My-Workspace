@@ -1,7 +1,7 @@
 ---
 type: index
 date: 2026-06-24
-updated: 2026-06-30
+updated: 2026-07-14
 project: MCD - Mercury Call Desk
 audience: Claude, ChatGPT, Gemini (and future AI assistants)
 ---
@@ -28,15 +28,16 @@ Partners use their own schedules, work location, prospecting methods, and non-co
 1. MCD - Mercury Call Desk Overview.md
 2. [C] Partner Program Business Terms — Approved 2026-06-30.md
 3. [C] Owner Setup & Open Decisions.md
-4. [C] AI Index & Commands.md (this file)
-5. 01-agent-onboarding/00_READ_ME_FIRST.md
-6. 01-agent-onboarding/03_COMPENSATION_AND_LEAD_RULES.md
-7. 01-agent-onboarding/07_CRM_SOP.md
-8. 01-agent-onboarding/08_COMPLIANCE_AND_COMMUNICATIONS.md
-9. 01-agent-onboarding/14_DEMO_PROCESS_AND_HANDOFF.md
-10. 01-agent-onboarding/agreements/[C] Sales Partner Agreement (DRAFT).md
-11. 01-agent-onboarding/agreements/[C] Confidentiality and IP Agreement (DRAFT).md
-12. 99-reference/[C] Master Ops Manual (Gemini).md
+4. 02-crm-gohighlevel/2026-07-14 CRM + GHL Implementation Handoff.md
+5. [C] AI Index & Commands.md (this file)
+6. 01-agent-onboarding/00_READ_ME_FIRST.md
+7. 01-agent-onboarding/03_COMPENSATION_AND_LEAD_RULES.md
+8. 01-agent-onboarding/07_CRM_SOP.md
+9. 01-agent-onboarding/08_COMPLIANCE_AND_COMMUNICATIONS.md
+10. 01-agent-onboarding/14_DEMO_PROCESS_AND_HANDOFF.md
+11. 01-agent-onboarding/agreements/[C] Sales Partner Agreement (DRAFT).md
+12. 01-agent-onboarding/agreements/[C] Confidentiality and IP Agreement (DRAFT).md
+13. 99-reference/[C] Master Ops Manual (Gemini).md
 ```
 
 Do not change pricing, lead attribution, client servicing, commission terms, CRM-access rules, agreements, or compliance language without first checking the approved Business Terms and Owner Setup tracker.
@@ -75,6 +76,7 @@ Do not change pricing, lead attribution, client servicing, commission terms, CRM
   - [C] Pricing and Commission Model.xlsx
 
 02-crm-gohighlevel/
+  - Current CRM/GHL implementation handoff (read first for live state)
   - GHL / MiniCRM implementation materials, MCP template, calendar setup
 
 03-reseller-channel/
@@ -110,6 +112,7 @@ onboarding status   → report whether onboarding, agreements, access control, a
 build onboarding    → update the numbered kit while preserving the approved Business Terms and no-reseller-right rule.
 certify partner     → use 09_CERTIFICATION_SCORECARD before authorizing live outreach/demo booking.
 plan crm            → design GHL/MiniCRM fields, roles, workflows, access, DNC, attribution, service cadence, and commission controls.
+crm handoff          → read 02-crm-gohighlevel/2026-07-14 CRM + GHL Implementation Handoff.md before changing live CRM, GHL, Stripe, or onboarding documents.
 plan reseller       → build a future separate reseller model; never merge it into the current Partner Agreement.
 update owner setup  → update the approved Business Terms and Owner Setup tracker only when Hamilton makes a new decision.
 ```
