@@ -195,9 +195,17 @@ Only after Phase 0 and Phase 1 are recorded.
 ```
 
 ```txt
-New calendar ID: ____________________________________________
-Agents added: _______________________________________________
-Per-slot capacity: __________  Duration: __________
+New calendar ID: mthWbSubGvowLme1jhHM   ("FCA Consultation (Team)", Round Robin type)
+Agents added: Alex Antonio (8tTyPhJCYmCqsCFvaiq6), Kenny Jumps (dyxxuG3Xe4F76scURNj2)
+              — remaining roster still unconfirmed, add later via calendar settings
+Per-slot capacity: 1 per member (as instructed)   Duration: 60 min / 30-min starts,
+              window 9:00 AM–6:30 PM PT
+Built 2026-08-13 evening by Hamilton in the GHL UI (Claude's build sheet; the calendar
+settings iframe rejects synthetic input, re-verified this session — accessibility tree
+exposes zero controls inside the module). Verified created: calendar count 20 → 21.
+Individual settings NOT yet independently verified — Phase 4 functional test covers them.
+Distribution note: GHL round-robin distribution is not exercised — every website booking
+pins assignedUserId to Alex at creation; Salesforce reassignment + the cron sync move it.
 ```
 
 **Do not delete or deactivate `hqwmzN40nNDRQZeJqqbR` yet.** Live appointments sit on it.
