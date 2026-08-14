@@ -1,6 +1,13 @@
 # [C] LSP Proposal — Salesforce → GHL Assignment Sync
 
-Created 2026-08-13 · Scope `lsp.fca` · Status: PROPOSAL — nothing here is built or approved.
+> **SUPERSEDED 2026-08-13, same evening. DO NOT BUILD FROM THIS DOCUMENT.**
+> Its central premise is wrong. The Salesforce→GHL sync **already exists** as a Vercel cron
+> poller (`/api/sync/appointments`, every minute) in the website repo — it was simply failing.
+> Building the `/api/agent-assignment` endpoint proposed below would duplicate working
+> infrastructure. See `[C] LSP Handoff — Sync Fix e034c76 and Corrected Scope.md` for what was
+> actually wrong and what was actually done. Kept only for the record of reasoning.
+
+Created 2026-08-13 · Scope `lsp.fca` · Status: SUPERSEDED — see banner above.
 Prereq reading: `LSP Overview.md`, `LOCK.md`, `[C] LSP Runbook — FCA Appointment Assignment Cutover.md` (Phase 0 result).
 
 ## Why this document exists

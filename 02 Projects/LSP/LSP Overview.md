@@ -90,9 +90,19 @@ appointment all still read Alex minutes later. The agent-email flow `Lead Assign
 Notification` exists but is **inactive**. Full evidence in
 `[C] LSP Runbook — FCA Appointment Assignment Cutover.md` (Phase 0 result).
 
-Consequence: the 20260813T2 SyncTest's contact/opportunity flip must have been performed
-GHL-side, not by Salesforce. Two things now need building/deciding, not one: the team calendar
-(unchanged) AND a Salesforce→GHL assignment sync, which does not exist.
+**CORRECTED again, later the same evening — read this part.** The sync *does* exist; it is simply
+not in Salesforce. It is a **Vercel cron poller** in the website repo: `vercel.json` runs
+`/api/sync/appointments` every minute, which reads Salesforce Events and writes the GHL
+appointment and opportunity, matching SF Event Owner email to GHL user email.
+
+It was failing. Production logs showed the same 422 every minute, and the request trace proved the
+damage: the rejection escaped the per-appointment `try`, so the opportunity assignment and the
+overdue-call path never ran for any appointment awaiting handoff. One failure, three symptoms —
+which is why contact, opportunity, and appointment all appeared stuck.
+
+Fixed in commit `e034c76` (local, awaiting Hamilton's lint/build/push). Assignment now fails in
+isolation. The appointment leg still requires the team calendar. Full evidence and the remaining
+open items: `[C] LSP Handoff — Sync Fix e034c76 and Corrected Scope.md`.
 
 ### Why — proven cause
 
