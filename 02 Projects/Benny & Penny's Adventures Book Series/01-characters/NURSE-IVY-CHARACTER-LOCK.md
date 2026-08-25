@@ -48,6 +48,7 @@ Caring · calm · encouraging · reassuring. She kneels or sits to Penny's eye l
 ## DO NOT DRIFT (hard rules)
 
 - ❌ Do not make her hair curly or in tight ringlets — soft waves in a low bun only.
+- ❌ Do not lighten her hair to blonde or any shade other than dark brown.
 - ❌ Do not darken (or lighten) her skin tone between pages or books.
 - ❌ Do not change her face/eye/eyebrow/nose shapes.
 - ❌ Do not change scrubs color (teal) or drop the stethoscope / "Nurse Ivy" badge.
@@ -67,3 +68,42 @@ Caring · calm · encouraging · reassuring. She kneels or sits to Penny's eye l
 ## Reusable AI prompt seed (paste into ChatGPT/Gemini/Canva, then attach the approved reference)
 
 > Nurse Ivy, a warm and caring home-infusion nurse. Dark brown soft wavy hair in a low bun with smooth front pieces framing her face — soft waves only, NOT curly, NOT tight ringlets. Brown eyes, warm light to light-medium skin tone (keep consistent, never darker), warm kind smile, soft natural makeup. Wearing teal scrubs with a stethoscope and a white "Nurse Ivy" name badge with a small pink heart. Calm, gentle, reassuring expression, kneeling to a toddler's eye level. Soft whimsical storybook illustration on a warm cream background. She must match the approved Book 1 / Page 6 reference exactly and look identical across every page and every book.
+
+---
+
+## Personality & world context (added 2026-08-24 — merged from Copilot draft, reconciled against locked visuals)
+
+**Theme:** Kindness, competence, calm reassurance.
+**Signature phrase:** "I'm proud of you. You are brave and amazing."
+
+**Traits:** Patient · soft-spoken · knowledgeable · encouraging · child-centered communication.
+**Function in story:** Guides Penny through infusion steps, explains medical concepts in friendly ways, models calmness and emotional regulation.
+
+## Turnaround (360°) guide
+
+- **Front:** teal scrubs, stethoscope centered, "Nurse Ivy ❤" badge visible, warm smile.
+- **Side:** nursing bag visible at her side, soft relaxed stance.
+- **Back:** scrub-top seam, hair bun visible from behind, low and neat.
+- **¾ view (default):** kneeling or leaning to Penny's eye level.
+
+## Pose library
+
+Kneeling beside Penny · holding her medical bag · checking equipment · giving a thumbs-up · comforting Penny (hand on shoulder) · smiling warmly at eye level.
+
+## Facial expression chart
+
+| Emotion | Read |
+|---|---|
+| Warm smile | Default expression, kind eyes |
+| Proud | Bright eyes, wide smile |
+| Gentle concern | Softened brow, still warm — never stern |
+| Reassuring | Steady eye contact, calm mouth |
+| Encouraging | Slight forward lean, open expression |
+
+## Prop sheet
+
+Teal nursing bag with a heart icon · stethoscope · "Nurse Ivy ❤" name badge · IV stand · clipboard · encouragement stickers for Penny.
+
+## Logo concept (series production package)
+
+Teal lettering for "Nurse Ivy," a stethoscope shape forming the "I," a small heart icon at the end.
