@@ -19,7 +19,7 @@ This is the single front door to every character lock. Any AI (Claude, ChatGPT, 
 
 | Character | Who | Lock file | Gold-standard reference |
 |---|---|---|---|
-| **Penny** | Brave 2–3-yr-old toddler, the heart of the series | `PENNY-CHARACTER-LOCK.md` | Book 1 cover · `3991.png` |
+| **Penny** | Brave 3–5-yr-old preschooler, the heart of the series | `PENNY-CHARACTER-LOCK.md` | Book 1 cover · `3991.png` |
 | **Benny Bear** | Penny's plush teddy-bear companion | `BENNY-CHARACTER-LOCK.md` | Book 1 cover · `3991.png` |
 | **Nurse Ivy** | Warm home-infusion nurse (inspired by Michelle Marie Pinto, RN) | `NURSE-IVY-CHARACTER-LOCK.md` | Book 1 **Page 6** · `0449.png` (hair) |
 
@@ -44,7 +44,7 @@ This is the single front door to every character lock. Any AI (Claude, ChatGPT, 
 | `0449.png` | Nurse Ivy **hair + likeness** (Book 1 Page 7 art) — soft wavy, low bun, NOT too curly | ✅ in repo · ☐ author sign-off |
 | `3991.png` | **Penny + Benny** approved likeness (on a pink round rug; target = pink **heart** rug) | ✅ in repo · ☐ author sign-off |
 | `8745.png` | The **three device helpers** together (Polly/Danny/Ellie master) | ✅ in repo · ☐ author sign-off |
-| Book 1 cover | Penny + Benny series gold standard | ☐ pending final cover |
+| Book 1 cover | Penny + Benny series gold standard | ☐ pending final cover; confirm against Penny's revised 3–5 age range |
 | Book 1 Page 6 | Nurse Ivy series gold standard | ☐ pending final art |
 
 When a file lands, tick it here and in the character's own lock, and flip the lock's reference row to "Approved" once Michelle signs off.
@@ -53,7 +53,7 @@ When a file lands, tick it here and in the character's own lock, and flip the lo
 
 ## Relationships & scale
 
-- **Penny** is a toddler; she **carries/hugs Benny** — Benny is about her torso size, clearly a held plush toy.
+- **Penny** is a young preschooler; she **carries/hugs Benny** — Benny is about her torso size, clearly a held plush toy.
 - **Nurse Ivy** is an adult who **lowers to Penny's eye level** (kneels/sits) in nearly every interaction — never towering.
 - **Device helpers** are small, friendly characters near the IV pole/tubing; **only one is used at a time** in any scene.
 - **Emotional rule:** in any medical moment at least one calm, reassuring face is visible. Penny may look nervous but is always safe; Benny is always present as comfort.
@@ -65,6 +65,13 @@ When a file lands, tick it here and in the character's own lock, and flip the lo
 - **Style:** soft, whimsical, cozy storybook illustration; rounded friendly forms; warm even lighting; never hyper-realistic, never scary.
 - **Child-safe medical rule:** equipment is simplified and friendly; **no scary needles, no blood**; the soft catheter ("tiny bendy straw") is emphasized over the needle.
 - **Text is live/editable** — never bake story wording into AI illustrations.
+
+## Series logos & badge (added 2026-08-24)
+
+- **Primary series logo — "Benny & Penny Adventures":** rounded bubble lettering, mint green + dusty rose palette, a heart integrated into the ampersand, soft child-friendly drop shadow.
+- **Secondary logo — "Home Infusion Helpers":** teal + lavender palette, medical heart icon, friendly rounded sans-serif.
+- **"Be Brave Be Kind" badge:** circular badge, pink outer ring, mint inner ring, heart + star icons — used across activity/certificate pages.
+- Each character also has its own small logotype concept documented at the bottom of its own lock file (Penny, Benny Bear, Nurse Ivy, Polly Pump, Danny Dial-a-Flow, Ellie Infusion Ball).
 
 ## Page & format standards (from Author Bible — for layout, not character art)
 
@@ -86,6 +93,23 @@ When a file lands, tick it here and in the character's own lock, and flip the lo
 ## How AIs should describe each lead (quick prompt seeds)
 
 - **Penny / Benny / Nurse Ivy:** use the "Reusable AI prompt seed" at the bottom of each character's lock file, and attach the matching reference image.
+- **Production package (added 2026-08-24):** every character lock now also carries a Personality & world context section, a Turnaround (360°) guide, a Pose library, a Facial expression chart, a Prop sheet, and a Logo concept — use these when generating illustrator-ready reference sheets or new 360° art, in addition to the original prompt seed.
+
+---
+
+## Update log
+
+**2026-08-24 — Reconciled a Copilot-drafted expanded character bible against the locked visual canon, at Hamilton's request.**
+- Source: Hamilton supplied an expanded "360°" character bible drafted in Copilot (personality depth, pose libraries, facial expression charts, prop sheets, logo concepts, turnaround structure) and asked to reconcile it against these locks before generating new reference art.
+- **Conflicts found and resolved with Hamilton, conflict-by-conflict:**
+  - Penny's age: locked 2–3 (toddler, matches the approved cover) vs. Copilot's 5–6 → **resolved to 3–5.** `PENNY-CHARACTER-LOCK.md` updated. ⚠️ The existing approved cover (`3991.png`) was produced for the 2–3 range; revisit against the new 3–5 range before treating it as gold-standard for later books.
+  - Danny Dial-a-Flow's color: locked purple (matches approved `8745.png`) vs. Copilot's blue → **kept purple.** No change.
+  - Ellie Infusion Ball's color: locked cream/off-white (matches approved `8745.png`) vs. Copilot's pink → **kept cream.** No change.
+  - Nurse Ivy's hair: locked dark brown (matches approved Page 6 art + author's real likeness) vs. Copilot's "brown or dark blonde" → **kept dark brown.** No change.
+  - Benny's heart patch: locked on both feet vs. Copilot's one paw → **kept both feet.** No change.
+  - Penny's sneakers: locked white with mint accents vs. Copilot's plain green → **kept white/mint.** No change.
+- **Everything else from the Copilot draft was additive, not conflicting**, and has been merged into each character's lock file as new sections: Personality & world context, Turnaround (360°) guide, Pose library, Facial expression chart, Prop sheet, Logo concept.
+- **Still open:** Michelle's formal sign-off on the locks (all reference rows still ☐, not ☑ Approved) and DRAFT hex confirmation against final art — unchanged since June 25.
 
 ---
 
