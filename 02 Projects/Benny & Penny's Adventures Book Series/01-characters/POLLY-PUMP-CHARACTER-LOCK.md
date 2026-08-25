@@ -18,6 +18,8 @@
 ## ⚠️ Correction vs. the written bible
 The Author Bible text said Polly has a "mint-green bow." **The approved art shows NO bow on Polly.** Per the precedence rule, **lock = no bow** (only **Ellie** wears the mint bow). Flag for Michelle if she wants the bow added back.
 
+> **2026-08-24 re-check:** a newer Copilot-drafted bible independently proposed changing Polly to a plain boxy shape with no color specified conflict; Hamilton confirmed **keep purple, no bow** — matches the approved reference art. No change made.
+
 ## Do not drift
 - ❌ No mint bow. ❌ Don't reshape into a plain box or a pump that doesn't read as a cute phone.
 - ❌ Don't recolor off-purple or drop the heart button / light-blue screen face.
@@ -28,3 +30,41 @@ The Author Bible text said Polly has a "mint-green bow." **The approved art show
 |---|---|---|---|---|
 | POLLY-REF-MASTER | trio master reference | `8745.png` | ☑ | ☐ (pending Michelle) |
 | POLLY-REF-02 | held by Nurse Ivy (clean front view) | `0449.png` | ☑ | ☐ |
+
+---
+
+## Personality & world context (added 2026-08-24 — merged from Copilot draft, reconciled against locked visuals)
+
+**Theme:** Steady, reliable, rhythmic.
+**Signature phrase:** "I give your medicine a steady push!"
+
+**Traits:** Dependable · organized · loves teamwork.
+**Function in story:** Represents consistency and safety; helps Penny understand how her medicine moves through the tubing.
+
+## Turnaround (360°) guide
+
+- **Front:** purple smartphone/tablet-shaped body, light-blue screen face, "Polly Pump" lettered above the face, pink heart button centered in the button row.
+- **Side:** purple tubing port visible at the top, rounded edges.
+- **Back:** smooth purple panel, no screen.
+- **¾ view (default, team pose):** friendly tilt, one arm often waving.
+
+## Pose library
+
+Gentle pulse/glow (working) · leaning forward · "working" pose near the IV pole · team pose with Danny and Ellie · waving hello.
+
+## Facial expression chart
+
+| Emotion | Read |
+|---|---|
+| Confident | Steady eyes, closed pleasant smile |
+| Focused | Slightly narrowed eyes, small smile |
+| Happy | Wide open smile |
+| Teamwork smile | Looking toward Danny/Ellie, bright expression |
+
+## Prop sheet
+
+Purple tubing · light-blue screen icons · pink heart button (plus blue/yellow buttons) · pulse-glow effect lines.
+
+## Logo concept (series production package)
+
+Purple blocky lettering for "Polly Pump," a small digital-screen-face icon, a subtle pulse line beneath the text.
