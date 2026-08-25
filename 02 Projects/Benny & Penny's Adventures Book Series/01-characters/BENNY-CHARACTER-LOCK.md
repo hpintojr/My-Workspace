@@ -84,3 +84,42 @@
 ## Reusable AI prompt seed (paste into ChatGPT/Gemini/Canva, then attach the approved reference)
 
 > Benny Bear, a soft plush teddy bear that looks like a stuffed toy first and a bear second. Very large round "marshmallow" head, noticeably wider than his small round plush body. Golden honey-brown curly-swirl plush fur, uniform color, no white markings. Face low on the head with a big forehead; small centered cream muzzle, small smiling mouth with a tiny visible tongue, small dark-brown nose. Very large, widely spaced, glossy round warm-brown eyes. Small rounded ears low on the sides. Mint-green bow tie and a mint-green heart patch on BOTH feet. Warm, comforting expression. Soft whimsical storybook illustration on a cream background. Must match the approved reference image exactly and look identical in every book.
+
+---
+
+## Personality & world context (added 2026-08-24 — merged from Copilot draft, reconciled against locked visuals)
+
+**Theme:** Comfort, bravery, reassurance.
+**Signature phrase:** "You're my bravest friend!"
+
+**Traits:** Encouraging · gentle · slightly silly · protective · speaks in simple, loving phrases.
+**Function in story:** Helps Penny express her feelings, acts as a mirror for bravery, provides emotional grounding during medical scenes.
+
+## Turnaround (360°) guide
+
+- **Front:** round marshmallow head centered, mint bow tie straight, both foot-heart patches visible when seated.
+- **Side:** slight belly curve, soft limbs, ear tilted slightly forward.
+- **Back:** seam line down the back, rounded silhouette, no markings.
+- **¾ view (default, hug-ready):** soft expression, one arm slightly open as if inviting a hug.
+
+## Pose library
+
+Sitting upright · arms open · being hugged by Penny · comforting pose (leaning in) · proud stance · leaning against Penny · held under one of Penny's arms.
+
+## Facial expression chart
+
+| Emotion | Read |
+|---|---|
+| Happy | Wide smile, tiny tongue visible |
+| Proud | Chin slightly up, warm eyes |
+| Comforting | Soft steady gaze, gentle smile |
+| Concerned | Eyes slightly rounder, mouth relaxed — never scared |
+| Encouraging | Open, warm expression, leaning toward Penny |
+
+## Prop sheet
+
+Mint bow tie (signature, do not vary color) · mini comfort blanket he's sometimes tucked under · no other props — Benny himself is Penny's primary comfort prop.
+
+## Logo concept (series production package)
+
+Warm-brown lettering for "Benny," a small paw print replacing the dot in the "i," a mint-green bow-tie icon as an accent.
