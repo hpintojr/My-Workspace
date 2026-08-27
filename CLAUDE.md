@@ -82,6 +82,29 @@ and returned the holder to Claude in LOCK.md. PRs #103-#138 are deployed; the ne
 read-only deployment reliability and configuration/state evidence, not production mutation.
 ```
 
+## B&P Cleaners — current state (2026-08-26)
+
+```txt
+STATUS: NEW PROJECT, kickoff only. Repo hpintojr/b-p-cleaners (public) holds the unmodified
+AdvantageFirst-Website Next.js lender template, imported as a starting baseline in 4 commits
+(6b403555, 044f270e, 9a519c90, 2eccf345 on main). No restyle or estimator refactor has started.
+
+Goal: repurpose the template into a lead-gen / instant-quote site for Benny & Penny Cleaning
+Services (residential + commercial, 1099 drop-servicing model). Brand palette is dark teal
+(#183437 / #1F6662) + gold gradient (#D8B66D/#E4C078/#B98B3D/#8D6225). B&P logo SVG is committed
+at public/images/bp-cleaners-logo.svg.
+
+Not imported on purpose: package-lock.json, all lender stock photography under public/images/,
+and the 185KB lender blog dataset (data/blogPosts.ts) + scraped Trustpilot reviews
+(data/trustpilot-reviews.json) — all lender-specific content the brand plan replaces outright.
+
+Next: restyle pass, SavingsEstimator.tsx -> cleaning quote calculator refactor (pricing logic in
+the Overview), NeonDB quote_requests table, and the two GHL pipelines (Customer Operations,
+1099 Contractor Recruitment). See 02 Projects/B&P Cleaners/B&P Cleaners Overview.md for the full
+spec (branding, pricing logic, DB schema, GHL workflows, ad structure) and open problems, and
+LOCK.md for lock state. Claude holds the lock.
+```
+
 ## MCD CRM — current state (2026-07-13)
 
 ```txt
@@ -230,6 +253,10 @@ local writes plus a local commit for the LSP diagnosis work.
 Separately and predating that session: the local clone is 2 commits AHEAD of origin/main. There is
 committed work in D:\GitHub\My Workspace that GitHub has never seen, so the stated source of truth
 is currently behind the local folder. Reconcile before relying on rule 1 as written.
+
+Update 2026-08-26: a Composio GitHub connector (account hpintojr) is now active in-session and was
+used for all B&P Cleaners work, including this edit — rule 1 was followed as written today. The
+local-ahead-of-origin gap noted above is unrelated and still unresolved.
 ```
 
 ## Historical next work — superseded
