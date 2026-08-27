@@ -1,6 +1,6 @@
 # Workspace Index
 
-Updated: 2026-08-13
+Updated: 2026-08-26
 
 ## First read
 
@@ -9,6 +9,21 @@ Updated: 2026-08-13
 2. 00 [C] Workspace Index.md
 3. CLAUDE.md
 4. Current project files listed below
+```
+
+## B&P Cleaners
+
+New project (2026-08-26). Repurposing the AdvantageFirst-Website Next.js lender template into a
+lead-gen / instant-quote site for Benny & Penny Cleaning Services (residential + commercial, 1099
+drop-servicing model). The unmodified template baseline is imported; no restyle or estimator
+refactor has started.
+
+```txt
+Project: B&P Cleaners
+Repository: hpintojr/b-p-cleaners (public)
+Read next:
+- 02 Projects/B&P Cleaners/B&P Cleaners Overview.md   <- read first (spec, pricing logic, GHL plan)
+- 02 Projects/B&P Cleaners/LOCK.md
 ```
 
 ## Portfolio
