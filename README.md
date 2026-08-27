@@ -13,6 +13,18 @@ A GitHub-based workspace for active project handoffs, daily logs, and operating 
 
 ## Current Active Focus
 
+### B&P Cleaners
+
+New project (started 2026-08-26). Repurposing the AdvantageFirst-Website Next.js lender template
+into a lead-gen and instant-quote site for Benny & Penny Cleaning Services (residential +
+commercial). Repo: hpintojr/b-p-cleaners. The unmodified template has been imported as a baseline
+(4 commits); no restyle or estimator-refactor work has started yet.
+
+```txt
+02 Projects/B&P Cleaners/B&P Cleaners Overview.md
+02 Projects/B&P Cleaners/LOCK.md
+```
+
 ### Benny & Penny's Adventures
 
 The customer portal, digital delivery, gifting, readable-slot controls, Google Places address work, checkout safeguards, email DNS, and cart-recovery foundations are built. Active work is recovery validation, actual product assets/files, policy copy, inbox placement, and LuLu research.
