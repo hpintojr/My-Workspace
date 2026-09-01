@@ -34,6 +34,24 @@ Listen. Then:
 
 Then log the answer, send approved collateral, and create the follow-up task.
 
+## Voicemail script
+
+> “Hi, this is [YOUR NAME] with Mercury Call Desk. Sorry we missed each other — I was calling about how your team handles calls when everyone's busy or the office is closed. If that's ever a pain point, I'd like to grab 15 minutes to show you a short, no-cost demo. You can reach me back at [NUMBER], or I'll try again in a few days. Thanks, and have a good one.”
+
+Keep it under 20 seconds. Do not leave a second voicemail for the same lead within 5 business days.
+
+## Quick-reference objection handling
+
+| Objection | Response starting point |
+|---|---|
+| "We already have a phone system" | See "If they say they already have a phone system" above. |
+| "Not interested" | Acknowledge, ask permission for one clarifying question, and close politely if it's still no. Do not push twice. |
+| "Send me information" | See "If they say ‘send information’" above. |
+| "How much does this cost?" | Do not quote price before discovery. Redirect to the demo: "Pricing depends on call volume and package — the demo is the fastest way to get an accurate number." |
+| "Is this AI going to replace my staff?" | "No — it's built to catch what your team can't get to, like after-hours and overflow calls, not replace anyone." |
+
+If a prospect raises an objection not listed here, log it as `NEW OBJECTION` in the CRM note per CRM SOP Section 9 so it gets reviewed and added.
+
 ## What not to say
 
 - Do not use a false reason for calling.
