@@ -1,7 +1,7 @@
 ---
 type: project-overview
 date: 2026-06-24
-updated: 2026-07-14
+updated: 2026-08-31
 project: MCD - Mercury Call Desk
 ---
 
@@ -45,6 +45,20 @@ Partner pathway: Standard Sales Partner → Advanced Partner / Manager → separ
 
 3. **Advanced Partner / reseller pathway — LATER**
    - Establish qualification standards, custom-pricing floor, separate reseller terms, and independent business requirements.
+
+## Recent updates
+
+```txt
+2026-08-31 — Sales script + SOP refresh, informed by DIAL CLUB Discord (#faq) thread on
+independent dialer/CRM builds. Added a call-disposition log and NEW OBJECTION feedback tag
+to 07_CRM_SOP.md, and a voicemail script + objection quick-reference to
+06_OUTBOUND_CALL_SCRIPT.md. See 01-agent-onboarding/16_KNOWLEDGE_BASE_AND_CALL_REVIEW.md.
+No CRM, lead, or production system changed.
+
+2026-08-31 — Hamilton is migrating the CRM stack off the custom crm.mcd (Vercel/Neon) build
+to a GoHighLevel CRM at crm.sulus.ai. New development on crm.mcd is FROZEN as of today; see
+02 Projects/MCD CRM - Agent and Admin Portals/LOCK.md.
+```
 
 ## Controlling business terms
 
