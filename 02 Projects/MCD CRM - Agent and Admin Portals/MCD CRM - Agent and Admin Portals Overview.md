@@ -1,11 +1,26 @@
 ---
 type: status
 date: 2026-07-13
+updated: 2026-08-31
 project: MCD CRM - Agent and Admin Portals
 repository: hpintojr/crm.mcd
 ---
 
 # MCD CRM — Agent and Admin Portals Overview
+
+## FROZEN — 2026-08-31
+
+```txt
+Hamilton has decided to migrate off this custom Next.js/Vercel/Neon build to a GoHighLevel
+CRM at crm.sulus.ai (location 6R986ILIQydGAU4T1l74). New development on hpintojr/crm.mcd is
+FROZEN as of 2026-08-31: no new PRs, no further feature work, no scope beyond what is already
+merged. Production stays live at crm.mercurycalldesk.com on PR #138 (commit c7aadba2) exactly
+as documented below — nothing is being decommissioned or mutated today. This freeze covers new
+development only.
+
+Migration scope, sequencing, lead-data handling, and a cutover date have not yet been defined —
+that is separate, future-scoped work. See LOCK.md for the current lock state.
+```
 
 ## Authoritative current checkpoint — 2026-07-13
 
