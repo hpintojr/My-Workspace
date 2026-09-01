@@ -50,6 +50,8 @@ Keep it under 20 seconds. Do not leave a second voicemail for the same lead with
 | "How much does this cost?" | Do not quote price before discovery. Redirect to the demo: "Pricing depends on call volume and package — the demo is the fastest way to get an accurate number." |
 | "Is this AI going to replace my staff?" | "No — it's built to catch what your team can't get to, like after-hours and overflow calls, not replace anyone." |
 
+For real prospect language and how junk-removal cold calls actually played out (openers, objections, what booked a demo vs. what didn't), see `16_KNOWLEDGE_BASE_AND_CALL_REVIEW.md` — reference/technique material from 25 downloaded DIAL CLUB call recordings, not approved script text.
+
 If a prospect raises an objection not listed here, log it as `NEW OBJECTION` in the CRM note per CRM SOP Section 9 so it gets reviewed and added.
 
 ## What not to say
