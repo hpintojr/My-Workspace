@@ -88,3 +88,12 @@ Any opt-out, DNC, unsubscribe, or “stop” request received by any channel mus
 ## 8. Former Partner role
 
 Good-standing former Partners may receive a read-only role for MCD-approved retained clients, commission dashboard, and meeting notes only. Access automatically ends 30 days after the final commission payout clears.
+
+## 9. Call Disposition Log & Knowledge-Base Feedback Loop
+
+*Added 2026-08-31, reference point: DIAL CLUB Discord (#faq), "Has anyone built their own dialer setup?" thread. See 16_KNOWLEDGE_BASE_AND_CALL_REVIEW.md.*
+
+- Record a **call disposition** on every call attempt, in addition to the pipeline stage in Section 3. Use one of: Gatekeeper Positive, Gatekeeper Negative, Voicemail Left, No Answer, Info Requested, Demo Booked, Not Interested, Hung Up. Disposition is call-level detail; pipeline stage stays the system-of-record status for the lead/opportunity.
+- If the disposition is Info Requested or Demo Booked, write a short recap in the note (Section 4 format) so a manager can review the outcome without re-listening to a recording.
+- If a prospect raises an objection not covered in the approved script (06_OUTBOUND_CALL_SCRIPT.md) or FAQ material, tag your note `NEW OBJECTION` so it can be reviewed and folded into the knowledge base.
+- This is a documentation habit, not a new tool or system. It does not authorize any new recording, transcription, or dialer tooling — approved CRM/GHL tooling under Section 1 is unchanged.
