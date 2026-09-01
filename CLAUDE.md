@@ -108,6 +108,14 @@ LOCK.md for lock state. Claude holds the lock.
 ## MCD CRM — current state (2026-07-13)
 
 ```txt
+UPDATE 2026-08-31: New development on hpintojr/crm.mcd is FROZEN — Hamilton is migrating to a
+GoHighLevel CRM at crm.sulus.ai (location 6R986ILIQydGAU4T1l74). See
+02 Projects/MCD CRM - Agent and Admin Portals/LOCK.md and Overview.md for the freeze note. The
+status below is the last verified production baseline and remains accurate; nothing production
+has changed.
+```
+
+```txt
 STATUS: HEALTHY. Production is on crm.mercurycalldesk.com at merge commit
   c7aadba2433c869fbfd1dd7175d0fd721b149085 (main, PR #138).
 Vercel production deployment dpl_E8fA5JUTMzrA7WKhq4NnXX1CrjjS is READY.
