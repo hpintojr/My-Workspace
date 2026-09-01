@@ -6,10 +6,21 @@ Others read/verify only. See `[C] AI Operating Protocol — Handoff, Changelog, 
 
 ```txt
 holder: claude
-scope: Standard execution holder — review the unmerged, non-deploying Stripe Connect readiness draft PR #139 and continue only within the existing production gates and financial safety boundary.
-since: 2026-07-13T23:31:00-07:00 (ChatGPT completed the authorized Connect-readiness interval)
-previous_holder: chatgpt
-intent: ChatGPT created a safe readiness-only foundation and Draft PR #139. Manual external payout remains the default; the optional Stripe Connect route has no live configuration, provider action, Connected Account, transfer, payout, migration, deployment, or feature-gate activation.
+scope: FROZEN 2026-08-31 — no new development on hpintojr/crm.mcd. Hamilton is migrating to a GoHighLevel CRM at crm.sulus.ai (location 6R986ILIQydGAU4T1l74). Read-only verification and documentation only until Hamilton defines migration scope.
+since: 2026-08-31T00:00:00-07:00 (owner-directed freeze)
+previous_holder: claude
+intent: Halt further feature work on crm.mcd. Draft PR #139 (Stripe Connect readiness) stays open, unmerged, and undeployed — no action required or authorized on it until Hamilton decides whether the migration supersedes it.
+```
+
+## Freeze note — 2026-08-31
+
+```txt
+Effective 2026-08-31, Hamilton directed a freeze on new development for this project while he
+migrates to a GoHighLevel CRM at crm.sulus.ai. The "Authorized without further owner approval"
+list below is suspended — do not open new PRs, branches, or feature work against hpintojr/crm.mcd
+until Hamilton scopes the migration or explicitly lifts the freeze. Production
+(crm.mercurycalldesk.com, PR #138) is untouched and keeps running as-is; this freeze is about new
+work, not a shutdown.
 ```
 
 ## Authorized without further owner approval
