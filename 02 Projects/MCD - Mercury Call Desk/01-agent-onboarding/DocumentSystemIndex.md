@@ -11,3 +11,4 @@ See PacketStatus.md.
 16_KNOWLEDGE_BASE_AND_CALL_REVIEW.md — Discord-sourced reference notes behind the Aug 2026 script/SOP refresh.
 17_DIAL_CLUB_DISCORD_ARCHIVE.md — full archive of the DIAL CLUB Discord (problems, benchmarks, templates, competitive intel) captured before Hamilton cancelled his subscription.
 18_VOICE_AGENT_CALLER_INTAKE_TEMPLATE.md — universal + trade-specific intake fields for the AI voice agent to collect from end customers (distinct from the outbound sales script and MCD's own brand setup sheet).
+19_SALES_DISCOVERY_INTAKE_FORM.md — fillable capture sheet Sales Partners use during/after a discovery call with a prospect, built from the 05 discovery questions and the 07 CRM note format.
